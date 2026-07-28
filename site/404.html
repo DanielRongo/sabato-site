@@ -240,37 +240,6 @@
   new MutationObserver(scan).observe(document.documentElement,{childList:true,subtree:true});
 })();
 </script>
-<script>
-(function(){
-  var IT = location.pathname === "/it" || location.pathname.indexOf("/it/") === 0;
-  var HREF = IT ? "/it/blog" : "/blog";
-  var anchorText = IT ? ["Contatti","Prezzi"] : ["Contact","Pricing"];
-  function inject(){
-    if (document.querySelector('a[data-blog-link]')) return;
-    var links = document.querySelectorAll('a');
-    for (var i=0;i<links.length;i++){
-      var a = links[i];
-      var t = (a.textContent||"").trim();
-      if (t !== anchorText[0] && t !== anchorText[1]) continue;
-      var r = a.getBoundingClientRect();
-      if (r.top < 0 || r.top > 200 || r.height === 0) continue;
-      var box = a.parentElement;                       // framer container div
-      var clone = box.cloneNode(true);
-      var ca = clone.querySelector('a');
-      if (!ca) continue;
-      // replace text node inside the deepest text wrapper
-      var tw = clone.querySelector('p, span, h1, h2, h3, h4, h5, h6') || ca;
-      tw.textContent = "Blog";
-      ca.href = HREF;
-      ca.setAttribute("data-blog-link","1");
-      box.parentElement.insertBefore(clone, box.nextSibling);
-      return;
-    }
-  }
-  if (document.readyState !== "loading") inject(); else document.addEventListener("DOMContentLoaded", inject);
-  new MutationObserver(function(){ inject(); }).observe(document.documentElement, {childList:true, subtree:true});
-  window.addEventListener("load", function(){ setTimeout(inject, 800); });
-})();
-</script>
+<script src="/js/enhance.js" defer></script>
 </body>
 </html>
