@@ -14,6 +14,19 @@ TPL = os.path.join(ROOT, "templates")
 POSTS = os.path.join(ROOT, "posts")
 BASE = "https://www.sabato.ai"
 
+def load_dummy_slugs():
+    p = os.path.join(ROOT, "dummy-posts.txt")
+    if not os.path.exists(p):
+        return set()
+    out = set()
+    for line in open(p, encoding="utf-8"):
+        line = line.strip()
+        if line and not line.startswith("#"):
+            out.add(line)
+    return out
+
+DUMMY_SLUGS = load_dummy_slugs()
+
 LANGS = {
     "en": {
         "post_tpl": "blog-post-en.html",
@@ -250,10 +263,13 @@ def main():
         rendered = []
         for fm, body in parsed[lang]:
             page, minutes = build_post(fm, body, L, fm["slug"] in slugs[other])
+            if fm["slug"] in DUMMY_SLUGS and "noindex" not in page:
+                page = page.replace("</head>", '<meta name="robots" content="noindex">\n</head>', 1)
             out = os.path.join(L["out_dir"], fm["slug"] + ".html")
             open(out, "w", encoding="utf-8").write(page)
             rendered.append((fm, minutes))
-            sitemap_urls.append(f"{BASE}{L['url_prefix']}/{fm['slug']}")
+            if fm["slug"] not in DUMMY_SLUGS:
+                sitemap_urls.append(f"{BASE}{L['url_prefix']}/{fm['slug']}")
             print(f"  wrote {os.path.relpath(out, ROOT)}")
         rendered.sort(key=lambda t: t[0]["date"], reverse=True)
         open(L["index_out"], "w", encoding="utf-8").write(build_index(rendered, L))
