@@ -38,7 +38,7 @@ LANGS = {
         "months": ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
                    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
         "date_fmt": lambda d, m, y, mo: f"{mo} {d}, {y}",
-        "byline": "<span>By Daniel Rongo</span>",
+        "byline": "<span>By Sabato AI</span>",
         "switch_label": "Leggi in italiano \U0001F1EE\U0001F1F9",
         "sibling_prefix": "/it/blog",
         "faq_heads": ("FAQ",),
@@ -62,7 +62,7 @@ LANGS = {
         "months": ["gen", "feb", "mar", "apr", "mag", "giu",
                    "lug", "ago", "set", "ott", "nov", "dic"],
         "date_fmt": lambda d, m, y, mo: f"{d} {mo} {y}",
-        "byline": "<span>Di Daniel Rongo</span>",
+        "byline": "<span>Di Sabato AI</span>",
         "switch_label": "Read in English \U0001F1EC\U0001F1E7",
         "sibling_prefix": "/blog",
         "faq_heads": ("FAQ", "Domande frequenti"),
@@ -163,7 +163,7 @@ def jsonld(fm, url, faq_entries, L):
         "dateModified": fm["date"],
         "inLanguage": L["inlang"],
         "mainEntityOfPage": {"@type": "WebPage", "@id": url},
-        "author": {"@type": "Person", "name": "Daniel Rongo"},
+        "author": {"@type": "Organization", "name": "Sabato AI", "url": "https://www.sabato.ai"},
         "publisher": {"@type": "Organization", "name": "Sabato AI", "url": BASE},
     }
     blocks = ['<script type="application/ld+json">%s</script>'
