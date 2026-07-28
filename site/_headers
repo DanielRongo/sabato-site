@@ -1,0 +1,9 @@
+/fuc/feather-icons/*
+  Content-Type: text/javascript; charset=utf-8
+  Cache-Control: public, max-age=31536000, immutable
+
+/fuc/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/gf/*
+  Cache-Control: public, max-age=31536000, immutable

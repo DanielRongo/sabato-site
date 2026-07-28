@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CX Response-Time Benchmarks for Mid-Market Stores | Sabato AI</title>
+  <meta name="description" content="A design-preview benchmark post comparing first-response times across channels, with a sample data table and an FAQ, all figures clearly fake.">
+  <link rel="canonical" href="https://www.sabato.ai/blog/cx-response-time-benchmarks">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="CX Response-Time Benchmarks for Mid-Market Stores | Sabato AI">
+  <meta property="og:description" content="A design-preview benchmark post comparing first-response times across channels, with a sample data table and an FAQ, all figures clearly fake.">
+  <meta property="og:url" content="https://www.sabato.ai/blog/cx-response-time-benchmarks">
+  <meta property="og:image" content="https://www.sabato.ai/fuc/assets/8Q4ofjOgRTqsr8FpanTJF9nzLwU.png">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary_large_image">
+  <link href="/fuc/images/hWFOqN6Okd1QgfKhizqgIF1s.png" rel="icon" media="(prefers-color-scheme: light)">
+  <link href="/fuc/images/dEcuqc3xAQ3JJoX4xQDYrMQefA.png" rel="icon" media="(prefers-color-scheme: dark)">
+  <link rel="apple-touch-icon" href="/fuc/images/dEcuqc3xAQ3JJoX4xQDYrMQefA.png">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "CX Response-Time Benchmarks for Mid-Market Stores", "description": "A design-preview benchmark post comparing first-response times across channels, with a sample data table and an FAQ, all figures clearly fake.", "datePublished": "2026-07-10", "dateModified": "2026-07-10", "inLanguage": "en", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://www.sabato.ai/blog/cx-response-time-benchmarks"}, "author": {"@type": "Person", "name": "Daniel Rongo"}, "publisher": {"@type": "Organization", "name": "Sabato AI", "url": "https://www.sabato.ai"}}</script>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Are these benchmarks real?", "acceptedAnswer": {"@type": "Answer", "text": "No. This is placeholder copy for design preview. Every value in the table is a fake round number labelled as a sample figure."}}, {"@type": "Question", "name": "What would the real methodology be?", "acceptedAnswer": {"@type": "Answer", "text": "Placeholder answer: a real edition would name the data sources, the sampling window and the store-size bands before showing a single number."}}, {"@type": "Question", "name": "How often would this be updated?", "acceptedAnswer": {"@type": "Answer", "text": "Placeholder answer: imagine a quarterly refresh, with prior editions archived and linked."}}, {"@type": "Question", "name": "Can I compare my store against this table?", "acceptedAnswer": {"@type": "Answer", "text": "Placeholder answer: not against this preview. Once real data lands here, the article would include a short self-assessment worksheet."}}]}</script>
+  <style>
+    /* ============ Fonts (local mirrors, same files the site loads) ============ */
+    @font-face { font-family: "Satoshi"; src: url("/fuc/third-party-assets/fontshare/wf/TTX2Z3BF3P6Y5BQT3IV2VNOK6FL22KUT/7QYRJOI3JIMYHGY6CH7SOIFRQLZOLNJ6/KFIAZD4RUMEZIYV6FQ3T3GP5PDBDB6JY.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 400; }
+    @font-face { font-family: "Satoshi"; src: url("/fuc/third-party-assets/fontshare/wf/P2LQKHE6KA6ZP4AAGN72KDWMHH6ZH3TA/ZC32TK2P7FPS5GFTL46EU6KQJA24ZYDB/7AHDUZ4A7LFLVFUIFSARGIWCRQJHISQP.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 500; }
+    @font-face { font-family: "Satoshi"; src: url("/fuc/third-party-assets/fontshare/wf/LAFFD4SDUCDVQEXFPDC7C53EQ4ZELWQI/PXCT3G6LO6ICM5I3NTYENYPWJAECAWDD/GHM6WVH6MILNYOOCXHXB5GTSGNTMGXZR.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 700; }
+    @font-face { font-family: "Satoshi"; src: url("/fuc/third-party-assets/fontshare/wf/NHPGVFYUXYXE33DZ75OIT4JFGHITX5PE/PSUTMASCDJTVPERDYJZPN23BVUFUCQIF/J64QX5IPOHK56I2KYUNBQ5M2XWZEYKYX.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 900; }
+    @font-face { font-family: "Kalam"; src: url("/fuc/third-party-assets/fontshare/wf/L5Z4DJRD7OROEK74MORC4URSE7ILAXYH/6QNQQQT3NGMLLBQ3J7CCWACN46YUMIJB/GNJHSO7TKXAQJXNY3V3S4VE64D4XKQCP.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 700; }
+    @font-face { font-family: "Inter"; src: url("/fuc/assets/GrgcKwrN6d3Uz8EwcLHZxwEfC4.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 400; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+2000-206F, U+20AC, U+2122; }
+    @font-face { font-family: "Inter"; src: url("/fuc/assets/UjlFhCnUjxhNfep4oYBPqnEssyo.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 500; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+2000-206F, U+20AC, U+2122; }
+    @font-face { font-family: "Inter"; src: url("/fuc/assets/syRNPWzAMIrcJ3wIlPIP43KjQs.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 700; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+2000-206F, U+20AC, U+2122; }
+
+    /* ============ Tokens ============ */
+    :root {
+      --lime: rgb(204, 255, 0);        /* CTA / accent */
+      --black: rgb(0, 0, 0);           /* hero + footer bands */
+      --ink: rgb(18, 10, 11);          /* primary text */
+      --gray: rgb(69, 65, 64);         /* body/secondary text */
+      --off: rgb(248, 244, 241);       /* light card background */
+      --line: rgb(227, 226, 226);      /* hairlines */
+      --blue: rgb(0, 153, 255);        /* text links */
+      --font: "Satoshi", "Inter", -apple-system, "Helvetica Neue", sans-serif;
+      --hand: "Kalam", cursive;
+      --radius: 24px;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font); background: #fff; color: var(--ink); }
+    img { display: block; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ============ Header / Nav ============ */
+    .site-header { position: sticky; top: 0; z-index: 100; max-width: 1200px; margin: 0 auto; padding: 16px 30px; }
+    .nav-shell { background: #fff; border-radius: var(--radius); height: 88px; padding: 16px 70px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .nav-logo img { width: 132px; height: auto; }
+    .nav-links { display: flex; align-items: center; gap: 48px; }
+    .nav-links a { font-size: 16px; font-weight: 500; line-height: 1.7; color: var(--ink); transition: opacity .2s; }
+    .nav-links a:hover { opacity: .6; }
+    .nav-links a.active { font-weight: 700; }
+    .nav-flag { font-size: 16px; line-height: 1; }
+    .btn-pill { display: inline-block; background: var(--lime); color: #000; border-radius: 100px; padding: 12px 30px; font-family: var(--font); font-size: 16px; font-weight: 700; line-height: 1.7; transition: transform .2s ease; white-space: nowrap; }
+    .btn-pill:hover { transform: scale(1.04); }
+
+    /* ============ Dark hero band ============ */
+    .hero { background: var(--black); border-radius: var(--radius); margin: 0 40px; padding: 96px 40px 104px; text-align: center; }
+    .hero .hand { font-family: var(--hand); font-weight: 700; font-size: 19px; color: #fff; margin-bottom: 18px; }
+    .hero h1 { color: #fff; font-size: 64px; font-weight: 700; letter-spacing: -2px; line-height: 1.15; max-width: 900px; margin: 0 auto; }
+    .hero .sub { color: #fff; font-size: 20px; font-weight: 400; line-height: 1.7; opacity: .85; max-width: 640px; margin: 20px auto 0; }
+
+    /* ============ Main shell ============ */
+    .shell { max-width: 1200px; margin: 0 auto; padding: 0 30px; }
+
+    /* ============ Blog index grid ============ */
+    .post-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; padding: 64px 0 96px; }
+    .post-card { background: var(--off); border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column; transition: transform .25s ease; }
+    .post-card:hover { transform: translateY(-4px); }
+    .post-card .card-img { aspect-ratio: 16 / 9; width: 100%; object-fit: cover; }
+    .post-card .card-body { padding: 28px 28px 26px; display: flex; flex-direction: column; gap: 14px; flex: 1; }
+    .tag { display: inline-block; align-self: flex-start; background: var(--lime); color: #000; border-radius: 100px; padding: 4px 14px; font-size: 13px; font-weight: 700; line-height: 1.6; letter-spacing: .2px; }
+    .post-card h2 { font-size: 24px; font-weight: 700; letter-spacing: -0.5px; line-height: 1.25; color: var(--ink); }
+    .post-card p.excerpt { font-size: 16px; line-height: 1.6; color: var(--gray); flex: 1; }
+    .post-card .meta { font-size: 14px; font-weight: 500; color: var(--gray); opacity: .75; }
+
+    /* ============ Article ============ */
+    .post-hero { padding: 72px 40px 80px; }
+    .post-hero .backlink { display: inline-block; color: #fff; opacity: .6; font-size: 15px; font-weight: 500; margin-bottom: 28px; transition: opacity .2s; }
+    .post-hero .backlink:hover { opacity: 1; }
+    .post-hero h1 { font-size: 52px; letter-spacing: -1.5px; }
+    .post-hero .tag { align-self: center; margin-bottom: 22px; }
+    .post-hero .meta { color: #fff; opacity: .65; font-size: 16px; font-weight: 500; margin-top: 22px; }
+    .post-hero .meta span + span::before { content: "·"; margin: 0 10px; }
+
+    article.prose { max-width: 760px; margin: 0 auto; padding: 72px 30px 40px; }
+    .prose h2 { font-size: 36px; font-weight: 700; letter-spacing: -1px; line-height: 1.2; color: var(--ink); margin: 56px 0 20px; }
+    .prose h3 { font-size: 25px; font-weight: 700; letter-spacing: -0.5px; line-height: 1.3; color: var(--ink); margin: 40px 0 14px; }
+    .prose p { font-size: 18px; line-height: 1.75; color: var(--gray); margin: 0 0 22px; }
+    .prose strong { color: var(--ink); font-weight: 700; }
+    .prose a { color: var(--blue); text-decoration: underline; }
+    .prose ul, .prose ol { margin: 0 0 24px; padding-left: 26px; }
+    .prose li { font-size: 18px; line-height: 1.7; color: var(--gray); margin-bottom: 10px; }
+    .prose li::marker { color: var(--ink); }
+    .prose blockquote { border-left: 4px solid var(--lime); background: var(--off); border-radius: 0 16px 16px 0; padding: 24px 28px; margin: 32px 0; }
+    .prose blockquote p { font-size: 19px; font-weight: 500; font-style: italic; color: var(--ink); margin: 0; }
+    .prose blockquote p + p { margin-top: 12px; font-size: 15px; font-style: normal; font-weight: 500; color: var(--gray); }
+    .prose figure { margin: 32px 0; }
+    .prose figure img { border-radius: 16px; }
+    .prose figcaption { font-size: 14px; color: var(--gray); opacity: .75; margin-top: 10px; text-align: center; }
+    .prose hr { border: 0; border-top: 1px solid var(--line); margin: 48px 0; }
+
+    /* tables */
+    .prose .table-wrap { overflow-x: auto; margin: 32px 0; border: 1px solid var(--line); border-radius: 16px; }
+    .prose table { width: 100%; border-collapse: collapse; font-size: 16px; }
+    .prose th { background: var(--off); color: var(--ink); font-weight: 700; text-align: left; padding: 14px 18px; border-bottom: 1px solid var(--line); }
+    .prose td { color: var(--gray); padding: 13px 18px; border-bottom: 1px solid var(--line); line-height: 1.55; }
+    .prose tr:last-child td { border-bottom: 0; }
+
+    /* key-stat callout */
+    .stat-callout { background: var(--black); border-radius: var(--radius); padding: 40px 44px; margin: 36px 0; }
+    .stat-callout .stat-number { font-size: 56px; font-weight: 900; letter-spacing: -1.5px; line-height: 1.1; color: var(--lime); }
+    .stat-callout .stat-label { font-size: 18px; line-height: 1.6; color: #fff; opacity: .85; margin-top: 10px; }
+    .stat-callout .stat-source { font-size: 13px; color: #fff; opacity: .45; margin-top: 14px; }
+
+    /* FAQ */
+    .faq { margin: 56px 0 0; }
+    .faq .faq-item { background: var(--off); border-radius: 16px; padding: 24px 28px; margin-bottom: 14px; }
+    .faq .faq-q { font-size: 20px; font-weight: 700; letter-spacing: -0.3px; color: var(--ink); margin: 0 0 8px; }
+    .faq .faq-a { font-size: 17px; line-height: 1.65; color: var(--gray); margin: 0; }
+    .faq .faq-a a { color: var(--blue); text-decoration: underline; }
+
+    /* Sources */
+    .sources { border-top: 1px solid var(--line); margin-top: 56px; padding-top: 28px; }
+    .sources h2 { font-size: 20px; letter-spacing: -0.3px; margin: 0 0 14px; }
+    .sources ol { padding-left: 22px; margin: 0; }
+    .sources li { font-size: 14px; line-height: 1.7; color: var(--gray); margin-bottom: 6px; }
+    .sources a { color: var(--blue); text-decoration: underline; word-break: break-all; }
+
+    /* Bottom CTA band */
+    .cta-band { background: var(--black); border-radius: var(--radius); margin: 72px 40px 40px; padding: 88px 40px; text-align: center; }
+    .cta-band .hand { font-family: var(--hand); font-weight: 700; font-size: 19px; color: #fff; margin-bottom: 14px; }
+    .cta-band h2 { color: #fff; font-size: 48px; font-weight: 700; letter-spacing: -1.5px; line-height: 1.15; max-width: 720px; margin: 0 auto 16px; }
+    .cta-band p { color: #fff; opacity: .8; font-size: 19px; line-height: 1.7; max-width: 560px; margin: 0 auto 34px; }
+
+    /* ============ Footer ============ */
+    footer.site-footer { background: var(--black); margin-top: 96px; padding: 110px 0 0; }
+    .footer-grid { display: grid; grid-template-columns: 1.35fr 1fr 1.25fr 1fr; gap: 48px; padding-bottom: 88px; }
+    .footer-brand img.footer-logo { width: 132px; height: auto; }
+    .footer-brand .tagline { color: #fff; font-size: 18px; line-height: 1.65; margin-top: 22px; }
+    .footer-brand .backed { color: #fff; font-size: 18px; margin-top: 64px; margin-bottom: 14px; }
+    .footer-brand img.backed-img { width: 191px; height: auto; }
+    .footer-col h4 { color: #fff; font-size: 18px; font-weight: 500; margin-bottom: 22px; }
+    .footer-col ul { list-style: none; }
+    .footer-col li { margin-bottom: 14px; }
+    .footer-col a, .footer-col span { color: rgba(248, 244, 241, .62); font-size: 18px; line-height: 1.5; transition: color .2s; }
+    .footer-col a:hover { color: #fff; }
+    .footer-bottom { border-top: 1px solid rgba(248, 244, 241, .16); padding: 26px 0 44px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+    .footer-bottom .copy { color: var(--off); font-size: 16px; opacity: .85; }
+    .footer-bottom .legal { display: flex; align-items: center; gap: 24px; }
+    .footer-bottom .legal a { color: var(--off); font-size: 16px; opacity: .85; transition: opacity .2s; }
+    .footer-bottom .legal a:hover { opacity: 1; }
+    .footer-bottom img { width: 20px; height: 20px; }
+
+    /* ============ Mobile (Framer breakpoint) ============ */
+    @media (max-width: 809px) {
+      .site-header { padding: 12px 16px; }
+      .nav-shell { height: 72px; padding: 12px 22px; border-radius: 20px; }
+      .nav-links { display: none; }
+      .nav-logo img { width: 108px; }
+      .btn-pill { padding: 10px 22px; font-size: 15px; }
+      .hero { margin: 0 16px; padding: 64px 24px 72px; }
+      .hero h1 { font-size: 40px; letter-spacing: -1.2px; }
+      .hero .sub { font-size: 18px; }
+      .shell { padding: 0 20px; }
+      .post-grid { grid-template-columns: 1fr; gap: 20px; padding: 40px 0 64px; }
+      .post-hero { padding: 56px 24px 60px; }
+      .post-hero h1 { font-size: 34px; letter-spacing: -1px; }
+      .post-hero .meta { font-size: 14px; }
+      article.prose { padding: 48px 20px 24px; }
+      .prose h2 { font-size: 28px; margin: 44px 0 16px; }
+      .prose h3 { font-size: 22px; }
+      .prose p, .prose li { font-size: 17px; }
+      .stat-callout { padding: 30px 26px; }
+      .stat-callout .stat-number { font-size: 42px; }
+      .cta-band { margin: 56px 16px 24px; padding: 64px 24px; }
+      .cta-band h2 { font-size: 32px; letter-spacing: -1px; }
+      footer.site-footer { margin-top: 64px; padding-top: 72px; }
+      .footer-grid { grid-template-columns: 1fr; gap: 40px; padding-bottom: 56px; }
+      .footer-brand .backed { margin-top: 36px; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+    }
+    @media (min-width: 810px) and (max-width: 1099px) {
+      .nav-shell { padding: 16px 36px; }
+      .nav-links { gap: 28px; }
+      .post-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="nav-shell">
+      <a class="nav-logo" href="/" aria-label="Sabato AI — Home">
+        <img src="/fuc/images/UTATYXc6NipXQRoxyaGHHfHSyA4-f2557e25.png" alt="Sabato AI logo" width="132" height="61">
+      </a>
+      <nav class="nav-links" aria-label="Main">
+        <a href="/#usecases">Use Cases</a>
+        <a href="/pricing">Pricing</a>
+        <a href="/about">About</a>
+        <a href="/contact">Contact</a>
+        <a href="/blog" class="active">Blog</a>
+        <a class="nav-flag" href="/it/blog" aria-label="Versione italiana">🇮🇹</a>
+      </nav>
+      <a class="btn-pill" href="https://cal.com/sabatoai/intro" target="_blank" rel="noopener">Start Free Pilot</a>
+    </div>
+  </header>
+  <section class="hero post-hero">
+    <a class="backlink" href="/blog">← Back to the blog</a>
+    <div style="display:flex;flex-direction:column;align-items:center;">
+      <span class="tag">Benchmarks</span>
+      <h1>CX Response-Time Benchmarks for Mid-Market Stores</h1>
+      <p class="meta"><span>Jul 10, 2026</span><span>3 min read</span><span>By Daniel Rongo</span><span><a href="/it/blog/cx-response-time-benchmarks" style="color:#fff;text-decoration:underline;text-underline-offset:3px;">Leggi in italiano 🇮🇹</a></span></p>
+    </div>
+  </section>
+  <main>
+    <article class="prose">
+<p>This is placeholder copy to preview a benchmark-style article. In a real edition, this opening would explain where the numbers come from, what counts as a first response, and which store sizes are included. On this page, every number is a sample figure invented for layout testing.</p>
+<p>Second filler paragraph: imagine it setting expectations — benchmarks are a mirror, not a target, and channel mix matters more than any single median.</p>
+<h2>The headline table</h2>
+<p>This is placeholder copy introducing the table below. All values are fake round numbers labelled as samples; they exist so you can check column alignment, row striping and the rounded border of the table wrapper.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Channel</th>
+<th>Median first response (sample)</th>
+<th>"Good" threshold (sample)</th>
+<th>Share of contacts (sample)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Phone / voice</td>
+<td>30 seconds</td>
+<td>under 1 minute</td>
+<td>30%</td>
+</tr>
+<tr>
+<td>Live chat</td>
+<td>2 minutes</td>
+<td>under 3 minutes</td>
+<td>20%</td>
+</tr>
+<tr>
+<td>Email</td>
+<td>8 hours</td>
+<td>under 4 hours</td>
+<td>40%</td>
+</tr>
+<tr>
+<td>Social DMs</td>
+<td>3 hours</td>
+<td>under 1 hour</td>
+<td>10%</td>
+</tr>
+</tbody>
+</table></div>
+<p>A short filler paragraph after the table checks bottom spacing. A real post would call out the widest gap and explain why it persists.</p>
+<h2>How to read these numbers</h2>
+<p>This is placeholder copy for an interpretation section. The genuine article would warn against averaging across channels and would segment by order value. The sentences here are intentionally generic filler about methodology.</p>
+<h3>Segment before you compare</h3>
+<p>Placeholder copy under an H3: imagine advice to split benchmarks by ticket type, because a returns question and a WISMO ping deserve different clocks.</p>
+<h3>Watch the tail, not the median</h3>
+<p>Placeholder copy under a second H3: imagine an explanation of why the slowest 5% of responses drive most complaints, with a <em>sample</em> worst-case of 48 hours (sample figure).</p>
+<h2>What changed since the last edition</h2>
+<p>This is placeholder copy for a trend section. In a live benchmark series, this passage would compare the current quarter against the previous one and flag which channels moved. The filler below imitates that structure with invented, clearly-labelled movements so the layout can be judged honestly.</p>
+<ul>
+<li>Placeholder trend: phone/voice medians "improved by 20% (sample figure)" as more stores added automation.</li>
+<li>Placeholder trend: email medians "held flat (sample figure)" for the third consecutive preview.</li>
+<li>Placeholder trend: social DM response times "worsened by 30% (sample figure)" as volumes shifted.</li>
+</ul>
+<h3>The channel-mix shift</h3>
+<p>Placeholder copy under an H3. Imagine two sentences on customers migrating from email to voice for urgent issues, and what that does to staffing plans. This filler paragraph stands in for both of them, plus a third sentence that exists purely to give the paragraph a realistic length on the page.</p>
+<h2>The self-assessment, previewed</h2>
+<p>This is placeholder copy for the worksheet section a real edition would include. It would ask the reader to pull their own medians for the same four channels, mark where they sit against each row of the table, and pick the one gap that most affects revenue rather than the one that is easiest to fix. These three filler sentences occupy that space for now.</p>
+<p>A closing filler paragraph notes what a genuine edition would do next: publish the methodology, invite stores into the panel, and date-stamp every figure. Nothing on this page should be quoted, because none of it is real.</p>
+<section class="faq"><h2>FAQ</h2>
+<div class="faq-item"><p class="faq-q">Are these benchmarks real?</p><p class="faq-a">No. This is placeholder copy for design preview. Every value in the table is a fake round number labelled as a sample figure.</p></div>
+<div class="faq-item"><p class="faq-q">What would the real methodology be?</p><p class="faq-a">Placeholder answer: a real edition would name the data sources, the sampling window and the store-size bands before showing a single number.</p></div>
+<div class="faq-item"><p class="faq-q">How often would this be updated?</p><p class="faq-a">Placeholder answer: imagine a quarterly refresh, with prior editions archived and linked.</p></div>
+<div class="faq-item"><p class="faq-q">Can I compare my store against this table?</p><p class="faq-a">Placeholder answer: not against this preview. Once real data lands here, the article would include a short self-assessment worksheet.</p></div>
+</section><section class="sources"><h2>Sources</h2>
+<ol>
+<li><a href="https://example.com/response-time-panel">Placeholder source — example.com/response-time-panel</a></li>
+<li><a href="https://example.com/cx-survey-2026">Placeholder source — example.com/cx-survey-2026</a></li>
+<li><a href="https://example.com/channel-mix-notes">Placeholder source — example.com/channel-mix-notes</a></li>
+</ol>
+</section>
+    </article>
+    <section class="cta-band">
+      <p class="hand">hear it for yourself</p>
+      <h2>Put a voice layer on your e-commerce.</h2>
+      <p>We build it, we run it, you see the numbers. Live in two weeks.</p>
+      <a class="btn-pill" href="https://cal.com/sabatoai/intro" target="_blank" rel="noopener">Start Free Pilot</a>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <div class="shell">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="/" aria-label="Sabato AI — Home">
+            <img class="footer-logo" src="/fuc/images/KY1UqOX7zKeKJdbxTotIopeeZIU-f2557e25.png" alt="Sabato AI logo" width="132" height="61">
+          </a>
+          <p class="tagline">The #1 managed Voice AI <br>for E-Commerce.</p>
+          <p class="backed">Backed by</p>
+          <img class="backed-img" src="/fuc/images/V9nq776DtkEODcun83ayNz0liCU-28058054.webp" alt="ElevenLabs Grants" width="191" height="16">
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/pricing">Pricing</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/contact">Contact us</a></li>
+            <li><a href="https://cal.com/sabatoai/intro" target="_blank" rel="noopener">Book a Demo</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Use Cases</h4>
+          <ul>
+            <li><a href="/#usecases">Pre-Sales Consultation</a></li>
+            <li><a href="/#usecases">Cart Abandonment Recovery</a></li>
+            <li><a href="/#usecases">Where Is My Order</a></li>
+            <li><a href="/#usecases">Qualify &amp; Collect for Quote</a></li>
+            <li><a href="/#usecases">Open a Complaint</a></li>
+            <li><a href="/#usecases">Checkout Summary via Text</a></li>
+            <li><a href="/#usecases">Managing Returns</a></li>
+            <li><a href="/#usecases">Post-Delivery Feedback</a></li>
+            <li><a href="/#usecases">Back-in-Stock Notification</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Industries</h4>
+          <ul>
+            <li><span>Home Improvement</span></li>
+            <li><span>Automotive &amp; Parts</span></li>
+            <li><span>Electronics &amp; Tech</span></li>
+            <li><span>Furniture &amp; Home</span></li>
+            <li><span>Outdoor &amp; Garden</span></li>
+            <li><span>Fashion &amp; Apparel</span></li>
+            <li><span>Health &amp; Wellness</span></li>
+            <li><span>Sports &amp; Fitness</span></li>
+            <li><span>Industrial &amp; B2B</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="copy">© 2026 Sabato LTD - 71-75, Shelton Street, Covent Garden, London (UK) - All rights reserved.</p>
+        <div class="legal">
+          <a href="/terms">Terms and Conditions</a>
+          <a href="/privacy-policy">Privacy and Cookies</a>
+          <a href="https://www.linkedin.com/company/sabato-ai" target="_blank" rel="noopener" aria-label="Sabato AI on LinkedIn">
+            <img src="/fuc/images/3vdzRTYV1XV6UUX6QKcsDIfU-e464e3f1.svg" alt="LinkedIn" width="20" height="20">
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

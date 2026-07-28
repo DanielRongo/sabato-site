@@ -1,0 +1,15 @@
+[[headers]]
+  for = "/fuc/feather-icons/*"
+  [headers.values]
+    Content-Type = "text/javascript; charset=utf-8"
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/fuc/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/gf/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
