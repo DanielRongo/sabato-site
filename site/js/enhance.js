@@ -15,6 +15,12 @@
   function injectBlogLink() {
     if (document.querySelector("a[data-blog-link]")) return;
     var links = document.querySelectorAll("a");
+    /* if the top nav already has a Blog link (static pages), do nothing */
+    for (var i = 0; i < links.length; i++) {
+      var a0 = links[i];
+      var r0 = a0.getBoundingClientRect();
+      if ((a0.textContent || "").trim() === "Blog" && r0.top >= 0 && r0.top < 200 && r0.height > 0) return;
+    }
     for (var i = 0; i < links.length; i++) {
       var a = links[i];
       var t = (a.textContent || "").trim();
@@ -22,6 +28,8 @@
       var r = a.getBoundingClientRect();
       if (r.top < 0 || r.top > 200 || r.height === 0) continue;
       var box = a.parentElement;
+      /* only clone single-item wrappers — never a shared container */
+      if (box.querySelectorAll("a").length !== 1) continue;
       var clone = box.cloneNode(true);
       var ca = clone.querySelector("a");
       if (!ca) continue;
