@@ -8,6 +8,7 @@
 
   /* Use-case pages that exist. label = exact text on site; href = live page. */
   var USECASES = [
+    { label: "Pre-Sales Consultation", href: "/use-cases/pre-sales-consultation" },
     { label: "Where Is My Order", href: "/use-cases/where-is-my-order" }
   ];
 
