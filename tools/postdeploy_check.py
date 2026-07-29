@@ -72,5 +72,34 @@ with sync_playwright() as p:
         pg.close()
     b.close()
 
+# click-through test: an href alone is not proof — Framer's router can intercept
+print("\nclick-through checks:")
+with sync_playwright() as p:
+    b = p.chromium.launch(executable_path="/opt/pw-browsers/chromium", args=["--no-sandbox"])
+    ctx = b.new_context(viewport={"width": 1440, "height": 900})
+    for src, label, expect in [("/", "Managing Returns", "/use-cases/managing-returns"),
+                               ("/blog", "Open a Complaint", "/use-cases/open-a-complaint"),
+                               ("/use-cases/where-is-my-order", "Pre-Sales Consultation",
+                                "/use-cases/pre-sales-consultation")]:
+        pg = ctx.new_page()
+        try:
+            pg.goto(BASE + src, wait_until="networkidle", timeout=45000)
+            pg.wait_for_timeout(2800)
+            loc = pg.locator(f'a:has-text("{label}")').filter(visible=True).last
+            loc.scroll_into_view_if_needed()
+            pg.wait_for_timeout(400)
+            loc.click(timeout=8000)
+            pg.wait_for_timeout(1800)
+            landed = pg.url.replace(BASE, "")
+        except Exception as e:
+            landed = "ERR " + str(e)[:40]
+        if landed != expect:
+            failures.append((f"{src} click {label}", {"landed": landed, "expected": expect}, [], []))
+            print(f"FAIL {src} click '{label}' -> {landed}")
+        else:
+            print(f"ok   {src} click '{label}' -> {landed}")
+        pg.close()
+    b.close()
+
 print("\n" + ("ALL PAGES CLEAN" if not failures else f"{len(failures)} PAGE(S) FAILED"))
 sys.exit(1 if failures else 0)

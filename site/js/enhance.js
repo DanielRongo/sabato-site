@@ -175,7 +175,31 @@
     }
   }
 
-  function run() { injectBlogLink(); injectDropdown(); wireUseCaseTargets(); }
+  /* ---------- 4. Beat Framer's client-side router to the click ----------
+     Framer hydrates its own router, which intercepts link clicks, calls
+     preventDefault() and navigates via an internal route table — so rewriting
+     an anchor's href is not enough on Framer-rendered pages: the click still
+     goes to the original destination. We listen on `window` in the CAPTURE
+     phase (the earliest point in the event path, before any document-level
+     handler Framer registers) and perform the navigation ourselves. */
+  function installClickInterceptor() {
+    if (window.__ucClickInterceptor) return;
+    window.__ucClickInterceptor = true;
+    window.addEventListener("click", function (e) {
+      if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      var node = e.target;
+      var a = node && node.closest ? node.closest("a") : null;
+      if (!a) return;
+      var href = a.getAttribute("href") || "";
+      if (href.indexOf("/use-cases/") !== 0) return;   /* only our pages */
+      if (a.target === "_blank") return;
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      window.location.assign(href);
+    }, true);
+  }
+
+  function run() { injectBlogLink(); injectDropdown(); wireUseCaseTargets(); installClickInterceptor(); }
   if (document.readyState !== "loading") run();
   else document.addEventListener("DOMContentLoaded", run);
   new MutationObserver(run).observe(document.documentElement, { childList: true, subtree: true });
