@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Voice AI Checkout Summary by Text | Close the Call, Send the Cart — Sabato AI</title>
+  <meta name="description" content="After every call, a text with the products discussed, the specs that mattered, and a direct checkout link. The conversation ends; the cart doesn't.">
+  <link rel="canonical" href="https://www.sabato.ai/use-cases/checkout-summary-via-text">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Voice AI Checkout Summary by Text | Close the Call, Send the Cart — Sabato AI">
+  <meta property="og:description" content="After every call, a text with the products discussed, the specs that mattered, and a direct checkout link. The conversation ends; the cart doesn't.">
+  <meta property="og:url" content="https://www.sabato.ai/use-cases/checkout-summary-via-text">
+  <meta property="og:image" content="https://www.sabato.ai/fuc/assets/8Q4ofjOgRTqsr8FpanTJF9nzLwU.png">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary_large_image">
+  <link href="/fuc/images/hWFOqN6Okd1QgfKhizqgIF1s.png" rel="icon" media="(prefers-color-scheme: light)">
+  <link href="/fuc/images/dEcuqc3xAQ3JJoX4xQDYrMQefA.png" rel="icon" media="(prefers-color-scheme: dark)">
+  <link rel="apple-touch-icon" href="/fuc/images/dEcuqc3xAQ3JJoX4xQDYrMQefA.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.sabato.ai/" },
+      { "@type": "ListItem", "position": 2, "name": "Use cases", "item": "https://www.sabato.ai/#usecases" },
+      { "@type": "ListItem", "position": 3, "name": "Checkout Summary via Text", "item": "https://www.sabato.ai/use-cases/checkout-summary-via-text" }
+    ]
+  }
+  </script>
+  <style>
+    /* ============ Fonts (local mirrors, same files the site loads) ============ */
+    @font-face { font-family: "Satoshi"; src: url("/fuc/third-party-assets/fontshare/wf/TTX2Z3BF3P6Y5BQT3IV2VNOK6FL22KUT/7QYRJOI3JIMYHGY6CH7SOIFRQLZOLNJ6/KFIAZD4RUMEZIYV6FQ3T3GP5PDBDB6JY.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 400; }
+    @font-face { font-family: "Satoshi"; src: url("/fuc/third-party-assets/fontshare/wf/P2LQKHE6KA6ZP4AAGN72KDWMHH6ZH3TA/ZC32TK2P7FPS5GFTL46EU6KQJA24ZYDB/7AHDUZ4A7LFLVFUIFSARGIWCRQJHISQP.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 500; }
+    @font-face { font-family: "Satoshi"; src: url("/fuc/third-party-assets/fontshare/wf/LAFFD4SDUCDVQEXFPDC7C53EQ4ZELWQI/PXCT3G6LO6ICM5I3NTYENYPWJAECAWDD/GHM6WVH6MILNYOOCXHXB5GTSGNTMGXZR.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 700; }
+    @font-face { font-family: "Satoshi"; src: url("/fuc/third-party-assets/fontshare/wf/NHPGVFYUXYXE33DZ75OIT4JFGHITX5PE/PSUTMASCDJTVPERDYJZPN23BVUFUCQIF/J64QX5IPOHK56I2KYUNBQ5M2XWZEYKYX.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 900; }
+    @font-face { font-family: "Kalam"; src: url("/fuc/third-party-assets/fontshare/wf/L5Z4DJRD7OROEK74MORC4URSE7ILAXYH/6QNQQQT3NGMLLBQ3J7CCWACN46YUMIJB/GNJHSO7TKXAQJXNY3V3S4VE64D4XKQCP.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 700; }
+    @font-face { font-family: "Inter"; src: url("/fuc/assets/GrgcKwrN6d3Uz8EwcLHZxwEfC4.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 400; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+2000-206F, U+20AC, U+2122; }
+    @font-face { font-family: "Inter"; src: url("/fuc/assets/UjlFhCnUjxhNfep4oYBPqnEssyo.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 500; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+2000-206F, U+20AC, U+2122; }
+    @font-face { font-family: "Inter"; src: url("/fuc/assets/syRNPWzAMIrcJ3wIlPIP43KjQs.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 700; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+2000-206F, U+20AC, U+2122; }
+
+    /* ============ Tokens ============ */
+    :root {
+      --lime: rgb(204, 255, 0);        /* CTA / accent */
+      --black: rgb(0, 0, 0);           /* dark bands */
+      --ink: rgb(18, 10, 11);          /* primary text */
+      --gray: rgb(69, 65, 64);         /* body/secondary text */
+      --off: rgb(248, 244, 241);       /* light card background */
+      --line: rgb(227, 226, 226);      /* hairlines */
+      --blue: rgb(0, 153, 255);        /* text links */
+      --font: "Satoshi", "Inter", -apple-system, "Helvetica Neue", sans-serif;
+      --hand: "Kalam", cursive;
+      --radius: 24px;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font); background: #fff; color: var(--ink); }
+    img { display: block; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+    svg text { font-family: var(--font); }
+
+    /* ============ Header / Nav ============ */
+    .site-header { position: sticky; top: 0; z-index: 100; max-width: 1200px; margin: 0 auto; padding: 16px 30px; }
+    .nav-shell { background: #fff; border-radius: var(--radius); height: 88px; padding: 16px 70px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .nav-logo img { width: 132px; height: auto; }
+    .nav-links { display: flex; align-items: center; gap: 48px; }
+    .nav-links a { font-size: 16px; font-weight: 500; line-height: 1.7; color: var(--ink); transition: opacity .2s; }
+    .nav-links a:hover { opacity: .6; }
+    .nav-links a.active { font-weight: 700; }
+    .nav-flag { font-size: 16px; line-height: 1; }
+    .btn-pill { display: inline-block; background: var(--lime); color: #000; border-radius: 100px; padding: 12px 30px; font-family: var(--font); font-size: 16px; font-weight: 700; line-height: 1.7; transition: transform .2s ease; white-space: nowrap; }
+    .btn-pill:hover { transform: scale(1.04); }
+    .tag { display: inline-block; background: var(--lime); color: #000; border-radius: 100px; padding: 4px 14px; font-size: 13px; font-weight: 700; line-height: 1.6; letter-spacing: .2px; }
+
+    /* ============ Shell ============ */
+    .shell { max-width: 1200px; margin: 0 auto; padding: 0 30px; }
+
+    /* ============ 1. Split hero ============ */
+    .split-hero { max-width: 1200px; margin: 0 auto; padding: 40px 40px 96px; display: grid; grid-template-columns: 1.04fr .96fr; gap: 64px; align-items: center; }
+    .hero-copy .tag { margin-bottom: 24px; }
+    .hero-copy h1 { font-size: 54px; font-weight: 700; letter-spacing: -1.9px; line-height: 1.1; color: var(--ink); margin: 0 0 22px; }
+    .hero-copy .sub { font-size: 19px; font-weight: 400; line-height: 1.7; color: var(--gray); max-width: 520px; margin: 0 0 32px; }
+    .hero-cta { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; }
+    .hero-cta .hand { font-family: var(--hand); font-weight: 700; font-size: 19px; color: var(--ink); transform: rotate(-2deg); }
+    .hero-visual svg { display: block; width: 100%; height: auto; max-width: 560px; margin: 0 auto; }
+    .hero-visual .hero-mobile { display: none; }
+
+    /* ============ 2. Queue picture (dark band) ============ */
+    .queue-band { background: var(--black); border-radius: var(--radius); margin: 0 40px; padding: 84px 72px 76px; }
+    .queue-inner { max-width: 1060px; margin: 0 auto; }
+    .queue-band .eyebrow { color: var(--lime); font-size: 13px; font-weight: 700; letter-spacing: 2.5px; margin: 0 0 18px; }
+    .queue-band h2 { color: #fff; font-size: 38px; font-weight: 700; letter-spacing: -1.1px; line-height: 1.15; margin: 0 0 26px; }
+    .queue-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+    .queue-grid .qcopy .qbody { color: rgba(248, 244, 241, .82); font-size: 17.5px; line-height: 1.75; margin: 0; }
+    .queue-viz svg { display: block; width: 100%; height: auto; }
+    .queue-viz .band-mobile { display: none; }
+    .queue-viz .fine { color: rgba(248, 244, 241, .45); font-size: 12px; line-height: 1.6; margin: 18px 0 0; }
+
+    /* ============ 3. Flow ============ */
+    .flow { max-width: 1200px; margin: 0 auto; padding: 104px 40px 0; text-align: center; }
+    .flow h2 { font-size: 38px; font-weight: 700; letter-spacing: -1.1px; line-height: 1.2; color: var(--ink); margin: 0 0 12px; }
+    .flow-desktop { display: block; width: 100%; height: auto; margin: 28px auto 0; max-width: 1120px; }
+    .flow-mobile { display: none; width: 100%; max-width: 360px; height: auto; margin: 20px auto 0; }
+    .flow-caption { font-size: 16.5px; line-height: 1.7; color: var(--gray); max-width: 680px; margin: 26px auto 0; }
+
+    /* ============ 4. Sample call (phone UI) ============ */
+    .call-band { background: var(--off); border-radius: var(--radius); margin: 104px 40px 0; padding: 84px 40px 88px; text-align: center; }
+    .call-band h2 { font-size: 38px; font-weight: 700; letter-spacing: -1.1px; line-height: 1.2; color: var(--ink); margin: 0 0 8px; }
+    .call-caption { font-size: 14px; font-weight: 500; color: var(--gray); opacity: .7; margin: 0; }
+    .call-panel { width: 100%; max-width: 680px; margin: 42px auto 0; background: var(--black); border-radius: 28px; padding: 30px 38px 30px; text-align: left; }
+    .panel-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-bottom: 20px; border-bottom: 1px solid rgba(248, 244, 241, .16); }
+    .panel-head .ph-left { display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 700; color: #fff; }
+    .panel-head .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--lime); outline: 3px solid rgba(204, 255, 0, .35); }
+    .panel-head .ph-time { font-size: 14px; font-weight: 500; color: rgba(248, 244, 241, .5); font-variant-numeric: tabular-nums; }
+    .panel-head .ph-wave { width: 64px; height: 18px; flex: none; }
+    .t-row { display: grid; grid-template-columns: 104px 1fr; gap: 20px; align-items: start; padding: 17px 0; border-bottom: 1px solid rgba(248, 244, 241, .08); }
+    .t-row:last-of-type { border-bottom: 0; padding-bottom: 6px; }
+    .t-spk { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 700; letter-spacing: 1.6px; padding-top: 3px; }
+    .t-spk svg { width: 16px; height: 12px; flex: none; }
+    .t-row.caller .t-spk { color: rgba(248, 244, 241, .5); }
+    .t-row.agent .t-spk { color: var(--lime); }
+    .t-row p { font-size: 15.5px; line-height: 1.65; margin: 0; color: rgba(248, 244, 241, .85); }
+    .t-row.agent p { color: #fff; }
+    .phone-note { font-size: 16.5px; line-height: 1.7; color: var(--gray); max-width: 560px; margin: 30px auto 0; }
+
+    /* ============ 5. Two-up value row ============ */
+    .value-row { max-width: 1200px; margin: 24px auto 0; padding: 80px 40px 0; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .value-card { background: var(--off); border-radius: var(--radius); padding: 46px 44px 44px; }
+    .value-card svg { display: block; height: 124px; width: auto; margin: 0 0 28px; }
+    .value-card h3 { font-size: 25px; font-weight: 700; letter-spacing: -0.6px; line-height: 1.25; color: var(--ink); margin: 0 0 14px; }
+    .value-card p { font-size: 16.5px; line-height: 1.7; color: var(--gray); margin: 0; }
+
+    /* ============ 6. CTA band ============ */
+    .cta-band { background: var(--black); border-radius: var(--radius); margin: 96px 40px 40px; padding: 88px 40px; text-align: center; }
+    .cta-band .hand { font-family: var(--hand); font-weight: 700; font-size: 19px; color: #fff; margin-bottom: 14px; }
+    .cta-band h2 { color: #fff; font-size: 48px; font-weight: 700; letter-spacing: -1.5px; line-height: 1.15; max-width: 720px; margin: 0 auto 16px; }
+    .cta-band p { color: #fff; opacity: .8; font-size: 19px; line-height: 1.7; max-width: 560px; margin: 0 auto 34px; }
+
+    /* ============ Footer ============ */
+    footer.site-footer { background: var(--black); margin-top: 96px; padding: 110px 0 0; }
+    .footer-grid { display: grid; grid-template-columns: 1.35fr 1fr 1.25fr 1fr; gap: 48px; padding-bottom: 88px; }
+    .footer-brand img.footer-logo { width: 132px; height: auto; }
+    .footer-brand .tagline { color: #fff; font-size: 18px; line-height: 1.65; margin-top: 22px; }
+    .footer-brand .backed { color: #fff; font-size: 18px; margin-top: 64px; margin-bottom: 14px; }
+    .footer-brand img.backed-img { width: 191px; height: auto; }
+    .footer-col h4 { color: #fff; font-size: 18px; font-weight: 500; margin-bottom: 22px; }
+    .footer-col ul { list-style: none; }
+    .footer-col li { margin-bottom: 14px; }
+    .footer-col a, .footer-col span { color: rgba(248, 244, 241, .62); font-size: 18px; line-height: 1.5; transition: color .2s; }
+    .footer-col a:hover { color: #fff; }
+    .footer-bottom { border-top: 1px solid rgba(248, 244, 241, .16); padding: 26px 0 44px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+    .footer-bottom .copy { color: var(--off); font-size: 16px; opacity: .85; }
+    .footer-bottom .legal { display: flex; align-items: center; gap: 24px; }
+    .footer-bottom .legal a { color: var(--off); font-size: 16px; opacity: .85; transition: opacity .2s; }
+    .footer-bottom .legal a:hover { opacity: 1; }
+    .footer-bottom img { width: 20px; height: 20px; }
+
+    /* ============ Mobile (Framer breakpoint) ============ */
+    @media (max-width: 809px) {
+      .site-header { padding: 12px 16px; }
+      .nav-shell { height: 72px; padding: 12px 22px; border-radius: 20px; }
+      .nav-links { display: none; }
+      .nav-logo img { width: 108px; }
+      .btn-pill { padding: 10px 22px; font-size: 15px; }
+      .shell { padding: 0 20px; }
+
+      .split-hero { grid-template-columns: 1fr; gap: 48px; padding: 20px 24px 64px; }
+      .hero-copy h1 { font-size: 37px; letter-spacing: -1.2px; }
+      .hero-copy .sub { font-size: 17.5px; }
+      .hero-visual .hero-desktop { display: none; }
+      .hero-visual .hero-mobile { display: block; max-width: 420px; }
+
+      .queue-band { margin: 0 16px; padding: 56px 26px 52px; }
+      .queue-band h2 { font-size: 29px; letter-spacing: -0.9px; margin-bottom: 22px; }
+      .queue-grid { grid-template-columns: 1fr; gap: 38px; }
+      .queue-grid .qcopy .qbody { font-size: 16.5px; }
+      .queue-viz .band-desktop { display: none; }
+      .queue-viz .band-mobile { display: block; }
+
+      .flow { padding: 72px 22px 0; }
+      .flow h2 { font-size: 29px; }
+      .flow-desktop { display: none; }
+      .flow-mobile { display: block; }
+      .flow-caption { font-size: 16px; }
+
+      .call-band { margin: 72px 16px 0; padding: 60px 18px 64px; }
+      .call-band h2 { font-size: 29px; }
+      .call-panel { border-radius: 24px; padding: 24px 22px 22px; }
+      .panel-head { padding-bottom: 16px; }
+      .panel-head .ph-left { font-size: 13px; white-space: nowrap; }
+      .panel-head .ph-time { font-size: 13px; }
+      .panel-head .ph-wave { display: none; }
+      .t-row { grid-template-columns: 1fr; gap: 7px; padding: 15px 0; }
+      .t-row p { font-size: 15px; }
+      .phone-note { font-size: 16px; }
+
+      .value-row { grid-template-columns: 1fr; gap: 20px; padding: 60px 20px 0; margin-top: 0; }
+      .value-card { padding: 36px 28px 34px; }
+      .value-card svg { height: 108px; }
+      .value-card h3 { font-size: 22px; }
+
+      .cta-band { margin: 72px 16px 24px; padding: 64px 24px; }
+      .cta-band h2 { font-size: 32px; letter-spacing: -1px; }
+
+      footer.site-footer { margin-top: 64px; padding-top: 72px; }
+      .footer-grid { grid-template-columns: 1fr; gap: 40px; padding-bottom: 56px; }
+      .footer-brand .backed { margin-top: 36px; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+    }
+    @media (min-width: 810px) and (max-width: 1099px) {
+      .nav-shell { padding: 16px 36px; }
+      .nav-links { gap: 28px; }
+      .split-hero { gap: 40px; padding: 32px 30px 72px; }
+      .hero-copy h1 { font-size: 44px; }
+      .queue-band { padding: 64px 44px 60px; }
+      .queue-grid { gap: 40px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="nav-shell">
+      <a class="nav-logo" href="/" aria-label="Sabato AI — Home">
+        <img src="/fuc/images/UTATYXc6NipXQRoxyaGHHfHSyA4-f2557e25.png" alt="Sabato AI logo" width="132" height="61">
+      </a>
+      <nav class="nav-links" aria-label="Main">
+        <a href="/#usecases">Use Cases</a>
+        <a href="/pricing">Pricing</a>
+        <a href="/about">About</a>
+        <a href="/contact">Contact</a>
+        <a href="/blog">Blog</a>
+        <a class="nav-flag" href="/it" aria-label="Versione italiana">🇮🇹</a>
+      </nav>
+      <a class="btn-pill" href="https://cal.com/sabatoai/intro" target="_blank" rel="noopener">Start Free Pilot</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- 1. Split hero -->
+    <section class="split-hero">
+      <div class="hero-copy">
+        <span class="tag">USE CASE</span>
+        <h1>The call ends. The cart shouldn't.</h1>
+        <p class="sub">After every conversation, the agent sends a text with the products discussed, the specs that mattered, and a direct checkout link. No "I'll look it up later". No lost basket.</p>
+        <div class="hero-cta">
+          <a class="btn-pill" href="https://cal.com/sabatoai/intro" target="_blank" rel="noopener">Start Free Pilot</a>
+          <span class="hand">live in two weeks</span>
+        </div>
+      </div>
+      <div class="hero-visual" aria-hidden="true">
+        <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+          <defs>
+            <!-- ended call card, drawn at origin, 180 x 104 -->
+            <g id="cs-card">
+              <rect x="0" y="0" width="180" height="104" rx="22" fill="rgb(30,30,30)"/>
+              <circle cx="22" cy="30" r="4.5" fill="rgb(122,120,118)"/>
+              <text x="34" y="34" font-size="11.5" font-weight="700" letter-spacing="1" fill="#fff" opacity=".55">CALL ENDED</text>
+              <rect x="120" y="18" width="44" height="24" rx="12" fill="none" stroke="rgb(69,65,64)" stroke-width="1.4"/>
+              <text x="142" y="34" text-anchor="middle" font-size="11.5" font-weight="500" fill="#fff" opacity=".6">04:12</text>
+              <g fill="rgb(204,255,0)" opacity=".5">
+                <rect x="22" y="69" width="5" height="10" rx="2.5"/>
+                <rect x="32" y="65" width="5" height="18" rx="2.5"/>
+                <rect x="42" y="61" width="5" height="26" rx="2.5"/>
+                <rect x="52" y="66" width="5" height="16" rx="2.5"/>
+                <rect x="62" y="57" width="5" height="34" rx="2.5"/>
+                <rect x="72" y="63" width="5" height="22" rx="2.5"/>
+                <rect x="82" y="54" width="5" height="40" rx="2.5"/>
+                <rect x="92" y="60" width="5" height="28" rx="2.5"/>
+                <rect x="102" y="57" width="5" height="34" rx="2.5"/>
+                <rect x="112" y="64" width="5" height="20" rx="2.5"/>
+                <rect x="122" y="61" width="5" height="26" rx="2.5"/>
+                <rect x="132" y="67" width="5" height="14" rx="2.5"/>
+                <rect x="142" y="65" width="5" height="18" rx="2.5"/>
+                <rect x="152" y="69" width="5" height="10" rx="2.5"/>
+              </g>
+            </g>
+            <!-- phone with the summary text, drawn at origin, 244 x 414 -->
+            <g id="cs-phone">
+              <rect x="0" y="0" width="244" height="414" rx="34" fill="#000"/>
+              <rect x="8" y="8" width="228" height="398" rx="27" fill="#fff"/>
+              <rect x="100" y="20" width="44" height="6" rx="3" fill="rgb(227,226,226)"/>
+              <text x="24" y="56" font-size="11.5" font-weight="700" letter-spacing="1.8" fill="rgb(69,65,64)" opacity=".55">MESSAGES</text>
+              <text x="220" y="56" text-anchor="end" font-size="11.5" font-weight="500" fill="rgb(69,65,64)" opacity=".45">now</text>
+              <line x1="20" y1="70" x2="224" y2="70" stroke="rgb(227,226,226)" stroke-width="1.4"/>
+              <rect x="20" y="92" width="204" height="214" rx="20" fill="rgb(248,244,241)"/>
+              <text x="36" y="124" font-size="14.5" font-weight="700" fill="rgb(18,10,11)">Your CityRider setup</text>
+              <text x="36" y="156" font-size="12.5" font-weight="500" fill="rgb(69,65,64)">• CityRider e-bike — 500W</text>
+              <text x="36" y="182" font-size="12.5" font-weight="500" fill="rgb(69,65,64)">• Lock + light kit</text>
+              <line x1="36" y1="200" x2="208" y2="200" stroke="rgb(227,226,226)" stroke-width="1.4"/>
+              <text x="36" y="226" font-size="14.5" font-weight="700" fill="rgb(18,10,11)">Total €1,240</text>
+              <rect x="36" y="248" width="172" height="42" rx="21" fill="rgb(204,255,0)"/>
+              <text x="122" y="274" text-anchor="middle" font-size="13" font-weight="700" fill="#000">Complete checkout →</text>
+              <text x="24" y="326" font-size="11.5" font-weight="500" fill="rgb(69,65,64)" opacity=".5">Delivered</text>
+              <rect x="20" y="344" width="204" height="34" rx="17" fill="none" stroke="rgb(227,226,226)" stroke-width="1.4"/>
+              <rect x="90" y="386" width="64" height="5" rx="2.5" fill="rgb(227,226,226)"/>
+            </g>
+          </defs>
+        </svg>
+        <svg class="hero-desktop" viewBox="0 0 560 520" role="img" aria-label="Illustration: a call ends and a text message arrives on a phone listing the products discussed, the total and a checkout button">
+          <circle cx="288" cy="262" r="234" fill="rgb(248,244,241)"/>
+          <circle cx="70" cy="72" r="12" fill="rgb(204,255,0)"/>
+          <circle cx="46" cy="436" r="8" fill="none" stroke="rgb(18,10,11)" stroke-width="2.5"/>
+          <use href="#cs-card" transform="translate(28,140)"/>
+          <path d="M118 254 C 118 304, 166 334, 234 334" fill="none" stroke="rgb(204,255,0)" stroke-width="5" stroke-linecap="round"/>
+          <path d="M232 326 L250 334 L232 342 Z" fill="rgb(204,255,0)"/>
+          <use href="#cs-phone" transform="translate(268,53)"/>
+        </svg>
+        <svg class="hero-mobile" viewBox="0 0 336 580" role="img" aria-label="Illustration: a call ends and a text message arrives on a phone listing the products discussed, the total and a checkout button">
+          <use href="#cs-card" transform="translate(78,0)"/>
+          <path d="M168 114 L168 138" fill="none" stroke="rgb(204,255,0)" stroke-width="5" stroke-linecap="round"/>
+          <path d="M159 136 L177 136 L168 152 Z" fill="rgb(204,255,0)"/>
+          <use href="#cs-phone" transform="translate(46,164)"/>
+        </svg>
+      </div>
+    </section>
+
+    <style>
+      .pilot-band { background: var(--off); border-radius: var(--radius); margin: 96px 40px 0; padding: 76px 48px; text-align: center; }
+      .pilot-band h2 { font-size: 36px; font-weight: 700; letter-spacing: -1px; line-height: 1.2; color: var(--ink); margin: 0 0 18px; }
+      .pilot-band p { font-size: 18px; line-height: 1.75; color: var(--gray); max-width: 720px; margin: 0 auto 30px; }
+      @media (max-width: 809px) {
+        .pilot-band { margin: 72px 16px 0; padding: 56px 24px; }
+        .pilot-band h2 { font-size: 28px; }
+        .pilot-band p { font-size: 17px; }
+      }
+    </style>
+
+    <!-- 2. After the call (dark band) -->
+    <section class="queue-band">
+      <div class="queue-inner">
+        <div class="queue-grid">
+          <div class="qcopy">
+            <p class="eyebrow">AFTER THE CALL</p>
+            <h2>Everything you agreed on, gone in four minutes.</h2>
+            <p class="qbody">A good call ends with a decision — this model, that spec, those two accessories. Then the buyer hangs up and the whole thing has to survive from memory. They can't recall which of the two variants you recommended. They can't find the product page again. The intent was real; the path back to checkout wasn't. A conversation that ends without a link is a conversation you have to have twice.</p>
+          </div>
+          <div class="queue-viz">
+            <svg class="band-desktop" viewBox="0 0 520 208" role="img" aria-label="Comparison: without a summary the call leads back only through memory and the buyer may or may not return; with Sabato a text with the cart leads straight to checkout">
+              <!-- WITHOUT -->
+              <text x="2" y="14" font-size="13" font-weight="700" letter-spacing="2" fill="#fff">WITHOUT</text>
+              <circle cx="26" cy="62" r="20" fill="rgb(43,43,43)"/>
+              <path d="M-13 1 C -13 -5, 13 -5, 13 1 L 13 5 C 13 7, 11 8, 9 7 L 5 5 C 3.8 4.4, 3.5 3.5, 3.5 2 L 3.5 0 C 1 -1, -1 -1, -3.5 0 L -3.5 2 C -3.5 3.5, -3.8 4.4, -5 5 L -9 7 C -11 8, -13 7, -13 5 Z" transform="translate(26,62) rotate(-135) scale(0.95) translate(0,-1.95)" fill="#fff" opacity=".7"/>
+              <line x1="54" y1="62" x2="292" y2="62" stroke="rgb(96,96,96)" stroke-width="2.6" stroke-linecap="round" stroke-dasharray="0.1 9"/>
+              <text x="173" y="50" text-anchor="middle" font-size="12" font-weight="500" fill="rgba(248,244,241,.5)">from memory</text>
+              <path d="M287 56 L295 62 L287 68" fill="none" stroke="rgb(96,96,96)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+              <rect x="304" y="42" width="214" height="40" rx="12" fill="rgb(45,45,45)"/>
+              <text x="411" y="67" text-anchor="middle" font-size="12.5" font-weight="500" fill="rgba(248,244,241,.42)">maybe returns, maybe not</text>
+              <!-- WITH -->
+              <text x="2" y="136" font-size="13" font-weight="700" letter-spacing="2" fill="rgb(204,255,0)">WITH</text>
+              <circle cx="26" cy="184" r="20" fill="rgb(204,255,0)"/>
+              <path d="M-13 1 C -13 -5, 13 -5, 13 1 L 13 5 C 13 7, 11 8, 9 7 L 5 5 C 3.8 4.4, 3.5 3.5, 3.5 2 L 3.5 0 C 1 -1, -1 -1, -3.5 0 L -3.5 2 C -3.5 3.5, -3.8 4.4, -5 5 L -9 7 C -11 8, -13 7, -13 5 Z" transform="translate(26,184) rotate(-135) scale(0.95) translate(0,-1.95)" fill="#000"/>
+              <line x1="54" y1="184" x2="292" y2="184" stroke="rgb(204,255,0)" stroke-width="3.5" stroke-linecap="round"/>
+              <text x="173" y="171" text-anchor="middle" font-size="12" font-weight="700" fill="rgb(204,255,0)">text with cart</text>
+              <path d="M286 177 L295 184 L286 191" fill="none" stroke="rgb(204,255,0)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+              <rect x="304" y="164" width="150" height="40" rx="12" fill="rgb(204,255,0)"/>
+              <text x="379" y="189" text-anchor="middle" font-size="13" font-weight="700" fill="#000">checkout</text>
+            </svg>
+            <svg class="band-mobile" viewBox="0 0 360 380" role="img" aria-label="Comparison: without a summary the call leads back only through memory and the buyer may or may not return; with Sabato a text with the cart leads straight to checkout">
+              <text x="2" y="14" font-size="14" font-weight="700" letter-spacing="2.2" fill="#fff">WITHOUT</text>
+              <circle cx="26" cy="56" r="24" fill="rgb(43,43,43)"/>
+              <path d="M-13 1 C -13 -5, 13 -5, 13 1 L 13 5 C 13 7, 11 8, 9 7 L 5 5 C 3.8 4.4, 3.5 3.5, 3.5 2 L 3.5 0 C 1 -1, -1 -1, -3.5 0 L -3.5 2 C -3.5 3.5, -3.8 4.4, -5 5 L -9 7 C -11 8, -13 7, -13 5 Z" transform="translate(26,56) rotate(-135) scale(1.12) translate(0,-1.95)" fill="#fff" opacity=".7"/>
+              <text x="66" y="62" font-size="15" font-weight="500" fill="rgba(248,244,241,.55)">from memory</text>
+              <line x1="26" y1="86" x2="26" y2="116" stroke="rgb(96,96,96)" stroke-width="2.6" stroke-linecap="round" stroke-dasharray="0.1 9"/>
+              <rect x="0" y="124" width="360" height="44" rx="12" fill="rgb(45,45,45)"/>
+              <text x="20" y="152" font-size="15" font-weight="500" fill="rgba(248,244,241,.45)">maybe returns, maybe not</text>
+              <text x="2" y="216" font-size="14" font-weight="700" letter-spacing="2.2" fill="rgb(204,255,0)">WITH</text>
+              <circle cx="26" cy="258" r="24" fill="rgb(204,255,0)"/>
+              <path d="M-13 1 C -13 -5, 13 -5, 13 1 L 13 5 C 13 7, 11 8, 9 7 L 5 5 C 3.8 4.4, 3.5 3.5, 3.5 2 L 3.5 0 C 1 -1, -1 -1, -3.5 0 L -3.5 2 C -3.5 3.5, -3.8 4.4, -5 5 L -9 7 C -11 8, -13 7, -13 5 Z" transform="translate(26,258) rotate(-135) scale(1.12) translate(0,-1.95)" fill="#000"/>
+              <text x="66" y="264" font-size="15" font-weight="700" fill="rgb(204,255,0)">text with cart</text>
+              <line x1="26" y1="288" x2="26" y2="318" stroke="rgb(204,255,0)" stroke-width="3.5" stroke-linecap="round"/>
+              <rect x="0" y="326" width="360" height="44" rx="12" fill="rgb(204,255,0)"/>
+              <text x="20" y="354" font-size="15" font-weight="700" fill="#000">checkout</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Flow -->
+    <section class="flow">
+      <h2>From conversation to checkout link</h2>
+      <svg class="flow-desktop" viewBox="0 0 1120 320" role="img" aria-label="Flow diagram: the call ends and the agent knows what was discussed, a summary text is sent with products, specs and a checkout link, then the buyer taps through to a built cart or your team sees the same summary">
+        <line x1="170" y1="140" x2="300" y2="140" stroke="rgb(18,10,11)" stroke-width="2"/>
+        <path d="M300 134 L312 140 L300 146 Z" fill="rgb(18,10,11)"/>
+        <path d="M408 140 C 490 140, 520 66, 606 66" fill="none" stroke="rgb(204,255,0)" stroke-width="10" stroke-linecap="round"/>
+        <path d="M408 140 C 490 140, 520 240, 606 240" fill="none" stroke="rgb(18,10,11)" stroke-width="2.5" stroke-linecap="round"/>
+        <!-- node 1: call ends -->
+        <circle cx="120" cy="140" r="46" fill="#000"/>
+        <g class="glyph" data-cx="120" data-cy="140">
+          <path d="M-13 1 C -13 -5, 13 -5, 13 1 L 13 5 C 13 7, 11 8, 9 7 L 5 5 C 3.8 4.4, 3.5 3.5, 3.5 2 L 3.5 0 C 1 -1, -1 -1, -3.5 0 L -3.5 2 C -3.5 3.5, -3.8 4.4, -5 5 L -9 7 C -11 8, -13 7, -13 5 Z" transform="translate(120,140) rotate(-135) scale(1.5) translate(0,-1.95)" fill="#fff"/>
+        </g>
+        <text x="120" y="216" text-anchor="middle" font-size="15" font-weight="700" fill="rgb(18,10,11)">Call ends — agent knows</text>
+        <text x="120" y="236" text-anchor="middle" font-size="14" font-weight="500" fill="rgb(69,65,64)">what was discussed</text>
+        <!-- node 2: summary text sent -->
+        <circle cx="360" cy="140" r="46" fill="rgb(204,255,0)"/>
+        <g class="glyph" data-cx="360" data-cy="140">
+          <rect x="336" y="116" width="48" height="34" rx="9" fill="#000"/>
+          <path d="M346 150 L346 164 L360 150 Z" fill="#000"/>
+          <g fill="rgb(204,255,0)">
+            <circle cx="348" cy="133" r="3.4"/>
+            <circle cx="360" cy="133" r="3.4"/>
+            <circle cx="372" cy="133" r="3.4"/>
+          </g>
+        </g>
+        <text x="360" y="216" text-anchor="middle" font-size="15" font-weight="700" fill="rgb(18,10,11)">Summary text sent: products,</text>
+        <text x="360" y="236" text-anchor="middle" font-size="14" font-weight="500" fill="rgb(69,65,64)">specs, checkout link</text>
+        <!-- upper outcome: buyer taps through -->
+        <circle cx="640" cy="66" r="27" fill="rgb(204,255,0)"/>
+        <g class="glyph" data-cx="640" data-cy="66" transform="translate(-1,-2.3)">
+          <path d="M626 55 L631 55 L636 74 L655 74" fill="none" stroke="#000" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M632 60 L656 60 L652.5 70 L634.5 70 Z" fill="#000"/>
+          <circle cx="638" cy="79" r="2.6" fill="#000"/>
+          <circle cx="652" cy="79" r="2.6" fill="#000"/>
+        </g>
+        <text x="686" y="60" font-size="17.5" font-weight="700" fill="rgb(18,10,11)">Buyer taps through —</text>
+        <text x="686" y="83" font-size="17.5" font-weight="500" fill="rgb(69,65,64)">cart already built</text>
+        <!-- lower outcome: still deciding -->
+        <circle cx="640" cy="240" r="27" fill="#000"/>
+        <g class="glyph" data-cx="640" data-cy="240" transform="translate(0,0.25)">
+          <circle cx="640" cy="233" r="6.5" fill="none" stroke="#fff" stroke-width="2.6"/>
+          <path d="M629 253 c 0 -7 5 -10.5 11 -10.5 c 6 0 11 3.5 11 10.5" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/>
+        </g>
+        <text x="686" y="234" font-size="17.5" font-weight="700" fill="rgb(18,10,11)">Still deciding —</text>
+        <text x="686" y="257" font-size="17.5" font-weight="500" fill="rgb(69,65,64)">your team sees the summary too</text>
+      </svg>
+      <svg class="flow-mobile" viewBox="0 0 360 484" role="img" aria-label="Flow diagram: the call ends and the agent knows what was discussed, a summary text is sent with products, specs and a checkout link, then the buyer taps through to a built cart or your team sees the same summary">
+        <line x1="48" y1="86" x2="48" y2="138" stroke="rgb(18,10,11)" stroke-width="2"/>
+        <line x1="48" y1="210" x2="48" y2="278" stroke="rgb(204,255,0)" stroke-width="9" stroke-linecap="round"/>
+        <path d="M30 200 C 8 240, 8 350, 30 392" fill="none" stroke="rgb(18,10,11)" stroke-width="2"/>
+        <!-- n1 -->
+        <circle cx="48" cy="50" r="34" fill="#000"/>
+        <g class="glyph" data-cx="48" data-cy="50">
+          <path d="M-13 1 C -13 -5, 13 -5, 13 1 L 13 5 C 13 7, 11 8, 9 7 L 5 5 C 3.8 4.4, 3.5 3.5, 3.5 2 L 3.5 0 C 1 -1, -1 -1, -3.5 0 L -3.5 2 C -3.5 3.5, -3.8 4.4, -5 5 L -9 7 C -11 8, -13 7, -13 5 Z" transform="translate(48,50) rotate(-135) scale(1.12) translate(0,-1.95)" fill="#fff"/>
+        </g>
+        <text x="100" y="44" font-size="15" font-weight="700" fill="rgb(18,10,11)">Call ends — agent knows</text>
+        <text x="100" y="64" font-size="14" font-weight="500" fill="rgb(69,65,64)">what was discussed</text>
+        <!-- n2 -->
+        <circle cx="48" cy="174" r="34" fill="rgb(204,255,0)"/>
+        <g class="glyph" data-cx="48" data-cy="174">
+          <rect x="30" y="156.5" width="36" height="25" rx="7" fill="#000"/>
+          <path d="M37 181.5 L37 191.5 L48 181.5 Z" fill="#000"/>
+          <g fill="rgb(204,255,0)">
+            <circle cx="39" cy="169" r="2.6"/>
+            <circle cx="48" cy="169" r="2.6"/>
+            <circle cx="57" cy="169" r="2.6"/>
+          </g>
+        </g>
+        <text x="100" y="158" font-size="15" font-weight="700" fill="rgb(18,10,11)">Summary text sent:</text>
+        <text x="100" y="178" font-size="14" font-weight="500" fill="rgb(69,65,64)">products, specs,</text>
+        <text x="100" y="197" font-size="14" font-weight="500" fill="rgb(69,65,64)">checkout link</text>
+        <!-- outcome A -->
+        <circle cx="48" cy="306" r="28" fill="rgb(204,255,0)"/>
+        <g class="glyph" data-cx="48" data-cy="306" transform="translate(-1,-2.3)">
+          <path d="M34 295 L39 295 L44 314 L63 314" fill="none" stroke="#000" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M40 300 L64 300 L60.5 310 L42.5 310 Z" fill="#000"/>
+          <circle cx="46" cy="319" r="2.6" fill="#000"/>
+          <circle cx="60" cy="319" r="2.6" fill="#000"/>
+        </g>
+        <text x="94" y="298" font-size="15" font-weight="700" fill="rgb(18,10,11)">Buyer taps through —</text>
+        <text x="94" y="318" font-size="15" font-weight="700" fill="rgb(18,10,11)">cart already built</text>
+        <!-- outcome B -->
+        <circle cx="48" cy="420" r="28" fill="#000"/>
+        <g class="glyph" data-cx="48" data-cy="420" transform="translate(0,0.25)">
+          <circle cx="48" cy="413" r="6.5" fill="none" stroke="#fff" stroke-width="2.4"/>
+          <path d="M37 433 c 0 -7 5 -10.5 11 -10.5 c 6 0 11 3.5 11 10.5" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/>
+        </g>
+        <text x="94" y="412" font-size="15" font-weight="700" fill="rgb(18,10,11)">Still deciding — your</text>
+        <text x="94" y="432" font-size="15" font-weight="500" fill="rgb(69,65,64)">team sees the summary too</text>
+      </svg>
+      <p class="flow-caption">The summary is built from your live catalogue — real SKUs, real prices, a real checkout link. Shopify native; other platforms connected during onboarding.</p>
+    </section>
+
+    <!-- 4. Sample call as live transcript -->
+    <section class="call-band">
+      <h2>What the call ends with</h2>
+      <p class="call-caption">Example call</p>
+      <div class="call-panel">
+        <div class="panel-head">
+          <span class="ph-left"><span class="dot"></span>Live call — Sabato Agent<span class="ph-time">&nbsp;· 04:12</span></span>
+          <svg class="ph-wave" viewBox="0 0 64 18" aria-hidden="true">
+            <g fill="rgb(204,255,0)">
+              <rect x="0" y="6.5" width="3" height="5" rx="1.5"/>
+              <rect x="6" y="4" width="3" height="10" rx="1.5"/>
+              <rect x="12" y="1.5" width="3" height="15" rx="1.5"/>
+              <rect x="18" y="5" width="3" height="8" rx="1.5"/>
+              <rect x="24" y="2.5" width="3" height="13" rx="1.5"/>
+              <rect x="30" y="6" width="3" height="6" rx="1.5"/>
+              <rect x="36" y="3" width="3" height="12" rx="1.5"/>
+              <rect x="42" y="1" width="3" height="16" rx="1.5"/>
+              <rect x="48" y="5" width="3" height="8" rx="1.5"/>
+              <rect x="54" y="6.5" width="3" height="5" rx="1.5"/>
+              <rect x="60" y="7.5" width="3" height="3" rx="1.5"/>
+            </g>
+          </svg>
+        </div>
+        <div class="t-row caller">
+          <span class="t-spk">CALLER<svg viewBox="0 0 16 12" aria-hidden="true"><g fill="currentColor"><rect x="0" y="3.5" width="2.5" height="5" rx="1.25"/><rect x="4.5" y="1" width="2.5" height="10" rx="1.25"/><rect x="9" y="2.5" width="2.5" height="7" rx="1.25"/><rect x="13.5" y="4.5" width="2.5" height="3" rx="1.25"/></g></svg></span>
+          <p>Right, so the 500-watt one with the bigger battery.</p>
+        </div>
+        <div class="t-row agent">
+          <span class="t-spk">AGENT<svg viewBox="0 0 16 12" aria-hidden="true"><g fill="currentColor"><rect x="0" y="3.5" width="2.5" height="5" rx="1.25"/><rect x="4.5" y="1" width="2.5" height="10" rx="1.25"/><rect x="9" y="2.5" width="2.5" height="7" rx="1.25"/><rect x="13.5" y="4.5" width="2.5" height="3" rx="1.25"/></g></svg></span>
+          <p>The CityRider 500 with the 20Ah pack. You mentioned the hill on your commute — that's the one that handles it.</p>
+        </div>
+        <div class="t-row caller">
+          <span class="t-spk">CALLER<svg viewBox="0 0 16 12" aria-hidden="true"><g fill="currentColor"><rect x="0" y="3.5" width="2.5" height="5" rx="1.25"/><rect x="4.5" y="1" width="2.5" height="10" rx="1.25"/><rect x="9" y="2.5" width="2.5" height="7" rx="1.25"/><rect x="13.5" y="4.5" width="2.5" height="3" rx="1.25"/></g></svg></span>
+          <p>And you said there was a lock that fits the frame?</p>
+        </div>
+        <div class="t-row agent">
+          <span class="t-spk">AGENT<svg viewBox="0 0 16 12" aria-hidden="true"><g fill="currentColor"><rect x="0" y="3.5" width="2.5" height="5" rx="1.25"/><rect x="4.5" y="1" width="2.5" height="10" rx="1.25"/><rect x="9" y="2.5" width="2.5" height="7" rx="1.25"/><rect x="13.5" y="4.5" width="2.5" height="3" rx="1.25"/></g></svg></span>
+          <p>The frame lock and light kit, yes. I'll put both in the summary.</p>
+        </div>
+        <div class="t-row caller">
+          <span class="t-spk">CALLER<svg viewBox="0 0 16 12" aria-hidden="true"><g fill="currentColor"><rect x="0" y="3.5" width="2.5" height="5" rx="1.25"/><rect x="4.5" y="1" width="2.5" height="10" rx="1.25"/><rect x="9" y="2.5" width="2.5" height="7" rx="1.25"/><rect x="13.5" y="4.5" width="2.5" height="3" rx="1.25"/></g></svg></span>
+          <p>Perfect. Send it over, I'll do it tonight.</p>
+        </div>
+        <div class="t-row agent">
+          <span class="t-spk">AGENT<svg viewBox="0 0 16 12" aria-hidden="true"><g fill="currentColor"><rect x="0" y="3.5" width="2.5" height="5" rx="1.25"/><rect x="4.5" y="1" width="2.5" height="10" rx="1.25"/><rect x="9" y="2.5" width="2.5" height="7" rx="1.25"/><rect x="13.5" y="4.5" width="2.5" height="3" rx="1.25"/></g></svg></span>
+          <p>Texting it now — the bike, the 20Ah pack and the lock kit, with a checkout link. It'll be there before you hang up.</p>
+        </div>
+      </div>
+      <p class="phone-note">Products and prices here are illustrative. The summary is generated from your catalogue — never from memory, never invented.</p>
+    </section>
+
+    <!-- 5. Two-up value row -->
+    <section class="value-row">
+      <div class="value-card">
+        <svg viewBox="0 0 240 130" role="img" aria-label="A shopping cart holding two items with a third item being added">
+          <path d="M20 40 L34 40 L44 84" fill="none" stroke="rgb(18,10,11)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M40 54 L128 54 L117 86 L48 86 Z" fill="none" stroke="rgb(18,10,11)" stroke-width="3" stroke-linejoin="round"/>
+          <circle cx="58" cy="100" r="6.5" fill="none" stroke="rgb(18,10,11)" stroke-width="3"/>
+          <circle cx="108" cy="100" r="6.5" fill="none" stroke="rgb(18,10,11)" stroke-width="3"/>
+          <rect x="52" y="59" width="30" height="24" rx="5" fill="rgb(204,255,0)"/>
+          <rect x="88" y="59" width="28" height="24" rx="5" fill="rgb(204,255,0)"/>
+          <rect x="168" y="10" width="36" height="30" rx="7" fill="none" stroke="rgb(204,255,0)" stroke-width="3"/>
+          <path d="M164 30 C 150 34, 146 42, 140 48" fill="none" stroke="rgb(204,255,0)" stroke-width="3" stroke-linecap="round"/>
+          <path d="M136 52 L138.8 40.7 L147.3 49.2 Z" fill="rgb(204,255,0)"/>
+        </svg>
+        <h3>The accessory nobody remembers to buy</h3>
+        <p>The lock, the second battery, the matching part — agreed on the call, forgotten by the time the buyer reaches checkout. In the summary they're already in the cart, so the average order value the conversation earned is the one that actually completes.</p>
+      </div>
+      <div class="value-card">
+        <svg viewBox="0 0 240 130" role="img" aria-label="A tap on a link row with a checkout arrow">
+          <rect x="10" y="28" width="180" height="66" rx="21" fill="#fff" stroke="rgb(18,10,11)" stroke-width="3.4"/>
+          <rect x="30" y="47" width="82" height="11" rx="5.5" fill="rgb(204,255,0)"/>
+          <rect x="30" y="68" width="54" height="11" rx="5.5" fill="rgb(227,226,226)"/>
+          <rect x="124" y="44" width="56" height="34" rx="17" fill="#000"/>
+          <g stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none">
+            <line x1="139" y1="61" x2="165" y2="61"/>
+            <path d="M159 55 L165 61 L159 67"/>
+          </g>
+          <g stroke="rgb(204,255,0)" stroke-width="3" stroke-linecap="round" fill="none">
+            <path d="M192 56 a 22 22 0 0 1 15 19"/>
+            <path d="M201 47 a 35 35 0 0 1 22 29" opacity=".55"/>
+          </g>
+          <path d="M178 70 L178 100 L185.5 92.5 L190.5 104.5 L197.5 101.5 L192.5 90 L202 88.5 Z" fill="rgb(204,255,0)" stroke="rgb(18,10,11)" stroke-width="2.6" stroke-linejoin="round"/>
+        </svg>
+        <h3>A link beats a search bar</h3>
+        <p>A buyer who has to re-find your product page is a buyer one search away from a competitor's. The summary lands while the conversation is still warm and takes exactly one tap to act on.</p>
+      </div>
+    </section>
+
+    <!-- 6. Pilot band -->
+    <section class="pilot-band">
+      <h2>Start with a pilot, not a promise</h2>
+      <p>We don't quote you an AOV uplift invented in a slide deck. A Sabato pilot sends real summaries after real calls and measures two things against your baseline: how many summaries convert, and what the assisted basket is worth. If they don't move, you walk away.</p>
+      <a class="btn-pill" href="https://cal.com/sabatoai/intro" target="_blank" rel="noopener">Book the pilot call</a>
+    </section>
+
+    <!-- 7. CTA band -->
+    <section class="cta-band">
+      <p class="hand">send the cart, not a memory</p>
+      <h2>End every call with a checkout link.</h2>
+      <p>We build it, we run it, you see the numbers. Live in two weeks.</p>
+      <a class="btn-pill" href="https://cal.com/sabatoai/intro" target="_blank" rel="noopener">Start Free Pilot</a>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="shell">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="/" aria-label="Sabato AI — Home">
+            <img class="footer-logo" src="/fuc/images/KY1UqOX7zKeKJdbxTotIopeeZIU-f2557e25.png" alt="Sabato AI logo" width="132" height="61">
+          </a>
+          <p class="tagline">The #1 managed Voice AI <br>for E-Commerce.</p>
+          <p class="backed">Backed by</p>
+          <img class="backed-img" src="/fuc/images/V9nq776DtkEODcun83ayNz0liCU-28058054.webp" alt="ElevenLabs Grants" width="191" height="16">
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/pricing">Pricing</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/contact">Contact us</a></li>
+            <li><a href="https://cal.com/sabatoai/intro" target="_blank" rel="noopener">Book a Demo</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Use Cases</h4>
+          <ul>
+            <li><a href="/#usecases">Pre-Sales Consultation</a></li>
+            <li><a href="/#usecases">Cart Abandonment Recovery</a></li>
+            <li><a href="/#usecases">Where Is My Order</a></li>
+            <li><a href="/#usecases">Qualify &amp; Collect for Quote</a></li>
+            <li><a href="/#usecases">Open a Complaint</a></li>
+            <li><a href="/#usecases">Checkout Summary via Text</a></li>
+            <li><a href="/#usecases">Managing Returns</a></li>
+            <li><a href="/#usecases">Post-Delivery Feedback</a></li>
+            <li><a href="/#usecases">Back-in-Stock Notification</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Industries</h4>
+          <ul>
+            <li><span>Home Improvement</span></li>
+            <li><span>Automotive &amp; Parts</span></li>
+            <li><span>Electronics &amp; Tech</span></li>
+            <li><span>Furniture &amp; Home</span></li>
+            <li><span>Outdoor &amp; Garden</span></li>
+            <li><span>Fashion &amp; Apparel</span></li>
+            <li><span>Health &amp; Wellness</span></li>
+            <li><span>Sports &amp; Fitness</span></li>
+            <li><span>Industrial &amp; B2B</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="copy">© 2026 Sabato LTD - 71-75, Shelton Street, Covent Garden, London (UK) - All rights reserved.</p>
+        <div class="legal">
+          <a href="/terms">Terms and Conditions</a>
+          <a href="/privacy-policy">Privacy and Cookies</a>
+          <a href="https://www.linkedin.com/company/sabato-ai" target="_blank" rel="noopener" aria-label="Sabato AI on LinkedIn">
+            <img src="/fuc/images/3vdzRTYV1XV6UUX6QKcsDIfU-e464e3f1.svg" alt="LinkedIn" width="20" height="20">
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+<script src="/js/enhance.js" defer></script>
+</body>
+</html>

@@ -12,7 +12,11 @@
     { label: "Cart Abandonment Recovery", href: "/use-cases/cart-abandonment-recovery" },
     { label: "Where Is My Order", href: "/use-cases/where-is-my-order" },
     { label: "Qualify & Collect for Quote", href: "/use-cases/qualify-and-collect-for-quote" },
-    { label: "Open a Complaint", href: "/use-cases/open-a-complaint" }
+    { label: "Open a Complaint", href: "/use-cases/open-a-complaint" },
+    { label: "Checkout Summary via Text", href: "/use-cases/checkout-summary-via-text" },
+    { label: "Managing Returns", href: "/use-cases/managing-returns" },
+    { label: "Post-Delivery Feedback", href: "/use-cases/post-delivery-feedback" },
+    { label: "Back-in-Stock Notification", href: "/use-cases/back-in-stock-notification" }
   ];
 
   /* ---------- 1. Blog link in top nav (cloned from a sibling for identical styling) ---------- */
