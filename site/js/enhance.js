@@ -50,25 +50,30 @@
     }
   }
 
-  /* ---------- 2. Use Cases dropdown on the top-nav item (EN only until IT pages exist) ---------- */
+  /* ---------- 2. Use Cases dropdown ----------
+     Two structural problems this solves:
+     (a) nav markup differs between Framer pages (one wrapper per link) and our
+         own templates (one shared <nav>), so parent-relative centring drifts —
+         we position fixed against the LINK's own bounding box instead;
+     (b) Framer re-renders the nav after hydration, orphaning listeners bound to
+         a specific element — so we delegate off document and resolve the link
+         fresh on every hover. */
+  function currentNavUseCasesLink(node) {
+    var a = node && node.closest ? node.closest("a") : null;
+    if (!a) return null;
+    if ((a.textContent || "").trim() !== USECASES_LABEL) return null;
+    var r = a.getBoundingClientRect();
+    if (r.top < 0 || r.top > 200 || r.height === 0) return null;
+    return a;
+  }
+
   function injectDropdown() {
     if (IT) return;
     if (document.querySelector("[data-uc-dropdown]")) return;
-    var links = document.querySelectorAll("a");
-    var target = null;
-    for (var i = 0; i < links.length; i++) {
-      var a = links[i];
-      if ((a.textContent || "").trim() !== USECASES_LABEL) continue;
-      var r = a.getBoundingClientRect();
-      if (r.top >= 0 && r.top < 200 && r.height > 0) { target = a; break; }
-    }
-    if (!target) return;
-    var holder = target.parentElement;
-    holder.style.position = "relative";
+
     var dd = document.createElement("div");
     dd.setAttribute("data-uc-dropdown", "1");
-    dd.style.cssText =
-      "position:absolute;top:100%;left:50%;transform:translateX(-50%);padding-top:14px;display:none;z-index:9999;";
+    dd.style.cssText = "position:fixed;display:none;z-index:2147483000;padding-top:14px;";
     var card = document.createElement("div");
     card.style.cssText =
       "background:#fff;border:1px solid rgb(227,226,226);border-radius:16px;padding:8px;min-width:250px;box-shadow:0 12px 32px rgba(0,0,0,.10);";
@@ -85,19 +90,40 @@
       return el;
     }
     for (var j = 0; j < USECASES.length; j++) card.appendChild(item(USECASES[j].label, USECASES[j].href, false));
-    var div = document.createElement("div");
-    div.style.cssText = "height:1px;background:rgb(227,226,226);margin:6px 8px;";
-    card.appendChild(div);
+    var sep = document.createElement("div");
+    sep.style.cssText = "height:1px;background:rgb(227,226,226);margin:6px 8px;";
+    card.appendChild(sep);
     card.appendChild(item("All use cases", "/#usecases", true));
     dd.appendChild(card);
-    holder.appendChild(dd);
-    var hideTimer = null;
-    function show() { clearTimeout(hideTimer); dd.style.display = "block"; }
-    function hide() { hideTimer = setTimeout(function () { dd.style.display = "none"; }, 180); }
-    holder.addEventListener("mouseenter", show);
-    holder.addEventListener("mouseleave", hide);
-    dd.addEventListener("mouseenter", show);
+    document.body.appendChild(dd);
+
+    var anchorEl = null, hideTimer = null;
+
+    function place() {
+      if (!anchorEl || !anchorEl.isConnected) return;
+      var r = anchorEl.getBoundingClientRect();
+      dd.style.top = r.bottom + "px";
+      dd.style.left = "0px";
+      var w = dd.offsetWidth || 250;
+      var margin = 12;
+      var left = r.left + r.width / 2 - w / 2;
+      left = Math.max(margin, Math.min(left, window.innerWidth - w - margin));
+      dd.style.left = Math.round(left) + "px";
+    }
+    function show(el) { anchorEl = el; clearTimeout(hideTimer); dd.style.display = "block"; place(); }
+    function hide() { hideTimer = setTimeout(function () { dd.style.display = "none"; }, 200); }
+
+    document.addEventListener("mouseover", function (e) {
+      var link = currentNavUseCasesLink(e.target);
+      if (link) { show(link); return; }
+      if (dd.contains(e.target)) { clearTimeout(hideTimer); return; }
+      if (dd.style.display === "block") hide();
+    }, true);
+
+    dd.addEventListener("mouseenter", function () { clearTimeout(hideTimer); });
     dd.addEventListener("mouseleave", hide);
+    window.addEventListener("scroll", function () { if (dd.style.display === "block") place(); }, { passive: true });
+    window.addEventListener("resize", function () { if (dd.style.display === "block") place(); });
   }
 
   /* ---------- 3. Retarget footer links + make matching tiles clickable ---------- */
