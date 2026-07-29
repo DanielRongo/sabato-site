@@ -6,8 +6,16 @@
   var NAV_ANCHORS = IT ? ["Contatti", "Prezzi"] : ["Contact", "Pricing"];
   var USECASES_LABEL = IT ? "Casi d'uso" : "Use Cases";
 
-  /* Use-case pages that exist. label = exact text on site; href = live page. */
-  var USECASES = [
+  /* Typographic vs straight apostrophes differ between Framer pages and ours,
+     so all label comparisons go through this. */
+  function normLabel(x) {
+    return (x || "").replace(/[\u2018\u2019\u02BC]/g, "'").replace(/\s+/g, " ").trim();
+  }
+
+  /* Use-case pages that exist. label = exact text on the site; href = live page.
+     Italian list holds only the pages actually built — unbuilt ones keep their
+     original anchor so nothing links to a 404. */
+  var USECASES_EN = [
     { label: "Pre-Sales Consultation", href: "/use-cases/pre-sales-consultation" },
     { label: "Cart Abandonment Recovery", href: "/use-cases/cart-abandonment-recovery" },
     { label: "Where Is My Order", href: "/use-cases/where-is-my-order" },
@@ -18,6 +26,14 @@
     { label: "Post-Delivery Feedback", href: "/use-cases/post-delivery-feedback" },
     { label: "Back-in-Stock Notification", href: "/use-cases/back-in-stock-notification" }
   ];
+  var USECASES_IT = [
+    { label: "Consulenza Pre-Vendita", href: "/it/casi-duso/consulenza-pre-vendita" },
+    { label: "Dov'è il Mio Ordine", href: "/it/casi-duso/dove-e-il-mio-ordine" },
+    { label: "Gestione Resi", href: "/it/casi-duso/gestione-resi" }
+  ];
+  var USECASES = IT ? USECASES_IT : USECASES_EN;
+  var ALL_LABEL = IT ? "Tutti i casi d'uso" : "All use cases";
+  var ALL_HREF = IT ? "/it#casiduso" : "/#usecases";
 
   /* ---------- 1. Blog link in top nav (cloned from a sibling for identical styling) ---------- */
   function injectBlogLink() {
@@ -61,14 +77,14 @@
   function currentNavUseCasesLink(node) {
     var a = node && node.closest ? node.closest("a") : null;
     if (!a) return null;
-    if ((a.textContent || "").trim() !== USECASES_LABEL) return null;
+    if (normLabel(a.textContent) !== normLabel(USECASES_LABEL)) return null;
     var r = a.getBoundingClientRect();
     if (r.top < 0 || r.top > 200 || r.height === 0) return null;
     return a;
   }
 
   function injectDropdown() {
-    if (IT) return;
+    if (!USECASES.length) return;
     if (document.querySelector("[data-uc-dropdown]")) return;
 
     var dd = document.createElement("div");
@@ -93,7 +109,7 @@
     var sep = document.createElement("div");
     sep.style.cssText = "height:1px;background:rgb(227,226,226);margin:6px 8px;";
     card.appendChild(sep);
-    card.appendChild(item("All use cases", "/#usecases", true));
+    card.appendChild(item(ALL_LABEL, ALL_HREF, true));
     dd.appendChild(card);
     document.body.appendChild(dd);
 
@@ -133,10 +149,10 @@
     for (var i = 0; i < USECASES.length; i++) {
       (function (uc) {
         /* 3a. anchors whose own text is the label (our templates) */
-        var anchors = document.querySelectorAll('a[href*="#usecases"]');
+        var anchors = document.querySelectorAll('a[href*="#usecases"], a[href*="#casiduso"]');
         for (var m = 0; m < anchors.length; m++) {
           var an = anchors[m];
-          if ((an.textContent || "").trim() !== uc.label) continue;
+          if (normLabel(an.textContent) !== normLabel(uc.label)) continue;
           if (an.getAttribute("data-uc-wired") === "1") continue;
           an.href = uc.href;
           an.setAttribute("data-uc-wired", "1");
@@ -147,11 +163,11 @@
         for (var k = 0; k < nodes.length; k++) {
           var el = nodes[k];
           if (el.children.length !== 0) continue;
-          if ((el.textContent || "").trim() !== uc.label) continue;
+          if (normLabel(el.textContent) !== normLabel(uc.label)) continue;
           var anchor = el.closest("a");
           if (anchor) {
             var href = anchor.getAttribute("href") || "";
-            if (href.indexOf("#usecases") !== -1 && anchor.getAttribute("data-uc-wired") !== "1") {
+            if ((href.indexOf("#usecases") !== -1 || href.indexOf("#casiduso") !== -1) && anchor.getAttribute("data-uc-wired") !== "1") {
               anchor.href = uc.href;
               anchor.setAttribute("data-uc-wired", "1");
             }
@@ -194,7 +210,7 @@
       var a = node && node.closest ? node.closest("a") : null;
       if (!a) return;
       var href = a.getAttribute("href") || "";
-      if (href.indexOf("/use-cases/") !== 0) return;   /* only our pages */
+      if (href.indexOf("/use-cases/") !== 0 && href.indexOf("/it/casi-duso/") !== 0) return;
       if (a.target === "_blank") return;
       e.preventDefault();
       e.stopImmediatePropagation();
