@@ -126,10 +126,23 @@
     window.addEventListener("resize", function () { if (dd.style.display === "block") place(); });
   }
 
-  /* ---------- 3. Retarget footer links + make matching tiles clickable ---------- */
+  /* ---------- 3. Retarget footer links + make matching tiles clickable ----------
+     Two DOM shapes exist: Framer pages nest the label in a <p>/<span> inside the
+     <a>; our own templates put the text directly in the <a>. Handle both. */
   function wireUseCaseTargets() {
     for (var i = 0; i < USECASES.length; i++) {
       (function (uc) {
+        /* 3a. anchors whose own text is the label (our templates) */
+        var anchors = document.querySelectorAll('a[href*="#usecases"]');
+        for (var m = 0; m < anchors.length; m++) {
+          var an = anchors[m];
+          if ((an.textContent || "").trim() !== uc.label) continue;
+          if (an.getAttribute("data-uc-wired") === "1") continue;
+          an.href = uc.href;
+          an.setAttribute("data-uc-wired", "1");
+        }
+
+        /* 3b. label nested in a text element (Framer pages) */
         var nodes = document.querySelectorAll("p, span, h1, h2, h3, h4, h5, h6");
         for (var k = 0; k < nodes.length; k++) {
           var el = nodes[k];
@@ -137,7 +150,6 @@
           if ((el.textContent || "").trim() !== uc.label) continue;
           var anchor = el.closest("a");
           if (anchor) {
-            /* footer link (or any anchor) still pointing at the old #usecases target */
             var href = anchor.getAttribute("href") || "";
             if (href.indexOf("#usecases") !== -1 && anchor.getAttribute("data-uc-wired") !== "1") {
               anchor.href = uc.href;

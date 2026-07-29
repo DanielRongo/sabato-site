@@ -45,6 +45,21 @@ with sync_playwright() as p:
             }
             if not it and path in ("/", "/pricing", "/about", "/contact"):
                 checks["dropdown_present"] = pg.evaluate("!!document.querySelector('[data-uc-dropdown]')")
+            if not it:
+                # every footer use-case link must point at its real page, not the old anchor
+                checks["footer_uc_links"] = pg.evaluate("""(() => {
+                  const labels = ['Pre-Sales Consultation','Cart Abandonment Recovery','Where Is My Order',
+                    'Qualify & Collect for Quote','Open a Complaint','Checkout Summary via Text',
+                    'Managing Returns','Post-Delivery Feedback','Back-in-Stock Notification'];
+                  let found = 0, bad = 0;
+                  document.querySelectorAll('a').forEach(a => {
+                    const t = (a.textContent||'').trim();
+                    if (!labels.includes(t)) return;
+                    found++;
+                    const h = a.getAttribute('href') || '';
+                    if (!h.startsWith('/use-cases/')) bad++;
+                  });
+                  return found > 0 && bad === 0; })()""")
             failed = {k: v for k, v in checks.items() if not v}
             if failed:
                 failures.append((path, failed, bad[:3], errs[:3]))
