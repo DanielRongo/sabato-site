@@ -12,6 +12,16 @@
     return (x || "").replace(/[\u2018\u2019\u02BC]/g, "'").replace(/\s+/g, " ").trim();
   }
 
+  /* True if `text` is this use case's label or any known alias (the homepage
+     tiles and the footer sometimes name the same workflow differently). */
+  function matchesUC(text, uc) {
+    var n = normLabel(text);
+    if (n === normLabel(uc.label)) return true;
+    var al = uc.aliases || [];
+    for (var i = 0; i < al.length; i++) if (n === normLabel(al[i])) return true;
+    return false;
+  }
+
   /* Use-case pages that exist. label = exact text on the site; href = live page.
      Italian list holds only the pages actually built — unbuilt ones keep their
      original anchor so nothing links to a 404. */
@@ -32,7 +42,8 @@
     { label: "Dov'è il Mio Ordine", href: "/it/casi-duso/dove-e-il-mio-ordine" },
     { label: "Preventivi Automatici", href: "/it/casi-duso/preventivi-automatici" },
     { label: "Apertura Reclamo", href: "/it/casi-duso/apertura-reclamo" },
-    { label: "Riepilogo Checkout via Messaggio", href: "/it/casi-duso/riepilogo-checkout-via-messaggio" },
+    { label: "Riepilogo Checkout via Messaggio", href: "/it/casi-duso/riepilogo-checkout-via-messaggio",
+      aliases: ["Riepilogo Acquisto via SMS"] },
     { label: "Gestione Resi", href: "/it/casi-duso/gestione-resi" },
     { label: "Feedback Post-Consegna", href: "/it/casi-duso/feedback-post-consegna" },
     { label: "Notifica Ritorno in Stock", href: "/it/casi-duso/notifica-ritorno-in-stock" }
@@ -41,35 +52,39 @@
   var ALL_LABEL = IT ? "Tutti i casi d'uso" : "All use cases";
   var ALL_HREF = IT ? "/it#casiduso" : "/#usecases";
 
-  /* ---------- 1. Blog link in top nav (cloned from a sibling for identical styling) ---------- */
+  /* ---------- 1. Blog link in the FOOTER, right after "Book a Demo" ----------
+     (Deliberately not in the top nav — the header stays as designed.) */
+  var DEMO_LABEL = IT ? "Prenota una Demo" : "Book a Demo";
   function injectBlogLink() {
     if (document.querySelector("a[data-blog-link]")) return;
+    /* "Book a Demo" appears several times (mid-page CTAs + footer). The footer
+       one is always the lowest on the page — pick that, never a hero CTA. */
     var links = document.querySelectorAll("a");
-    /* if the top nav already has a Blog link (static pages), do nothing */
-    for (var i = 0; i < links.length; i++) {
-      var a0 = links[i];
-      var r0 = a0.getBoundingClientRect();
-      if ((a0.textContent || "").trim() === "Blog" && r0.top >= 0 && r0.top < 200 && r0.height > 0) return;
-    }
+    var target = null, targetY = -1;
     for (var i = 0; i < links.length; i++) {
       var a = links[i];
-      var t = (a.textContent || "").trim();
-      if (t !== NAV_ANCHORS[0] && t !== NAV_ANCHORS[1]) continue;
+      if (normLabel(a.textContent) !== normLabel(DEMO_LABEL)) continue;
       var r = a.getBoundingClientRect();
-      if (r.top < 0 || r.top > 200 || r.height === 0) continue;
-      var box = a.parentElement;
-      /* only clone single-item wrappers — never a shared container */
-      if (box.querySelectorAll("a").length !== 1) continue;
-      var clone = box.cloneNode(true);
-      var ca = clone.querySelector("a");
-      if (!ca) continue;
-      var tw = clone.querySelector("p, span, h1, h2, h3, h4, h5, h6") || ca;
-      tw.textContent = "Blog";
-      ca.href = BLOG_HREF;
-      ca.setAttribute("data-blog-link", "1");
-      box.parentElement.insertBefore(clone, box.nextSibling);
-      return;
+      if (r.height === 0) continue;
+      var y = r.top + window.scrollY;
+      if (y > targetY) { targetY = y; target = a; }
     }
+    if (!target) return;
+    var box = target.parentElement;
+    if (!box || !box.parentElement) return;
+    var wrapper = box.querySelectorAll("a").length === 1 ? box : target;
+    var clone = wrapper.cloneNode(true);
+    var ca = clone.tagName === "A" ? clone : clone.querySelector("a");
+    if (!ca) return;
+    var tw = (clone.querySelector && clone.querySelector("p, span, h1, h2, h3, h4, h5, h6")) || ca;
+    tw.textContent = "Blog";
+    ca.href = BLOG_HREF;
+    ca.setAttribute("data-blog-link", "1");
+    ca.removeAttribute("data-uc-wired");
+    /* the demo button opens cal.com in a new tab — Blog is internal, so drop that */
+    ca.removeAttribute("target");
+    ca.removeAttribute("rel");
+    wrapper.parentElement.insertBefore(clone, wrapper.nextSibling);
   }
 
   /* ---------- 2. Use Cases dropdown ----------
@@ -158,7 +173,7 @@
         var anchors = document.querySelectorAll('a[href*="#usecases"], a[href*="#casiduso"]');
         for (var m = 0; m < anchors.length; m++) {
           var an = anchors[m];
-          if (normLabel(an.textContent) !== normLabel(uc.label)) continue;
+          if (!matchesUC(an.textContent, uc)) continue;
           if (an.getAttribute("data-uc-wired") === "1") continue;
           an.href = uc.href;
           an.setAttribute("data-uc-wired", "1");
@@ -169,7 +184,7 @@
         for (var k = 0; k < nodes.length; k++) {
           var el = nodes[k];
           if (el.children.length !== 0) continue;
-          if (normLabel(el.textContent) !== normLabel(uc.label)) continue;
+          if (!matchesUC(el.textContent, uc)) continue;
           var anchor = el.closest("a");
           if (anchor) {
             var href = anchor.getAttribute("href") || "";
@@ -216,7 +231,9 @@
       var a = node && node.closest ? node.closest("a") : null;
       if (!a) return;
       var href = a.getAttribute("href") || "";
-      if (href.indexOf("/use-cases/") !== 0 && href.indexOf("/it/casi-duso/") !== 0) return;
+      var ours = href.indexOf("/use-cases/") === 0 || href.indexOf("/it/casi-duso/") === 0 ||
+                 a.hasAttribute("data-blog-link") || href === "/blog" || href === "/it/blog";
+      if (!ours) return;
       if (a.target === "_blank") return;
       e.preventDefault();
       e.stopImmediatePropagation();
