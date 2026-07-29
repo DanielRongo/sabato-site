@@ -28,8 +28,14 @@
   ];
   var USECASES_IT = [
     { label: "Consulenza Pre-Vendita", href: "/it/casi-duso/consulenza-pre-vendita" },
+    { label: "Recupero Carrelli Abbandonati", href: "/it/casi-duso/recupero-carrelli-abbandonati" },
     { label: "Dov'è il Mio Ordine", href: "/it/casi-duso/dove-e-il-mio-ordine" },
-    { label: "Gestione Resi", href: "/it/casi-duso/gestione-resi" }
+    { label: "Preventivi Automatici", href: "/it/casi-duso/preventivi-automatici" },
+    { label: "Apertura Reclamo", href: "/it/casi-duso/apertura-reclamo" },
+    { label: "Riepilogo Checkout via Messaggio", href: "/it/casi-duso/riepilogo-checkout-via-messaggio" },
+    { label: "Gestione Resi", href: "/it/casi-duso/gestione-resi" },
+    { label: "Feedback Post-Consegna", href: "/it/casi-duso/feedback-post-consegna" },
+    { label: "Notifica Ritorno in Stock", href: "/it/casi-duso/notifica-ritorno-in-stock" }
   ];
   var USECASES = IT ? USECASES_IT : USECASES_EN;
   var ALL_LABEL = IT ? "Tutti i casi d'uso" : "All use cases";
