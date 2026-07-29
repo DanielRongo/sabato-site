@@ -50,51 +50,62 @@ def main():
         ["git", "rev-list", "--max-parents=0", "HEAD"],
         cwd=ROOT, capture_output=True, text=True).stdout.strip()
 
-    renames = {}
-    for rel in changed_files(ref):
-        abs_path = os.path.join(ROOT, rel)
-        name = os.path.basename(rel)
-        m = MJS.match(name) or IDX.match(name)
-        if not m:
-            print(f"  skip (no hash in name): {name}")
-            continue
-        new_hash = short_hash(abs_path)
-        if new_hash == m.group("hash"):
-            continue
-        if name.endswith(".mjs"):
-            new_name = f'{m.group("stem")}.{new_hash}.mjs'
-        else:
-            new_name = f'{m.group("stem")}-{new_hash}.json'
-        os.rename(abs_path, os.path.join(os.path.dirname(abs_path), new_name))
-        renames[name] = new_name
-        print(f"  {name}\n    -> {new_name}")
+    def rewrite_refs(renames):
+        touched = 0
+        for dirpath, _, files in os.walk(SITE):
+            for fn in files:
+                if not TEXT_EXT.search(fn):
+                    continue
+                fp = os.path.join(dirpath, fn)
+                try:
+                    t = open(fp, encoding="utf-8").read()
+                except UnicodeDecodeError:
+                    continue
+                orig = t
+                for old, new in renames.items():
+                    if old in t:
+                        t = t.replace(old, new)
+                if t != orig:
+                    open(fp, "w", encoding="utf-8").write(t)
+                    touched += 1
+        return touched
 
-    if not renames:
+    # Renaming a file changes its referrers, which are themselves immutable-cached,
+    # so they must be rehashed too. Iterate until nothing new needs renaming.
+    all_renames = {}
+    done = set()
+    for round_no in range(1, 11):
+        renames = {}
+        for rel in changed_files(ref):
+            abs_path = os.path.join(ROOT, rel)
+            name = os.path.basename(rel)
+            if name in done or not os.path.exists(abs_path):
+                continue
+            m = MJS.match(name) or IDX.match(name)
+            if not m:
+                continue
+            new_hash = short_hash(abs_path)
+            if new_hash == m.group("hash"):
+                continue
+            if name.endswith(".mjs"):
+                new_name = f'{m.group("stem")}.{new_hash}.mjs'
+            else:
+                new_name = f'{m.group("stem")}-{new_hash}.json'
+            os.rename(abs_path, os.path.join(os.path.dirname(abs_path), new_name))
+            renames[name] = new_name
+            done.add(name)
+            done.add(new_name)
+            print(f"  [round {round_no}] {name}\n              -> {new_name}")
+        if not renames:
+            break
+        rewrite_refs(renames)
+        all_renames.update(renames)
+
+    if not all_renames:
         print("nothing to rehash — all edited assets already have fresh names")
         return 0
+    print(f"\nrenamed {len(all_renames)} file(s) across {round_no} round(s)")
 
-    # rewrite every reference across the site
-    touched = 0
-    for dirpath, _, files in os.walk(SITE):
-        for fn in files:
-            if not TEXT_EXT.search(fn):
-                continue
-            fp = os.path.join(dirpath, fn)
-            try:
-                t = open(fp, encoding="utf-8").read()
-            except UnicodeDecodeError:
-                continue
-            orig = t
-            for old, new in renames.items():
-                if old in t:
-                    t = t.replace(old, new)
-            if t != orig:
-                open(fp, "w", encoding="utf-8").write(t)
-                touched += 1
-
-    print(f"\nrenamed {len(renames)} file(s); updated references in {touched} file(s)")
-
-    # dangling-reference check
     dangling = []
     for dirpath, _, files in os.walk(SITE):
         for fn in files:
@@ -105,7 +116,7 @@ def main():
                 t = open(fp, encoding="utf-8").read()
             except UnicodeDecodeError:
                 continue
-            for old in renames:
+            for old in all_renames:
                 if old in t:
                     dangling.append((os.path.relpath(fp, ROOT), old))
     if dangling:
