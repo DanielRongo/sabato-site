@@ -186,7 +186,10 @@
     if (window.__ucClickInterceptor) return;
     window.__ucClickInterceptor = true;
     window.addEventListener("click", function (e) {
-      if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      /* deliberately NOT checking e.defaultPrevented: Framer's router may already
+         have cancelled the event (it registers on the same target/phase before us),
+         and for our own pages we want to override that and navigate anyway. */
+      if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
       var node = e.target;
       var a = node && node.closest ? node.closest("a") : null;
       if (!a) return;
