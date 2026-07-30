@@ -9,12 +9,6 @@ cover_style: lime
 
 Una cliente vuole la taglia 44. Non è sicura che la tua 44 sia davvero una 44, quindi compra la 44 e la 46, ne tiene una e rispedisce l'altra. Secondo l'*Annual Returns Benchmark 2024* di ZigZag e Retail Economics, il 27,4% degli acquirenti UK di abbigliamento e calzature lo fa di proposito. Ognuno di loro ha pagato un secondo capo perché la tua scheda prodotto non rispondeva a una domanda.
 
-:::keystat
-27,4%
-degli acquirenti UK di moda ordina deliberatamente più taglie per poi renderne una parte
-Fonte: ZigZag / Retail Economics, Annual Returns Benchmark 2024
-:::
-
 ## Perché il bracketing è un problema di informazione e non di logistica?
 
 Il bracketing è l'acquisto deliberato dello stesso articolo in due o più taglie, con l'intenzione di rendere tutte tranne una. Finisce nel report della logistica inversa, quindi viene trattato come un problema di logistica inversa. Non lo è.
@@ -199,12 +193,6 @@ Uplift                              =  + £642,92  (+62,4%)
 Rispondere alla domanda vale +62% di contribuzione su quella coorte. Reprimere il comportamento vale, nel migliore dei casi, il pareggio.
 
 Addebito le £13,69 piene anche ai 7 resi a taglia singola, benché £0,85 — la spedizione in uscita e il pick & pack della seconda unità — non siano mai stati sostenuti. Questo sottostima l'uplift. Preferisco arrotondare contro il mio stesso argomento.
-
-:::takeaway Prima di applicare una fee sui resi
-Su un articolo da £40 al 60% di margine con £13,69 di costo per unità resa, eliminare il bracketing paga solo se circa il 43% dei bracketer potenziali compra comunque.
-Una fee da £3,95 ne richiede circa il 50% — e un sondaggio ha il 49% degli acquirenti che dichiara che le fee lo fermano.
-43% e 50% escono da questo esempio, non da una legge di natura. Ricostruisci le soglie sul tuo tariffario prima di scoraggiare chiunque.
-:::
 
 E annota il contrappeso: Balaram, Perdikaki e Galbreth hanno mostrato su *Naval Research Logistics* nel 2022 che il bracketing taglia in entrambe le direzioni — alza i costi di logistica inversa ma riduce l'esitazione sulla vestibilità e spinge i volumi. Ecco perché la soglia te la calcoli da solo invece di prendere in prestito la mia.
 

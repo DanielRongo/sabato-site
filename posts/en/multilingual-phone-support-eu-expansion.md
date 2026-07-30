@@ -100,12 +100,6 @@ A German phone line on an English-only store underperforms through no fault of t
 
 In the same CSA Research 2020 survey, 40% of consumers said they never buy from websites in other languages. That's a website stat, not a phone stat — but it defines the floor the phone line stands on. If the site loses the buyer before checkout, nobody calls.
 
-:::keystat
-40%
-of consumers never buy from websites in other languages — the floor your phone line stands on
-Source: CSA Research, "Can't Read, Won't Buy", 2020
-:::
-
 The minimum localized surface before the line goes live: product pages, order confirmation and shipping emails, and the IVR greeting. Not the blog. Not the About page. Those three, then launch.
 
 ## Step 5 — Hire, outsource, or automate? Run the numbers
@@ -122,11 +116,7 @@ Five languages, one seat each, annualized:
 | Outsource 5 seats (nearshore EU) | ~$13–22/hr × 5 seats; ≈ $135k–$230k at full-time coverage | No employment admin, scales up and down | Agent turnover, shallow product knowledge, per-language premiums on quotes |
 | Voice AI + human escalation in 1–2 core languages | Software cost + 1–2 agents (€30k–€70k loaded) | All 5 languages answered from day one; humans handle the hard 20% | Escalation design is real work; edge cases need a human path or trust erodes |
 
-:::takeaway The verdict
-Hiring five native agents costs roughly €166k–€211k a year loaded, before management overhead.
-Outsourcing — quoted in dollars, so convert at the day's rate before comparing — lands in a comparable band once multilingual premiums hit the quote.
-The only structure that answers five languages without five payrolls is automation with human escalation in your top one or two markets. Run your own numbers — but run them before signing anything.
-:::
+**The verdict.** Hiring five native agents costs roughly €166k–€211k a year loaded, before management overhead. Outsourcing — quoted in dollars, so convert at the day's rate before comparing — lands in a comparable band once multilingual premiums hit the quote. The only structure that answers five languages without five payrolls is automation with human escalation in your top one or two markets. Run your own numbers, but run them before signing anything.
 
 ## Step 6 — What to measure, and the thresholds that trigger the next language
 

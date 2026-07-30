@@ -9,12 +9,6 @@ cover_style: lime
 
 A customer wants the 12. She isn't sure your 12 is really a 12, so she buys the 12 and the 14, keeps one, ships the other back. ZigZag and Retail Economics' *Annual Returns Benchmark 2024* has 27.4% of UK clothing and footwear shoppers doing this on purpose. Every one of them paid for a second unit because your product page would not answer a question.
 
-:::keystat
-27.4%
-of UK clothing and footwear shoppers deliberately order multiple sizes to return some
-Source: ZigZag / Retail Economics, Annual Returns Benchmark 2024
-:::
-
 ## Why is bracketing an information problem and not a logistics one?
 
 Bracketing is when a shopper deliberately orders the same item in two or more sizes, intending to return all but one. It lands in your reverse-logistics report, so it gets treated as a reverse-logistics problem. It isn't.
@@ -199,12 +193,6 @@ Uplift                         =  + £642.92  (+62.4%)
 Answering the question is worth +62% contribution on that cohort. Suppressing the behaviour is worth, at best, break-even.
 
 I charge the full £13.69 to those 7 single-size returns even though £0.85 of it — the outbound shipping and pick-and-pack on a second unit — was never incurred. That understates the uplift. I'd rather round against my own argument.
-
-:::takeaway Before you charge a returns fee
-On a £40 item at 60% margin with a £13.69 cost per returned unit, killing bracketing outright pays only if roughly 43% of would-be bracketers still buy.
-A £3.95 fee needs about 50% — and one survey has 49% of shoppers saying fees stop them buying.
-43% and 50% fall out of this example, not a law of nature. Rebuild the thresholds on your own rate card before you deter anyone.
-:::
 
 And note the counterweight: Balaram, Perdikaki and Galbreth showed in *Naval Research Logistics* in 2022 that bracketing cuts both ways, raising reverse-logistics cost while reducing fit hesitation and driving volume. Which is why you compute your own threshold instead of borrowing mine.
 

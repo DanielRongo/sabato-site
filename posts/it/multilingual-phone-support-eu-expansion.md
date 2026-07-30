@@ -100,12 +100,6 @@ Una linea telefonica tedesca su uno store solo in inglese rende meno senza alcun
 
 Nello stesso sondaggio CSA Research 2020, il 40% dei consumatori ha dichiarato di non comprare mai da siti in altre lingue. È una statistica sul sito, non sul telefono — ma definisce il pavimento su cui poggia la linea telefonica. Se il sito perde l'acquirente prima del checkout, non chiama nessuno.
 
-:::keystat
-40%
-dei consumatori non compra mai da siti in altre lingue — il pavimento su cui poggia la tua linea telefonica
-Fonte: CSA Research, "Can't Read, Won't Buy", 2020
-:::
-
 La superficie minima da localizzare prima che la linea vada online: le pagine prodotto, le email di conferma ordine e spedizione, e il messaggio di benvenuto dell'IVR. Non il blog. Non la pagina About. Quelle tre cose, poi si lancia.
 
 ## Step 5 — Assumere, esternalizzare o automatizzare? Fai i conti
@@ -122,11 +116,7 @@ Cinque lingue, una postazione ciascuna, su base annua:
 | Esternalizzare 5 postazioni (nearshore UE) | ~$13–22/ora × 5 postazioni; ≈ $135k–$230k a copertura full-time | Niente amministrazione del personale, scala su e giù | Turnover degli agenti, conoscenza superficiale del prodotto, sovrapprezzi per lingua sui preventivi |
 | Voice AI + escalation umana in 1–2 lingue core | Costo del software + 1–2 agenti (€30k–€70k caricati) | Tutte e 5 le lingue coperte dal giorno uno; gli umani gestiscono il 20% difficile | Il design dell'escalation è lavoro vero; i casi limite hanno bisogno di un percorso umano o la fiducia si erode |
 
-:::takeaway Il verdetto
-Assumere cinque agenti madrelingua costa circa €166k–€211k l'anno a costo pieno, prima dell'overhead di gestione.
-L'esternalizzazione — quotata in dollari, quindi converti al cambio del giorno prima di confrontare — atterra in una fascia comparabile una volta che i sovrapprezzi multilingua entrano nel preventivo.
-L'unica struttura che risponde in cinque lingue senza cinque buste paga è l'automazione con escalation umana nei tuoi uno o due mercati principali. Fai i tuoi conti — ma falli prima di firmare qualsiasi cosa.
-:::
+**Il verdetto.** Assumere cinque agenti madrelingua costa circa €166k–€211k l'anno a costo pieno, prima dell'overhead di gestione. L'esternalizzazione — quotata in dollari, quindi converti al cambio del giorno prima di confrontare — atterra in una fascia comparabile una volta che i sovrapprezzi multilingua entrano nel preventivo. L'unica struttura che risponde in cinque lingue senza cinque buste paga è l'automazione con escalation umana nei tuoi uno o due mercati principali. Fai i tuoi conti, ma falli prima di firmare qualsiasi cosa.
 
 ## Step 6 — Cosa misurare, e le soglie che fanno scattare la lingua successiva
 
