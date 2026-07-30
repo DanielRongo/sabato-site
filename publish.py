@@ -409,9 +409,14 @@ def render_body(body, L):
     body, blocks = extract_blocks(body, L)
     MD.reset()
     out = MD.convert(body)
-    # wrap tables for horizontal scroll + rounded border
-    out = out.replace("<table>", '<div class="table-wrap"><table>')
-    out = out.replace("</table>", "</table></div>")
+    # wrap tables for horizontal scroll + rounded border; >=4 columns get
+    # denser cells + wrapping headers so they fit the column without scrolling
+    def _wrap_table(m):
+        tbl = m.group(0)
+        cols = tbl.split("</tr>", 1)[0].count("<th")
+        cls = "table-wrap dense" if cols >= 4 else "table-wrap"
+        return f'<div class="{cls}">{tbl}</div>'
+    out = re.sub(r"<table>.*?</table>", _wrap_table, out, flags=re.S)
 
     faq_entries = []
 

@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>How to Reduce Bracketing Returns Without Losing the Sale | Sabato AI</title>
+  <meta name="description" content="How to reduce bracketing returns without losing the sale: the SQL to measure it, the true cost per order, and the break-even most brands never calculate.">
+  <link rel="canonical" href="https://www.sabato.ai/blog/reduce-bracketing-returns">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="How to Reduce Bracketing Returns Without Losing the Sale | Sabato AI">
+  <meta property="og:description" content="How to reduce bracketing returns without losing the sale: the SQL to measure it, the true cost per order, and the break-even most brands never calculate.">
+  <meta property="og:url" content="https://www.sabato.ai/blog/reduce-bracketing-returns">
+  <meta property="og:image" content="https://www.sabato.ai/fuc/assets/8Q4ofjOgRTqsr8FpanTJF9nzLwU.png">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary_large_image">
+  <link href="/fuc/images/hWFOqN6Okd1QgfKhizqgIF1s.png" rel="icon" media="(prefers-color-scheme: light)">
+  <link href="/fuc/images/dEcuqc3xAQ3JJoX4xQDYrMQefA.png" rel="icon" media="(prefers-color-scheme: dark)">
+  <link rel="apple-touch-icon" href="/fuc/images/dEcuqc3xAQ3JJoX4xQDYrMQefA.png">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "How to Reduce Bracketing Returns Without Losing the Sale", "description": "How to reduce bracketing returns without losing the sale: the SQL to measure it, the true cost per order, and the break-even most brands never calculate.", "datePublished": "2026-07-30", "dateModified": "2026-07-30", "inLanguage": "en", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://www.sabato.ai/blog/reduce-bracketing-returns"}, "author": {"@type": "Organization", "name": "Sabato AI", "url": "https://www.sabato.ai"}, "publisher": {"@type": "Organization", "name": "Sabato AI", "url": "https://www.sabato.ai"}}</script>
+  <style>
+    /* ============ Fonts (local mirrors, same files the site loads) ============ */
+    @font-face { font-family: "Satoshi"; src: url("/fuc/third-party-assets/fontshare/wf/TTX2Z3BF3P6Y5BQT3IV2VNOK6FL22KUT/7QYRJOI3JIMYHGY6CH7SOIFRQLZOLNJ6/KFIAZD4RUMEZIYV6FQ3T3GP5PDBDB6JY.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 400; }
+    @font-face { font-family: "Satoshi"; src: url("/fuc/third-party-assets/fontshare/wf/P2LQKHE6KA6ZP4AAGN72KDWMHH6ZH3TA/ZC32TK2P7FPS5GFTL46EU6KQJA24ZYDB/7AHDUZ4A7LFLVFUIFSARGIWCRQJHISQP.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 500; }
+    @font-face { font-family: "Satoshi"; src: url("/fuc/third-party-assets/fontshare/wf/LAFFD4SDUCDVQEXFPDC7C53EQ4ZELWQI/PXCT3G6LO6ICM5I3NTYENYPWJAECAWDD/GHM6WVH6MILNYOOCXHXB5GTSGNTMGXZR.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 700; }
+    @font-face { font-family: "Satoshi"; src: url("/fuc/third-party-assets/fontshare/wf/NHPGVFYUXYXE33DZ75OIT4JFGHITX5PE/PSUTMASCDJTVPERDYJZPN23BVUFUCQIF/J64QX5IPOHK56I2KYUNBQ5M2XWZEYKYX.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 900; }
+    @font-face { font-family: "Kalam"; src: url("/fuc/third-party-assets/fontshare/wf/L5Z4DJRD7OROEK74MORC4URSE7ILAXYH/6QNQQQT3NGMLLBQ3J7CCWACN46YUMIJB/GNJHSO7TKXAQJXNY3V3S4VE64D4XKQCP.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 700; }
+    @font-face { font-family: "Inter"; src: url("/fuc/assets/GrgcKwrN6d3Uz8EwcLHZxwEfC4.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 400; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+2000-206F, U+20AC, U+2122; }
+    @font-face { font-family: "Inter"; src: url("/fuc/assets/UjlFhCnUjxhNfep4oYBPqnEssyo.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 500; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+2000-206F, U+20AC, U+2122; }
+    @font-face { font-family: "Inter"; src: url("/fuc/assets/syRNPWzAMIrcJ3wIlPIP43KjQs.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 700; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+2000-206F, U+20AC, U+2122; }
+
+    /* ============ Tokens ============ */
+    :root {
+      --lime: rgb(204, 255, 0);        /* CTA / accent */
+      --black: rgb(0, 0, 0);           /* hero + footer bands */
+      --ink: rgb(18, 10, 11);          /* primary text */
+      --gray: rgb(69, 65, 64);         /* body/secondary text */
+      --off: rgb(248, 244, 241);       /* light card background */
+      --line: rgb(227, 226, 226);      /* hairlines */
+      --blue: rgb(0, 153, 255);        /* text links */
+      --font: "Satoshi", "Inter", -apple-system, "Helvetica Neue", sans-serif;
+      --hand: "Kalam", cursive;
+      --radius: 24px;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font); background: #fff; color: var(--ink); }
+    img { display: block; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ============ Header / Nav ============ */
+    .site-header { position: sticky; top: 0; z-index: 100; max-width: 1200px; margin: 0 auto; padding: 16px 30px; }
+    .nav-shell { background: #fff; border-radius: var(--radius); height: 88px; padding: 16px 70px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .nav-logo img { width: 132px; height: auto; }
+    .nav-links { display: flex; align-items: center; gap: 48px; }
+    .nav-links a { font-size: 16px; font-weight: 500; line-height: 1.7; color: var(--ink); transition: opacity .2s; }
+    .nav-links a:hover { opacity: .6; }
+    .nav-links a.active { font-weight: 700; }
+    .nav-flag { font-size: 16px; line-height: 1; }
+    .btn-pill { display: inline-block; background: var(--lime); color: #000; border-radius: 100px; padding: 12px 30px; font-family: var(--font); font-size: 16px; font-weight: 700; line-height: 1.7; transition: transform .2s ease; white-space: nowrap; }
+    .btn-pill:hover { transform: scale(1.04); }
+
+    /* ============ Dark hero band ============ */
+    .hero { background: var(--black); border-radius: var(--radius); margin: 0 40px; padding: 96px 40px 104px; text-align: center; }
+    .hero .hand { font-family: var(--hand); font-weight: 700; font-size: 19px; color: #fff; margin-bottom: 18px; }
+    .hero h1 { color: #fff; font-size: 64px; font-weight: 700; letter-spacing: -2px; line-height: 1.15; max-width: 900px; margin: 0 auto; }
+    .hero .sub { color: #fff; font-size: 20px; font-weight: 400; line-height: 1.7; opacity: .85; max-width: 640px; margin: 20px auto 0; }
+
+    /* ============ Main shell ============ */
+    .shell { max-width: 1200px; margin: 0 auto; padding: 0 30px; }
+
+    /* ============ Blog index grid ============ */
+    .post-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; padding: 64px 0 96px; }
+    .post-card { background: var(--off); border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column; transition: transform .25s ease; }
+    .post-card:hover { transform: translateY(-4px); }
+    .post-card .card-img { aspect-ratio: 16 / 9; width: 100%; object-fit: cover; }
+    .post-card .card-body { padding: 28px 28px 26px; display: flex; flex-direction: column; gap: 14px; flex: 1; }
+    .tag { display: inline-block; align-self: flex-start; background: var(--lime); color: #000; border-radius: 100px; padding: 4px 14px; font-size: 13px; font-weight: 700; line-height: 1.6; letter-spacing: .2px; }
+    .post-card h2 { font-size: 24px; font-weight: 700; letter-spacing: -0.5px; line-height: 1.25; color: var(--ink); }
+    .post-card p.excerpt { font-size: 16px; line-height: 1.6; color: var(--gray); flex: 1; }
+    .post-card .meta { font-size: 14px; font-weight: 500; color: var(--gray); opacity: .75; }
+
+    /* ============ Article ============ */
+    .post-hero { padding: 72px 40px 80px; }
+    .post-hero .backlink { display: inline-block; color: #fff; opacity: .6; font-size: 15px; font-weight: 500; margin-bottom: 28px; transition: opacity .2s; }
+    .post-hero .backlink:hover { opacity: 1; }
+    .post-hero h1 { font-size: 52px; letter-spacing: -1.5px; }
+    .post-hero .tag { align-self: center; margin-bottom: 22px; }
+    .post-hero .meta { color: #fff; opacity: .65; font-size: 16px; font-weight: 500; margin-top: 22px; }
+    .post-hero .meta span + span::before { content: "·"; margin: 0 10px; }
+
+    article.prose { max-width: 760px; margin: 0 auto; padding: 72px 30px 40px; }
+    .prose h2 { font-size: 36px; font-weight: 700; letter-spacing: -1px; line-height: 1.2; color: var(--ink); margin: 56px 0 20px; }
+    .prose h3 { font-size: 25px; font-weight: 700; letter-spacing: -0.5px; line-height: 1.3; color: var(--ink); margin: 40px 0 14px; }
+    .prose p { font-size: 18px; line-height: 1.75; color: var(--gray); margin: 0 0 22px; }
+    .prose strong { color: var(--ink); font-weight: 700; }
+    .prose a { color: var(--blue); text-decoration: underline; }
+    .prose ul, .prose ol { margin: 0 0 24px; padding-left: 26px; }
+    .prose li { font-size: 18px; line-height: 1.7; color: var(--gray); margin-bottom: 10px; }
+    .prose li::marker { color: var(--ink); }
+    .prose blockquote { border-left: 4px solid var(--lime); background: var(--off); border-radius: 0 16px 16px 0; padding: 24px 28px; margin: 32px 0; }
+    .prose blockquote p { font-size: 19px; font-weight: 500; font-style: italic; color: var(--ink); margin: 0; }
+    .prose blockquote p + p { margin-top: 12px; font-size: 15px; font-style: normal; font-weight: 500; color: var(--gray); }
+    .prose figure { margin: 32px 0; }
+    .prose figure img { border-radius: 16px; }
+    .prose figcaption { font-size: 14px; color: var(--gray); opacity: .75; margin-top: 10px; text-align: center; }
+    .prose hr { border: 0; border-top: 1px solid var(--line); margin: 48px 0; }
+
+    /* tables */
+    .prose .table-wrap { overflow-x: auto; margin: 32px 0; border: 1px solid var(--line); border-radius: 16px; }
+    .prose table { width: 100%; border-collapse: collapse; font-size: 16px; }
+    .prose th { background: var(--off); color: var(--ink); font-weight: 700; text-align: left; padding: 14px 18px; border-bottom: 1px solid var(--line); }
+    .prose td { color: var(--gray); padding: 13px 18px; border-bottom: 1px solid var(--line); line-height: 1.55; }
+    .prose tr:last-child td { border-bottom: 0; }
+
+    /* key-stat callout */
+    .stat-callout { background: var(--black); border-radius: var(--radius); padding: 40px 44px; margin: 36px 0; }
+    .stat-callout .stat-number { font-size: 56px; font-weight: 900; letter-spacing: -1.5px; line-height: 1.1; color: var(--lime); }
+    .stat-callout .stat-label { font-size: 18px; line-height: 1.6; color: #fff; opacity: .85; margin-top: 10px; }
+    .stat-callout .stat-source { font-size: 13px; color: #fff; opacity: .45; margin-top: 14px; }
+
+    /* FAQ */
+    .faq { margin: 56px 0 0; }
+    .faq .faq-item { background: var(--off); border-radius: 16px; padding: 24px 28px; margin-bottom: 14px; }
+    .faq .faq-q { font-size: 20px; font-weight: 700; letter-spacing: -0.3px; color: var(--ink); margin: 0 0 8px; }
+    .faq .faq-a { font-size: 17px; line-height: 1.65; color: var(--gray); margin: 0; }
+    .faq .faq-a a { color: var(--blue); text-decoration: underline; }
+
+    /* Sources */
+    .sources { border-top: 1px solid var(--line); margin-top: 56px; padding-top: 28px; }
+    .sources h2 { font-size: 20px; letter-spacing: -0.3px; margin: 0 0 14px; }
+    .sources ol { padding-left: 22px; margin: 0; }
+    .sources li { font-size: 14px; line-height: 1.7; color: var(--gray); margin-bottom: 6px; }
+    .sources a { color: var(--blue); text-decoration: underline; word-break: break-all; }
+
+    /* Bottom CTA band */
+    .cta-band { background: var(--black); border-radius: var(--radius); margin: 72px 40px 40px; padding: 88px 40px; text-align: center; }
+    .cta-band .hand { font-family: var(--hand); font-weight: 700; font-size: 19px; color: #fff; margin-bottom: 14px; }
+    .cta-band h2 { color: #fff; font-size: 48px; font-weight: 700; letter-spacing: -1.5px; line-height: 1.15; max-width: 720px; margin: 0 auto 16px; }
+    .cta-band p { color: #fff; opacity: .8; font-size: 19px; line-height: 1.7; max-width: 560px; margin: 0 auto 34px; }
+
+    /* ============ Footer ============ */
+    footer.site-footer { background: var(--black); margin-top: 96px; padding: 110px 0 0; }
+    .footer-grid { display: grid; grid-template-columns: 1.35fr 1fr 1.25fr 1fr; gap: 48px; padding-bottom: 88px; }
+    .footer-brand img.footer-logo { width: 132px; height: auto; }
+    .footer-brand .tagline { color: #fff; font-size: 18px; line-height: 1.65; margin-top: 22px; }
+    .footer-brand .backed { color: #fff; font-size: 18px; margin-top: 64px; margin-bottom: 14px; }
+    .footer-brand img.backed-img { width: 191px; height: auto; }
+    .footer-col h4 { color: #fff; font-size: 18px; font-weight: 500; margin-bottom: 22px; }
+    .footer-col ul { list-style: none; }
+    .footer-col li { margin-bottom: 14px; }
+    .footer-col a, .footer-col span { color: rgba(248, 244, 241, .62); font-size: 18px; line-height: 1.5; transition: color .2s; }
+    .footer-col a:hover { color: #fff; }
+    .footer-bottom { border-top: 1px solid rgba(248, 244, 241, .16); padding: 26px 0 44px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+    .footer-bottom .copy { color: var(--off); font-size: 16px; opacity: .85; }
+    .footer-bottom .legal { display: flex; align-items: center; gap: 24px; }
+    .footer-bottom .legal a { color: var(--off); font-size: 16px; opacity: .85; transition: opacity .2s; }
+    .footer-bottom .legal a:hover { opacity: 1; }
+    .footer-bottom img { width: 20px; height: 20px; }
+
+    /* ============ Mobile (Framer breakpoint) ============ */
+    @media (max-width: 809px) {
+      .site-header { padding: 12px 16px; }
+      .nav-shell { height: 72px; padding: 12px 22px; border-radius: 20px; }
+      .nav-links { display: none; }
+      .nav-logo img { width: 108px; }
+      .btn-pill { padding: 10px 22px; font-size: 15px; }
+      .hero { margin: 0 16px; padding: 64px 24px 72px; }
+      .hero h1 { font-size: 40px; letter-spacing: -1.2px; }
+      .hero .sub { font-size: 18px; }
+      .shell { padding: 0 20px; }
+      .post-grid { grid-template-columns: 1fr; gap: 20px; padding: 40px 0 64px; }
+      .post-hero { padding: 56px 24px 60px; }
+      .post-hero h1 { font-size: 34px; letter-spacing: -1px; }
+      .post-hero .meta { font-size: 14px; }
+      article.prose { padding: 48px 20px 24px; }
+      .prose h2 { font-size: 28px; margin: 44px 0 16px; }
+      .prose h3 { font-size: 22px; }
+      .prose p, .prose li { font-size: 17px; }
+      .stat-callout { padding: 30px 26px; }
+      .stat-callout .stat-number { font-size: 42px; }
+      .cta-band { margin: 56px 16px 24px; padding: 64px 24px; }
+      .cta-band h2 { font-size: 32px; letter-spacing: -1px; }
+      footer.site-footer { margin-top: 64px; padding-top: 72px; }
+      .footer-grid { grid-template-columns: 1fr; gap: 40px; padding-bottom: 56px; }
+      .footer-brand .backed { margin-top: 36px; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+    }
+    @media (min-width: 810px) and (max-width: 1099px) {
+      .nav-shell { padding: 16px 36px; }
+      .nav-links { gap: 28px; }
+      .post-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+        /* ============ Authored content blocks ============ */
+    svg text { font-family: var(--font); }
+
+    /* code (fenced blocks + inline) */
+    .prose pre { background: var(--black); border-radius: 20px; padding: 26px 30px; margin: 32px 0; overflow-x: auto; }
+    .prose pre code { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 13.5px; line-height: 1.8; color: rgb(248,244,241); white-space: pre; }
+    .prose p code, .prose li code, .prose td code { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: .9em; background: var(--off); border: 1px solid var(--line); border-radius: 6px; padding: 1px 6px; color: var(--ink); }
+
+    /* 1. :::keystat — big lime number on a black card */
+    .stat-callout { margin: 40px 0; }
+    .stat-callout .stat-number { margin: 0; }
+    .stat-callout .stat-label { margin: 10px 0 0; }
+    .stat-callout .stat-source { border-top: 1px solid rgba(248,244,241,.16); padding-top: 13px; margin: 18px 0 0; }
+    .stat-callout .stat-source .src-lbl { font-weight: 700; opacity: .85; }
+    .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 40px 0; }
+    .stat-grid .stat-callout { margin: 0; padding: 34px 32px; display: flex; flex-direction: column; }
+    .stat-grid .stat-callout .stat-source { margin-top: auto; padding-top: 18px; }
+    .stat-grid .stat-callout .stat-number { font-size: 46px; }
+    .stat-grid .stat-callout .stat-label { font-size: 16.5px; }
+
+    /* 2. :::takeaway — the save-worthy summary */
+    .takeaway { background: var(--off); border-left: 6px solid var(--lime); border-radius: 0 var(--radius) var(--radius) 0; padding: 34px 40px 32px; margin: 44px 0; }
+    .takeaway .tk-head { display: inline-block; background: var(--lime); color: #000; border-radius: 100px; padding: 5px 15px; font-size: 12.5px; font-weight: 700; letter-spacing: 1.7px; text-transform: uppercase; margin: 0 0 20px; }
+    .takeaway ul.tk-list { list-style: none; margin: 0; padding: 0; }
+    .takeaway ul.tk-list li { position: relative; padding-left: 28px; font-size: 17.5px; font-weight: 500; line-height: 1.6; color: var(--ink); margin: 0 0 14px; }
+    .takeaway ul.tk-list li:last-child { margin-bottom: 0; }
+    .takeaway ul.tk-list li::before { content: ""; position: absolute; left: 0; top: 8px; width: 12px; height: 12px; border-radius: 4px; background: var(--lime); box-shadow: inset 0 0 0 1px rgba(18,10,11,.16); }
+    .takeaway a { color: var(--blue); text-decoration: underline; }
+
+    /* 3. :::action — numbered "do this" checklist */
+    .action-block { border: 1px solid var(--line); border-radius: var(--radius); padding: 36px 40px 32px; margin: 44px 0; }
+    .action-block .ab-head { font-size: 24px; font-weight: 700; letter-spacing: -0.6px; line-height: 1.25; color: var(--ink); margin: 0 0 20px; }
+    .action-block ol.ab-list { list-style: none; margin: 0; padding: 0; }
+    .action-block ol.ab-list li { display: flex; align-items: flex-start; gap: 18px; padding: 17px 0; border-top: 1px solid var(--line); margin: 0; }
+    .action-block ol.ab-list li:first-child { border-top: 0; padding-top: 4px; }
+    .action-block ol.ab-list li:last-child { padding-bottom: 2px; }
+    .action-block .ab-num { flex: none; width: 34px; height: 34px; border-radius: 50%; background: var(--lime); color: #000; font-size: 15px; font-weight: 900; display: flex; align-items: center; justify-content: center; }
+    .action-block .ab-text { font-size: 17.5px; line-height: 1.62; color: var(--gray); padding-top: 5px; }
+    .action-block .ab-text strong { color: var(--ink); font-weight: 700; }
+    .action-block a { color: var(--blue); text-decoration: underline; }
+
+    /* 4. :::compare — two-column comparison card */
+    .compare-wrap { margin: 44px 0; }
+    .compare-wrap .cmp-title { font-size: 12.5px; font-weight: 700; letter-spacing: 2.2px; text-transform: uppercase; color: var(--gray); margin: 0 0 14px; }
+    .compare { border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; margin: 0; }
+    .compare .cmp-head, .compare .cmp-row { display: grid; grid-template-columns: 1.02fr 1fr 1fr; }
+    .compare .cmp-head > div, .compare .cmp-row > div { padding: 15px 22px; }
+    .compare .cmp-head { border-bottom: 1px solid var(--line); background: var(--off); }
+    .compare .cmp-head .cmp-col { font-size: 15px; font-weight: 700; line-height: 1.35; color: var(--ink); }
+    .compare .cmp-head .cmp-col.accent { background: var(--lime); color: #000; }
+    .compare .cmp-row + .cmp-row { border-top: 1px solid var(--line); }
+    .compare .cmp-row .cmp-lbl { font-size: 14px; font-weight: 700; line-height: 1.45; color: var(--ink); }
+    .compare .cmp-row .cmp-cell { font-size: 16px; line-height: 1.5; color: var(--gray); }
+    .compare .cmp-row .cmp-cell.accent { background: rgba(204,255,0,.15); color: var(--ink); font-weight: 500; }
+    .compare .cmp-cap { display: none; }
+    .compare a { color: var(--blue); text-decoration: underline; }
+
+    /* 5. :::quote — pull quote */
+    .prose .pullquote { border-left: 5px solid var(--lime); padding: 4px 0 4px 30px; margin: 48px 0; }
+    .prose .pullquote blockquote { background: none; border: 0; border-radius: 0; padding: 0; margin: 0; }
+    .prose .pullquote blockquote p { font-size: 27px; font-weight: 500; font-style: italic; letter-spacing: -0.7px; line-height: 1.36; color: var(--ink); margin: 0; }
+    .prose .pullquote figcaption { font-size: 15px; font-weight: 700; font-style: normal; color: var(--gray); opacity: 1; text-align: left; margin-top: 18px; }
+
+    /* 6. markdown tables */
+    .prose .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 40px 0; border: 1px solid var(--line); border-radius: 20px; }
+    .prose table { width: 100%; min-width: 520px; border-collapse: collapse; font-size: 16px; }
+    .prose thead th { background: var(--off); color: var(--ink); font-size: 13px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; text-align: left; padding: 15px 20px; border-bottom: 2px solid var(--lime); white-space: nowrap; }
+    .prose tbody td { color: var(--gray); padding: 14px 20px; border-bottom: 1px solid var(--line); line-height: 1.55; }
+    .prose tbody tr:nth-child(even) { background: rgba(248,244,241,.7); }
+    .prose tbody tr:last-child td { border-bottom: 0; }
+    .prose tbody td:first-child { color: var(--ink); font-weight: 700; }
+    .prose th:first-child, .prose td:first-child { padding-left: 24px; }
+    .prose th:last-child, .prose td:last-child { padding-right: 24px; }
+    .prose .dense thead th { white-space: normal; font-size: 12px; letter-spacing: 1px; padding: 12px 12px; }
+    .prose .dense td { font-size: 14px; padding: 11px 12px; }
+    .prose .dense th:first-child, .prose .dense td:first-child { padding-left: 18px; }
+    .prose .dense th:last-child, .prose .dense td:last-child { padding-right: 18px; }
+
+    /* 7. :::chart bar — inline SVG bar chart, no library */
+    .chart-card { background: var(--off); border-radius: var(--radius); padding: 32px 36px 28px; margin: 44px 0; }
+    .chart-card .chart-title { font-size: 12.5px; font-weight: 700; letter-spacing: 2.2px; text-transform: uppercase; color: var(--ink); margin: 0 0 24px; }
+    .chart-card svg { display: block; width: 100%; height: auto; overflow: visible; }
+    .chart-card svg.chart-mobile { display: none; }
+    .chart-card .chart-source { font-size: 12.5px; line-height: 1.6; color: var(--gray); opacity: .85; margin: 24px 0 0; border-top: 1px solid var(--line); padding-top: 14px; }
+    .chart-card .chart-source .src-lbl { font-weight: 700; }
+
+    @media (max-width: 809px) {
+      .stat-grid { grid-template-columns: 1fr; gap: 16px; margin: 32px 0; }
+      .stat-grid .stat-callout { padding: 28px 24px; }
+      .stat-grid .stat-callout .stat-number { font-size: 38px; }
+      .stat-callout { margin: 32px 0; }
+
+      .takeaway { padding: 26px 22px 24px; margin: 36px 0; border-left-width: 5px; border-radius: 0 20px 20px 0; }
+      .takeaway ul.tk-list li { font-size: 16.5px; padding-left: 25px; }
+      .takeaway ul.tk-list li::before { width: 11px; height: 11px; top: 7px; }
+
+      .action-block { padding: 28px 22px 24px; margin: 36px 0; border-radius: 20px; }
+      .action-block .ab-head { font-size: 21px; margin-bottom: 14px; }
+      .action-block ol.ab-list li { gap: 14px; padding: 15px 0; }
+      .action-block .ab-num { width: 30px; height: 30px; font-size: 14px; }
+      .action-block .ab-text { font-size: 16.5px; padding-top: 3px; }
+
+      .compare-wrap { margin: 36px 0; }
+      .compare { border-radius: 20px; }
+      .compare .cmp-head { display: none; }
+      .compare .cmp-row { display: block; padding: 16px 18px 8px; }
+      .compare .cmp-row > div { padding: 0; }
+      .compare .cmp-row .cmp-lbl { font-size: 12px; font-weight: 700; letter-spacing: 1.7px; text-transform: uppercase; color: var(--gray); margin-bottom: 10px; }
+      .compare .cmp-row .cmp-cell { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px; margin-bottom: 8px; font-size: 16px; }
+      .compare .cmp-row .cmp-cell.accent { background: rgba(204,255,0,.22); border-color: rgba(204,255,0,.5); }
+      .compare .cmp-cap { display: block; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gray); margin-bottom: 5px; }
+
+      .prose .pullquote { margin: 38px 0; padding-left: 22px; border-left-width: 4px; }
+      .prose .pullquote blockquote p { font-size: 22px; letter-spacing: -0.5px; }
+      .prose .pullquote figcaption { font-size: 14px; margin-top: 14px; }
+
+      .prose .table-wrap { margin: 32px 0; border-radius: 16px; }
+      .prose table { font-size: 15px; }
+      .prose thead th { font-size: 12px; padding: 13px 16px; }
+      .prose tbody td { padding: 12px 16px; }
+      .prose th:first-child, .prose td:first-child { padding-left: 18px; }
+      .prose th:last-child, .prose td:last-child { padding-right: 18px; }
+
+      .chart-card { padding: 24px 20px 20px; margin: 36px 0; border-radius: 20px; }
+      .chart-card .chart-title { margin-bottom: 18px; }
+
+      .prose pre { padding: 20px 18px; border-radius: 16px; }
+      .prose pre code { font-size: 12.5px; }
+    }
+    @media (max-width: 559px) {
+      .chart-card svg.chart-desktop { display: none; }
+      .chart-card svg.chart-mobile { display: block; max-width: 330px; margin: 0 auto; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="nav-shell">
+      <a class="nav-logo" href="/" aria-label="Sabato AI — Home">
+        <img src="/fuc/images/UTATYXc6NipXQRoxyaGHHfHSyA4-f2557e25.png" alt="Sabato AI logo" width="132" height="61">
+      </a>
+      <nav class="nav-links" aria-label="Main">
+        <a href="/#usecases">Use Cases</a>
+        <a href="/pricing">Pricing</a>
+        <a href="/about">About</a>
+        <a href="/contact">Contact</a>
+        <a class="nav-flag" href="/it/blog" aria-label="Versione italiana">🇮🇹</a>
+      </nav>
+      <a class="btn-pill" href="https://cal.com/sabatoai/intro" target="_blank" rel="noopener">Start Free Pilot</a>
+    </div>
+  </header>
+  <section class="hero post-hero">
+    <a class="backlink" href="/blog">← Back to the blog</a>
+    <div style="display:flex;flex-direction:column;align-items:center;">
+      <span class="tag">Returns</span>
+      <h1>How to Reduce Bracketing Returns Without Losing the Sale</h1>
+      <p class="meta"><span>Jul 30, 2026</span><span>7 min read</span><span>By Sabato AI</span><span><a href="/it/blog/reduce-bracketing-returns" style="color:#fff;text-decoration:underline;text-underline-offset:3px;">Leggi in italiano 🇮🇹</a></span></p>
+    </div>
+  </section>
+  <main>
+    <article class="prose">
+<p>A customer wants the 12. She isn't sure your 12 is really a 12, so she buys the 12 and the 14, keeps one, ships the other back. ZigZag and Retail Economics' <em>Annual Returns Benchmark 2024</em> has 27.4% of UK clothing and footwear shoppers doing this on purpose. Every one of them paid for a second unit because your product page would not answer a question.</p>
+<div class="stat-callout"><p class="stat-number">27.4%</p><p class="stat-label">of UK clothing and footwear shoppers deliberately order multiple sizes to return some</p><p class="stat-source"><span class="src-lbl">Source:</span> ZigZag / Retail Economics, Annual Returns Benchmark 2024</p></div>
+<h2>Why is bracketing an information problem and not a logistics one?</h2>
+<p>Bracketing is when a shopper deliberately orders the same item in two or more sizes, intending to return all but one. It lands in your reverse-logistics report, so it gets treated as a reverse-logistics problem. It isn't.</p>
+<p>Sahoo, Dellarocas and Srinivasan documented the mechanism in <em>Information Systems Research</em> in 2018, across two years of transaction-level data from a North American specialty retailer. Where reviews were thin, shoppers bought substitutes alongside the primary purchase to hedge, and returns rose with them. More reviews meant fewer returns. Reviews other shoppers voted helpful meant fewer still.</p>
+<figure class="pullquote"><blockquote><p>The second size is not a behaviour you can police. It is a purchase the customer makes instead of an answer you didn't give her.</p></blockquote></figure>
+<p>Withhold the answer and she buys the hedge. That puts the problem upstream, out of the warehouse and into merchandising.</p>
+<h2>Step 1: Count it. The three-level detection rule for your own data</h2>
+<p>Nobody can tell you your bracket rate. Compute it.</p>
+<p><strong>Level 1 — same order.</strong> One order contains two or more variants of the same parent product differing only in size.</p>
+<pre><code>WITH size_groups AS (
+  SELECT
+    ol.order_id,
+    o.customer_id,
+    v.product_id,
+    v.option_colour,
+    COUNT(DISTINCT v.option_size)   AS distinct_sizes,
+    SUM(ol.qty)                     AS units,
+    SUM(ol.qty * ol.unit_price)     AS gross_value
+  FROM order_lines ol
+  JOIN variants v ON v.variant_id = ol.variant_id
+  JOIN orders   o ON o.order_id   = ol.order_id
+  GROUP BY 1,2,3,4
+)
+SELECT * FROM size_groups
+WHERE distinct_sizes &gt;= 2;         -- the bracket flag
+</code></pre>
+<p>Group by product_id <strong>and colour</strong>. Two colours of the same style is a <em>style</em> hedge, a different question with a different answer. Merge them and you will misdiagnose the fix.</p>
+<p><strong>Level 2 — the short window.</strong> Some customers order, get nervous, and buy the next size up ten minutes later. Self-join the same customer, same product_id and colour, different size, within a window:</p>
+<pre><code>SELECT a.customer_id, a.product_id, a.option_colour,
+       a.order_id AS order_a, b.order_id AS order_b,
+       ABS(EXTRACT(EPOCH FROM (b.created_at - a.created_at)))/3600 AS hours_apart
+FROM order_variant_flat a
+JOIN order_variant_flat b
+  ON  a.customer_id   = b.customer_id
+  AND a.product_id    = b.product_id
+  AND a.option_colour = b.option_colour
+  AND a.option_size  &lt;&gt; b.option_size
+  AND a.order_id      &lt; b.order_id
+WHERE ABS(EXTRACT(EPOCH FROM (b.created_at - a.created_at))) &lt;= 48*3600;
+</code></pre>
+<p>Do not inherit 48 hours from me. Plot hours-between-same-product-different-size orders. You'll see a spike in the first few hours (the hedge) and a long flat tail (genuine repurchase after trying). Cut at the elbow, document the cut, never change it mid-experiment.</p>
+<p><strong>Level 3 — confirmed bracket.</strong> This is the only level with P&amp;L in it: bracket flag AND partial return of the size group.</p>
+<pre><code>bracket_confirmed = (distinct_sizes &gt;= 2)
+                AND (returned_units_in_group &gt;= 1)
+                AND (returned_units_in_group &lt;  units_in_group)
+</code></pre>
+<div class="table-wrap dense"><table>
+<thead>
+<tr>
+<th>Outcome</th>
+<th>Rule</th>
+<th>What it means</th>
+<th>What to do</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Confirmed bracket</td>
+<td>partial return of the size group</td>
+<td>The hedge worked. You paid for it.</td>
+<td>Target with a pre-purchase answer</td>
+</tr>
+<tr>
+<td>Full-group return</td>
+<td>every unit returned</td>
+<td>The product failed, not the size</td>
+<td>Route to merchandising / QA</td>
+</tr>
+<tr>
+<td>Full-group keep</td>
+<td>nothing returned</td>
+<td>Gift, household, genuine multi-buy</td>
+<td>Exclude — this is your false-positive rate</td>
+</tr>
+</tbody>
+</table></div>
+<div class="takeaway"><p class="tk-head">How to measure bracketing</p><ul class="tk-list"><li>Flag orders containing two or more variants of the same parent product and colour that differ only in size (Level 1).</li><li>Add same-customer, same-product orders placed inside a short window (Level 2).</li><li>Confirm the bracket where part, but not all, of that size group comes back (Level 3).</li><li>Group by parent product plus colour, never product alone. There is no published benchmark; you are your own baseline.</li></ul></div>
+<p>Two things will bite you before the analysis does.</p>
+<p><strong>The week-one blocker is data, not SQL.</strong> If option_size isn't a structured variant option, common on migrated Shopify and Magento catalogues, you have a cleaning job before you have a query. Then set your exclusions: gifts (size gap over two steps, or crossing department), promo-bundle SKUs, guest-checkout identity gaps (report your stitch rate honestly, or your Level 2 number is a floor), exchanges booked as returns, marketplace channel, and non-ordinal size systems that need a size_rank lookup first.</p>
+<p><strong>There is no public benchmark for bracketed orders as a share of orders. None.</strong> Every figure in circulation is share-of-<em>returns</em> and vendor-published. Compute monthly for 24 months and segment by style, category, new versus returning, channel and discount depth. The signal isn't the average. It's the variance between styles. Any style running above 1.5× the category median on 200+ orders in 90 days has an unanswered question sitting on its PDP. That list is your fix queue.</p>
+<h2>Step 2: Price it. What one bracketed order actually costs</h2>
+<p>Most operators count two lines: return carriage and a bit of warehouse labour. Here is the full model on a mid-market UK fashion rate card. Every [ASSUMPTION] is a placeholder you replace with your own numbers.</p>
+<div class="table-wrap dense"><table>
+<thead>
+<tr>
+<th>Line</th>
+<th>Value</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ASP per unit</td>
+<td>£40.00</td>
+<td>[ASSUMPTION]</td>
+</tr>
+<tr>
+<td>Gross margin 60% → gross profit</td>
+<td>£24.00</td>
+<td>[ASSUMPTION]</td>
+</tr>
+<tr>
+<td>Incremental outbound shipping (second size, same parcel)</td>
+<td>£0.50</td>
+<td>[ASSUMPTION]</td>
+</tr>
+<tr>
+<td>Incremental pick &amp; pack</td>
+<td>£0.35</td>
+<td>[ASSUMPTION]</td>
+</tr>
+<tr>
+<td>Inbound return carriage</td>
+<td>£3.50</td>
+<td>[ASSUMPTION]</td>
+</tr>
+<tr>
+<td>Goods-in, inspect, steam, re-tag, re-bag, restock</td>
+<td>£2.50</td>
+<td>[ASSUMPTION], anchored to bevh fashion processing</td>
+</tr>
+<tr>
+<td>Payment fee not returned on refund</td>
+<td>£0.80</td>
+<td>Stripe published UK rate + Stripe refund policy</td>
+</tr>
+<tr>
+<td>Depreciation / markdown, 13.1% of goods value</td>
+<td>£5.24</td>
+<td>bevh-Retourenkompendium, citing University of Bamberg</td>
+</tr>
+<tr>
+<td>CS contact: 20% of returns × £4.00 handle cost</td>
+<td>£0.80</td>
+<td>[ASSUMPTION]</td>
+</tr>
+</tbody>
+</table></div>
+<p>Two of those lines are silent, and almost nobody books them. Stripe's support documentation states that processing fees from the original transaction aren't returned when you refund; at the published UK standard card rate of 1.5% + 20p, a refunded £40 item permanently costs you £0.80, buried in payment fees where nobody attributes it to returns. Depreciation is the other, and it's the biggest line here.</p>
+<figure class="chart-card"><p class="chart-title">Where the £13.69 cost of one returned unit goes</p><svg class="chart-desktop" viewBox="0 0 628 448" role="img" aria-label="Depreciation / markdown: £5.24. Inbound return carriage: £3.50. Goods-in, refurb, restock: £2.50. Payment fee not refunded: £0.80. CS contact (allocated): £0.80. Incremental outbound: £0.50. Incremental pick &amp; pack: £0.35."><text x="0" y="12.9" font-size="15" font-weight="700" fill="rgb(18,10,11)">Depreciation / markdown</text><text x="628" y="12.9" text-anchor="end" font-size="15" font-weight="900" fill="rgb(18,10,11)">£5.24</text><rect x="0" y="22" width="628" height="16" rx="8" fill="rgba(18,10,11,.08)"/><rect x="0" y="22" width="628" height="16" rx="8" fill="rgb(204,255,0)"/><text x="0" y="56" font-size="13" fill="rgb(69,65,64)">38% — the line nobody books</text><text x="0" y="92.9" font-size="15" font-weight="700" fill="rgb(18,10,11)">Inbound return carriage</text><text x="628" y="92.9" text-anchor="end" font-size="15" font-weight="900" fill="rgb(18,10,11)">£3.50</text><rect x="0" y="102" width="628" height="16" rx="8" fill="rgba(18,10,11,.08)"/><rect x="0" y="102" width="419.5" height="16" rx="8" fill="rgb(204,255,0)"/><text x="0" y="136" font-size="13" fill="rgb(69,65,64)">the only line the industry optimises</text><text x="0" y="172.9" font-size="15" font-weight="700" fill="rgb(18,10,11)">Goods-in, refurb, restock</text><text x="628" y="172.9" text-anchor="end" font-size="15" font-weight="900" fill="rgb(18,10,11)">£2.50</text><rect x="0" y="182" width="628" height="16" rx="8" fill="rgba(18,10,11,.08)"/><rect x="0" y="182" width="299.6" height="16" rx="8" fill="rgb(204,255,0)"/><text x="0" y="234.9" font-size="15" font-weight="700" fill="rgb(18,10,11)">Payment fee not refunded</text><text x="628" y="234.9" text-anchor="end" font-size="15" font-weight="900" fill="rgb(18,10,11)">£0.80</text><rect x="0" y="244" width="628" height="16" rx="8" fill="rgba(18,10,11,.08)"/><rect x="0" y="244" width="95.9" height="16" rx="8" fill="rgb(204,255,0)"/><text x="0" y="296.9" font-size="15" font-weight="700" fill="rgb(18,10,11)">CS contact (allocated)</text><text x="628" y="296.9" text-anchor="end" font-size="15" font-weight="900" fill="rgb(18,10,11)">£0.80</text><rect x="0" y="306" width="628" height="16" rx="8" fill="rgba(18,10,11,.08)"/><rect x="0" y="306" width="95.9" height="16" rx="8" fill="rgb(204,255,0)"/><text x="0" y="358.9" font-size="15" font-weight="700" fill="rgb(18,10,11)">Incremental outbound</text><text x="628" y="358.9" text-anchor="end" font-size="15" font-weight="900" fill="rgb(18,10,11)">£0.50</text><rect x="0" y="368" width="628" height="16" rx="8" fill="rgba(18,10,11,.08)"/><rect x="0" y="368" width="59.9" height="16" rx="8" fill="rgb(204,255,0)"/><text x="0" y="420.9" font-size="15" font-weight="700" fill="rgb(18,10,11)">Incremental pick &amp; pack</text><text x="628" y="420.9" text-anchor="end" font-size="15" font-weight="900" fill="rgb(18,10,11)">£0.35</text><rect x="0" y="430" width="628" height="16" rx="8" fill="rgba(18,10,11,.08)"/><rect x="0" y="430" width="41.9" height="16" rx="8" fill="rgb(204,255,0)"/></svg><svg class="chart-mobile" viewBox="0 0 310 420" role="img" aria-label="Depreciation / markdown: £5.24. Inbound return carriage: £3.50. Goods-in, refurb, restock: £2.50. Payment fee not refunded: £0.80. CS contact (allocated): £0.80. Incremental outbound: £0.50. Incremental pick &amp; pack: £0.35."><text x="0" y="12.04" font-size="14" font-weight="700" fill="rgb(18,10,11)">Depreciation / markdown</text><text x="310" y="12.04" text-anchor="end" font-size="14" font-weight="900" fill="rgb(18,10,11)">£5.24</text><rect x="0" y="21" width="310" height="15" rx="7.5" fill="rgba(18,10,11,.08)"/><rect x="0" y="21" width="310" height="15" rx="7.5" fill="rgb(204,255,0)"/><text x="0" y="53" font-size="12" fill="rgb(69,65,64)">38% — the line nobody books</text><text x="0" y="87.04" font-size="14" font-weight="700" fill="rgb(18,10,11)">Inbound return carriage</text><text x="310" y="87.04" text-anchor="end" font-size="14" font-weight="900" fill="rgb(18,10,11)">£3.50</text><rect x="0" y="96" width="310" height="15" rx="7.5" fill="rgba(18,10,11,.08)"/><rect x="0" y="96" width="207.1" height="15" rx="7.5" fill="rgb(204,255,0)"/><text x="0" y="128" font-size="12" fill="rgb(69,65,64)">the only line the industry optimises</text><text x="0" y="162.04" font-size="14" font-weight="700" fill="rgb(18,10,11)">Goods-in, refurb, restock</text><text x="310" y="162.04" text-anchor="end" font-size="14" font-weight="900" fill="rgb(18,10,11)">£2.50</text><rect x="0" y="171" width="310" height="15" rx="7.5" fill="rgba(18,10,11,.08)"/><rect x="0" y="171" width="147.9" height="15" rx="7.5" fill="rgb(204,255,0)"/><text x="0" y="220.04" font-size="14" font-weight="700" fill="rgb(18,10,11)">Payment fee not refunded</text><text x="310" y="220.04" text-anchor="end" font-size="14" font-weight="900" fill="rgb(18,10,11)">£0.80</text><rect x="0" y="229" width="310" height="15" rx="7.5" fill="rgba(18,10,11,.08)"/><rect x="0" y="229" width="47.3" height="15" rx="7.5" fill="rgb(204,255,0)"/><text x="0" y="278.04" font-size="14" font-weight="700" fill="rgb(18,10,11)">CS contact (allocated)</text><text x="310" y="278.04" text-anchor="end" font-size="14" font-weight="900" fill="rgb(18,10,11)">£0.80</text><rect x="0" y="287" width="310" height="15" rx="7.5" fill="rgba(18,10,11,.08)"/><rect x="0" y="287" width="47.3" height="15" rx="7.5" fill="rgb(204,255,0)"/><text x="0" y="336.04" font-size="14" font-weight="700" fill="rgb(18,10,11)">Incremental outbound</text><text x="310" y="336.04" text-anchor="end" font-size="14" font-weight="900" fill="rgb(18,10,11)">£0.50</text><rect x="0" y="345" width="310" height="15" rx="7.5" fill="rgba(18,10,11,.08)"/><rect x="0" y="345" width="29.6" height="15" rx="7.5" fill="rgb(204,255,0)"/><text x="0" y="394.04" font-size="14" font-weight="700" fill="rgb(18,10,11)">Incremental pick &amp; pack</text><text x="310" y="394.04" text-anchor="end" font-size="14" font-weight="900" fill="rgb(18,10,11)">£0.35</text><rect x="0" y="403" width="310" height="15" rx="7.5" fill="rgba(18,10,11,.08)"/><rect x="0" y="403" width="20.7" height="15" rx="7.5" fill="rgb(204,255,0)"/></svg><p class="chart-source"><span class="src-lbl">Source:</span> worked model above — bevh-Retourenkompendium; Stripe UK pricing and refund policy</p></figure>
+<p>Now the bracketed order. Two units at £40. Keeps one, returns one.</p>
+<div class="compare-wrap"><p class="cmp-title">One order, two outcomes</p><div class="compare"><div class="cmp-head"><div class="cmp-lbl"></div><div class="cmp-col">Bracketed order</div><div class="cmp-col accent">Right size, first time</div></div><div class="cmp-row"><div class="cmp-lbl">Units bought</div><div class="cmp-cell"><span class="cmp-cap">Bracketed order</span><span class="cmp-val">2</span></div><div class="cmp-cell accent"><span class="cmp-cap">Right size, first time</span><span class="cmp-val">1</span></div></div><div class="cmp-row"><div class="cmp-lbl">Gross profit on the kept unit</div><div class="cmp-cell"><span class="cmp-cap">Bracketed order</span><span class="cmp-val">£24.00</span></div><div class="cmp-cell accent"><span class="cmp-cap">Right size, first time</span><span class="cmp-val">£24.00</span></div></div><div class="cmp-row"><div class="cmp-lbl">Cost of the returned unit</div><div class="cmp-cell"><span class="cmp-cap">Bracketed order</span><span class="cmp-val">−£13.69</span></div><div class="cmp-cell accent"><span class="cmp-cap">Right size, first time</span><span class="cmp-val">£0.00</span></div></div><div class="cmp-row"><div class="cmp-lbl">Net contribution</div><div class="cmp-cell"><span class="cmp-cap">Bracketed order</span><span class="cmp-val">£10.31</span></div><div class="cmp-cell accent"><span class="cmp-cap">Right size, first time</span><span class="cmp-val">£24.00</span></div></div></div></div>
+<p>The fit question you didn't answer costs 57% of the gross profit on that order.</p>
+<p>£13.69 sits inside the £10–£20 per-return range ZigZag and Retail Economics published for UK non-food in 2024, though their range also carries lost-sale opportunity cost and mine doesn't. Treat it as a sanity check on the order of magnitude, not a match.</p>
+<p>Look at which line dominates. Return carriage, the thing the entire industry optimises, is £3.50 of £13.69 — 26%. Depreciation is 38%. Renegotiate reverse logistics down to literally zero and you still carry £10.19 of cost on every bracketed order.</p>
+<p>One warning, because it is the most common error in returns content: £10–£20 (ZigZag 2024, includes lost-sale opportunity cost) and €2.85 (Bamberg/EUROM, 2020–21, transport and handling only) are not two estimates of the same thing. They are two different cost boundaries. Pick one, state it, stick to it.</p>
+<h2>Step 3: Do the break-even before you deter anyone</h2>
+<p>You can always drive return rate down by making it harder to buy. The question is how much deterrence you can afford.</p>
+<p>Let G = gross profit per kept unit, C = net cost of a returned unit, s = the share of would-be bracketers who still buy after your intervention, k = their keep rate afterwards.</p>
+<pre><code>Break-even survival rate:  s* = (G − C) / ( k·G − (1−k)·C )
+</code></pre>
+<p><strong>Case A — perfect information, k = 1.</strong></p>
+<pre><code>s* = (24.00 − 13.69) / 24.00 = 10.31 / 24.00 = 43%
+</code></pre>
+<p>An intervention that eliminates bracketing pays only if at least 43 of every 100 would-be bracketers still buy. If more than 57 walk, you made yourself poorer while the returns dashboard turned green.</p>
+<p><strong>Case B — a £3.95 returns fee, the ASOS rate.</strong> The fee recovers £3.95, so net C = £9.74. Assume k = 0.9:</p>
+<pre><code>s* = 10.31 / (0.9 × 24.00 − 0.1 × 9.74) = 10.31 / 20.626 = 50%
+</code></pre>
+<div class="stat-grid"><div class="stat-callout"><p class="stat-number">43%</p><p class="stat-label">of would-be bracketers must still buy for a perfect-information fix to break even</p><p class="stat-source"><span class="src-lbl">Source:</span> worked example — £40 ASP, 60% margin, £13.69 cost per return</p></div><div class="stat-callout"><p class="stat-number">50%</p><p class="stat-label">must still buy if you charge a £3.95 returns fee instead</p><p class="stat-source"><span class="src-lbl">Source:</span> same model, fee recovered against the return cost</p></div></div>
+<p>A returns fee needs half your would-be bracketers to keep buying. The one deterrence survey available (Trustpilot/OnePoll, 2023, US, stated intent rather than observed behaviour) has 49% of shoppers claiming they won't buy from retailers who charge for returns. You are being asked to bet the P&amp;L on a coin flip.</p>
+<p><strong>Case C — answer the question instead of deterring it.</strong> Take 100 bracketers. Say 70 now buy a single size (keeping 90% of them), 25 still bracket, 5 buy nothing.</p>
+<pre><code>70 buy →  63 kept × £24.00     = £1,512.00
+       →   7 returned × £13.69 =  − £95.83
+25 still bracket × £10.31      =  + £257.75
+ 5 buy nothing                 =       £0.00
+                        Total  =  £1,673.92
+
+Baseline: 100 × £10.31         =  £1,031.00
+Uplift                         =  + £642.92  (+62.4%)
+</code></pre>
+<p>Answering the question is worth +62% contribution on that cohort. Suppressing the behaviour is worth, at best, break-even.</p>
+<p>I charge the full £13.69 to those 7 single-size returns even though £0.85 of it — the outbound shipping and pick-and-pack on a second unit — was never incurred. That understates the uplift. I'd rather round against my own argument.</p>
+<div class="takeaway"><p class="tk-head">Before you charge a returns fee</p><ul class="tk-list"><li>On a £40 item at 60% margin with a £13.69 cost per returned unit, killing bracketing outright pays only if roughly 43% of would-be bracketers still buy.</li><li>A £3.95 fee needs about 50% — and one survey has 49% of shoppers saying fees stop them buying.</li><li>43% and 50% fall out of this example, not a law of nature. Rebuild the thresholds on your own rate card before you deter anyone.</li></ul></div>
+<p>And note the counterweight: Balaram, Perdikaki and Galbreth showed in <em>Naval Research Logistics</em> in 2022 that bracketing cuts both ways, raising reverse-logistics cost while reducing fit hesitation and driving volume. Which is why you compute your own threshold instead of borrowing mine.</p>
+<h2>Step 4: Sort your reason codes into what you can answer and what you can't</h2>
+<p>Before you spend a penny on tooling, re-map your existing reason codes into these six buckets.</p>
+<div class="table-wrap dense"><table>
+<thead>
+<tr>
+<th>Bucket</th>
+<th>Example codes</th>
+<th>Answerable pre-purchase?</th>
+<th>Owner</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>A. Dimensional fit</strong></td>
+<td>too small, sleeves short, waist gapes</td>
+<td>Fully, given garment measurements</td>
+<td>Product data</td>
+</tr>
+<tr>
+<td><strong>B. Fit character / drape</strong></td>
+<td>"boxy", "runs small", "not true to size"</td>
+<td>Yes — but only by someone who has worn it</td>
+<td>UGC, clienteling, conversation</td>
+</tr>
+<tr>
+<td><strong>C. Spec / material</strong></td>
+<td>weight, opacity, stretch, warmth</td>
+<td>Yes. Pure information gap</td>
+<td>PDP copy and Q&amp;A</td>
+</tr>
+<tr>
+<td><strong>D. Expectation mismatch</strong></td>
+<td>colour differs from photo, looked cheaper</td>
+<td>Partly, and more media can make it worse</td>
+<td>Merchandising</td>
+</tr>
+<tr>
+<td><strong>E. Taste / occasion</strong></td>
+<td>"didn't like it", changed my mind</td>
+<td>No. Stop trying</td>
+<td>Nobody</td>
+</tr>
+<tr>
+<td><strong>F. Product or ops failure</strong></td>
+<td>faulty, wrong item sent</td>
+<td>No. Different problem entirely</td>
+<td>QA / warehouse</td>
+</tr>
+</tbody>
+</table></div>
+<p>On bucket D, resist the reflex to add content. De, Hu and Rahman's 2013 econometric study of a women's clothing retailer found that zoom usage reduced returns while <em>alternative photos increased them</em>. More media is not monotonically better.</p>
+<p>Two rules.</p>
+<p><strong>Only A, B and C are in scope for a pre-purchase intervention.</strong> If your taxonomy has a single bucket called "size/fit", you cannot separate A from B, and a size chart structurally cannot fix B. If free-text "other" is more than 15% of volume, that's job one; B and C are usually hiding in there.</p>
+<p><strong>Almost no returns portal offers a code that says "I ordered two sizes on purpose."</strong> So bracketed returns get logged as "too small", pollute your fit-failure signal, and aim your PDP fixes at the wrong styles. Add the code. ZigZag's 27.4% exists because somebody asked the question directly. Your portal never does.</p>
+<h2>Step 5: Rank the interventions by evidence and speed to ship</h2>
+<div class="table-wrap dense"><table>
+<thead>
+<tr>
+<th>Intervention</th>
+<th>Cost</th>
+<th>Time to ship</th>
+<th>Bucket</th>
+<th>Evidence (grade)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Model measurements + "model wears size X"</td>
+<td>~£0</td>
+<td>days</td>
+<td>A</td>
+<td>Baymard #10 (independent UX)</td>
+</tr>
+<tr>
+<td>Garment measurements + size guide next to the selector</td>
+<td>labour</td>
+<td>2–6 wks</td>
+<td>A</td>
+<td>Baymard #3–#7; NN/g 2022 (independent UX)</td>
+</tr>
+<tr>
+<td>Aggregate fit subscore + structured "runs small" reviews</td>
+<td>low SaaS</td>
+<td>2–6 wks</td>
+<td><strong>B</strong></td>
+<td>Sahoo et al. 2018 (<strong>peer-reviewed — strongest</strong>)</td>
+</tr>
+<tr>
+<td>Bracketing checkout nudge</td>
+<td>one sprint</td>
+<td>1–3 wks</td>
+<td>A/B</td>
+<td>SAIZ, True Fit (vendor only, unquantified)</td>
+</tr>
+<tr>
+<td>Fit finder / size recommender</td>
+<td>SaaS</td>
+<td>4–12 wks</td>
+<td>A</td>
+<td>Zalando −10%; Fit Analytics A/B (first-party + vendor)</td>
+</tr>
+<tr>
+<td>Lengthen your returns window</td>
+<td>£0 + WC drag</td>
+<td>days</td>
+<td>endowment</td>
+<td>Janakiraman et al. 2016 (peer-reviewed meta)</td>
+</tr>
+<tr>
+<td>Returns fee</td>
+<td>£0</td>
+<td>days</td>
+<td>suppression</td>
+<td>Contradictory; 50% break-even (weak)</td>
+</tr>
+<tr>
+<td>Virtual try-on</td>
+<td>high SaaS</td>
+<td>8–16 wks</td>
+<td>A/D</td>
+<td>None credible (poor)</td>
+</tr>
+<tr>
+<td>Shift payment mix away from BNPL</td>
+<td>revenue risk</td>
+<td>quarters</td>
+<td>structural</td>
+<td>30.15% returns prepaid vs 55.65% invoice — Bamberg (correlational)</td>
+</tr>
+<tr>
+<td><a href="/use-cases/pre-sales-consultation">Pre-purchase conversation (Sabato)</a></td>
+<td>SaaS</td>
+<td>weeks</td>
+<td>A/B/C</td>
+<td>Baymard #9; EHI 48% (<strong>hypothesis — no third-party evidence</strong>)</td>
+</tr>
+</tbody>
+</table></div>
+<p>Time-to-ship ranges are my estimate from implementation experience, not vendor-published numbers.</p>
+<p>Rows 1 and 2 are free or nearly free, and everything downstream depends on them: fit tools, chatbots and agents are all garbage-in, garbage-out on garment measurements. Baymard's 2022 testing found 83% of desktop apparel sites give shoppers insufficient sizing information, so assume you are one of them until you've checked. Row 3 is the best-evidenced item here, and it carries a warning from the same paper. Showing average ratings <em>higher</em> than the true rating increased returns. Suppressing negative fit reviews is actively harmful.</p>
+<p>The checkout nudge is the Level 1 rule from Step 1, run against the cart object: roughly twenty lines of JS plus a variant-to-parent lookup, shippable in a sprint. <strong>Design rule: the nudge must answer the question, never block or shame.</strong> Removing the second size removes the hedge. Answering removes the <em>need</em> for the hedge. Vendors ship this; none of them publish numbers.</p>
+<p>Be honest about the evidence on fit finders. The credible figure is Zalando's own July 2023 claim of a 10% reduction in size-related returns where its size advice is available. The credible <em>methodology</em> is Fit Analytics' A/B with THE ICONIC: 250,000 shoppers, three months, measured as revenue after returns. The "+150% conversion" and "−50% bracketing" numbers circulating elsewhere are unaudited vendor marketing.</p>
+<p>Two rows deserve a second look. Lengthening your returns window is free and counter-intuitive: Janakiraman, Syrdal and Freling's 2016 meta-analysis of 21 papers found <em>time</em> leniency reduces returns via the endowment effect, while scope leniency increases them. Operators under returns pressure shorten the window. That's backwards.</p>
+<p>And if you are going to charge, steal ASOS's mechanism rather than the headline. ASOS computes a personal return rate per customer on a rolling 12 months and charges £3.95 above 70% with three or more orders — <strong>unless you keep more than £40 of the order.</strong> That threshold means ASOS isn't punishing returns, it's punishing low basket retention. Bracketing a £60 dress and keeping it is free. Then go back and run your own s*.</p>
+<p>Virtual try-on is the biggest gap between hype and evidence on the list, and not a first move. The only sourced datapoint is negative: in EHI's German retailer survey (~2019), virtual fitting tools were rated effective by 34%, below personal consultation at 48%.</p>
+<p>On the payment row: before you touch your PDP, segment your bracket rate by payment method. If BNPL is 40% of your fashion orders, that's a bigger structural driver than your size chart. German data, correlational, and the self-selection is obvious — people who plan to return choose invoice. Don't read it as causal.</p>
+<p><strong>On the Sabato row.</strong> Our thesis: a pre-purchase conversation removes the need for the hedge. Vanity sizing gives a deterministic algorithm a ceiling. The residual question is a judgement call: does this brand's 12 run like your usual 12? Nobody has published evidence that a conversation reduces bracketing, us included. The honest supports are Baymard listing a customer-service link inside the size guide as a <em>sizing</em> best practice, and retailers ranking personal consultation above virtual try-on. Treat it as a hypothesis. Falsify it with the design below: power on confirmed-bracket rate, guardrail on new-customer order rate.</p>
+<h2>Step 6: Test it properly, or you'll ship the wrong thing</h2>
+<p><strong>Never ship on return rate alone.</strong> You can drive return rate to zero by shipping nothing. Return rate cannot tell a demand-suppression path from a demand-neutral one, which is the entire question.</p>
+<p><strong>Pick the OEC.</strong> Kohavi, Tang and Xu's <em>Trustworthy Online Controlled Experiments</em> (2020): one Overall Evaluation Criterion, plus guardrails that must not degrade. Use net contribution per session — (kept units × gross profit − returned units × C) ÷ sessions. Primary: kept units per session. Diagnostic: confirmed-bracket rate. Guardrails: order rate, <strong>new-customer order rate</strong> (new customers bracket most and are the ones a fee scares off), AOV, CS contact rate. Units per order may legitimately fall. That's the point.</p>
+<p><strong>Randomise by user, sticky, never by session.</strong> The same shopper must see one experience across browse, cart and return, or your bracket detection straddles both arms. Never test at product level either; shoppers cross styles in a single session and contaminate both.</p>
+<p><strong>The power problem, stated honestly.</strong> Detecting a 1pp drop in confirmed-bracket rate from an assumed 8% base — plug in your own — needs about 11,800 orders per arm, reachable in a quarter for most mid-market brands. Detecting a 3% lift in revenue per session, on a mean of £2.00 with a standard deviation of £12.00, needs 640,000 sessions per arm. You cannot power the money metric. So run a two-tier readout: power the test on the diagnostic, treat revenue as a directional guardrail with a wide interval, and never let an underpowered "revenue up 4%" become the business case.</p>
+<p><strong>The lag trap.</strong> You cannot read returns metrics until the window has closed. Freeze the exposure cohort, then wait return_window + 21 days. Report interim results on order-side metrics only, and label them interim.</p>
+<p><strong>Pre-register the confounds.</strong> Seasonality (never straddle a sale boundary), promo depth, new-versus-returning mix, catalogue turnover (fashion assortment turns in six to eight weeks), novelty decay (discard week one), and multiple comparisons — five metrics across eight segments is forty tests and you will find "significance."</p>
+<h2>Does this apply outside fashion?</h2>
+<p>The mechanism generalises: when a decisive pre-purchase question goes unanswered, the shopper buys a hedge or doesn't buy at all. In fashion the hedge is a second size. At higher ASPs the hedge becomes too expensive to buy, so the failure mode shifts from <em>return</em> to <em>non-purchase</em> — invisible in returns data, visible only in PDP exit rate and pre-purchase contact volume.</p>
+<div class="table-wrap dense"><table>
+<thead>
+<tr>
+<th>Category</th>
+<th>The unanswered question</th>
+<th>The hedge</th>
+<th>How to detect it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Furniture</td>
+<td>Will it fit through the door, up the stairs, in the alcove?</td>
+<td>Swatch first, two finishes, or abandon</td>
+<td>Multi-variant same-parent in one order</td>
+</tr>
+<tr>
+<td>Appliances</td>
+<td>Aperture, door reversal, plumbing fit</td>
+<td>Rarely brackets — calls or abandons</td>
+<td>Pre-purchase contact rate per SKU</td>
+</tr>
+<tr>
+<td>Bikes</td>
+<td>Frame size, and I'm between two</td>
+<td>Two frame sizes where returns are free</td>
+<td>Same model, two sizes, ≤7 days</td>
+</tr>
+<tr>
+<td>Auto parts</td>
+<td>Does it fit <em>my</em> vehicle?</td>
+<td>Two variants, or buys from whoever guarantees fit</td>
+<td>Two variants of one part family, one order</td>
+</tr>
+<tr>
+<td>B2B spec-driven</td>
+<td>Tolerance, certification, interoperability</td>
+<td>Samples of two or three specs</td>
+<td>Sample orders, multi-spec carts</td>
+</tr>
+</tbody>
+</table></div>
+<p>The proof point is in parts. In February 2023 eBay Motors launched Guaranteed Fit: enter your vehicle, get a green "Fits" checkmark, and if the part doesn't fit, eBay covers return shipping and refunds you. eBay then bought the myFitment group to keep the compatibility data right. A business eBay describes as $10bn+ in annual GMV underwrote the fitment answer with its own balance sheet. Nobody does that for a logistics problem. They do it for a conversion problem.</p>
+<p>No credible bracket-rate benchmark exists in any of these categories. The argument here is structural, not statistical.</p>
+<div class="action-block"><p class="ab-head">Your next 30 days</p><ol class="ab-list"><li><span class="ab-num">1</span><span class="ab-text">Days 1–3: check whether option_size is a structured variant option. If it isn't, that's your whole first week.</span></li><li><span class="ab-num">2</span><span class="ab-text">Days 3–7: run the Level 1 query across 24 months. Segment by style. Build the &gt;1.5×-median fix queue.</span></li><li><span class="ab-num">3</span><span class="ab-text">Days 3–7, in parallel, zero cost: pull the last 500 pre-purchase CS contacts, tag each with the question it asked, sort by frequency. Every top-10 question answered nowhere on the PDP is a hedge or an abandonment you're paying for.</span></li><li><span class="ab-num">4</span><span class="ab-text">Week 2: rebuild the cost model on your own rate card. Compute your s*.</span></li><li><span class="ab-num">5</span><span class="ab-text">Week 2: re-map reason codes to A–F. Add the "ordered two sizes on purpose" code.</span></li><li><span class="ab-num">6</span><span class="ab-text">Weeks 3–4: ship the free stuff — model measurements, size worn, size guide beside the selector, CS link inside the size guide.</span></li><li><span class="ab-num">7</span><span class="ab-text">Week 4: pre-register one test on the top style in the queue. Pick the OEC before you build anything.</span></li></ol></div>
+<p>Bracketing isn't a returns problem you process. It's a question you didn't answer, and you can find out exactly which question by Friday.</p>
+<section class="faq"><h2>FAQ</h2>
+
+</section><section class="sources"><h2>Sources</h2>
+<ul>
+<li>Sahoo, Dellarocas &amp; Srinivasan (2018), <em>The Impact of Online Product Reviews on Product Returns</em>, Information Systems Research — <a href="https://ideas.repec.org/a/inm/orisre/v29y2018i3p723-738.html">ideas.repec.org</a></li>
+<li>De, Hu &amp; Rahman (2013), <em>Product-Oriented Web Technologies and Product Returns</em>, Information Systems Research — <a href="https://econpapers.repec.org/article/inmorisre/v_3a24_3ay_3a2013_3ai_3a4_3ap_3a998-1010.htm">econpapers.repec.org</a></li>
+<li>Balaram, Perdikaki &amp; Galbreth (2022), <em>Bracketing of purchases to manage size uncertainty</em>, Naval Research Logistics — <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3823892">SSRN</a></li>
+<li>Janakiraman, Syrdal &amp; Freling (2016), <em>The Effect of Return Policy Leniency on Consumer Purchase and Return Decisions</em>, Journal of Retailing — <a href="https://news.utdallas.edu/business-management/researchers-examine-effect-of-return-policies-on-c">UT Dallas</a></li>
+<li>ZigZag / Retail Economics, <em>Annual Returns Benchmark 2024</em> — <a href="https://info.zigzag.global/hubfs/Annual-Returns-Benchmark-Report-2024-ZigZag.pdf">PDF</a></li>
+<li>bevh-Retourenkompendium, 2. Auflage (citing University of Bamberg returns research and EHI Retail Institute retailer survey, ~2019) — <a href="https://bevh.org/fileadmin/user_upload/Studien/Retourenkompendium/Final_2._Auflage_Retourenkompendium_41_.pdf">PDF</a></li>
+<li>University of Bamberg, EUROM project (n=411 European retailers, 2020–21) — <a href="https://www.retourenforschung.de/forschungsprojekt-eurom-2122.html">retourenforschung.de</a></li>
+<li>Baymard Institute (2022), <em>Apparel: 10 Best Practices on Sizing</em> — <a href="https://baymard.com/blog/apparel-size-information">baymard.com</a></li>
+<li>Baymard Institute (2024), <em>Always Provide an Aggregate Fit Subscore</em> — <a href="https://baymard.com/blog/apparel-provide-aggregate-fit-subscore-in-reviews">baymard.com</a></li>
+<li>Nielsen Norman Group (2022), <em>Size Guides and Product Measurements for International Shoppers</em> — <a href="https://www.nngroup.com/articles/sizes-measurements-ecommerce/">nngroup.com</a></li>
+<li>Zalando (2023), <em>Size recommendations based on customers' own body measurements</em> — <a href="https://corporate.zalando.com/en/technology/zalando-launches-size-recommendations-based-customers-own-body-measurements">corporate.zalando.com</a></li>
+<li>Fit Analytics, THE ICONIC case study (vendor) — <a href="https://fitanalytics.com/case-studies/the-iconic">fitanalytics.com</a></li>
+<li>True Fit, ASICS case study (vendor) — <a href="https://info.truefit.com/asics-case-study">truefit.com</a></li>
+<li>SAIZ, <em>Automated checkout nudges to stop bracketing</em> (vendor) — <a href="https://www.saiz.io/checkout-nudges">saiz.io</a></li>
+<li>ASOS, <em>What is your Fair Use Policy</em> — <a href="https://www.asos.com/customer-care/returns-refunds/what-is-your-fair-use-policy">asos.com</a></li>
+<li>Trustpilot / OnePoll (2023), US online shopper survey — <a href="https://corporate.trustpilot.com/press/news/a-quarter-of-americans-admit-to-buying-more-to-save">trustpilot.com</a></li>
+<li>Stripe, <em>Understanding fees for refunded payments</em> — <a href="https://support.stripe.com/questions/understanding-fees-for-refunded-payments">support.stripe.com</a></li>
+<li>Stripe UK pricing — <a href="https://stripe.com/gb/pricing">stripe.com</a></li>
+<li>eBay Motors (2023), <em>eBay Guaranteed Fit launch</em> — <a href="https://www.stocktitan.net/news/EBAY/e-bay-motors-launches-new-purchase-protections-for-auto-parts-y44cw5yq6mdz.html">stocktitan.net</a></li>
+<li>eBay acquires the myFitment group — <a href="https://www.stocktitan.net/news/EBAY/e-bay-acquires-the-my-fitment-group-of-companies-to-enhance-part-and-fj5wzm5b5dan.html">stocktitan.net</a></li>
+<li>Kohavi, Tang &amp; Xu (2020), <em>Trustworthy Online Controlled Experiments</em> — <a href="https://experimentguide.com/wp-content/uploads/TrustworthyOnlineControlledExperiments_PracticalGuideToABTesting_Chapter1.pdf">experimentguide.com</a></li>
+</ul>
+</section>
+    </article>
+    <section class="cta-band">
+      <p class="hand">hear it for yourself</p>
+      <h2>Put a voice layer on your e-commerce.</h2>
+      <p>We build it, we run it, you see the numbers. Live in two weeks.</p>
+      <a class="btn-pill" href="https://cal.com/sabatoai/intro" target="_blank" rel="noopener">Start Free Pilot</a>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <div class="shell">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="/" aria-label="Sabato AI — Home">
+            <img class="footer-logo" src="/fuc/images/KY1UqOX7zKeKJdbxTotIopeeZIU-f2557e25.png" alt="Sabato AI logo" width="132" height="61">
+          </a>
+          <p class="tagline">The #1 managed Voice AI <br>for E-Commerce.</p>
+          <p class="backed">Backed by</p>
+          <img class="backed-img" src="/fuc/images/V9nq776DtkEODcun83ayNz0liCU-28058054.webp" alt="ElevenLabs Grants" width="191" height="16">
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/pricing">Pricing</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/contact">Contact us</a></li>
+            <li><a href="https://cal.com/sabatoai/intro" target="_blank" rel="noopener">Book a Demo</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Use Cases</h4>
+          <ul>
+            <li><a href="/#usecases">Pre-Sales Consultation</a></li>
+            <li><a href="/#usecases">Cart Abandonment Recovery</a></li>
+            <li><a href="/#usecases">Where Is My Order</a></li>
+            <li><a href="/#usecases">Qualify &amp; Collect for Quote</a></li>
+            <li><a href="/#usecases">Open a Complaint</a></li>
+            <li><a href="/#usecases">Checkout Summary via Text</a></li>
+            <li><a href="/#usecases">Managing Returns</a></li>
+            <li><a href="/#usecases">Post-Delivery Feedback</a></li>
+            <li><a href="/#usecases">Back-in-Stock Notification</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Industries</h4>
+          <ul>
+            <li><span>Home Improvement</span></li>
+            <li><span>Automotive &amp; Parts</span></li>
+            <li><span>Electronics &amp; Tech</span></li>
+            <li><span>Furniture &amp; Home</span></li>
+            <li><span>Outdoor &amp; Garden</span></li>
+            <li><span>Fashion &amp; Apparel</span></li>
+            <li><span>Health &amp; Wellness</span></li>
+            <li><span>Sports &amp; Fitness</span></li>
+            <li><span>Industrial &amp; B2B</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="copy">© 2026 Sabato LTD - 71-75, Shelton Street, Covent Garden, London (UK) - All rights reserved.</p>
+        <div class="legal">
+          <a href="/terms">Terms and Conditions</a>
+          <a href="/privacy-policy">Privacy and Cookies</a>
+          <a href="https://www.linkedin.com/company/sabato-ai" target="_blank" rel="noopener" aria-label="Sabato AI on LinkedIn">
+            <img src="/fuc/images/3vdzRTYV1XV6UUX6QKcsDIfU-e464e3f1.svg" alt="LinkedIn" width="20" height="20">
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+<script src="/js/enhance.js" defer></script>
+</body>
+</html>

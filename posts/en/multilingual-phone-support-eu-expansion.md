@@ -9,6 +9,12 @@ cover_style: black
 
 Customers are 75% more likely to repurchase from a brand whose customer care speaks their language, according to CSA Research's 2020 survey of 8,709 consumers in 29 countries. For a mid-market cross-border seller, that makes localizing the phone line the cheapest market expansion available this year. It's a sequencing problem, not a hiring problem. Here's the playbook, in order.
 
+:::keystat
+75%
+more likely to repurchase when customer care speaks the buyer's language
+Source: CSA Research, 8,709 consumers in 29 countries, 2020
+:::
+
 ## Step 1 — Which markets are already calling you?
 
 Don't start with a market map. Start with your own data. Your goal this week: a ranked list of your top three non-domestic markets by revenue and average order value — not by sessions. Sessions tell you who's curious. Revenue tells you who's buying despite the language barrier, which means they'd buy more without it.
@@ -25,7 +31,11 @@ Before you spend a euro, find out what a German customer hears when she calls yo
 
 What each caller asks: one pre-sale question ("does this fit X?"), one order-status question with a real order number, one return request. What they log: time to pickup, what happens when they open in German or French — does the agent switch, stall, or hang up — hold time, whether the issue got resolved, and the tone of the handoff if there was one.
 
-Three failure modes I keep seeing — opinion, not survey data: the agent switches to English and loses the caller in the first thirty seconds; the caller gets parked on hold while someone hunts for "the person who speaks Italian"; the issue gets resolved but the caller never calls again because the whole thing felt like an imposition. A monolingual line doesn't produce complaints. It produces silence, and silence looks like everything's fine.
+Three failure modes I keep seeing — opinion, not survey data: the agent switches to English and loses the caller in the first thirty seconds; the caller gets parked on hold while someone hunts for "the person who speaks Italian"; the issue gets resolved but the caller never calls again because the whole thing felt like an imposition.
+
+:::quote
+A monolingual line doesn't produce complaints. It produces silence — and silence looks like everything's fine.
+:::
 
 Copy-paste scorecard, one row per call:
 
@@ -52,11 +62,21 @@ Three or more failed calls out of five: that market goes to the top of your sequ
 
 You will not launch five languages at once. You'll launch one, prove it, add the next. Order matters more than speed.
 
-**The rule: score each candidate market as (current revenue from that market) × (how badly its buyers need their own language) × (AOV). Highest score goes first. Revenue proves demand, language dependence proves the line is the fix, and AOV proves each converted call pays for itself. A high-revenue, low-English, high-ticket market is your launch market. Everything else waits.**
+:::takeaway The sequencing rule
+Score each candidate market as (current revenue from that market) × (how badly its buyers need their own language) × (AOV). Highest score goes first.
+Revenue proves demand. Language dependence proves the line is the fix. AOV proves each converted call pays for itself.
+A high-revenue, low-English, high-ticket market is your launch market. Everything else waits.
+:::
 
 ### Why Germany goes first if it's on your list
 
 In CSA Research's 2020 survey, 57% of German respondents said they buy *only* at local-language websites — the highest share of all 29 countries surveyed. German buyers are the least willing to tolerate English, and German AOVs in most categories don't hurt either. If Germany is in your GA4 top three, it goes first. Not a close call.
+
+:::keystat
+57%
+of German shoppers buy only at local-language websites — the highest of 29 countries surveyed
+Source: CSA Research, "Can't Read, Won't Buy", 2020
+:::
 
 ### Why the Netherlands goes last
 
@@ -64,13 +84,27 @@ The EF English Proficiency Index 2025 ranks the Netherlands #1 in the world for 
 
 France earns a note of its own. Per the Ipsos bva Observatoire des Services Clients 2025, the phone was still the most-used customer service channel in France. If France is on your list, localize the phone line before chat or email.
 
-**Worked example.** Fictional seller: mid-market bike-parts brand, home market Belgium, €4M online revenue. GA4 top three abroad: Germany (€520k revenue, €140 AOV), France (€430k, €95 AOV), Netherlands (€390k, €110 AOV). Score them: Germany — high revenue, highest language dependence, highest AOV: first. France — solid revenue, moderate English, phone-heavy service culture: second. Netherlands — decent revenue, but buyers handle English fine: last, maybe never. Rollout order: DE, FR, NL. One line at a time, each gated by the thresholds in Step 6.
+**Worked example.** Fictional seller: mid-market bike-parts brand, home market Belgium, €4M online revenue. GA4 top three abroad, scored with the rule:
+
+| Market | Revenue | AOV | The deciding factor | Order |
+| --- | --- | --- | --- | --- |
+| Germany | €520k | €140 | Highest language dependence of 29 countries | **1st** |
+| France | €430k | €95 | Moderate English, phone-heavy service culture | 2nd |
+| Netherlands | €390k | €110 | Buyers handle English fine | Last — maybe never |
+
+Rollout order: DE, FR, NL. One line at a time, each gated by the thresholds in Step 6.
 
 ## Step 4 — Don't put a native phone line behind an English-only checkout
 
 A German phone line on an English-only store underperforms through no fault of the agent — the caller notices the mismatch immediately. Phone and website localize together, or the phone carries the whole burden alone.
 
 In the same CSA Research 2020 survey, 40% of consumers said they never buy from websites in other languages. That's a website stat, not a phone stat — but it defines the floor the phone line stands on. If the site loses the buyer before checkout, nobody calls.
+
+:::keystat
+40%
+of consumers never buy from websites in other languages — the floor your phone line stands on
+Source: CSA Research, "Can't Read, Won't Buy", 2020
+:::
 
 The minimum localized surface before the line goes live: product pages, order confirmation and shipping emails, and the IVR greeting. Not the blog. Not the About page. Those three, then launch.
 
@@ -88,7 +122,11 @@ Five languages, one seat each, annualized:
 | Outsource 5 seats (nearshore EU) | ~$13–22/hr × 5 seats; ≈ $135k–$230k at full-time coverage | No employment admin, scales up and down | Agent turnover, shallow product knowledge, per-language premiums on quotes |
 | Voice AI + human escalation in 1–2 core languages | Software cost + 1–2 agents (€30k–€70k loaded) | All 5 languages answered from day one; humans handle the hard 20% | Escalation design is real work; edge cases need a human path or trust erodes |
 
-**The verdict, in one paragraph: hiring five native agents costs roughly €166k–€211k a year loaded, before management overhead. Outsourcing — quoted in dollars, so convert at the day's rate before comparing — lands in a comparable band once multilingual premiums hit the quote. The only structure that answers five languages without five payrolls is automation with human escalation in your top one or two markets. Run your own numbers — but run them before signing anything.**
+:::takeaway The verdict
+Hiring five native agents costs roughly €166k–€211k a year loaded, before management overhead.
+Outsourcing — quoted in dollars, so convert at the day's rate before comparing — lands in a comparable band once multilingual premiums hit the quote.
+The only structure that answers five languages without five payrolls is automation with human escalation in your top one or two markets. Run your own numbers — but run them before signing anything.
+:::
 
 ## Step 6 — What to measure, and the thresholds that trigger the next language
 
@@ -105,11 +143,13 @@ One external number for the stakes: in Unbabel's 2021 global CX survey — a ven
 
 ## The one-week launch checklist
 
-1. **Monday** — Run the 5-call mystery audit (Step 2 scorecard) on your current line in your top foreign language.
-2. **Tuesday** — Pull GA4 country data, cross with shipping-country revenue and AOV. Rank your top three markets.
-3. **Wednesday** — Score the three markets with the sequencing rule: revenue × language dependence × AOV. Fix the rollout order in writing.
-4. **Thursday** — Build the cost model for market #1: hire vs outsource vs automate-with-escalation, using your call volumes.
-5. **Friday** — Pilot decision. Pick one language, one channel, a 90-day window, and the two thresholds from Step 6 that decide extend-or-fold.
+:::action The one-week launch checklist
+Monday — run the 5-call mystery audit (Step 2 scorecard) on your current line in your top foreign language.
+Tuesday — pull GA4 country data, cross with shipping-country revenue and AOV. Rank your top three markets.
+Wednesday — score the three markets with the sequencing rule: revenue × language dependence × AOV. Fix the rollout order in writing.
+Thursday — build the cost model for market #1: hire vs outsource vs automate-with-escalation, using your call volumes.
+Friday — pilot decision. Pick one language, one channel, a 90-day window, and the two thresholds from Step 6 that decide extend-or-fold.
+:::
 
 ## FAQ
 
