@@ -310,6 +310,15 @@ Every one of these cost a debugging cycle. They are the reason the checks exist.
    "reproductions" of bugs that didn't exist. **Screenshot first, then click what
    you can see.**
 
+8. **A test can rot into the opposite of its intent.** `postdeploy_check.py`
+   asserted "Blog appears once in the top 200px" — correct until Blog moved to
+   the footer, after which it failed on every page *and* would have passed if
+   Blog were accidentally restored to the header. When a design decision
+   inverts, go fix the assertion that encoded the old one. **When a check fails
+   everywhere at once, suspect the check before the site** — and prove which it
+   is by mutation-testing: break the thing on purpose and confirm the assertion
+   catches it.
+
 ---
 
 ## 11. Content rules (non-negotiable)
@@ -339,7 +348,16 @@ These protect the brand's whole positioning — the site's credibility *is* the 
 ## 12. Current inventory
 
 - 9 English use-case pages + 9 Italian, fully cross-linked with hreflang
-- Bilingual blog with block kit; author = Sabato AI
+- Bilingual blog with block kit; author = Sabato AI. Live posts (EN+IT):
+  `multilingual-phone-support-eu-expansion`, `reduce-bracketing-returns`
+- Tables with 4+ columns automatically get a `dense` class (`publish.py`):
+  smaller cells and wrapping headers, so wide tables fit the prose column
+  instead of clipping behind a horizontal scroll
+- `tools/serve_like_netlify.py` serves the built site the way Netlify does
+  (extensionless URLs, plus the `_headers` Content-Type rule for the
+  hash-suffixed feather-icon modules) so the post-deploy sweep runs offline:
+  `python3 tools/serve_like_netlify.py 8913 &` then
+  `python3 tools/postdeploy_check.py http://127.0.0.1:8913`
 - Contact forms → Netlify Forms (form name `sabato-contact`, field `page` records
   the source page). Enable notifications under Netlify → Forms.
 - A scheduled "Sabato blog publisher" task (daily 09:00 CET) that publishes at
