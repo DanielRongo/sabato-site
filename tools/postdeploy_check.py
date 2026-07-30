@@ -9,8 +9,11 @@ from playwright.sync_api import sync_playwright
 
 BASE = sys.argv[1].rstrip("/") if len(sys.argv) > 1 else "http://127.0.0.1:8909"
 PAGES = ["/", "/it", "/pricing", "/about", "/contact", "/blog", "/it/blog",
-         "/blog/what-wismo-calls-cost", "/it/blog/what-wismo-calls-cost",
-         "/use-cases/where-is-my-order", "/privacy-policy"]
+         "/blog/reduce-bracketing-returns", "/it/blog/reduce-bracketing-returns",
+         "/blog/multilingual-phone-support-eu-expansion",
+         "/it/blog/multilingual-phone-support-eu-expansion",
+         "/use-cases/where-is-my-order", "/it/casi-duso/dove-e-il-mio-ordine",
+         "/privacy-policy"]
 
 NAV_COUNT_JS = """(label) => {
   let c = 0;
@@ -19,6 +22,25 @@ NAV_COUNT_JS = """(label) => {
     if ((a.textContent||'').trim() === label && r.top >= 0 && r.top < 200 && r.height > 0) c++;
   });
   return c; }"""
+
+# Blog lives in the FOOTER, not the header (right after Book a Demo / Prenota una
+# Demo). Assert both halves: absent from the header, present exactly once in the
+# footer, pointing at the right language and NOT opening in a new tab — the
+# footer link is cloned from the cal.com demo button, which carries target=_blank.
+BLOG_PLACEMENT_JS = """(expectedHref) => {
+  const pageH = document.body.scrollHeight;
+  let header = 0; const footer = [];
+  document.querySelectorAll('a').forEach(a => {
+    if ((a.textContent||'').trim() !== 'Blog') return;
+    const r = a.getBoundingClientRect();
+    if (r.height <= 0) return;
+    const absTop = r.top + window.scrollY;
+    if (r.top >= 0 && r.top < 200) header++;
+    if (absTop > pageH * 0.6) footer.push({
+      href: a.getAttribute('href'), target: a.getAttribute('target') });
+  });
+  return { header, footer };
+}"""
 
 failures = []
 with sync_playwright() as p:
@@ -35,8 +57,14 @@ with sync_playwright() as p:
             pg.goto(BASE + path, wait_until="networkidle", timeout=45000)
             pg.wait_for_timeout(2500)
             it = path == "/it" or path.startswith("/it/")
+            blog = pg.evaluate(BLOG_PLACEMENT_JS, "/it/blog" if it else "/blog")
             checks = {
-                "blog_link_x1": pg.evaluate(NAV_COUNT_JS, "Blog") == 1,
+                "blog_not_in_header": blog["header"] == 0,
+                "blog_in_footer_x1": len(blog["footer"]) == 1,
+                "blog_footer_href": bool(blog["footer"]) and
+                    blog["footer"][0]["href"] == ("/it/blog" if it else "/blog"),
+                "blog_footer_same_tab": bool(blog["footer"]) and
+                    blog["footer"][0]["target"] != "_blank",
                 "no_dup_nav": pg.evaluate(NAV_COUNT_JS, "Prezzi" if it else "Pricing") == 1,
                 "logo_present": pg.evaluate(
                     "!!document.querySelector('img[src*=\"UTATYXc6\"], a[href=\"/\"] img, a[href=\"./\"] img')"),
