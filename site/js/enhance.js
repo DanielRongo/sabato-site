@@ -53,10 +53,9 @@
   var ALL_LABEL = IT ? "Tutti i casi d'uso" : "All use cases";
   var ALL_HREF = IT ? "/it#casiduso" : "/#usecases";
 
-  /* Industry pages. English only for now: the Italian footer carries the same
-     English category labels, and pointing an Italian visitor at an English page
-     is worse than leaving the label unlinked. Add INDUSTRIES_IT when /it/settori
-     exists and this whole block starts working there too. */
+  /* Industry pages, both languages. The Italian footer names some categories
+     differently between the Framer build and our own templates (and left
+     "Home Improvement" untranslated), so aliases carry the variants. */
   var INDUSTRIES_EN = [
     { label: "Home Improvement", href: "/industries/home-improvement" },
     { label: "Automotive & Parts", href: "/industries/automotive-parts" },
@@ -68,10 +67,21 @@
     { label: "Sports & Fitness", href: "/industries/sports-fitness" },
     { label: "Industrial & B2B", href: "/industries/industrial-b2b" }
   ];
-  var INDUSTRIES = IT ? [] : INDUSTRIES_EN;
-  var IND_LABEL = "Industries";
-  var IND_ALL_LABEL = "All industries";
-  var IND_ALL_HREF = "/industries";
+  var INDUSTRIES_IT = [
+    { label: "Clima e Riscaldamento", href: "/it/settori/clima-e-riscaldamento", aliases: ["Home Improvement", "Miglioramento Casa"] },
+    { label: "Automotive e Ricambi", href: "/it/settori/ricambi-auto", aliases: ["Automotive & Parts"] },
+    { label: "Elettronica e Tech", href: "/it/settori/elettronica", aliases: ["Electronics & Tech"] },
+    { label: "Arredamento e Casa", href: "/it/settori/arredamento", aliases: ["Furniture & Home"] },
+    { label: "Industria e B2B", href: "/it/settori/industria-b2b", aliases: ["Industrial & B2B"] },
+    { label: "Outdoor e Giardino", href: "/it/settori/giardino-outdoor", aliases: ["Outdoor & Garden"] },
+    { label: "Fashion e Abbigliamento", href: "/it/settori/moda-abbigliamento", aliases: ["Fashion & Apparel"] },
+    { label: "Salute e Benessere", href: "/it/settori/salute-benessere", aliases: ["Health & Wellness"] },
+    { label: "Sport e Fitness", href: "/it/settori/sport-fitness", aliases: ["Sports & Fitness"] }
+  ];
+  var INDUSTRIES = IT ? INDUSTRIES_IT : INDUSTRIES_EN;
+  var IND_LABEL = IT ? "Settori" : "Industries";
+  var IND_ALL_LABEL = IT ? "Tutti i settori" : "All industries";
+  var IND_ALL_HREF = IT ? "/it/settori" : "/industries";
 
   /* ---------- 1. Blog link in the FOOTER, right after "Book a Demo" ----------
      (Deliberately not in the top nav — the header stays as designed.) */
@@ -323,8 +333,7 @@
         for (var j = 0; j < all.length; j++) {
           var a = all[j];
           if (a.hasAttribute("data-ind-link")) continue;
-          var txt = a.textContent || "";
-          if (normLabel(txt) !== normLabel(ind.label)) continue;
+          if (!matchesUC(a.textContent || "", ind)) continue;
           if (a.getAttribute("href") === ind.href) continue;
           a.setAttribute("href", ind.href);
           a.removeAttribute("target");
@@ -348,6 +357,7 @@
       var href = a.getAttribute("href") || "";
       var ours = href.indexOf("/use-cases/") === 0 || href.indexOf("/it/casi-duso/") === 0 ||
                  href.indexOf("/industries/") === 0 || href === "/industries" ||
+                 href.indexOf("/it/settori/") === 0 || href === "/it/settori" ||
                  a.hasAttribute("data-blog-link") || href === "/blog" || href === "/it/blog";
       if (!ours) return;
       if (a.target === "_blank") return;

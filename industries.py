@@ -36,7 +36,12 @@ CAL = "https://cal.com/sabatoai/intro"
 # Per-industry content. Everything category-specific lives here.
 # --------------------------------------------------------------------------
 from industry_data import INDUSTRIES
+from industry_data_it import INDUSTRIES_IT
 from industry_icons import ICONS
+
+# EN slug -> IT slug, for hreflang and the language switch
+IT_BY_EN = {d["en"]: slug for slug, d in INDUSTRIES_IT.items()}
+EN_BY_IT = {slug: d["en"] for slug, d in INDUSTRIES_IT.items()}
 
 ORDER = list(INDUSTRIES.keys())
 
@@ -203,8 +208,13 @@ def wave(n=26, dark=True):
     return f'<svg class="wave" viewBox="0 0 {n*13} 48" aria-hidden="true">{"".join(out)}</svg>'
 
 
-def build(slug, d):
-    url = f"{BASE}/industries/{slug}"
+def build(slug, d, lang="en"):
+    prefix = "/industries" if lang == "en" else "/it/settori"
+    url = f"{BASE}{prefix}/{slug}"
+    alt = (f"{BASE}/it/settori/{IT_BY_EN[slug]}" if lang == "en"
+           else f"{BASE}/industries/{EN_BY_IT[slug]}")
+    tpl_name = "industry.html" if lang == "en" else "industry-it.html"
+    icon_key = slug if lang == "en" else d["en"]
     q_rows = "".join(
         f'<div class="q-row"><p class="q-ask">{q}</p>'
         f'<div class="q-ans"><p>{a}</p><code>{f_}</code></div></div>'
@@ -251,7 +261,7 @@ def build(slug, d):
         {"@type": "ListItem", "position": 3, "name": re.sub("<[^>]+>", "", html.unescape(d["label"])), "item": url},
     ]}
 
-    tpl = open(os.path.join(ROOT, "templates", "industry.html"), encoding="utf-8").read()
+    tpl = open(os.path.join(ROOT, "templates", tpl_name), encoding="utf-8").read()
     page = (tpl
             .replace("{{TITLE}}", d["title"])
             .replace("{{DESCRIPTION}}", d["description"])
@@ -275,7 +285,8 @@ def build(slug, d):
             .replace("{{WORKFLOWS}}", wf)
             .replace("{{WF_COUNT}}", str(len(d["workflows"])))
             .replace("{{SCENE}}", scene(d["scene"]))
-            .replace("{{ICON}}", ICONS[slug])
+            .replace("{{ICON}}", ICONS[icon_key])
+            .replace("{{ALT}}", alt)
             .replace("{{TRANSCRIPT_META}}", d["transcript_meta"])
             .replace("{{TRANSCRIPT}}", tr)
             .replace("{{DATA_H2}}", d["data_h2"])
@@ -289,58 +300,82 @@ def build(slug, d):
             .replace("{{FAQ_LD}}", json.dumps(faq_ld, ensure_ascii=False))
             .replace("{{BC_LD}}", json.dumps(bc_ld, ensure_ascii=False))
             )
-    out = os.path.join(SITE, "industries", f"{slug}.html")
+    out = (os.path.join(SITE, "industries", f"{slug}.html") if lang == "en"
+           else os.path.join(SITE, "it", "settori", f"{slug}.html"))
     os.makedirs(os.path.dirname(out), exist_ok=True)
     open(out, "w", encoding="utf-8").write(page)
     return out
 
 
 
-def build_index():
+def build_index(lang="en"):
     """Hub page at /industries. Gives the header nav item a real destination and
     a place for the nine to be crawled from, rather than nav pointing at one
     arbitrary category."""
     from industry_icons import ICONS
+    src = INDUSTRIES if lang == "en" else INDUSTRIES_IT
+    prefix = "/industries" if lang == "en" else "/it/settori"
+    WHEN = {"en": {"before": "Calls before buying", "after": "Calls after buying",
+                   "mixed": "Calls before and after"},
+            "it": {"before": "Chiama prima di comprare", "after": "Chiama dopo l'acquisto",
+                   "mixed": "Chiama prima e dopo"}}[lang]
+    LEAD = "Leads with: " if lang == "en" else "Parte da: "
     cards = ""
-    for slug in ORDER:
-        d = INDUSTRIES[slug]
-        when = {"before": "Calls before buying",
-                "after": "Calls after buying",
-                "mixed": "Calls before and after"}[d["when"]]
+    for slug in src:
+        d = src[slug]
+        when = WHEN[d["when"]]
         lead = d["workflows"][0][0]
+        icon_key = slug if lang == "en" else d["en"]
         cards += (
-            f'<a class="ix-card" href="/industries/{slug}">'
-            f'<span class="ix-icon">{ICONS[slug]}</span>'
+            f'<a class="ix-card" href="{prefix}/{slug}">'
+            f'<span class="ix-icon">{ICONS[icon_key]}</span>'
             f'<h3>{d["label"]}</h3>'
             f'<p class="ix-when">{when}</p>'
-            f'<p class="ix-lead">Leads with: {lead}</p></a>')
+            f'<p class="ix-lead">{LEAD}{lead}</p></a>')
 
-    tpl = open(os.path.join(ROOT, "templates", "industry-index.html"), encoding="utf-8").read()
+    tpl_name = "industry-index.html" if lang == "en" else "industry-index-it.html"
+    tpl = open(os.path.join(ROOT, "templates", tpl_name), encoding="utf-8").read()
     page = tpl.replace("{{CARDS}}", cards).replace("{{CAL}}", CAL)
-    out = os.path.join(SITE, "industries", "index.html")
+    out = (os.path.join(SITE, "industries", "index.html") if lang == "en"
+           else os.path.join(SITE, "it", "settori", "index.html"))
     os.makedirs(os.path.dirname(out), exist_ok=True)
     open(out, "w", encoding="utf-8").write(page)
     return out
 
 
 def link_footer_industries():
-    """Footer industries ship as plain <span>. Make the built ones real links."""
+    """Footer industries ship as plain <span>. Make them real links — and point
+    Italian pages at Italian pages. An earlier version keyed only on the English
+    label and put /industries/ hrefs onto nine Italian pages, which is a worse
+    bug than leaving them unlinked."""
+    it_by_label = {}
+    for slug, d in INDUSTRIES_IT.items():
+        for lab in [d["label"]] + d.get("alias", []):
+            it_by_label[lab] = f"/it/settori/{slug}"
+    en_by_label = {lab: href for lab, href in FOOTER_INDUSTRIES if href}
+
     touched = 0
     for dirpath, _, files in os.walk(SITE):
         for fn in files:
             if not fn.endswith(".html"):
                 continue
             fp = os.path.join(dirpath, fn)
+            rel = os.path.relpath(fp, SITE).replace(os.sep, "/")
+            is_it = rel == "it.html" or rel.startswith("it/")
+            table = it_by_label if is_it else en_by_label
             try:
                 t = open(fp, encoding="utf-8").read()
             except UnicodeDecodeError:
                 continue
             orig = t
-            for label, href in FOOTER_INDUSTRIES:
-                if not href:
-                    continue
+            for label, href in table.items():
                 t = t.replace(f"<li><span>{label}</span></li>",
                               f'<li><a href="{href}">{label}</a></li>')
+            # repair any cross-language href a previous run wrote
+            if is_it:
+                for label, href in table.items():
+                    t = re.sub(r'<li><a href="/industries/[a-z-]+">' + re.escape(label) + r'</a></li>',
+                               f'<li><a href="{href}">{label}</a></li>', t)
             if t != orig:
                 open(fp, "w", encoding="utf-8").write(t)
                 touched += 1
@@ -349,7 +384,10 @@ def link_footer_industries():
 
 if __name__ == "__main__":
     for slug in ORDER:
-        print("  wrote", os.path.relpath(build(slug, INDUSTRIES[slug]), ROOT))
-    print("  wrote", os.path.relpath(build_index(), ROOT))
+        print("  wrote", os.path.relpath(build(slug, INDUSTRIES[slug], "en"), ROOT))
+    for slug, d in INDUSTRIES_IT.items():
+        print("  wrote", os.path.relpath(build(slug, d, "it"), ROOT))
+    print("  wrote", os.path.relpath(build_index("en"), ROOT))
+    print("  wrote", os.path.relpath(build_index("it"), ROOT))
     n = link_footer_industries()
     print(f"  footer: linked built industries on {n} page(s)")
