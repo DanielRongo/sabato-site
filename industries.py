@@ -295,6 +295,34 @@ def build(slug, d):
     return out
 
 
+
+def build_index():
+    """Hub page at /industries. Gives the header nav item a real destination and
+    a place for the nine to be crawled from, rather than nav pointing at one
+    arbitrary category."""
+    from industry_icons import ICONS
+    cards = ""
+    for slug in ORDER:
+        d = INDUSTRIES[slug]
+        when = {"before": "Calls before buying",
+                "after": "Calls after buying",
+                "mixed": "Calls before and after"}[d["when"]]
+        lead = d["workflows"][0][0]
+        cards += (
+            f'<a class="ix-card" href="/industries/{slug}">'
+            f'<span class="ix-icon">{ICONS[slug]}</span>'
+            f'<h3>{d["label"]}</h3>'
+            f'<p class="ix-when">{when}</p>'
+            f'<p class="ix-lead">Leads with: {lead}</p></a>')
+
+    tpl = open(os.path.join(ROOT, "templates", "industry-index.html"), encoding="utf-8").read()
+    page = tpl.replace("{{CARDS}}", cards).replace("{{CAL}}", CAL)
+    out = os.path.join(SITE, "industries", "index.html")
+    os.makedirs(os.path.dirname(out), exist_ok=True)
+    open(out, "w", encoding="utf-8").write(page)
+    return out
+
+
 def link_footer_industries():
     """Footer industries ship as plain <span>. Make the built ones real links."""
     touched = 0
@@ -322,5 +350,6 @@ def link_footer_industries():
 if __name__ == "__main__":
     for slug in ORDER:
         print("  wrote", os.path.relpath(build(slug, INDUSTRIES[slug]), ROOT))
+    print("  wrote", os.path.relpath(build_index(), ROOT))
     n = link_footer_industries()
     print(f"  footer: linked built industries on {n} page(s)")

@@ -1,4 +1,5 @@
-/* Sabato site enhancements: blog nav link, Use Cases dropdown, use-case page wiring.
+/* Sabato site enhancements: blog nav link, Use Cases + Industries dropdowns,
+   use-case and industry page wiring.
    Config-driven: add new use-case pages to USECASES and everything updates. */
 (function () {
   var IT = location.pathname === "/it" || location.pathname.indexOf("/it/") === 0;
@@ -52,6 +53,26 @@
   var ALL_LABEL = IT ? "Tutti i casi d'uso" : "All use cases";
   var ALL_HREF = IT ? "/it#casiduso" : "/#usecases";
 
+  /* Industry pages. English only for now: the Italian footer carries the same
+     English category labels, and pointing an Italian visitor at an English page
+     is worse than leaving the label unlinked. Add INDUSTRIES_IT when /it/settori
+     exists and this whole block starts working there too. */
+  var INDUSTRIES_EN = [
+    { label: "Home Improvement", href: "/industries/home-improvement" },
+    { label: "Automotive & Parts", href: "/industries/automotive-parts" },
+    { label: "Electronics & Tech", href: "/industries/electronics-tech" },
+    { label: "Furniture & Home", href: "/industries/furniture-home" },
+    { label: "Outdoor & Garden", href: "/industries/outdoor-garden" },
+    { label: "Fashion & Apparel", href: "/industries/fashion-apparel" },
+    { label: "Health & Wellness", href: "/industries/health-wellness" },
+    { label: "Sports & Fitness", href: "/industries/sports-fitness" },
+    { label: "Industrial & B2B", href: "/industries/industrial-b2b" }
+  ];
+  var INDUSTRIES = IT ? [] : INDUSTRIES_EN;
+  var IND_LABEL = "Industries";
+  var IND_ALL_LABEL = "All industries";
+  var IND_ALL_HREF = "/industries";
+
   /* ---------- 1. Blog link in the FOOTER, right after "Book a Demo" ----------
      (Deliberately not in the top nav — the header stays as designed.) */
   var DEMO_LABEL = IT ? "Prenota una Demo" : "Book a Demo";
@@ -95,21 +116,29 @@
      (b) Framer re-renders the nav after hydration, orphaning listeners bound to
          a specific element — so we delegate off document and resolve the link
          fresh on every hover. */
-  function currentNavUseCasesLink(node) {
+  /* A nav link in the top 200px whose label matches — the trigger for a menu. */
+  function currentNavLink(node, label) {
     var a = node && node.closest ? node.closest("a") : null;
     if (!a) return null;
-    if (normLabel(a.textContent) !== normLabel(USECASES_LABEL)) return null;
+    if (normLabel(a.textContent) !== normLabel(label)) return null;
     var r = a.getBoundingClientRect();
     if (r.top < 0 || r.top > 200 || r.height === 0) return null;
     return a;
   }
 
-  function injectDropdown() {
+  /* One dropdown implementation, two menus. Keeping them identical matters more
+     than it looks: a second menu built separately drifts in padding, radius and
+     hover colour within a release or two. */
+  function makeDropdown(opts) {
+    var USECASES = opts.items, USECASES_LABEL = opts.trigger;
+    var ALL_LABEL = opts.allLabel, ALL_HREF = opts.allHref;
+    function currentNavUseCasesLink(n) { return currentNavLink(n, USECASES_LABEL); }
+
     if (!USECASES.length) return;
-    if (document.querySelector("[data-uc-dropdown]")) return;
+    if (document.querySelector("[" + opts.attr + "]")) return;
 
     var dd = document.createElement("div");
-    dd.setAttribute("data-uc-dropdown", "1");
+    dd.setAttribute(opts.attr, "1");
     dd.style.cssText = "position:fixed;display:none;z-index:2147483000;padding-top:14px;";
     var card = document.createElement("div");
     card.style.cssText =
@@ -161,6 +190,13 @@
     dd.addEventListener("mouseleave", hide);
     window.addEventListener("scroll", function () { if (dd.style.display === "block") place(); }, { passive: true });
     window.addEventListener("resize", function () { if (dd.style.display === "block") place(); });
+  }
+
+  function injectDropdown() {
+    makeDropdown({ items: USECASES, trigger: USECASES_LABEL, allLabel: ALL_LABEL,
+                   allHref: ALL_HREF, attr: "data-uc-dropdown" });
+    makeDropdown({ items: INDUSTRIES, trigger: IND_LABEL, allLabel: IND_ALL_LABEL,
+                   allHref: IND_ALL_HREF, attr: "data-ind-dropdown" });
   }
 
   /* ---------- 3. Retarget footer links + make matching tiles clickable ----------
@@ -219,6 +255,85 @@
      goes to the original destination. We listen on `window` in the CAPTURE
      phase (the earliest point in the event path, before any document-level
      handler Framer registers) and perform the navigation ourselves. */
+  /* ---------- Industries nav item ----------
+     The header has no Industries link, so clone the Use Cases one to inherit its
+     exact styling and insert it alongside. Clone the ANCHOR, never a wrapper:
+     cloning a wrapper once duplicated the whole shared <nav> on every use-case
+     page. Guard on the label so the MutationObserver can't add a second. */
+  function injectIndustriesNav() {
+    if (!INDUSTRIES.length) return;
+    var links = document.querySelectorAll("a");
+    var src = null, already = false;
+    for (var i = 0; i < links.length; i++) {
+      var a = links[i], r = a.getBoundingClientRect();
+      if (r.top < 0 || r.top > 200 || r.height === 0) continue;
+      var n = normLabel(a.textContent);
+      if (n === normLabel(IND_LABEL)) { already = true; break; }
+      if (n === normLabel(USECASES_LABEL) && !src) src = a;
+    }
+    if (already || !src) return;
+
+    /* Framer wraps each nav link in its own container div; our templates put the
+       anchors straight into <nav>. Cloning the anchor on a Framer page drops a
+       second link INSIDE that 75px wrapper, which stacks it onto a second row.
+       So clone the wrapper when it holds exactly one anchor — and only then,
+       because cloning a wrapper that holds the whole nav duplicates the header. */
+    var wrap = src.parentElement;
+    var cloneWrapper = wrap && wrap !== document.body &&
+                       wrap.querySelectorAll("a").length === 1 &&
+                       wrap.children.length === 1;
+    var node = cloneWrapper ? wrap : src;
+
+    var el = node.cloneNode(true);
+    var anchor = cloneWrapper ? el.querySelector("a") : el;
+    if (!anchor) return;
+    anchor.setAttribute("data-ind-link", "1");
+    anchor.removeAttribute("target");
+    anchor.removeAttribute("rel");
+    anchor.setAttribute("href", IND_ALL_HREF);
+    anchor.style.whiteSpace = "nowrap";
+    /* Framer nests the label in a <p>; our templates put it in the <a>. */
+    var leaf = anchor.querySelector("p, span");
+    if (leaf && !leaf.children.length) leaf.textContent = IND_LABEL;
+    else anchor.textContent = IND_LABEL;
+
+    node.parentNode.insertBefore(el, node.nextSibling);
+
+    /* A sixth item can push a fixed-gap nav onto two rows. Only shrink the gap
+       if that actually happened — measured, not assumed. */
+    var row = el.parentElement;
+    if (row && getComputedStyle(row).display.indexOf("flex") === 0) {
+      var tops = {}, kids = row.children, count = 0;
+      for (var k = 0; k < kids.length; k++) {
+        var top = Math.round(kids[k].getBoundingClientRect().top);
+        if (!tops[top]) { tops[top] = 1; count++; }
+      }
+      if (count > 1) row.style.gap = "28px";
+    }
+  }
+
+  /* ---------- Footer industry links ----------
+     On Framer pages these labels sit inside <a> elements that have no href at
+     all, so they need one setting rather than retargeting — a different repair
+     from the use-case links, which had a wrong href. */
+  function wireIndustryTargets() {
+    for (var i = 0; i < INDUSTRIES.length; i++) {
+      (function (ind) {
+        var all = document.querySelectorAll("a");
+        for (var j = 0; j < all.length; j++) {
+          var a = all[j];
+          if (a.hasAttribute("data-ind-link")) continue;
+          var txt = a.textContent || "";
+          if (normLabel(txt) !== normLabel(ind.label)) continue;
+          if (a.getAttribute("href") === ind.href) continue;
+          a.setAttribute("href", ind.href);
+          a.removeAttribute("target");
+          a.removeAttribute("rel");
+        }
+      })(INDUSTRIES[i]);
+    }
+  }
+
   function installClickInterceptor() {
     if (window.__ucClickInterceptor) return;
     window.__ucClickInterceptor = true;
@@ -232,6 +347,7 @@
       if (!a) return;
       var href = a.getAttribute("href") || "";
       var ours = href.indexOf("/use-cases/") === 0 || href.indexOf("/it/casi-duso/") === 0 ||
+                 href.indexOf("/industries/") === 0 || href === "/industries" ||
                  a.hasAttribute("data-blog-link") || href === "/blog" || href === "/it/blog";
       if (!ours) return;
       if (a.target === "_blank") return;
@@ -241,7 +357,10 @@
     }, true);
   }
 
-  function run() { injectBlogLink(); injectDropdown(); wireUseCaseTargets(); installClickInterceptor(); }
+  function run() {
+    injectBlogLink(); injectIndustriesNav(); injectDropdown();
+    wireUseCaseTargets(); wireIndustryTargets(); installClickInterceptor();
+  }
   if (document.readyState !== "loading") run();
   else document.addEventListener("DOMContentLoaded", run);
   new MutationObserver(run).observe(document.documentElement, { childList: true, subtree: true });

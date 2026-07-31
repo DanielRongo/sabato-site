@@ -17,7 +17,7 @@ PAGES = ["/", "/it", "/pricing", "/about", "/contact", "/blog", "/it/blog",
          "/blog/should-you-remove-the-phone-number",
          "/it/blog/should-you-remove-the-phone-number",
          "/use-cases/where-is-my-order", "/it/casi-duso/dove-e-il-mio-ordine",
-         "/industries/home-improvement", "/industries/fashion-apparel",
+         "/industries", "/industries/home-improvement", "/industries/fashion-apparel",
          "/industries/automotive-parts", "/industries/electronics-tech",
          "/industries/furniture-home", "/industries/industrial-b2b",
          "/industries/outdoor-garden", "/industries/health-wellness",
@@ -115,6 +115,8 @@ with sync_playwright() as p:
     b = p.chromium.launch(executable_path="/opt/pw-browsers/chromium", args=["--no-sandbox"])
     ctx = b.new_context(viewport={"width": 1440, "height": 900})
     for src, label, expect in [("/", "Managing Returns", "/use-cases/managing-returns"),
+                               ("/", "Industrial & B2B", "/industries/industrial-b2b"),
+                               ("/pricing", "Industries", "/industries"),
                                ("/blog", "Open a Complaint", "/use-cases/open-a-complaint"),
                                ("/use-cases/where-is-my-order", "Pre-Sales Consultation",
                                 "/use-cases/pre-sales-consultation")]:
