@@ -14,6 +14,8 @@ PAGES = ["/", "/it", "/pricing", "/about", "/contact", "/blog", "/it/blog",
          "/it/blog/multilingual-phone-support-eu-expansion",
          "/blog/why-customers-call-instead-of-ordering-online",
          "/it/blog/why-customers-call-instead-of-ordering-online",
+         "/blog/should-you-remove-the-phone-number",
+         "/it/blog/should-you-remove-the-phone-number",
          "/use-cases/where-is-my-order", "/it/casi-duso/dove-e-il-mio-ordine",
          "/privacy-policy"]
 
