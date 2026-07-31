@@ -150,6 +150,10 @@
     /* live call card */
     .callcard { background: var(--black); border-radius: var(--radius); padding: 26px 26px 22px; }
     .cc-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+    .cc-id { display: flex; align-items: center; gap: 12px; }
+    .cc-icon { width: 34px; height: 34px; border-radius: 10px; background: rgba(204,255,0,.12);
+               display: flex; align-items: center; justify-content: center; flex: none; }
+    .cc-icon svg { width: 20px; height: 20px; display: block; }
     .cc-live { display: flex; align-items: center; gap: 9px; color: var(--lime); font-size: 11.5px; font-weight: 700; letter-spacing: 2px; }
     .cc-live i { width: 8px; height: 8px; border-radius: 50%; background: var(--lime); display: block; }
     .cc-time { color: rgba(248,244,241,.5); font-size: 12.5px; font-variant-numeric: tabular-nums; }
@@ -288,7 +292,21 @@
   </style>
 </head>
 <body>
-{{HEADER}}
+<header class="site-header">
+    <div class="nav-shell">
+      <a class="nav-logo" href="/" aria-label="Sabato AI — Home">
+        <img src="/fuc/images/UTATYXc6NipXQRoxyaGHHfHSyA4-f2557e25.png" alt="Sabato AI logo" width="132" height="61">
+      </a>
+      <nav class="nav-links" aria-label="Main">
+        <a href="/#usecases">Use Cases</a>
+        <a href="/pricing">Pricing</a>
+        <a href="/about">About</a>
+        <a href="/contact">Contact</a>
+        <a class="nav-flag" href="/it" aria-label="Versione italiana">🇮🇹</a>
+      </nav>
+      <a class="btn-pill" href="https://cal.com/sabatoai/intro" target="_blank" rel="noopener">Start Free Pilot</a>
+    </div>
+  </header>
 
 <section class="ind-hero"><div class="shell"><div class="grid">
   <div>
@@ -302,7 +320,7 @@
     {{PROOF}}
   </div>
   <div class="callcard">
-    <div class="cc-top"><span class="cc-live"><i></i>LIVE CALL</span><span class="cc-time">1:26</span></div>
+    <div class="cc-top"><span class="cc-id"><span class="cc-icon">{{ICON}}</span><span class="cc-live"><i></i>LIVE CALL</span></span><span class="cc-time">1:26</span></div>
     {{WAVE}}
     <div class="cc-ctrls"><span></span><span></span><span class="on"></span></div>
     <div class="cc-q"><p class="lbl">WHAT THE CALLER JUST ASKED</p><p>{{CALL_Q}}</p></div>

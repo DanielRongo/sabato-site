@@ -18,6 +18,10 @@ PAGES = ["/", "/it", "/pricing", "/about", "/contact", "/blog", "/it/blog",
          "/it/blog/should-you-remove-the-phone-number",
          "/use-cases/where-is-my-order", "/it/casi-duso/dove-e-il-mio-ordine",
          "/industries/home-improvement", "/industries/fashion-apparel",
+         "/industries/automotive-parts", "/industries/electronics-tech",
+         "/industries/furniture-home", "/industries/industrial-b2b",
+         "/industries/outdoor-garden", "/industries/health-wellness",
+         "/industries/sports-fitness",
          "/privacy-policy"]
 
 NAV_COUNT_JS = """(label) => {

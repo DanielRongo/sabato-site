@@ -150,6 +150,10 @@
     /* live call card */
     .callcard { background: var(--black); border-radius: var(--radius); padding: 26px 26px 22px; }
     .cc-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+    .cc-id { display: flex; align-items: center; gap: 12px; }
+    .cc-icon { width: 34px; height: 34px; border-radius: 10px; background: rgba(204,255,0,.12);
+               display: flex; align-items: center; justify-content: center; flex: none; }
+    .cc-icon svg { width: 20px; height: 20px; display: block; }
     .cc-live { display: flex; align-items: center; gap: 9px; color: var(--lime); font-size: 11.5px; font-weight: 700; letter-spacing: 2px; }
     .cc-live i { width: 8px; height: 8px; border-radius: 50%; background: var(--lime); display: block; }
     .cc-time { color: rgba(248,244,241,.5); font-size: 12.5px; font-variant-numeric: tabular-nums; }
@@ -316,7 +320,7 @@
     
   </div>
   <div class="callcard">
-    <div class="cc-top"><span class="cc-live"><i></i>LIVE CALL</span><span class="cc-time">1:26</span></div>
+    <div class="cc-top"><span class="cc-id"><span class="cc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="rgb(204,255,0)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.5 3.5 5 5.2 3.5 9.5l3 1.3V20.5h11V10.8l3-1.3L19 5.2l-3.5-1.7"/><path d="M8.5 3.5a3.5 3.5 0 0 0 7 0"/></svg></span><span class="cc-live"><i></i>LIVE CALL</span></span><span class="cc-time">1:26</span></div>
     <svg class="wave" viewBox="0 0 390 48" aria-hidden="true"><rect x="0" y="19" width="5" height="10" rx="2.5" fill="rgba(204,255,0,.45)"/><rect x="13" y="13" width="5" height="22" rx="2.5" fill="rgb(204,255,0)"/><rect x="26" y="7" width="5" height="34" rx="2.5" fill="rgb(204,255,0)"/><rect x="39" y="15" width="5" height="18" rx="2.5" fill="rgba(204,255,0,.45)"/><rect x="52" y="4" width="5" height="40" rx="2.5" fill="rgb(204,255,0)"/><rect x="65" y="17" width="5" height="14" rx="2.5" fill="rgb(204,255,0)"/><rect x="78" y="10" width="5" height="28" rx="2.5" fill="rgba(204,255,0,.45)"/><rect x="91" y="2" width="5" height="44" rx="2.5" fill="rgb(204,255,0)"/><rect x="104" y="14" width="5" height="20" rx="2.5" fill="rgb(204,255,0)"/><rect x="117" y="6" width="5" height="36" rx="2.5" fill="rgba(204,255,0,.45)"/><rect x="130" y="18" width="5" height="12" rx="2.5" fill="rgb(204,255,0)"/><rect x="143" y="9" width="5" height="30" rx="2.5" fill="rgb(204,255,0)"/><rect x="156" y="3" width="5" height="42" rx="2.5" fill="rgba(204,255,0,.45)"/><rect x="169" y="16" width="5" height="16" rx="2.5" fill="rgb(204,255,0)"/><rect x="182" y="11" width="5" height="26" rx="2.5" fill="rgb(204,255,0)"/><rect x="195" y="5" width="5" height="38" rx="2.5" fill="rgba(204,255,0,.45)"/><rect x="208" y="13" width="5" height="22" rx="2.5" fill="rgb(204,255,0)"/><rect x="221" y="7" width="5" height="34" rx="2.5" fill="rgb(204,255,0)"/><rect x="234" y="18" width="5" height="12" rx="2.5" fill="rgba(204,255,0,.45)"/><rect x="247" y="10" width="5" height="28" rx="2.5" fill="rgb(204,255,0)"/><rect x="260" y="4" width="5" height="40" rx="2.5" fill="rgb(204,255,0)"/><rect x="273" y="15" width="5" height="18" rx="2.5" fill="rgba(204,255,0,.45)"/><rect x="286" y="12" width="5" height="24" rx="2.5" fill="rgb(204,255,0)"/><rect x="299" y="8" width="5" height="32" rx="2.5" fill="rgb(204,255,0)"/><rect x="312" y="17" width="5" height="14" rx="2.5" fill="rgba(204,255,0,.45)"/><rect x="325" y="14" width="5" height="20" rx="2.5" fill="rgb(204,255,0)"/><rect x="338" y="19" width="5" height="10" rx="2.5" fill="rgb(204,255,0)"/><rect x="351" y="13" width="5" height="22" rx="2.5" fill="rgba(204,255,0,.45)"/><rect x="364" y="7" width="5" height="34" rx="2.5" fill="rgb(204,255,0)"/><rect x="377" y="15" width="5" height="18" rx="2.5" fill="rgb(204,255,0)"/></svg>
     <div class="cc-ctrls"><span></span><span></span><span class="on"></span></div>
     <div class="cc-q"><p class="lbl">WHAT THE CALLER JUST ASKED</p><p>&ldquo;My order was supposed to arrive Tuesday and the tracking hasn&rsquo;t moved since Friday.&rdquo;</p></div>
@@ -353,29 +357,18 @@
   <h2>4 of the nine workflows carry this category. Start with the first one.</h2>
   <span class="hand">the order is different on every industry page &mdash; that&rsquo;s the point</span>
   <div class="wf-grid"><a class="wf-card" href="/use-cases/where-is-my-order"><span class="wf-n">01</span><span class="wf-arrow" aria-hidden="true">&rarr;</span><h3>Where is my order</h3><p>The volume workflow in fashion. Carrier events read out loud, exceptions explained.</p></a><a class="wf-card" href="/use-cases/managing-returns"><span class="wf-n">02</span><span class="wf-arrow" aria-hidden="true">&rarr;</span><h3>Managing returns</h3><p>Eligibility checked against policy, exchange offered before refund.</p></a><a class="wf-card" href="/use-cases/back-in-stock-notification"><span class="wf-n">03</span><span class="wf-arrow" aria-hidden="true">&rarr;</span><h3>Back-in-stock notification</h3><p>Calls the customers who wanted it, instead of an email in a spam folder.</p></a><a class="wf-card" href="/use-cases/post-delivery-feedback"><span class="wf-n">04</span><span class="wf-arrow" aria-hidden="true">&rarr;</span><h3>Post-delivery feedback</h3><p>Catches the problem while it is still fixable, and earns the review.</p></a></div>
-  <svg class="scene" viewBox="0 0 720 300" role="img" aria-label="A parcel tracked through carrier events to a pickup point">
-  <rect x="0" y="0" width="720" height="300" rx="24" fill="rgb(248,244,241)"/>
-  <!-- parcel -->
-  <rect x="48" y="96" width="120" height="100" rx="10" fill="rgb(18,10,11)"/>
+  <svg class="scene" viewBox="0 0 720 300" role="img" aria-label="A parcel tracked through carrier events to a pickup point"><style>.s-b{font-family:Satoshi,sans-serif;font-size:15px;font-weight:700;fill:rgb(18,10,11)}.s-s{font-family:Satoshi,sans-serif;font-size:12px;fill:rgb(69,65,64)}.s-n{font-family:Satoshi,sans-serif;font-size:13px;fill:rgba(248,244,241,.8)}</style><rect x="0" y="0" width="720" height="300" rx="24" fill="rgb(248,244,241)"/><rect x="48" y="96" width="120" height="100" rx="10" fill="rgb(18,10,11)"/>
   <line x1="108" y1="96" x2="108" y2="196" stroke="rgb(204,255,0)" stroke-width="5"/>
-  <rect x="66" y="120" width="42" height="5" rx="2.5" fill="rgba(248,244,241,.4)"/>
-  <!-- route -->
-  <line x1="188" y1="146" x2="520" y2="146" stroke="rgb(227,226,226)" stroke-width="4"/>
+  <line x1="188" y1="146" x2="470" y2="146" stroke="rgb(227,226,226)" stroke-width="4"/>
   <line x1="188" y1="146" x2="386" y2="146" stroke="rgb(204,255,0)" stroke-width="4"/>
   <circle cx="188" cy="146" r="11" fill="rgb(204,255,0)"/>
   <circle cx="287" cy="146" r="11" fill="rgb(204,255,0)"/>
   <circle cx="386" cy="146" r="11" fill="rgb(204,255,0)"/>
   <circle cx="470" cy="146" r="11" fill="none" stroke="rgb(18,10,11)" stroke-width="3" stroke-dasharray="4 4"/>
-  <text x="176" y="186" font-family="Satoshi,sans-serif" font-size="11" fill="rgb(69,65,64)">picked</text>
-  <text x="268" y="186" font-family="Satoshi,sans-serif" font-size="11" fill="rgb(69,65,64)">in transit</text>
-  <text x="356" y="186" font-family="Satoshi,sans-serif" font-size="11" font-weight="700" fill="rgb(18,10,11)">held at depot</text>
-  <text x="446" y="186" font-family="Satoshi,sans-serif" font-size="11" fill="rgb(69,65,64)">pickup</text>
-  <!-- rerouted destination -->
-  <rect x="536" y="86" width="140" height="120" rx="16" fill="rgb(18,10,11)"/>
-  <text x="558" y="122" font-family="Satoshi,sans-serif" font-size="11" letter-spacing="1.6" fill="rgba(248,244,241,.55)">REROUTED</text>
-  <path d="M560 146 l14 14 l28 -30" fill="none" stroke="rgb(204,255,0)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
-  <text x="558" y="190" font-family="Satoshi,sans-serif" font-size="13" fill="rgba(248,244,241,.8)">400 m away</text>
-</svg>
+  <text x="176" y="186" class="s-s" font-size="11">picked</text>
+  <text x="262" y="186" class="s-s" font-size="11">in transit</text>
+  <text x="348" y="186" class="s-b" font-size="11">held at depot</text>
+  <text x="446" y="186" class="s-s" font-size="11">pickup</text><rect x="500" y="60" width="176" height="180" rx="16" fill="rgb(18,10,11)"/><text x="524" y="100" font-family="Satoshi,sans-serif" font-size="12" letter-spacing="1.6" fill="rgba(248,244,241,.55)">REROUTED</text><text x="524" y="146" font-family="Satoshi,sans-serif" font-size="38" font-weight="900" fill="rgb(204,255,0)">400 m</text><line x1="524" y1="166" x2="652" y2="166" stroke="rgba(248,244,241,.18)" stroke-width="1"/><text x="524" y="192" class="s-n">pickup point</text><text x="524" y="214" class="s-n">code sent by text</text></svg>
 </div></section>
 
 <section class="call-band"><div class="shell">
@@ -466,14 +459,14 @@
           <h4>Industries</h4>
           <ul>
             <li><a href="/industries/home-improvement">Home Improvement</a></li>
-            <li><span>Automotive &amp; Parts</span></li>
-            <li><span>Electronics &amp; Tech</span></li>
-            <li><span>Furniture &amp; Home</span></li>
-            <li><span>Outdoor &amp; Garden</span></li>
+            <li><a href="/industries/automotive-parts">Automotive &amp; Parts</a></li>
+            <li><a href="/industries/electronics-tech">Electronics &amp; Tech</a></li>
+            <li><a href="/industries/furniture-home">Furniture &amp; Home</a></li>
+            <li><a href="/industries/outdoor-garden">Outdoor &amp; Garden</a></li>
             <li><a href="/industries/fashion-apparel">Fashion &amp; Apparel</a></li>
-            <li><span>Health &amp; Wellness</span></li>
-            <li><span>Sports &amp; Fitness</span></li>
-            <li><span>Industrial &amp; B2B</span></li>
+            <li><a href="/industries/health-wellness">Health &amp; Wellness</a></li>
+            <li><a href="/industries/sports-fitness">Sports &amp; Fitness</a></li>
+            <li><a href="/industries/industrial-b2b">Industrial &amp; B2B</a></li>
           </ul>
         </div>
       </div>
