@@ -14,7 +14,7 @@ SITE = os.path.join(ROOT, "site")
 TPL = os.path.join(ROOT, "templates")
 POSTS = os.path.join(ROOT, "posts")
 BASE = "https://www.sabato.ai"
-FAVICON = "/fuc/images/dEcuqc3xAQ3JJoX4xQDYrMQefA.png"
+FAVICON = "/fuc/images/hWFOqN6Okd1QgfKhizqgIF1s.png"  # light-mode favicon (cards are off-white)
 
 def load_dummy_slugs():
     p = os.path.join(ROOT, "dummy-posts.txt")
