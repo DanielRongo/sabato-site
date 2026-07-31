@@ -83,19 +83,11 @@
   var IND_ALL_LABEL = IT ? "Tutti i settori" : "All industries";
   var IND_ALL_HREF = IT ? "/it/settori" : "/industries";
 
-  /* ---------- 1. Extra links in the FOOTER, right after "Book a Demo" ----------
-     (Deliberately not in the top nav — the header stays as designed.)
-     Each is a clone of the demo button, so it inherits the footer's styling
-     whatever Framer decides that is this week. Order here is the order on the
-     page: ROI Calculator sits directly under Book a Demo because it is a
-     conversion asset, Blog below it. */
+  /* ---------- 1. Blog link in the FOOTER, right after "Book a Demo" ----------
+     (Deliberately not in the top nav — the header stays as designed.) */
   var DEMO_LABEL = IT ? "Prenota una Demo" : "Book a Demo";
-  var FOOTER_LINKS = [
-    { label: "ROI Calculator", href: "/roi-calculator", attr: "data-roi-link" },
-    { label: "Blog",           href: BLOG_HREF,         attr: "data-blog-link" }
-  ];
-
-  function injectFooterLinks() {
+  function injectBlogLink() {
+    if (document.querySelector("a[data-blog-link]")) return;
     /* "Book a Demo" appears several times (mid-page CTAs + footer). The footer
        one is always the lowest on the page — pick that, never a hero CTA. */
     var links = document.querySelectorAll("a");
@@ -112,25 +104,18 @@
     var box = target.parentElement;
     if (!box || !box.parentElement) return;
     var wrapper = box.querySelectorAll("a").length === 1 ? box : target;
-
-    /* Insert in reverse: each clone goes immediately after the demo button, so
-       pushing them in back-to-front leaves FOOTER_LINKS order on screen. */
-    for (var j = FOOTER_LINKS.length - 1; j >= 0; j--) {
-      var spec = FOOTER_LINKS[j];
-      if (document.querySelector("a[" + spec.attr + "]")) continue;
-      var clone = wrapper.cloneNode(true);
-      var ca = clone.tagName === "A" ? clone : clone.querySelector("a");
-      if (!ca) continue;
-      var tw = (clone.querySelector && clone.querySelector("p, span, h1, h2, h3, h4, h5, h6")) || ca;
-      tw.textContent = spec.label;
-      ca.href = spec.href;
-      ca.setAttribute(spec.attr, "1");
-      ca.removeAttribute("data-uc-wired");
-      /* the demo button opens cal.com in a new tab — these are internal */
-      ca.removeAttribute("target");
-      ca.removeAttribute("rel");
-      wrapper.parentElement.insertBefore(clone, wrapper.nextSibling);
-    }
+    var clone = wrapper.cloneNode(true);
+    var ca = clone.tagName === "A" ? clone : clone.querySelector("a");
+    if (!ca) return;
+    var tw = (clone.querySelector && clone.querySelector("p, span, h1, h2, h3, h4, h5, h6")) || ca;
+    tw.textContent = "Blog";
+    ca.href = BLOG_HREF;
+    ca.setAttribute("data-blog-link", "1");
+    ca.removeAttribute("data-uc-wired");
+    /* the demo button opens cal.com in a new tab — Blog is internal, so drop that */
+    ca.removeAttribute("target");
+    ca.removeAttribute("rel");
+    wrapper.parentElement.insertBefore(clone, wrapper.nextSibling);
   }
 
   /* ---------- 2. Use Cases dropdown ----------
@@ -373,8 +358,7 @@
       var ours = href.indexOf("/use-cases/") === 0 || href.indexOf("/it/casi-duso/") === 0 ||
                  href.indexOf("/industries/") === 0 || href === "/industries" ||
                  href.indexOf("/it/settori/") === 0 || href === "/it/settori" ||
-                 a.hasAttribute("data-blog-link") || href === "/blog" || href === "/it/blog" ||
-                 a.hasAttribute("data-roi-link") || href === "/roi-calculator";
+                 a.hasAttribute("data-blog-link") || href === "/blog" || href === "/it/blog";
       if (!ours) return;
       if (a.target === "_blank") return;
       e.preventDefault();
@@ -384,7 +368,7 @@
   }
 
   function run() {
-    injectFooterLinks(); injectIndustriesNav(); injectDropdown();
+    injectBlogLink(); injectIndustriesNav(); injectDropdown();
     wireUseCaseTargets(); wireIndustryTargets(); installClickInterceptor();
   }
   if (document.readyState !== "loading") run();
