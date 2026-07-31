@@ -209,6 +209,7 @@ def wave(n=26, dark=True):
 
 
 def build(slug, d, lang="en"):
+    d = dict(d, lang=lang)
     prefix = "/industries" if lang == "en" else "/it/settori"
     url = f"{BASE}{prefix}/{slug}"
     alt = (f"{BASE}/it/settori/{IT_BY_EN[slug]}" if lang == "en"
@@ -230,8 +231,19 @@ def build(slug, d, lang="en"):
         f'<li><span class="r-n">{i}</span><span class="r-t">{t}</span></li>'
         for i, t in enumerate(d["rank"], 1))
 
+    GLYPH = ('<svg viewBox="0 0 16 12" aria-hidden="true"><g fill="currentColor">'
+             '<rect x="0" y="3.5" width="2.5" height="5" rx="1.25"/>'
+             '<rect x="4.5" y="1" width="2.5" height="10" rx="1.25"/>'
+             '<rect x="9" y="2.5" width="2.5" height="7" rx="1.25"/>'
+             '<rect x="13.5" y="4.5" width="2.5" height="3" rx="1.25"/></g></svg>')
+    SPK = {"caller": "CALLER", "agent": "AGENT"}
+    if d.get("lang") == "it":
+        SPK = {"caller": "CLIENTE", "agent": "AGENTE"}
+    # Same markup as the use-case pages: the speaker class sits on .t-row, and
+    # .t-spk holds the label plus the waveform glyph. Colour comes from their
+    # CSS (.t-row.caller .t-spk / .t-row.agent .t-spk) rather than from ours.
     tr = "".join(
-        f'<div class="t-row"><span class="t-spk {who}">{wave(4)}<b>{who.upper()}</b></span><p>{txt}</p></div>'
+        f'<div class="t-row {who}"><span class="t-spk">{SPK[who]}{GLYPH}</span><p>{txt}</p></div>'
         for who, txt in d["transcript"])
 
     data_rows = "".join(
@@ -276,7 +288,7 @@ def build(slug, d, lang="en"):
             .replace("{{PROOF}}", proof)
             .replace("{{BAND_EYEBROW}}", d["band_eyebrow"])
             .replace("{{BAND_H2}}", d["band_h2"])
-            .replace("{{BAND_COPY}}", "".join(f"<p>{p}</p>" for p in d["band_copy"]))
+            .replace("{{BAND_COPY}}", "".join(f'<p class="qbody">{p}</p>' for p in d["band_copy"]))
             .replace("{{RANK_HEAD}}", d["rank_head"])
             .replace("{{RANK}}", rank)
             .replace("{{QUESTIONS_H2}}", d["questions_h2"])

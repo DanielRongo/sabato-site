@@ -19,7 +19,9 @@
   <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.sabato.ai"}, {"@type": "ListItem", "position": 2, "name": "Industries", "item": "https://www.sabato.ai/industries"}, {"@type": "ListItem", "position": 3, "name": "Automotive e Ricambi", "item": "https://www.sabato.ai/it/settori/ricambi-auto"}]}</script>
   <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Un agente vocale può confermare la compatibilità al telefono?", "acceptedAnswer": {"@type": "Answer", "text": "Solo quanto lo permette la tua tabella. Con targa o telaio decodifica la versione e verifica la famiglia di ricambi, intervalli di data compresi. Dove non c’è un record per quella versione lo dice e passa la mano: non deduce la compatibilità da un modello simile."}}, {"@type": "Question", "name": "E i clienti professionali che chiamano ogni giorno?", "acceptedAnswer": {"@type": "Answer", "text": "Sono quelli che ne beneficiano di più, perché la chiamata è corta e ripetitiva: codice, veicolo, giacenza, orario limite. L’agente riconosce l’account dal numero e salta le parti che a un abituale non servono."}}, {"@type": "Question", "name": "Se il cliente non ha il numero di telaio?", "acceptedAnswer": {"@type": "Answer", "text": "Chiede prima la targa, e in mancanza ripiega su marca, modello, anno e motore, segnalando che la risposta è meno certa di una verifica da telaio. Quel distinguo viene detto, non nascosto."}}, {"@type": "Question", "name": "Funziona fuori orario e nel fine settimana?", "acceptedAnswer": {"@type": "Answer", "text": "Sì, e in questa categoria conta più che altrove: molti acquisti di ricambi avvengono di sabato, con l’auto già smontata."}}, {"@type": "Question", "name": "Cosa serve per partire?", "acceptedAnswer": {"@type": "Answer", "text": "Accesso in lettura a prodotti e ordini, le tabelle di compatibilità e sostituzione, e la giacenza per magazzino con gli orari limite. Se la compatibilità sta in un feed fornitore invece che a catalogo, leggiamo il feed."}}]}</script>
   <style>
-@font-face { font-family: "Satoshi"; src: url("/fuc/third-party-assets/fontshare/wf/TTX2Z3BF3P6Y5BQT3IV2VNOK6FL22KUT/7QYRJOI3JIMYHGY6CH7SOIFRQLZOLNJ6/KFIAZD4RUMEZIYV6FQ3T3GP5PDBDB6JY.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 400; }
+
+    /* ============ Fonts (local mirrors, same files the site loads) ============ */
+    @font-face { font-family: "Satoshi"; src: url("/fuc/third-party-assets/fontshare/wf/TTX2Z3BF3P6Y5BQT3IV2VNOK6FL22KUT/7QYRJOI3JIMYHGY6CH7SOIFRQLZOLNJ6/KFIAZD4RUMEZIYV6FQ3T3GP5PDBDB6JY.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 400; }
     @font-face { font-family: "Satoshi"; src: url("/fuc/third-party-assets/fontshare/wf/P2LQKHE6KA6ZP4AAGN72KDWMHH6ZH3TA/ZC32TK2P7FPS5GFTL46EU6KQJA24ZYDB/7AHDUZ4A7LFLVFUIFSARGIWCRQJHISQP.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 500; }
     @font-face { font-family: "Satoshi"; src: url("/fuc/third-party-assets/fontshare/wf/LAFFD4SDUCDVQEXFPDC7C53EQ4ZELWQI/PXCT3G6LO6ICM5I3NTYENYPWJAECAWDD/GHM6WVH6MILNYOOCXHXB5GTSGNTMGXZR.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 700; }
     @font-face { font-family: "Satoshi"; src: url("/fuc/third-party-assets/fontshare/wf/NHPGVFYUXYXE33DZ75OIT4JFGHITX5PE/PSUTMASCDJTVPERDYJZPN23BVUFUCQIF/J64QX5IPOHK56I2KYUNBQ5M2XWZEYKYX.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 900; }
@@ -27,6 +29,8 @@
     @font-face { font-family: "Inter"; src: url("/fuc/assets/GrgcKwrN6d3Uz8EwcLHZxwEfC4.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 400; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+2000-206F, U+20AC, U+2122; }
     @font-face { font-family: "Inter"; src: url("/fuc/assets/UjlFhCnUjxhNfep4oYBPqnEssyo.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 500; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+2000-206F, U+20AC, U+2122; }
     @font-face { font-family: "Inter"; src: url("/fuc/assets/syRNPWzAMIrcJ3wIlPIP43KjQs.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 700; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+2000-206F, U+20AC, U+2122; }
+
+    /* ============ Tokens ============ */
     :root {
       --lime: rgb(204, 255, 0);        /* CTA / accent */
       --black: rgb(0, 0, 0);           /* dark bands */
@@ -44,6 +48,9 @@
     body { font-family: var(--font); background: #fff; color: var(--ink); }
     img { display: block; max-width: 100%; }
     a { text-decoration: none; color: inherit; }
+    svg text { font-family: var(--font); }
+
+    /* ============ Header / Nav ============ */
     .site-header { position: sticky; top: 0; z-index: 100; max-width: 1200px; margin: 0 auto; padding: 16px 30px; }
     .nav-shell { background: #fff; border-radius: var(--radius); height: 88px; padding: 16px 70px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
     .nav-logo img { width: 132px; height: auto; }
@@ -54,15 +61,71 @@
     .nav-flag { font-size: 16px; line-height: 1; }
     .btn-pill { display: inline-block; background: var(--lime); color: #000; border-radius: 100px; padding: 12px 30px; font-family: var(--font); font-size: 16px; font-weight: 700; line-height: 1.7; transition: transform .2s ease; white-space: nowrap; }
     .btn-pill:hover { transform: scale(1.04); }
+    .tag { display: inline-block; background: var(--lime); color: #000; border-radius: 100px; padding: 4px 14px; font-size: 13px; font-weight: 700; line-height: 1.6; letter-spacing: .2px; }
+
+    /* ============ Shell ============ */
     .shell { max-width: 1200px; margin: 0 auto; padding: 0 30px; }
+
+    /* ============ 1. Split hero ============ */
+    .split-hero { max-width: 1200px; margin: 0 auto; padding: 40px 40px 96px; display: grid; grid-template-columns: 1.04fr .96fr; gap: 64px; align-items: center; }
     .hero-copy .tag { margin-bottom: 24px; }
     .hero-copy h1 { font-size: 54px; font-weight: 700; letter-spacing: -1.9px; line-height: 1.1; color: var(--ink); margin: 0 0 22px; }
     .hero-copy .sub { font-size: 19px; font-weight: 400; line-height: 1.7; color: var(--gray); max-width: 520px; margin: 0 0 32px; }
+    .hero-cta { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; }
     .hero-cta .hand { font-family: var(--hand); font-weight: 700; font-size: 19px; color: var(--ink); transform: rotate(-2deg); }
+    .hero-visual svg { display: block; width: 100%; height: auto; max-width: 560px; margin: 0 auto; }
+
+    /* ============ 2. Queue picture (dark band) ============ */
+    .queue-band { background: var(--black); border-radius: var(--radius); margin: 0 40px; padding: 84px 72px 76px; }
+    .queue-inner { max-width: 1060px; margin: 0 auto; }
     .queue-band .eyebrow { color: var(--lime); font-size: 13px; font-weight: 700; letter-spacing: 2.5px; margin: 0 0 18px; }
+    .queue-band h2 { color: #fff; font-size: 38px; font-weight: 700; letter-spacing: -1.1px; line-height: 1.15; margin: 0 0 26px; }
+    .queue-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
     .queue-grid .qcopy .qbody { color: rgba(248, 244, 241, .82); font-size: 17.5px; line-height: 1.75; margin: 0; }
+    .queue-viz svg { display: block; width: 100%; height: auto; }
     .queue-viz .fine { color: rgba(248, 244, 241, .45); font-size: 12px; line-height: 1.6; margin: 18px 0 0; }
+
+    /* ============ 3. Flow ============ */
+    .flow { max-width: 1200px; margin: 0 auto; padding: 104px 40px 0; text-align: center; }
+    .flow h2 { font-size: 38px; font-weight: 700; letter-spacing: -1.1px; line-height: 1.2; color: var(--ink); margin: 0 0 12px; }
+    .flow-desktop { display: block; width: 100%; height: auto; margin: 28px auto 0; max-width: 1120px; }
+    .flow-mobile { display: none; width: 100%; max-width: 360px; height: auto; margin: 20px auto 0; }
+    .flow-caption { font-size: 16.5px; line-height: 1.7; color: var(--gray); max-width: 680px; margin: 26px auto 0; }
+
+    /* ============ 4. Sample call (phone UI) ============ */
+    .call-band { background: var(--off); border-radius: var(--radius); margin: 104px 40px 0; padding: 84px 40px 88px; text-align: center; }
+    .call-band h2 { font-size: 38px; font-weight: 700; letter-spacing: -1.1px; line-height: 1.2; color: var(--ink); margin: 0 0 8px; }
+    .call-caption { font-size: 14px; font-weight: 500; color: var(--gray); opacity: .7; margin: 0; }
+    .call-panel { width: 100%; max-width: 680px; margin: 42px auto 0; background: var(--black); border-radius: 28px; padding: 30px 38px 30px; text-align: left; }
+    .panel-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-bottom: 20px; border-bottom: 1px solid rgba(248, 244, 241, .16); }
+    .panel-head .ph-left { display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 700; color: #fff; }
+    .panel-head .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--lime); outline: 3px solid rgba(204, 255, 0, .35); }
+    .panel-head .ph-time { font-size: 14px; font-weight: 500; color: rgba(248, 244, 241, .5); font-variant-numeric: tabular-nums; }
+    .panel-head .ph-wave { width: 64px; height: 18px; flex: none; }
+    .t-row { display: grid; grid-template-columns: 104px 1fr; gap: 20px; align-items: start; padding: 17px 0; border-bottom: 1px solid rgba(248, 244, 241, .08); }
+    .t-row:last-of-type { border-bottom: 0; padding-bottom: 6px; }
+    .t-spk { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 700; letter-spacing: 1.6px; padding-top: 3px; }
+    .t-spk svg { width: 16px; height: 12px; flex: none; }
+    .t-row.caller .t-spk { color: rgba(248, 244, 241, .5); }
+    .t-row.agent .t-spk { color: var(--lime); }
+    .t-row p { font-size: 15.5px; line-height: 1.65; margin: 0; color: rgba(248, 244, 241, .85); }
+    .t-row.agent p { color: #fff; }
+    .phone-note { font-size: 16.5px; line-height: 1.7; color: var(--gray); max-width: 560px; margin: 30px auto 0; }
+
+    /* ============ 5. Two-up value row ============ */
+    .value-row { max-width: 1200px; margin: 24px auto 0; padding: 80px 40px 0; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .value-card { background: var(--off); border-radius: var(--radius); padding: 46px 44px 44px; }
+    .value-card svg { display: block; height: 124px; width: auto; margin: 0 0 28px; }
+    .value-card h3 { font-size: 25px; font-weight: 700; letter-spacing: -0.6px; line-height: 1.25; color: var(--ink); margin: 0 0 14px; }
+    .value-card p { font-size: 16.5px; line-height: 1.7; color: var(--gray); margin: 0; }
+
+    /* ============ 6. CTA band ============ */
+    .cta-band { background: var(--black); border-radius: var(--radius); margin: 96px 40px 40px; padding: 88px 40px; text-align: center; }
     .cta-band .hand { font-family: var(--hand); font-weight: 700; font-size: 19px; color: #fff; margin-bottom: 14px; }
+    .cta-band h2 { color: #fff; font-size: 48px; font-weight: 700; letter-spacing: -1.5px; line-height: 1.15; max-width: 720px; margin: 0 auto 16px; }
+    .cta-band p { color: #fff; opacity: .8; font-size: 19px; line-height: 1.7; max-width: 560px; margin: 0 auto 34px; }
+
+    /* ============ Footer ============ */
     footer.site-footer { background: var(--black); margin-top: 96px; padding: 110px 0 0; }
     .footer-grid { display: grid; grid-template-columns: 1.35fr 1fr 1.25fr 1fr; gap: 48px; padding-bottom: 88px; }
     .footer-brand img.footer-logo { width: 132px; height: auto; }
@@ -81,6 +144,7 @@
     .footer-bottom .legal a:hover { opacity: 1; }
     .footer-bottom img { width: 20px; height: 20px; }
 
+    /* ============ Mobile (Framer breakpoint) ============ */
     @media (max-width: 809px) {
       .site-header { padding: 12px 16px; }
       .nav-shell { height: 72px; padding: 12px 22px; border-radius: 20px; }
@@ -137,161 +201,125 @@
       .queue-grid { gap: 40px; }
       .footer-grid { grid-template-columns: 1fr 1fr; }
     }
+    @media (min-width: 810px) and (max-width: 1200px) { .nav-links { gap: 26px; } }
+  
 
-    /* ================= industry page ================= */
-    .ind-hero { padding: 92px 0 84px; }
-    .ind-hero .grid { display: grid; grid-template-columns: 1.05fr 1fr; gap: 64px; align-items: center; }
-    .chip { display: inline-block; background: var(--lime); color: var(--ink); font-size: 12px; font-weight: 700;
-            letter-spacing: 1.4px; text-transform: uppercase; padding: 8px 16px; border-radius: 100px; margin-bottom: 26px; }
-    .ind-hero h1 { font-size: 58px; line-height: 1.04; letter-spacing: -2px; font-weight: 900; color: var(--ink); margin: 0 0 22px; }
-    .ind-hero .sub { font-size: 18px; line-height: 1.62; color: var(--gray); max-width: 34em; margin: 0 0 32px; }
-    .hero-cta { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; }
-    .proof { display: flex; align-items: center; gap: 10px; margin: 30px 0 0; padding-top: 22px;
-             border-top: 1px solid var(--line); font-size: 14.5px; color: var(--gray); }
-    .proof-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--lime); flex: none; }
+    /* ===== industry-page additions =====
+       Everything above is the use-case page's CSS, unchanged, so the two
+       families share one type scale, one band rhythm and one card system.
+       Only genuinely new components are defined below, on that same scale:
+       nothing here redefines a class the use-case page already owns. */
 
-    /* live call card */
-    .callcard { background: var(--black); border-radius: var(--radius); padding: 26px 26px 22px; }
+    /* hero live-call card */
+    .callcard { background: var(--black); border-radius: var(--radius); padding: 30px 32px 26px; }
     .cc-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
     .cc-id { display: flex; align-items: center; gap: 12px; }
-    .cc-icon { width: 34px; height: 34px; border-radius: 10px; background: rgba(204,255,0,.12);
+    .cc-icon { width: 36px; height: 36px; border-radius: 11px; background: rgba(204,255,0,.12);
                display: flex; align-items: center; justify-content: center; flex: none; }
-    .cc-icon svg { width: 20px; height: 20px; display: block; }
-    .cc-live { display: flex; align-items: center; gap: 9px; color: var(--lime); font-size: 11.5px; font-weight: 700; letter-spacing: 2px; }
+    .cc-icon svg { width: 21px; height: 21px; display: block; }
+    .cc-live { display: flex; align-items: center; gap: 9px; color: var(--lime); font-size: 12px; font-weight: 700; letter-spacing: 1.6px; }
     .cc-live i { width: 8px; height: 8px; border-radius: 50%; background: var(--lime); display: block; }
-    .cc-time { color: rgba(248,244,241,.5); font-size: 12.5px; font-variant-numeric: tabular-nums; }
-    .wave { display: block; width: 100%; height: 44px; }
-    .cc-ctrls { display: flex; justify-content: center; gap: 14px; margin: 18px 0 22px; }
-    .cc-ctrls span { width: 40px; height: 40px; border-radius: 50%; background: rgba(248,244,241,.1); display: block; }
+    .cc-time { color: rgba(248,244,241,.5); font-size: 13px; font-variant-numeric: tabular-nums; }
+    .wave { display: block; width: 100%; height: 46px; }
+    .cc-ctrls { display: flex; justify-content: center; gap: 14px; margin: 20px 0 24px; }
+    .cc-ctrls span { width: 42px; height: 42px; border-radius: 50%; background: rgba(248,244,241,.1); display: block; }
     .cc-ctrls span.on { background: var(--lime); }
-    .cc-q { background: rgba(248,244,241,.06); border-radius: 14px; padding: 18px 20px; }
-    .cc-q .lbl { font-size: 10.5px; letter-spacing: 1.6px; color: rgba(248,244,241,.45); margin: 0 0 9px; }
-    .cc-q p { color: #fff; font-size: 15.5px; line-height: 1.5; margin: 0; }
-    .cm-row { display: flex; justify-content: space-between; gap: 16px; padding: 11px 0; border-top: 1px solid rgba(248,244,241,.1); font-size: 12.5px; }
+    .cc-q { background: rgba(248,244,241,.06); border-radius: 16px; padding: 20px 22px; }
+    .cc-q .lbl { font-size: 11px; letter-spacing: 1.6px; color: rgba(248,244,241,.45); margin: 0 0 10px; font-weight: 700; }
+    .cc-q p { color: #fff; font-size: 16.5px; line-height: 1.55; margin: 0; }
+    .cm-row { display: flex; justify-content: space-between; gap: 16px; padding: 12px 0; border-top: 1px solid rgba(248,244,241,.1); font-size: 13px; }
     .cm-row span { color: rgba(248,244,241,.5); }
     .cm-row b { color: var(--lime); font-weight: 700; text-align: right; }
-    .cc-note { color: rgba(248,244,241,.32); font-size: 11px; margin: 14px 0 0; }
+    .cc-note { color: rgba(248,244,241,.32); font-size: 12px; margin: 16px 0 0; }
+    .proof { display: flex; align-items: center; gap: 10px; margin: 30px 0 0; padding-top: 22px;
+             border-top: 1px solid var(--line); font-size: 15px; line-height: 1.6; color: var(--gray); }
+    .proof-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--lime); flex: none; }
 
-    /* dark band */
-    .band { background: var(--black); padding: 96px 0; }
-    .band .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
-    .band h2 { font-size: 40px; line-height: 1.14; letter-spacing: -1.2px; font-weight: 900; color: #fff; margin: 0 0 24px; }
-    .band p { color: rgba(248,244,241,.72); font-size: 16.5px; line-height: 1.66; margin: 0 0 18px; }
-    .band .eyebrow { color: var(--lime); font-size: 11.5px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin: 0 0 18px; }
-    .rank { background: rgba(248,244,241,.05); border-radius: var(--radius); padding: 30px 32px; }
-    .rank h3 { color: rgba(248,244,241,.55); font-size: 11.5px; letter-spacing: 1.8px; text-transform: uppercase; margin: 0 0 20px; font-weight: 700; }
+    /* dark "why this category phones" band — same shape as .queue-band */
+    .rank { background: rgba(248,244,241,.05); border-radius: var(--radius); padding: 34px 36px; }
+    .rank h3 { color: rgba(248,244,241,.55); font-size: 12px; letter-spacing: 1.8px; text-transform: uppercase; margin: 0 0 22px; font-weight: 700; }
     .rank ul { list-style: none; margin: 0; padding: 0; }
-    .rank li { display: flex; align-items: baseline; gap: 16px; padding: 13px 0; border-top: 1px solid rgba(248,244,241,.1); }
+    .rank li { display: flex; align-items: baseline; gap: 16px; padding: 14px 0; border-top: 1px solid rgba(248,244,241,.1); }
     .rank li:first-child { border-top: 0; }
-    .r-n { color: var(--lime); font-weight: 900; font-size: 14px; min-width: 20px; font-variant-numeric: tabular-nums; }
-    .r-t { color: #fff; font-size: 15px; line-height: 1.45; }
-    .rank .fine { color: rgba(248,244,241,.38); font-size: 11.5px; margin: 20px 0 0; line-height: 1.5; }
+    .r-n { color: var(--lime); font-weight: 700; font-size: 15px; min-width: 20px; font-variant-numeric: tabular-nums; }
+    .r-t { color: #fff; font-size: 16.5px; line-height: 1.5; }
 
-    /* questions */
-    .qs { padding: 96px 0; background: var(--off); }
-    .qs h2 { font-size: 38px; line-height: 1.16; letter-spacing: -1.1px; font-weight: 900; color: var(--ink); margin: 0 0 20px; max-width: 20em; }
-    .qs .intro { font-size: 16.5px; line-height: 1.65; color: var(--gray); max-width: 44em; margin: 0 0 44px; }
+    /* questions table — off-white band, same inset rhythm as .call-band */
+    .qs { background: var(--off); border-radius: var(--radius); margin: 104px 40px 0; padding: 84px 56px 88px; }
+    .qs h2 { max-width: 22em; }
+    .qs .intro { font-size: 18px; line-height: 1.7; color: var(--gray); max-width: 44em; margin: 0 0 44px; }
     .q-table { background: #fff; border-radius: var(--radius); overflow: hidden; }
-    .q-row { display: grid; grid-template-columns: 1fr 1.25fr; gap: 34px; padding: 26px 34px; border-top: 1px solid var(--line); }
+    .q-row { display: grid; grid-template-columns: 1fr 1.25fr; gap: 34px; padding: 28px 36px; border-top: 1px solid var(--line); }
     .q-row:first-child { border-top: 0; }
-    .q-ask { font-size: 16.5px; font-weight: 700; color: var(--ink); line-height: 1.45; margin: 0; }
-    .q-ans p { font-size: 15px; line-height: 1.6; color: var(--gray); margin: 0 0 10px; }
-    .q-ans code { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 12.5px; background: var(--off);
-                  border: 1px solid var(--line); border-radius: 6px; padding: 3px 8px; color: var(--ink); display: inline-block; }
-    .q-note { font-size: 13px; color: var(--gray); opacity: .75; margin: 20px 0 0; }
+    .q-ask { font-size: 17.5px; font-weight: 700; color: var(--ink); line-height: 1.45; margin: 0; }
+    .q-ans p { font-size: 16px; line-height: 1.65; color: var(--gray); margin: 0 0 10px; }
+    .q-ans code { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 13px; background: var(--off);
+                  border: 1px solid var(--line); border-radius: 6px; padding: 3px 9px; color: var(--ink); display: inline-block; }
+    .q-note { font-size: 14px; color: var(--gray); opacity: .72; margin: 22px 0 0; }
 
-    /* mid-page CTA */
     .midcta { display: flex; align-items: center; justify-content: space-between; gap: 28px; flex-wrap: wrap;
-              background: var(--black); border-radius: var(--radius); padding: 30px 36px; margin: 44px 0 0; }
-    .midcta p { color: #fff; font-size: 19px; font-weight: 700; margin: 0; letter-spacing: -.3px; }
-    .midcta .m-sub { color: rgba(248,244,241,.6); font-size: 14px; font-weight: 400; margin: 6px 0 0; letter-spacing: 0; }
+              background: var(--black); border-radius: var(--radius); padding: 34px 40px; margin: 44px 0 0; }
+    .midcta p { color: #fff; font-size: 21px; font-weight: 700; margin: 0; letter-spacing: -.4px; }
+    .midcta .m-sub { color: rgba(248,244,241,.6); font-size: 15px; font-weight: 500; margin: 7px 0 0; letter-spacing: 0; }
 
-    /* workflows */
-    .wf { padding: 96px 0; }
-    .wf h2 { font-size: 38px; line-height: 1.16; letter-spacing: -1.1px; font-weight: 900; color: var(--ink); margin: 0 0 14px; max-width: 18em; }
-    .wf-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-top: 38px; }
-    .wf-card { display: block; background: var(--off); border-radius: 20px; padding: 26px 24px 28px; text-decoration: none;
-               position: relative; transition: background .16s ease, transform .16s ease; }
-    .wf-card:hover { background: #fff; box-shadow: 0 10px 30px rgba(18,10,11,.08); transform: translateY(-2px); }
-    .wf-n { font-size: 11.5px; font-weight: 700; letter-spacing: 1.6px; color: var(--gray); }
-    .wf-arrow { position: absolute; top: 24px; right: 24px; width: 26px; height: 26px; border-radius: 50%; background: var(--lime);
-                color: var(--ink); font-size: 13px; display: flex; align-items: center; justify-content: center; font-weight: 700; }
-    .wf-card h3 { font-size: 17px; font-weight: 700; color: var(--ink); margin: 26px 0 8px; letter-spacing: -.3px; }
-    .wf-card p { font-size: 13.5px; line-height: 1.55; color: var(--gray); margin: 0; }
+    /* workflow strip */
+    .wf { max-width: 1200px; margin: 0 auto; padding: 96px 40px 0; }
+    .wf-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-top: 40px; }
+    .wf-card { display: block; background: var(--off); border-radius: var(--radius); padding: 30px 28px 32px; text-decoration: none;
+               position: relative; transition: background .16s ease, transform .16s ease, box-shadow .16s ease; }
+    .wf-card:hover { background: #fff; box-shadow: 0 12px 32px rgba(18,10,11,.08); transform: translateY(-2px); }
+    .wf-n { font-size: 12px; font-weight: 700; letter-spacing: 1.6px; color: var(--gray); }
+    .wf-arrow { position: absolute; top: 26px; right: 26px; width: 28px; height: 28px; border-radius: 50%; background: var(--lime);
+                color: var(--ink); font-size: 14px; display: flex; align-items: center; justify-content: center; font-weight: 700; }
+    .wf-card h3 { font-size: 19px; font-weight: 700; color: var(--ink); margin: 26px 0 9px; letter-spacing: -.4px; line-height: 1.3; }
+    .wf-card p { font-size: 15px; line-height: 1.6; color: var(--gray); margin: 0; }
     .scene { display: block; width: 100%; height: auto; margin: 56px 0 0; }
-    .scene-cap { font-size: 12.5px; color: var(--gray); opacity: .72; margin: 14px 0 0; }
 
-    /* transcript */
-    .call-band { background: var(--black); padding: 92px 0; }
-    .call-band h2 { font-size: 38px; font-weight: 900; letter-spacing: -1.1px; color: #fff; margin: 0 0 8px; }
-    .call-meta { color: rgba(248,244,241,.45); font-size: 12.5px; margin: 0 0 34px; }
-    .call-panel { background: rgba(248,244,241,.05); border-radius: var(--radius); padding: 12px 30px 26px; }
-    .t-row { display: grid; grid-template-columns: 108px 1fr; gap: 22px; padding: 17px 0; border-top: 1px solid rgba(248,244,241,.09); align-items: start; }
-    .t-row:first-child { border-top: 0; }
-    .t-spk { display: flex; align-items: center; gap: 8px; padding-top: 2px; }
-    .t-spk b { font-size: 10.5px; letter-spacing: 1.4px; font-weight: 700; }
-    .t-spk .wave { width: 26px; height: 16px; }
-    .t-spk.caller b { color: rgba(248,244,241,.5); }
-    .t-spk.agent b { color: var(--lime); }
-    .t-row p { color: rgba(248,244,241,.9); font-size: 15.5px; line-height: 1.62; margin: 0; }
-    .call-caption { color: rgba(248,244,241,.34); font-size: 11.5px; margin: 22px 0 0; }
-
-    /* data reality */
-    .data { padding: 96px 0; background: var(--off); }
-    .data .grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 60px; align-items: start; }
-    .data h2 { font-size: 36px; line-height: 1.18; letter-spacing: -1.1px; font-weight: 900; color: var(--ink); margin: 0 0 20px; }
-    .data > .shell > .grid > div > p { font-size: 16.5px; line-height: 1.65; color: var(--gray); margin: 0 0 26px; }
-    .honest { background: var(--black); border-radius: 18px; padding: 26px 28px; }
-    .honest .lbl { color: var(--lime); font-size: 11px; font-weight: 700; letter-spacing: 1.8px; margin: 0 0 12px; }
-    .honest p { color: rgba(248,244,241,.85); font-size: 14.5px; line-height: 1.62; margin: 0; }
-    .d-row { background: #fff; border-radius: 16px; padding: 20px 24px; margin-bottom: 12px; display: grid;
-             grid-template-columns: 200px 1fr; gap: 24px; align-items: baseline; }
-    .d-row h3 { font-size: 15px; font-weight: 700; color: var(--ink); margin: 0; letter-spacing: -.2px; }
-    .d-row p { font-size: 14px; line-height: 1.55; color: var(--gray); margin: 0; }
+    /* data-reality band */
+    .data { max-width: 1200px; margin: 0 auto; padding: 96px 40px 0; }
+    .data-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 60px; align-items: start; margin-top: 34px; }
+    .honest { background: var(--black); border-radius: var(--radius); padding: 30px 32px; margin-top: 26px; }
+    .honest .lbl { color: var(--lime); font-size: 11.5px; font-weight: 700; letter-spacing: 1.8px; margin: 0 0 13px; }
+    .honest p { color: rgba(248,244,241,.85); font-size: 16px; line-height: 1.65; margin: 0; }
+    .d-row { background: var(--off); border-radius: var(--radius); padding: 24px 28px; margin-bottom: 14px; display: grid;
+             grid-template-columns: 210px 1fr; gap: 26px; align-items: baseline; }
+    .d-row h3 { font-size: 16.5px; font-weight: 700; color: var(--ink); margin: 0; letter-spacing: -.3px; }
+    .d-row p { font-size: 15.5px; line-height: 1.6; color: var(--gray); margin: 0; }
 
     /* pilot */
-    .pilot { padding: 92px 0; }
-    .pilot .grid { display: grid; grid-template-columns: 1fr 1.15fr; gap: 56px; align-items: start; }
-    .pilot h2 { font-size: 36px; font-weight: 900; letter-spacing: -1.1px; color: var(--ink); margin: 0 0 18px; }
-    .pilot p { font-size: 16.5px; line-height: 1.65; color: var(--gray); margin: 0; }
-    .p-item { display: grid; grid-template-columns: 26px 1fr; gap: 14px; background: var(--off); border-radius: 14px;
-              padding: 18px 22px; margin-bottom: 10px; align-items: start; }
-    .p-tick { width: 22px; height: 22px; border-radius: 50%; background: var(--lime); color: var(--ink); font-size: 12px;
-              font-weight: 900; display: flex; align-items: center; justify-content: center; }
-    .p-item p { font-size: 14.5px; line-height: 1.55; }
+    .pilot { max-width: 1200px; margin: 0 auto; padding: 96px 40px 0; }
+    .pilot-grid { display: grid; grid-template-columns: 1fr 1.15fr; gap: 56px; align-items: start; }
+    .p-item { display: grid; grid-template-columns: 26px 1fr; gap: 15px; background: var(--off); border-radius: 16px;
+              padding: 20px 24px; margin-bottom: 12px; align-items: start; }
+    .p-tick { width: 24px; height: 24px; border-radius: 50%; background: var(--lime); color: var(--ink); font-size: 13px;
+              font-weight: 700; display: flex; align-items: center; justify-content: center; }
+    .p-item p { font-size: 16px; line-height: 1.6; color: var(--gray); margin: 0; }
 
     /* faq */
-    .faq-sec { padding: 92px 0; background: var(--off); }
-    .faq-sec h2 { font-size: 36px; font-weight: 900; letter-spacing: -1.1px; color: var(--ink); margin: 0 0 34px; max-width: 20em; }
-    .faq-item { background: #fff; border-radius: 16px; padding: 24px 28px; margin-bottom: 12px; }
-    .faq-q { font-size: 18px; font-weight: 700; color: var(--ink); margin: 0 0 9px; letter-spacing: -.3px; }
-    .faq-a { font-size: 15.5px; line-height: 1.65; color: var(--gray); margin: 0; }
+    .faq-sec { background: var(--off); border-radius: var(--radius); margin: 104px 40px 0; padding: 84px 56px 88px; }
+    .faq-item { background: #fff; border-radius: var(--radius); padding: 28px 32px; margin-bottom: 14px; }
+    .faq-q { font-size: 19px; font-weight: 700; color: var(--ink); margin: 0 0 10px; letter-spacing: -.35px; line-height: 1.35; }
+    .faq-a { font-size: 16.5px; line-height: 1.7; color: var(--gray); margin: 0; }
 
-    /* closing cta */
-    .cta-band { background: var(--black); padding: 96px 0; text-align: center; }
-    .cta-band h2 { font-size: 42px; font-weight: 900; letter-spacing: -1.4px; color: #fff; margin: 10px 0 16px; }
-    .cta-band p { color: rgba(248,244,241,.7); font-size: 17px; line-height: 1.6; max-width: 34em; margin: 0 auto 30px; }
-    .cta-band .hand { color: var(--lime); }
+    .rank .fine { color: rgba(248,244,241,.45); font-size: 12px; line-height: 1.6; margin: 20px 0 0; }
+    .lede { font-size: 17.5px; line-height: 1.75; color: var(--gray); margin: 0; }
     .nb { white-space: nowrap; }
-    @media (min-width: 810px) and (max-width: 1200px) { .nav-links { gap: 26px; } }
 
-    @media (max-width: 980px) {
-      .ind-hero .grid, .band .grid, .data .grid, .pilot .grid { grid-template-columns: 1fr; gap: 40px; }
+    @media (max-width: 1099px) {
       .wf-grid { grid-template-columns: repeat(2, 1fr); }
+      .data-grid, .pilot-grid { grid-template-columns: 1fr; gap: 40px; }
     }
     @media (max-width: 809px) {
-      .ind-hero { padding: 60px 0 56px; }
-      .ind-hero h1 { font-size: 38px; letter-spacing: -1.2px; }
-      .band, .qs, .wf, .call-band, .data, .pilot, .faq-sec, .cta-band { padding: 64px 0; }
-      .band h2, .qs h2, .wf h2, .call-band h2, .data h2, .pilot h2, .faq-sec h2 { font-size: 28px; letter-spacing: -.8px; }
-      .cta-band h2 { font-size: 30px; letter-spacing: -1px; }
+      .qs, .faq-sec { margin: 72px 16px 0; padding: 60px 22px 64px; }
+      .wf, .data, .pilot { padding: 64px 20px 0; }
       .q-row, .d-row { grid-template-columns: 1fr; gap: 12px; padding: 22px 24px; }
       .wf-grid { grid-template-columns: 1fr; }
-      .t-row { grid-template-columns: 1fr; gap: 8px; }
-      .call-panel { padding: 12px 20px 22px; }
-      .midcta { padding: 24px 24px; }
-      .rank { padding: 24px 22px; }
+      .midcta { padding: 26px 24px; }
+      .rank { padding: 26px 24px; }
+      .callcard { padding: 24px 22px 22px; }
+      .qs .intro { font-size: 16.5px; }
     }
+    @media (min-width: 810px) and (max-width: 1200px) { .nav-links { gap: 26px; } }
 
   </style>
 </head>
@@ -312,9 +340,9 @@
     </div>
   </header>
 
-<section class="ind-hero"><div class="shell"><div class="grid">
-  <div>
-    <span class="chip">Automotive e Ricambi</span>
+<section class="split-hero">
+  <div class="hero-copy">
+    <span class="tag">Automotive e Ricambi</span>
     <h1>Ogni chiamata sui ricambi è la stessa domanda con un&rsquo;auto diversa.</h1>
     <p class="sub">È compatibile con la mia? L&rsquo;agente di Sabato prende la targa o il telaio, controlla la tabella di compatibilità e risponde sì, no, oppure &ldquo;quel codice è stato sostituito — il ricambio attuale è questo&rdquo;.</p>
     <div class="hero-cta">
@@ -323,30 +351,34 @@
     </div>
     
   </div>
-  <div class="callcard">
-    <div class="cc-top"><span class="cc-id"><span class="cc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="rgb(204,255,0)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="3"/><line x1="12" y1="3.5" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="20.5"/><line x1="3.5" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="20.5" y2="12"/></svg></span><span class="cc-live"><i></i>LIVE CALL</span></span><span class="cc-time">1:26</span></div>
-    <svg class="wave" viewBox="0 0 390 48" aria-hidden="true"><rect x="0" y="19" width="5" height="10" rx="2.5" fill="rgba(204,255,0,.45)"/><rect x="13" y="13" width="5" height="22" rx="2.5" fill="rgb(204,255,0)"/><rect x="26" y="7" width="5" height="34" rx="2.5" fill="rgb(204,255,0)"/><rect x="39" y="15" width="5" height="18" rx="2.5" fill="rgba(204,255,0,.45)"/><rect x="52" y="4" width="5" height="40" rx="2.5" fill="rgb(204,255,0)"/><rect x="65" y="17" width="5" height="14" rx="2.5" fill="rgb(204,255,0)"/><rect x="78" y="10" width="5" height="28" rx="2.5" fill="rgba(204,255,0,.45)"/><rect x="91" y="2" width="5" height="44" rx="2.5" fill="rgb(204,255,0)"/><rect x="104" y="14" width="5" height="20" rx="2.5" fill="rgb(204,255,0)"/><rect x="117" y="6" width="5" height="36" rx="2.5" fill="rgba(204,255,0,.45)"/><rect x="130" y="18" width="5" height="12" rx="2.5" fill="rgb(204,255,0)"/><rect x="143" y="9" width="5" height="30" rx="2.5" fill="rgb(204,255,0)"/><rect x="156" y="3" width="5" height="42" rx="2.5" fill="rgba(204,255,0,.45)"/><rect x="169" y="16" width="5" height="16" rx="2.5" fill="rgb(204,255,0)"/><rect x="182" y="11" width="5" height="26" rx="2.5" fill="rgb(204,255,0)"/><rect x="195" y="5" width="5" height="38" rx="2.5" fill="rgba(204,255,0,.45)"/><rect x="208" y="13" width="5" height="22" rx="2.5" fill="rgb(204,255,0)"/><rect x="221" y="7" width="5" height="34" rx="2.5" fill="rgb(204,255,0)"/><rect x="234" y="18" width="5" height="12" rx="2.5" fill="rgba(204,255,0,.45)"/><rect x="247" y="10" width="5" height="28" rx="2.5" fill="rgb(204,255,0)"/><rect x="260" y="4" width="5" height="40" rx="2.5" fill="rgb(204,255,0)"/><rect x="273" y="15" width="5" height="18" rx="2.5" fill="rgba(204,255,0,.45)"/><rect x="286" y="12" width="5" height="24" rx="2.5" fill="rgb(204,255,0)"/><rect x="299" y="8" width="5" height="32" rx="2.5" fill="rgb(204,255,0)"/><rect x="312" y="17" width="5" height="14" rx="2.5" fill="rgba(204,255,0,.45)"/><rect x="325" y="14" width="5" height="20" rx="2.5" fill="rgb(204,255,0)"/><rect x="338" y="19" width="5" height="10" rx="2.5" fill="rgb(204,255,0)"/><rect x="351" y="13" width="5" height="22" rx="2.5" fill="rgba(204,255,0,.45)"/><rect x="364" y="7" width="5" height="34" rx="2.5" fill="rgb(204,255,0)"/><rect x="377" y="15" width="5" height="18" rx="2.5" fill="rgb(204,255,0)"/></svg>
-    <div class="cc-ctrls"><span></span><span></span><span class="on"></span></div>
-    <div class="cc-q"><p class="lbl">COSA HA APPENA CHIESTO IL CLIENTE</p><p>&ldquo;Ho una Golf del 2016, 2.0 TDI — questi dischi anteriori vanno bene?&rdquo;</p></div>
-    <div class="cm-row"><span>Intento rilevato</span><b>Verifica compatibilità</b></div><div class="cm-row"><span>Dati letti</span><b>Targa &middot; tabella compatibilità</b></div><div class="cm-row"><span>Esito</span><b>Confermato + pastiglie</b></div>
-    <p class="cc-note">Chiamata di esempio. Interfaccia illustrativa, non una registrazione reale.</p>
+  <div class="hero-visual">
+    <div class="callcard">
+      <div class="cc-top"><span class="cc-id"><span class="cc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="rgb(204,255,0)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="3"/><line x1="12" y1="3.5" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="20.5"/><line x1="3.5" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="20.5" y2="12"/></svg></span><span class="cc-live"><i></i>LIVE CALL</span></span><span class="cc-time">1:26</span></div>
+      <svg class="wave" viewBox="0 0 390 48" aria-hidden="true"><rect x="0" y="19" width="5" height="10" rx="2.5" fill="rgba(204,255,0,.45)"/><rect x="13" y="13" width="5" height="22" rx="2.5" fill="rgb(204,255,0)"/><rect x="26" y="7" width="5" height="34" rx="2.5" fill="rgb(204,255,0)"/><rect x="39" y="15" width="5" height="18" rx="2.5" fill="rgba(204,255,0,.45)"/><rect x="52" y="4" width="5" height="40" rx="2.5" fill="rgb(204,255,0)"/><rect x="65" y="17" width="5" height="14" rx="2.5" fill="rgb(204,255,0)"/><rect x="78" y="10" width="5" height="28" rx="2.5" fill="rgba(204,255,0,.45)"/><rect x="91" y="2" width="5" height="44" rx="2.5" fill="rgb(204,255,0)"/><rect x="104" y="14" width="5" height="20" rx="2.5" fill="rgb(204,255,0)"/><rect x="117" y="6" width="5" height="36" rx="2.5" fill="rgba(204,255,0,.45)"/><rect x="130" y="18" width="5" height="12" rx="2.5" fill="rgb(204,255,0)"/><rect x="143" y="9" width="5" height="30" rx="2.5" fill="rgb(204,255,0)"/><rect x="156" y="3" width="5" height="42" rx="2.5" fill="rgba(204,255,0,.45)"/><rect x="169" y="16" width="5" height="16" rx="2.5" fill="rgb(204,255,0)"/><rect x="182" y="11" width="5" height="26" rx="2.5" fill="rgb(204,255,0)"/><rect x="195" y="5" width="5" height="38" rx="2.5" fill="rgba(204,255,0,.45)"/><rect x="208" y="13" width="5" height="22" rx="2.5" fill="rgb(204,255,0)"/><rect x="221" y="7" width="5" height="34" rx="2.5" fill="rgb(204,255,0)"/><rect x="234" y="18" width="5" height="12" rx="2.5" fill="rgba(204,255,0,.45)"/><rect x="247" y="10" width="5" height="28" rx="2.5" fill="rgb(204,255,0)"/><rect x="260" y="4" width="5" height="40" rx="2.5" fill="rgb(204,255,0)"/><rect x="273" y="15" width="5" height="18" rx="2.5" fill="rgba(204,255,0,.45)"/><rect x="286" y="12" width="5" height="24" rx="2.5" fill="rgb(204,255,0)"/><rect x="299" y="8" width="5" height="32" rx="2.5" fill="rgb(204,255,0)"/><rect x="312" y="17" width="5" height="14" rx="2.5" fill="rgba(204,255,0,.45)"/><rect x="325" y="14" width="5" height="20" rx="2.5" fill="rgb(204,255,0)"/><rect x="338" y="19" width="5" height="10" rx="2.5" fill="rgb(204,255,0)"/><rect x="351" y="13" width="5" height="22" rx="2.5" fill="rgba(204,255,0,.45)"/><rect x="364" y="7" width="5" height="34" rx="2.5" fill="rgb(204,255,0)"/><rect x="377" y="15" width="5" height="18" rx="2.5" fill="rgb(204,255,0)"/></svg>
+      <div class="cc-ctrls"><span></span><span></span><span class="on"></span></div>
+      <div class="cc-q"><p class="lbl">COSA HA APPENA CHIESTO IL CLIENTE</p><p>&ldquo;Ho una Golf del 2016, 2.0 TDI — questi dischi anteriori vanno bene?&rdquo;</p></div>
+      <div class="cm-row"><span>Intento rilevato</span><b>Verifica compatibilità</b></div><div class="cm-row"><span>Dati letti</span><b>Targa &middot; tabella compatibilità</b></div><div class="cm-row"><span>Esito</span><b>Confermato + pastiglie</b></div>
+      <p class="cc-note">Chiamata di esempio. Interfaccia illustrativa, non una registrazione reale.</p>
+    </div>
   </div>
-</div></div></section>
+</section>
 
-<section class="band"><div class="shell"><div class="grid">
-  <div>
-    <p class="eyebrow">Perché questa categoria telefona</p>
-    <h2>Un ricambio sbagliato è un reso, un rimontaggio e un cliente che il prossimo lo compra altrove.</h2>
-    <p>Chi compra ricambi non sta guardando le vetrine. Ha un&rsquo;auto smontata, o un cliente che aspetta, e una domanda precisa: è compatibile. Se sbagli paghi il reso, il corriere e spesso una contestazione dell&rsquo;officina che il lavoro l&rsquo;aveva già iniziato.</p><p>La scheda prodotto può ospitare la ricerca per targa, e dovrebbe farlo. Non può però rispondere a &ldquo;la mia è il restyling, cambia la pinza?&rdquo; — che è esattamente la chiamata che arriva.</p>
+<section class="queue-band">
+  <div class="queue-grid">
+    <div class="qcopy">
+      <p class="eyebrow">Perché questa categoria telefona</p>
+      <h2>Un ricambio sbagliato è un reso, un rimontaggio e un cliente che il prossimo lo compra altrove.</h2>
+      <p class="qbody">Chi compra ricambi non sta guardando le vetrine. Ha un&rsquo;auto smontata, o un cliente che aspetta, e una domanda precisa: è compatibile. Se sbagli paghi il reso, il corriere e spesso una contestazione dell&rsquo;officina che il lavoro l&rsquo;aveva già iniziato.</p><p class="qbody">La scheda prodotto può ospitare la ricerca per targa, e dovrebbe farlo. Non può però rispondere a &ldquo;la mia è il restyling, cambia la pinza?&rdquo; — che è esattamente la chiamata che arriva.</p>
+    </div>
+    <div class="rank">
+      <h3>Di cosa parlano le chiamate in entrata</h3>
+      <ul><li><span class="r-n">1</span><span class="r-t">È compatibile con la mia auto (targa o telaio)</span></li><li><span class="r-n">2</span><span class="r-t">È la versione giusta — restyling, codice motore, allestimento</span></li><li><span class="r-n">3</span><span class="r-t">Il codice è stato sostituito, da cosa</span></li><li><span class="r-n">4</span><span class="r-t">Originale o aftermarket, e sono equivalenti</span></li><li><span class="r-n">5</span><span class="r-t">Dov&rsquo;è l&rsquo;ordine, ho l&rsquo;auto sul ponte</span></li></ul>
+      <p class="fine">In ordine di quanto le sentiamo in questa categoria. Non pubblichiamo distribuzioni di chiamate che non abbiamo misurato &mdash; sostituiscile con il tuo call log prima di prendere decisioni.</p>
+    </div>
   </div>
-  <div class="rank">
-    <h3>Di cosa parlano le chiamate in entrata</h3>
-    <ul><li><span class="r-n">1</span><span class="r-t">È compatibile con la mia auto (targa o telaio)</span></li><li><span class="r-n">2</span><span class="r-t">È la versione giusta — restyling, codice motore, allestimento</span></li><li><span class="r-n">3</span><span class="r-t">Il codice è stato sostituito, da cosa</span></li><li><span class="r-n">4</span><span class="r-t">Originale o aftermarket, e sono equivalenti</span></li><li><span class="r-n">5</span><span class="r-t">Dov&rsquo;è l&rsquo;ordine, ho l&rsquo;auto sul ponte</span></li></ul>
-    <p class="fine">In ordine di quanto le sentiamo in questa categoria. Non pubblichiamo distribuzioni di chiamate che non abbiamo misurato &mdash; sostituiscile con il tuo call log prima di prendere decisioni.</p>
-  </div>
-</div></div></section>
+</section>
 
-<section class="qs"><div class="shell">
+<section class="qs">
   <h2>Cinque domande che un centralino ricambi sente ogni giorno — e cosa deve esserci nei tuoi sistemi</h2>
   <p class="intro">La compatibilità è un problema di dati prima che di servizio. Ogni risposta qui si risolve su una tabella precisa, e dove la tabella è incompleta l&rsquo;agente passa la mano invece di tirare a indovinare: una compatibilità sbagliata detta con sicurezza è la risposta più costosa di questa categoria.</p>
   <div class="q-table"><div class="q-row"><p class="q-ask">&ldquo;Va bene per una Golf 2016 2.0 TDI?&rdquo;</p><div class="q-ans"><p>Targa o numero di telaio decodificati nella versione esatta, poi incrociati con la tabella di compatibilità della famiglia di ricambi.</p><code>vehicle.by_vin &middot; fitment.k_type</code></div></div><div class="q-row"><p class="q-ask">&ldquo;La mia è il restyling — cambia qualcosa?&rdquo;</p><div class="q-ans"><p>Intervallo di data di costruzione sul record di compatibilità: è da lì che nasce la maggior parte degli ordini sbagliati.</p><code>fitment.build_from &middot; fitment.build_to</code></div></div><div class="q-row"><p class="q-ask">&ldquo;Quel codice non lo trovo più.&rdquo;</p><div class="q-ans"><p>Catena di sostituzione seguita fino al ricambio attuale, con il codice originale riportato nelle note d&rsquo;ordine per l&rsquo;officina.</p><code>part.superseded_by[]</code></div></div><div class="q-row"><p class="q-ask">&ldquo;L&rsquo;aftermarket vale l&rsquo;originale?&rdquo;</p><div class="q-ans"><p>Fascia del marchio e corrispondenza con i codici OE, dichiarata come equivalenza dai tuoi dati — non come opinione dell&rsquo;agente.</p><code>part.oe_refs[] &middot; brand.tier</code></div></div><div class="q-row"><p class="q-ask">&ldquo;Mi serve domani, ho l&rsquo;auto sul ponte.&rdquo;</p><div class="q-ans"><p>Giacenza per magazzino più l&rsquo;orario limite per la spedizione in giornata sul CAP del chiamante.</p><code>stock.by_wh &middot; carrier.cutoff</code></div></div></div>
@@ -355,9 +387,9 @@
     <div><p>Ci riconosci il tuo centralino?</p><p class="m-sub">Nella call facciamo girare queste domande sul tuo catalogo.</p></div>
     <a class="btn-pill" href="https://cal.com/sabatoai/intro" target="_blank" rel="noopener">Inizia Pilot Gratuito</a>
   </div>
-</div></section>
+</section>
 
-<section class="wf"><div class="shell">
+<section class="wf">
   <h2>4 dei nove workflow reggono questa categoria. Parti dal primo.</h2>
   <span class="hand">l&rsquo;ordine cambia su ogni settore &mdash; ed &egrave; il punto</span>
   <div class="wf-grid"><a class="wf-card" href="/it/casi-duso/consulenza-pre-vendita"><span class="wf-n">01</span><span class="wf-arrow" aria-hidden="true">&rarr;</span><h3>Consulenza pre-vendita</h3><p>La chiamata sulla compatibilità. Quella che decide se l&rsquo;ordine è giusto.</p></a><a class="wf-card" href="/it/casi-duso/dove-e-il-mio-ordine"><span class="wf-n">02</span><span class="wf-arrow" aria-hidden="true">&rarr;</span><h3>Dov&rsquo;è il mio ordine</h3><p>Un&rsquo;officina con l&rsquo;auto sul ponte chiede in modo diverso. Risposta dai tracking in tempo reale.</p></a><a class="wf-card" href="/it/casi-duso/gestione-resi"><span class="wf-n">03</span><span class="wf-arrow" aria-hidden="true">&rarr;</span><h3>Gestione resi</h3><p>Resi da ricambio sbagliato classificati per causa, così i dati di compatibilità si correggono invece di limitarsi a processare il reso.</p></a><a class="wf-card" href="/it/casi-duso/riepilogo-checkout-via-messaggio"><span class="wf-n">04</span><span class="wf-arrow" aria-hidden="true">&rarr;</span><h3>Riepilogo checkout via messaggio</h3><p>Codice, veicolo e conferma di compatibilità per iscritto prima dell&rsquo;addebito.</p></a></div>
@@ -370,56 +402,61 @@
   <circle cx="368" cy="150" r="22" fill="rgb(18,10,11)"/>
   <circle cx="368" cy="106" r="5" fill="rgb(204,255,0)"/><circle cx="368" cy="194" r="5" fill="rgb(204,255,0)"/>
   <circle cx="324" cy="150" r="5" fill="rgb(204,255,0)"/><circle cx="412" cy="150" r="5" fill="rgb(204,255,0)"/><rect x="500" y="60" width="176" height="180" rx="16" fill="rgb(18,10,11)"/><text x="524" y="100" font-family="Satoshi,sans-serif" font-size="12" letter-spacing="1.6" fill="rgba(248,244,241,.55)">FITS</text><text x="524" y="146" font-family="Satoshi,sans-serif" font-size="38" font-weight="900" fill="rgb(204,255,0)">312 mm</text><line x1="524" y1="166" x2="652" y2="166" stroke="rgba(248,244,241,.18)" stroke-width="1"/><text x="524" y="192" class="s-n">vented front disc</text><text x="524" y="214" class="s-n">not the 288</text></svg>
-</div></section>
+</section>
 
-<section class="call-band"><div class="shell">
+<section class="call-band">
   <h2>Com&rsquo;&egrave; fatta la chiamata</h2>
-  <p class="call-meta">In entrata &middot; 1 min 58 s &middot; lingua: italiano &middot; esito: ordine corretto</p>
-  <div class="call-panel"><div class="t-row"><span class="t-spk caller"><svg class="wave" viewBox="0 0 52 48" aria-hidden="true"><rect x="0" y="19" width="5" height="10" rx="2.5" fill="rgba(204,255,0,.45)"/><rect x="13" y="13" width="5" height="22" rx="2.5" fill="rgb(204,255,0)"/><rect x="26" y="7" width="5" height="34" rx="2.5" fill="rgb(204,255,0)"/><rect x="39" y="15" width="5" height="18" rx="2.5" fill="rgba(204,255,0,.45)"/></svg><b>CALLER</b></span><p>Buongiorno, cerco i dischi freno anteriori per una Golf del 2016, il 2.0 diesel.</p></div><div class="t-row"><span class="t-spk agent"><svg class="wave" viewBox="0 0 52 48" aria-hidden="true"><rect x="0" y="19" width="5" height="10" rx="2.5" fill="rgba(204,255,0,.45)"/><rect x="13" y="13" width="5" height="22" rx="2.5" fill="rgb(204,255,0)"/><rect x="26" y="7" width="5" height="34" rx="2.5" fill="rgb(204,255,0)"/><rect x="39" y="15" width="5" height="18" rx="2.5" fill="rgba(204,255,0,.45)"/></svg><b>AGENT</b></span><p>Se ha la targa glielo verifico esattamente.</p></div><div class="t-row"><span class="t-spk caller"><svg class="wave" viewBox="0 0 52 48" aria-hidden="true"><rect x="0" y="19" width="5" height="10" rx="2.5" fill="rgba(204,255,0,.45)"/><rect x="13" y="13" width="5" height="22" rx="2.5" fill="rgb(204,255,0)"/><rect x="26" y="7" width="5" height="34" rx="2.5" fill="rgb(204,255,0)"/><rect x="39" y="15" width="5" height="18" rx="2.5" fill="rgba(204,255,0,.45)"/></svg><b>CALLER</b></span><p>Sì, è una Golf 7, la targa ce l&rsquo;ho sul libretto, un attimo.</p></div><div class="t-row"><span class="t-spk agent"><svg class="wave" viewBox="0 0 52 48" aria-hidden="true"><rect x="0" y="19" width="5" height="10" rx="2.5" fill="rgba(204,255,0,.45)"/><rect x="13" y="13" width="5" height="22" rx="2.5" fill="rgb(204,255,0)"/><rect x="26" y="7" width="5" height="34" rx="2.5" fill="rgb(204,255,0)"/><rect x="39" y="15" width="5" height="18" rx="2.5" fill="rgba(204,255,0,.45)"/></svg><b>AGENT</b></span><p>Con calma. Intanto: è il modello base o la GTD?</p></div><div class="t-row"><span class="t-spk caller"><svg class="wave" viewBox="0 0 52 48" aria-hidden="true"><rect x="0" y="19" width="5" height="10" rx="2.5" fill="rgba(204,255,0,.45)"/><rect x="13" y="13" width="5" height="22" rx="2.5" fill="rgb(204,255,0)"/><rect x="26" y="7" width="5" height="34" rx="2.5" fill="rgb(204,255,0)"/><rect x="39" y="15" width="5" height="18" rx="2.5" fill="rgba(204,255,0,.45)"/></svg><b>CALLER</b></span><p>Base. Targa FN471TK.</p></div><div class="t-row"><span class="t-spk agent"><svg class="wave" viewBox="0 0 52 48" aria-hidden="true"><rect x="0" y="19" width="5" height="10" rx="2.5" fill="rgba(204,255,0,.45)"/><rect x="13" y="13" width="5" height="22" rx="2.5" fill="rgb(204,255,0)"/><rect x="26" y="7" width="5" height="34" rx="2.5" fill="rgb(204,255,0)"/><rect x="39" y="15" width="5" height="18" rx="2.5" fill="rgba(204,255,0,.45)"/></svg><b>AGENT</b></span><p>Trovata — Golf 2.0 TDI, immatricolata marzo 2016, quindi post-restyling. Monta il disco autoventilante da 312 millimetri, non il 288 delle prime. Quelli che stava guardando sono i 288, quindi non andrebbero.</p></div><div class="t-row"><span class="t-spk caller"><svg class="wave" viewBox="0 0 52 48" aria-hidden="true"><rect x="0" y="19" width="5" height="10" rx="2.5" fill="rgba(204,255,0,.45)"/><rect x="13" y="13" width="5" height="22" rx="2.5" fill="rgb(204,255,0)"/><rect x="26" y="7" width="5" height="34" rx="2.5" fill="rgb(204,255,0)"/><rect x="39" y="15" width="5" height="18" rx="2.5" fill="rgba(204,255,0,.45)"/></svg><b>CALLER</b></span><p>Meno male che ho chiamato.</p></div><div class="t-row"><span class="t-spk agent"><svg class="wave" viewBox="0 0 52 48" aria-hidden="true"><rect x="0" y="19" width="5" height="10" rx="2.5" fill="rgba(204,255,0,.45)"/><rect x="13" y="13" width="5" height="22" rx="2.5" fill="rgb(204,255,0)"/><rect x="26" y="7" width="5" height="34" rx="2.5" fill="rgb(204,255,0)"/><rect x="39" y="15" width="5" height="18" rx="2.5" fill="rgba(204,255,0,.45)"/></svg><b>AGENT</b></span><p>La coppia da 312 è disponibile nel magazzino di Bologna, l&rsquo;orario limite per la consegna domani è le sedici. Di solito si prendono anche le pastiglie: stesso asse, stesso intervento. Gliele aggiungo?</p></div><div class="t-row"><span class="t-spk caller"><svg class="wave" viewBox="0 0 52 48" aria-hidden="true"><rect x="0" y="19" width="5" height="10" rx="2.5" fill="rgba(204,255,0,.45)"/><rect x="13" y="13" width="5" height="22" rx="2.5" fill="rgb(204,255,0)"/><rect x="26" y="7" width="5" height="34" rx="2.5" fill="rgb(204,255,0)"/><rect x="39" y="15" width="5" height="18" rx="2.5" fill="rgba(204,255,0,.45)"/></svg><b>CALLER</b></span><p>Sì, entrambe.</p></div></div>
-  <p class="call-caption">Trascrizione illustrativa costruita sui workflow qui sopra. Non &egrave; una registrazione reale; non mostra dati di clienti.</p>
-  <div class="midcta">
+  <p class="call-caption">In entrata &middot; 1 min 58 s &middot; lingua: italiano &middot; esito: ordine corretto</p>
+  <div class="call-panel"><div class="t-row caller"><span class="t-spk">CLIENTE<svg viewBox="0 0 16 12" aria-hidden="true"><g fill="currentColor"><rect x="0" y="3.5" width="2.5" height="5" rx="1.25"/><rect x="4.5" y="1" width="2.5" height="10" rx="1.25"/><rect x="9" y="2.5" width="2.5" height="7" rx="1.25"/><rect x="13.5" y="4.5" width="2.5" height="3" rx="1.25"/></g></svg></span><p>Buongiorno, cerco i dischi freno anteriori per una Golf del 2016, il 2.0 diesel.</p></div><div class="t-row agent"><span class="t-spk">AGENTE<svg viewBox="0 0 16 12" aria-hidden="true"><g fill="currentColor"><rect x="0" y="3.5" width="2.5" height="5" rx="1.25"/><rect x="4.5" y="1" width="2.5" height="10" rx="1.25"/><rect x="9" y="2.5" width="2.5" height="7" rx="1.25"/><rect x="13.5" y="4.5" width="2.5" height="3" rx="1.25"/></g></svg></span><p>Se ha la targa glielo verifico esattamente.</p></div><div class="t-row caller"><span class="t-spk">CLIENTE<svg viewBox="0 0 16 12" aria-hidden="true"><g fill="currentColor"><rect x="0" y="3.5" width="2.5" height="5" rx="1.25"/><rect x="4.5" y="1" width="2.5" height="10" rx="1.25"/><rect x="9" y="2.5" width="2.5" height="7" rx="1.25"/><rect x="13.5" y="4.5" width="2.5" height="3" rx="1.25"/></g></svg></span><p>Sì, è una Golf 7, la targa ce l&rsquo;ho sul libretto, un attimo.</p></div><div class="t-row agent"><span class="t-spk">AGENTE<svg viewBox="0 0 16 12" aria-hidden="true"><g fill="currentColor"><rect x="0" y="3.5" width="2.5" height="5" rx="1.25"/><rect x="4.5" y="1" width="2.5" height="10" rx="1.25"/><rect x="9" y="2.5" width="2.5" height="7" rx="1.25"/><rect x="13.5" y="4.5" width="2.5" height="3" rx="1.25"/></g></svg></span><p>Con calma. Intanto: è il modello base o la GTD?</p></div><div class="t-row caller"><span class="t-spk">CLIENTE<svg viewBox="0 0 16 12" aria-hidden="true"><g fill="currentColor"><rect x="0" y="3.5" width="2.5" height="5" rx="1.25"/><rect x="4.5" y="1" width="2.5" height="10" rx="1.25"/><rect x="9" y="2.5" width="2.5" height="7" rx="1.25"/><rect x="13.5" y="4.5" width="2.5" height="3" rx="1.25"/></g></svg></span><p>Base. Targa FN471TK.</p></div><div class="t-row agent"><span class="t-spk">AGENTE<svg viewBox="0 0 16 12" aria-hidden="true"><g fill="currentColor"><rect x="0" y="3.5" width="2.5" height="5" rx="1.25"/><rect x="4.5" y="1" width="2.5" height="10" rx="1.25"/><rect x="9" y="2.5" width="2.5" height="7" rx="1.25"/><rect x="13.5" y="4.5" width="2.5" height="3" rx="1.25"/></g></svg></span><p>Trovata — Golf 2.0 TDI, immatricolata marzo 2016, quindi post-restyling. Monta il disco autoventilante da 312 millimetri, non il 288 delle prime. Quelli che stava guardando sono i 288, quindi non andrebbero.</p></div><div class="t-row caller"><span class="t-spk">CLIENTE<svg viewBox="0 0 16 12" aria-hidden="true"><g fill="currentColor"><rect x="0" y="3.5" width="2.5" height="5" rx="1.25"/><rect x="4.5" y="1" width="2.5" height="10" rx="1.25"/><rect x="9" y="2.5" width="2.5" height="7" rx="1.25"/><rect x="13.5" y="4.5" width="2.5" height="3" rx="1.25"/></g></svg></span><p>Meno male che ho chiamato.</p></div><div class="t-row agent"><span class="t-spk">AGENTE<svg viewBox="0 0 16 12" aria-hidden="true"><g fill="currentColor"><rect x="0" y="3.5" width="2.5" height="5" rx="1.25"/><rect x="4.5" y="1" width="2.5" height="10" rx="1.25"/><rect x="9" y="2.5" width="2.5" height="7" rx="1.25"/><rect x="13.5" y="4.5" width="2.5" height="3" rx="1.25"/></g></svg></span><p>La coppia da 312 è disponibile nel magazzino di Bologna, l&rsquo;orario limite per la consegna domani è le sedici. Di solito si prendono anche le pastiglie: stesso asse, stesso intervento. Gliele aggiungo?</p></div><div class="t-row caller"><span class="t-spk">CLIENTE<svg viewBox="0 0 16 12" aria-hidden="true"><g fill="currentColor"><rect x="0" y="3.5" width="2.5" height="5" rx="1.25"/><rect x="4.5" y="1" width="2.5" height="10" rx="1.25"/><rect x="9" y="2.5" width="2.5" height="7" rx="1.25"/><rect x="13.5" y="4.5" width="2.5" height="3" rx="1.25"/></g></svg></span><p>Sì, entrambe.</p></div></div>
+  <p class="call-caption" style="margin-top:22px;">Trascrizione illustrativa costruita sui workflow qui sopra. Non &egrave; una registrazione reale; non mostra dati di clienti.</p>
+  <div class="midcta" style="text-align:left;max-width:680px;margin-left:auto;margin-right:auto;">
     <div><p>Sentilo girare sui tuoi dati.</p><p class="m-sub">Stessa chiamata, il tuo catalogo, nella call di presentazione.</p></div>
     <a class="btn-pill" href="https://cal.com/sabatoai/intro" target="_blank" rel="noopener">Inizia Pilot Gratuito</a>
   </div>
-</div></section>
+</section>
 
-<section class="data"><div class="shell"><div class="grid">
-  <div>
-    <h2>I dati dietro una risposta di compatibilità</h2>
-    <p>I dati di compatibilità invecchiano male. I costruttori rivedono, sostituiscono e ri-referenziano di continuo, e una tabella corretta due anni fa oggi produce risposte sbagliate in silenzio. Li verifichiamo prima del pilota.</p>
-    <div class="honest">
-      <p class="lbl">LA PARTE ONESTA</p>
-      <p>Dati sorgente sbagliati producono risposte sbagliate dette con sicurezza. Se un campo &egrave; vecchio, l&rsquo;agente lo legge comunque con scioltezza &mdash; e una risposta sbagliata veloce costa pi&ugrave; di una giusta lenta, perch&eacute; diventa un ordine che fallisce. Verifichiamo i campi da cui dipende questa pagina prima del pilota, e vincoliamo l&rsquo;agente a passare la mano su tutto ci&ograve; che non &egrave; mappato.</p>
+<section class="data">
+  <p class="eyebrow">Cosa deve poter leggere l&rsquo;agente</p>
+  <h2>I dati dietro una risposta di compatibilità</h2>
+  <div class="data-grid">
+    <div>
+      <p class="lede">I dati di compatibilità invecchiano male. I costruttori rivedono, sostituiscono e ri-referenziano di continuo, e una tabella corretta due anni fa oggi produce risposte sbagliate in silenzio. Li verifichiamo prima del pilota.</p>
+      <div class="honest">
+        <p class="lbl">LA PARTE ONESTA</p>
+        <p>Dati sorgente sbagliati producono risposte sbagliate dette con sicurezza. Se un campo &egrave; vecchio, l&rsquo;agente lo legge comunque con scioltezza &mdash; e una risposta sbagliata veloce costa pi&ugrave; di una giusta lenta, perch&eacute; diventa un ordine che fallisce. Verifichiamo i campi da cui dipende questa pagina prima del pilota, e vincoliamo l&rsquo;agente a passare la mano su tutto ci&ograve; che non &egrave; mappato.</p>
+      </div>
+    </div>
+    <div><div class="d-row"><h3>Decodifica veicolo</h3><p>Targa o telaio fino alla versione esatta: codice motore, data di costruzione, allestimento.</p></div><div class="d-row"><h3>Tabella di compatibilità</h3><p>Famiglia di ricambi per versione, con gli intervalli di data — il campo che manca più spesso.</p></div><div class="d-row"><h3>Catene di sostituzione</h3><p>Dal codice vecchio a quello attuale, così un riferimento fuori produzione porta comunque a una vendita.</p></div><div class="d-row"><h3>Riferimenti incrociati OE</h3><p>Quali codici aftermarket corrispondono a quali OE, e in che fascia di marchio.</p></div><div class="d-row"><h3>Giacenza per magazzino</h3><p>Più gli orari limite dei corrieri, perché per un&rsquo;officina la consegna in giornata è tutta la domanda.</p></div></div>
+  </div>
+</section>
+
+<section class="pilot">
+  <div class="pilot-grid">
+    <div>
+      <span class="hand">mai numeri inventati</span>
+      <h2>Un pilota misurato, non una promessa</h2>
+      <p class="lede">Partiamo dalle tue registrazioni vere e dai tuoi dati veri. Quattro settimane, un workflow, una baseline misurata prima che l&rsquo;agente vada live e di nuovo dopo. Se i numeri non si muovono, ti fermi &mdash; nessun vincolo annuale, e nessun case study scritto prima che il risultato esista.</p>
+    </div>
+    <div>
+      <div class="p-item"><span class="p-tick">&#10003;</span><p>Misuriamo prima il tuo volume di chiamate, il tasso di risposta e le ore di chiamate perse.</p></div>
+      <div class="p-item"><span class="p-tick">&#10003;</span><p>Un workflow live nella prima settimana, sul tuo numero, con fallback umano.</p></div>
+      <div class="p-item"><span class="p-tick">&#10003;</span><p>Vedi le trascrizioni di ogni chiamata che prende, incluse quelle che passa a una persona.</p></div>
+      <div class="p-item"><span class="p-tick">&#10003;</span><p>Due clienti con nome e cognome, nessun muro di loghi &mdash; non ti mostriamo clienti che non abbiamo.</p></div>
     </div>
   </div>
-  <div><div class="d-row"><h3>Decodifica veicolo</h3><p>Targa o telaio fino alla versione esatta: codice motore, data di costruzione, allestimento.</p></div><div class="d-row"><h3>Tabella di compatibilità</h3><p>Famiglia di ricambi per versione, con gli intervalli di data — il campo che manca più spesso.</p></div><div class="d-row"><h3>Catene di sostituzione</h3><p>Dal codice vecchio a quello attuale, così un riferimento fuori produzione porta comunque a una vendita.</p></div><div class="d-row"><h3>Riferimenti incrociati OE</h3><p>Quali codici aftermarket corrispondono a quali OE, e in che fascia di marchio.</p></div><div class="d-row"><h3>Giacenza per magazzino</h3><p>Più gli orari limite dei corrieri, perché per un&rsquo;officina la consegna in giornata è tutta la domanda.</p></div></div>
-</div></div></section>
+</section>
 
-<section class="pilot"><div class="shell"><div class="grid">
-  <div>
-    <span class="hand">mai numeri inventati</span>
-    <h2>Un pilota misurato, non una promessa</h2>
-    <p>Partiamo dalle tue registrazioni vere e dai tuoi dati veri. Quattro settimane, un workflow, una baseline misurata prima che l&rsquo;agente vada live e di nuovo dopo. Se i numeri non si muovono, ti fermi &mdash; nessun vincolo annuale, e nessun case study scritto prima che il risultato esista.</p>
-  </div>
-  <div>
-    <div class="p-item"><span class="p-tick">&#10003;</span><p>Misuriamo prima il tuo volume di chiamate, il tasso di risposta e le ore di chiamate perse.</p></div>
-    <div class="p-item"><span class="p-tick">&#10003;</span><p>Un workflow live nella prima settimana, sul tuo numero, con fallback umano.</p></div>
-    <div class="p-item"><span class="p-tick">&#10003;</span><p>Vedi le trascrizioni di ogni chiamata che prende, incluse quelle che passa a una persona.</p></div>
-    <div class="p-item"><span class="p-tick">&#10003;</span><p>Due clienti con nome e cognome, nessun muro di loghi &mdash; non ti mostriamo clienti che non abbiamo.</p></div>
-  </div>
-</div></div></section>
-
-<section class="faq-sec"><div class="shell">
+<section class="faq-sec">
   <h2>Domande frequenti</h2>
   <div class="faq-item"><p class="faq-q">Un agente vocale può confermare la compatibilità al telefono?</p><p class="faq-a">Solo quanto lo permette la tua tabella. Con targa o telaio decodifica la versione e verifica la famiglia di ricambi, intervalli di data compresi. Dove non c&rsquo;è un record per quella versione lo dice e passa la mano: non deduce la compatibilità da un modello simile.</p></div><div class="faq-item"><p class="faq-q">E i clienti professionali che chiamano ogni giorno?</p><p class="faq-a">Sono quelli che ne beneficiano di più, perché la chiamata è corta e ripetitiva: codice, veicolo, giacenza, orario limite. L&rsquo;agente riconosce l&rsquo;account dal numero e salta le parti che a un abituale non servono.</p></div><div class="faq-item"><p class="faq-q">Se il cliente non ha il numero di telaio?</p><p class="faq-a">Chiede prima la targa, e in mancanza ripiega su marca, modello, anno e motore, segnalando che la risposta è meno certa di una verifica da telaio. Quel distinguo viene detto, non nascosto.</p></div><div class="faq-item"><p class="faq-q">Funziona fuori orario e nel fine settimana?</p><p class="faq-a">Sì, e in questa categoria conta più che altrove: molti acquisti di ricambi avvengono di sabato, con l&rsquo;auto già smontata.</p></div><div class="faq-item"><p class="faq-q">Cosa serve per partire?</p><p class="faq-a">Accesso in lettura a prodotti e ordini, le tabelle di compatibilità e sostituzione, e la giacenza per magazzino con gli orari limite. Se la compatibilità sta in un feed fornitore invece che a catalogo, leggiamo il feed.</p></div>
-</div></section>
+</section>
 
-<section class="cta-band"><div class="shell">
+<section class="cta-band">
   <span class="hand">porta una targa, proviamo</span>
   <h2>Ascolta l&rsquo;agente su una chiamata di compatibilità</h2>
-  <p>Porta una targa e un codice ricambio alla call. Lo facciamo girare sui tuoi dati, dal vivo.</p>
+  <p class="sub" style="max-width:640px;margin:0 auto 30px;color:rgba(248,244,241,.72);">Porta una targa e un codice ricambio alla call. Lo facciamo girare sui tuoi dati, dal vivo.</p>
   <a class="btn-pill" href="https://cal.com/sabatoai/intro" target="_blank" rel="noopener">Inizia Pilot Gratuito</a>
-</div></section>
+</section>
 
 <footer class="site-footer">
     <div class="shell">
