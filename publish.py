@@ -60,9 +60,10 @@ LANGS = {
             "chart_alt": "Bar chart.",
             "chart_credit": "\u00a9 2026 Sabato LTD \u00b7 sabato.ai",
             "share_label": "Share this chart",
-            "share_li": "Share on LinkedIn",
-            "share_x": "Share on X",
-            "share_dl": "Download image",
+            "share_native": "Share image",
+            "share_copy": "Copy image",
+            "share_copied": "Copied",
+            "share_dl": "Download",
         },
     },
     "it": {
@@ -95,9 +96,10 @@ LANGS = {
             "chart_alt": "Grafico a barre.",
             "chart_credit": "\u00a9 2026 Sabato LTD \u00b7 sabato.ai",
             "share_label": "Condividi questo grafico",
-            "share_li": "Condividi su LinkedIn",
-            "share_x": "Condividi su X",
-            "share_dl": "Scarica l\u2019immagine",
+            "share_native": "Condividi immagine",
+            "share_copy": "Copia immagine",
+            "share_copied": "Copiata",
+            "share_dl": "Scarica",
         },
     },
 }
@@ -516,19 +518,17 @@ def jsonld(fm, url, faq_entries, L):
 
 
 def add_chart_sharing(content, fm, url, L):
-    """Give every chart a share row and a downloadable, branded PNG.
+    """Give every chart a share row that shares the IMAGE, not the post URL.
 
-    Done here rather than in blk_chart because only build_post knows the post
-    URL and slug. The share intents carry the post URL (that is what LinkedIn
-    and X unfurl); the download link points at the PNG that
-    tools/render_chart_images.py writes for this figure.
+    LinkedIn and X share-intents only accept a URL to unfurl — a site cannot push
+    an image into their composer. So the buttons here move the PNG itself:
+    the native share sheet with the file attached where the browser supports it
+    (mobile), copy-to-clipboard to paste straight into a composer (desktop), and
+    a plain download as the universal fallback. No post URL is involved.
+
+    Done here rather than in blk_chart because only build_post knows the slug.
     """
     lbl = L["labels"]
-    q_url = urllib.parse.quote(url, safe="")
-    q_txt = urllib.parse.quote(fm["title"], safe="")
-    li = f"https://www.linkedin.com/sharing/share-offsite/?url={q_url}"
-    xu = f"https://twitter.com/intent/tweet?url={q_url}&amp;text={q_txt}"
-
     parts = content.split("</figure>")
     out, fig = [], 0
     for seg in parts[:-1]:
@@ -539,12 +539,12 @@ def add_chart_sharing(content, fm, url, L):
             share = (
                 '<div class="chart-share">'
                 f'<span class="cs-label">{esc(lbl["share_label"])}</span>'
-                f'<a class="cs-btn" href="{li}" target="_blank" rel="noopener nofollow" '
-                f'title="{esc(lbl["share_li"])}">in</a>'
-                f'<a class="cs-btn" href="{xu}" target="_blank" rel="noopener nofollow" '
-                f'title="{esc(lbl["share_x"])}">X</a>'
-                f'<a class="cs-btn cs-dl" href="{img}" download '
-                f'title="{esc(lbl["share_dl"])}">&#8595; PNG</a>'
+                f'<button type="button" class="cs-btn" data-share-native hidden>'
+                f'{esc(lbl["share_native"])}</button>'
+                f'<button type="button" class="cs-btn" data-share-copy '
+                f'data-done="{esc(lbl["share_copied"])}">{esc(lbl["share_copy"])}</button>'
+                f'<a class="cs-btn cs-dl" href="{img}" download>'
+                f'&#8595; {esc(lbl["share_dl"])}</a>'
                 "</div>"
             )
         else:

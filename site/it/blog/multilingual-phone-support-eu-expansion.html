@@ -140,6 +140,11 @@
       line-height: 1; transition: background .15s ease, border-color .15s ease; }
     .prose .chart-share .cs-btn:hover { background: var(--lime); border-color: var(--lime); }
     .prose .chart-share .cs-dl { font-weight: 600; }
+    .prose .chart-share button.cs-btn { font-family: inherit; cursor: pointer; }
+    /* .cs-btn sets display, which outranks the UA [hidden] rule - restore it */
+    .prose .chart-share .cs-btn[hidden] { display: none; }
+    .prose .chart-share .cs-btn.is-done { background: var(--lime); border-color: var(--lime); }
+    .nb { white-space: nowrap; }
     @media (max-width: 640px) {
       .prose .chart-share { gap: 6px; }
       .prose .chart-share .cs-label { width: 100%; margin-bottom: 2px; }
@@ -516,7 +521,7 @@
     </article>
     <section class="cta-band">
       <p class="hand">ascoltala dal vivo</p>
-      <h2>Dai una voce al tuo e-commerce.</h2>
+      <h2>Dai una voce al tuo <span class="nb">e-commerce</span>.</h2>
       <p>Lo costruiamo noi, lo gestiamo noi, tu vedi i numeri. Live in due settimane.</p>
       <a class="btn-pill" href="https://cal.com/sabatoai/intro" target="_blank" rel="noopener">Inizia Pilot Gratuito</a>
     </section>
@@ -528,7 +533,7 @@
           <a href="/it" aria-label="Sabato AI — Home">
             <img class="footer-logo" src="/fuc/images/KY1UqOX7zKeKJdbxTotIopeeZIU-f2557e25.png" alt="Sabato AI logo" width="132" height="61">
           </a>
-          <p class="tagline">La prima voice AI dedicata <br>esclusivamente all'E-Commerce.</p>
+          <p class="tagline">La prima voice AI dedicata <br>esclusivamente all'<span class="nb">E-Commerce</span>.</p>
           <p class="backed">Supportato da</p>
           <img class="backed-img" src="/fuc/images/V9nq776DtkEODcun83ayNz0liCU-28058054.webp" alt="ElevenLabs Grants" width="191" height="16">
         </div>
@@ -584,5 +589,57 @@
     </div>
   </footer>
 <script src="/js/enhance.js?v=6c21bc4c3d" defer></script>
+  <script>
+  /* Chart sharing moves the PNG itself, never the post URL.
+     LinkedIn and X share-intents can only unfurl a URL, so the paths that
+     actually put the image somewhere are: the native share sheet with the file
+     attached (mobile), the clipboard (desktop -> paste into the composer), and
+     a download. */
+  (function () {
+    document.querySelectorAll("figure.chart-card[data-chart-img]").forEach(function (fig) {
+      var row = fig.querySelector(".chart-share");
+      if (!row) return;
+      var src = fig.getAttribute("data-chart-img");
+      var name = src.split("/").pop();
+      function getBlob() { return fetch(src).then(function (r) { return r.blob(); }); }
+
+      var nativeBtn = row.querySelector("[data-share-native]");
+      if (nativeBtn && navigator.share && navigator.canShare) {
+        try {
+          var probe = new File([new Blob([""], { type: "image/png" })], name, { type: "image/png" });
+          if (navigator.canShare({ files: [probe] })) nativeBtn.hidden = false;
+        } catch (e) { /* File ctor unsupported: leave hidden */ }
+        nativeBtn.addEventListener("click", function () {
+          getBlob().then(function (b) {
+            var f = new File([b], name, { type: "image/png" });
+            return navigator.share({ files: [f] });
+          }).catch(function () { window.location.href = src; });
+        });
+      }
+
+      var copyBtn = row.querySelector("[data-share-copy]");
+      if (copyBtn) {
+        copyBtn.addEventListener("click", function () {
+          var label = copyBtn.textContent;
+          // ClipboardItem must be constructed synchronously with a promise for Safari
+          if (!(window.ClipboardItem && navigator.clipboard && navigator.clipboard.write)) {
+            window.location.href = src;
+            return;
+          }
+          navigator.clipboard.write([new ClipboardItem({ "image/png": getBlob() })])
+            .then(function () {
+              copyBtn.textContent = copyBtn.getAttribute("data-done");
+              copyBtn.classList.add("is-done");
+              setTimeout(function () {
+                copyBtn.textContent = label;
+                copyBtn.classList.remove("is-done");
+              }, 1800);
+            })
+            .catch(function () { window.location.href = src; });
+        });
+      }
+    });
+  })();
+  </script>
 </body>
 </html>
