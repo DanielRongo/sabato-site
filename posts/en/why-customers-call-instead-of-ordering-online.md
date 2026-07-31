@@ -19,7 +19,7 @@ The phone rings because the site isn't trusted, and the site isn't trusted becau
 
 A **data-integrity tax** is the salaried time you spend confirming by phone what your own website already claims. Every call that only verifies a claim your site already makes is that tax — and the call log is the itemised bill.
 
-## what buyers actually say goes wrong
+## What buyers actually say goes wrong
 
 The stated failure modes are mostly accuracy, and they're not close.
 
@@ -44,7 +44,7 @@ None of those percentages are yours, though. A survey of 750 buyers across six c
 
 And the stakes: 75% would switch supplier for a better online experience, which Sana reports as up from [74% the year before](https://www.globenewswire.com/en/news-release/2024/03/07/2842219/0/en/B2B-Web-Stores-Are-Driving-Buyers-Away-According-to-New-Survey.html). Don't read that as a trend. The one-point move sits inside anyone's margin of error, and the two waves aren't the same sample — the 74% came from n=1,000 fielded in summer 2023, the 75% from n=750 fielded in September 2024. Read 75% as a level. Three quarters of your buyers are open to leaving, and they have been for at least two surveys.
 
-## can you trust a software vendor's survey about how badly software is needed?
+## Can you trust a software vendor's survey about how badly software is needed?
 
 Conditionally, yes, and only if it passes a test most vendor reports fail.
 
@@ -62,7 +62,7 @@ Gartner doesn't validate Sana's percentages. It validates that the information l
 
 If the site and the rep disagree roughly seven times out of ten, calling isn't irrational. It's an accurate risk assessment. The call is the buyer's audit of your data — and your call log is the only copy of that audit you get to keep.
 
-## the three questions that generate the calls
+## The three questions that generate the calls
 
 Almost all pre-purchase call volume reduces to three database lookups, each owned by a different system nobody has reconciled.
 
@@ -76,7 +76,7 @@ These aren't conversations. They're queries. A human is being paid to run a data
 
 One distinction most call-deflection content collapses: this is pre-purchase doubt about whether you'll actually deliver. [WISMO](/use-cases/where-is-my-order) is post-purchase, after the money moved, with different owners and different fixes. Don't put them in the same bucket.
 
-## how to measure what share of your calls are just data questions
+## How to measure what share of your calls are just data questions
 
 Your analytics package can tell you where people left. It cannot tell you which claim they stopped believing. The call line can, once you instrument it: one week of setup, two weeks of tagging. Not a project.
 
@@ -100,7 +100,7 @@ No published benchmark exists for the share of ecommerce calls that are stock an
 
 Worth stating plainly, because vendors will fill the gap. If a deflection vendor quotes you a share, ask for the primary study, the sample and the fieldwork date. The most-recycled statistic in this genre — a widely quoted figure for the share of business calls that supposedly go unanswered — has no primary study, no named research body and no methodology anywhere in its citation chain, and this is exactly the topic where that kind of number gets laundered into a board deck.
 
-## now price the data fix against the redesign
+## Now price the data fix against the redesign
 
 Put the two next to each other before anything gets signed — with your tagged fortnight in hand, because that's the only thing in the room that knows which column your money belongs in.
 
@@ -119,7 +119,7 @@ The data fix is usually cheaper, usually unglamorous, and has no vendor pushing 
 
 Display honesty beats display precision. "In stock, 4 available, counted this morning" and "ships in 2–3 weeks, supplier-confirmed" both outperform a confident integer that turns out to be wrong. The second time a buyer gets burned, they start phoning permanently, and you've bought yourself a recurring cost to save a UI decision.
 
-## why quietly removing the phone number backfires
+## Why quietly removing the phone number backfires
 
 Because deflection without the data fix trades call cost for regret.
 
@@ -133,7 +133,7 @@ Gartner's 2024 wave (n=632) settles the practical question: the largest single p
 
 Removing the phone number while your data is wrong doesn't remove the doubt. It removes your chance to resolve it. And deflection-by-neglect, where the number stays up but nobody answers, is the expensive version, because abandoned calls skew high-intent. Deflection is legitimate after the answer on the page is correct. Only then.
 
-## the part that argues against my own product
+## The part that argues against my own product
 
 We sell voice AI. Here's the case against deploying it.
 

@@ -6,6 +6,7 @@ templates in blog-build/, writes post pages + blog indexes into site/, and
 keeps site/sitemap.xml up to date. Re-run any time:  python3 publish.py
 """
 import os, re, json, math, html
+import urllib.parse
 import markdown
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -13,6 +14,7 @@ SITE = os.path.join(ROOT, "site")
 TPL = os.path.join(ROOT, "templates")
 POSTS = os.path.join(ROOT, "posts")
 BASE = "https://www.sabato.ai"
+FAVICON = "/fuc/images/dEcuqc3xAQ3JJoX4xQDYrMQefA.png"
 
 def load_dummy_slugs():
     p = os.path.join(ROOT, "dummy-posts.txt")
@@ -56,6 +58,11 @@ LANGS = {
             "action": "What to do",
             "source": "Source:",
             "chart_alt": "Bar chart.",
+            "chart_credit": "\u00a9 2026 Sabato LTD \u00b7 sabato.ai",
+            "share_label": "Share this chart",
+            "share_li": "Share on LinkedIn",
+            "share_x": "Share on X",
+            "share_dl": "Download image",
         },
     },
     "it": {
@@ -86,6 +93,11 @@ LANGS = {
             "action": "Cosa fare",
             "source": "Fonte:",
             "chart_alt": "Grafico a barre.",
+            "chart_credit": "\u00a9 2026 Sabato LTD \u00b7 sabato.ai",
+            "share_label": "Condividi questo grafico",
+            "share_li": "Condividi su LinkedIn",
+            "share_x": "Condividi su X",
+            "share_dl": "Scarica l\u2019immagine",
         },
     },
 }
@@ -360,10 +372,19 @@ def blk_chart(arg, raw, L):
     if not rows:
         raise ValueError("chart has no data rows")
     head = f'<p class="chart-title">{esc(title)}</p>' if title else ""
-    return ('<figure class="chart-card">' + head
+    # Charts are the most shareable thing we publish, so every one carries its
+    # own attribution (mark + copyright) INSIDE the figure. That way the credit
+    # survives a screenshot or a right-click-save, not just a link.
+    brand = (
+        '<div class="chart-brand">'
+        f'<img src="{FAVICON}" alt="Sabato" width="18" height="18" loading="lazy">'
+        f'<span>{L["labels"]["chart_credit"]}</span>'
+        "</div>"
+    )
+    return ('<figure class="chart-card" data-chart>' + head
             + bar_svg(rows, "chart-desktop", 628, 15, 15, 13, 16, 24)
             + bar_svg(rows, "chart-mobile", 310, 14, 14, 12, 15, 22)
-            + source_html(src, L, "chart-source") + "</figure>")
+            + source_html(src, L, "chart-source") + brand + "</figure>")
 
 
 BLOCKS = {
@@ -425,12 +446,27 @@ def render_body(body, L):
     def faq_repl(m):
         head, inner = m.group(1), m.group(2)
         items = []
+        # Two authoring shapes are supported, because silently dropping the
+        # section is far worse than accepting both:
+        #   ### Question            -> <h3>Q</h3><p>A</p>
+        #   **Question** Answer     -> <p><strong>Q</strong> A</p>
+        pairs = []
         for qm in re.finditer(r"<h3>(.*?)</h3>\s*((?:<p>.*?</p>\s*)+)", inner, re.S):
-            q = qm.group(1)
-            answers = re.findall(r"<p>(.*?)</p>", qm.group(2), re.S)
+            pairs.append((qm.group(1), re.findall(r"<p>(.*?)</p>", qm.group(2), re.S)))
+        if not pairs:
+            for pm in re.finditer(r"<p><strong>(.*?)</strong>(.*?)</p>", inner, re.S):
+                ans = pm.group(2).strip()
+                if ans:
+                    pairs.append((pm.group(1), [ans]))
+        for q, answers in pairs:
             faq_entries.append((strip_tags(q), " ".join(strip_tags(a) for a in answers)))
             a_html = "".join(f'<p class="faq-a">{a}</p>' for a in answers)
             items.append(f'<div class="faq-item"><p class="faq-q">{q}</p>{a_html}</div>')
+        if not items:
+            # Nothing parsed: drop the whole section rather than leave a naked
+            # heading with no content under it.
+            print(f"  ! FAQ heading '{strip_tags(head)}' had no parseable Q&A - section omitted")
+            return ""
         return f'<section class="faq"><h2>{head}</h2>\n' + "\n".join(items) + "\n</section>"
 
     out = re.sub(rf"<h2>({heads})</h2>\s*(.*?)(?=<h2>|<section|\Z)", faq_repl, out, flags=re.S)
@@ -479,11 +515,51 @@ def jsonld(fm, url, faq_entries, L):
     return "\n  ".join(blocks)
 
 
+def add_chart_sharing(content, fm, url, L):
+    """Give every chart a share row and a downloadable, branded PNG.
+
+    Done here rather than in blk_chart because only build_post knows the post
+    URL and slug. The share intents carry the post URL (that is what LinkedIn
+    and X unfurl); the download link points at the PNG that
+    tools/render_chart_images.py writes for this figure.
+    """
+    lbl = L["labels"]
+    q_url = urllib.parse.quote(url, safe="")
+    q_txt = urllib.parse.quote(fm["title"], safe="")
+    li = f"https://www.linkedin.com/sharing/share-offsite/?url={q_url}"
+    xu = f"https://twitter.com/intent/tweet?url={q_url}&amp;text={q_txt}"
+
+    parts = content.split("</figure>")
+    out, fig = [], 0
+    for seg in parts[:-1]:
+        if 'class="chart-card"' in seg:
+            fig += 1
+            img = f"{L['url_prefix']}/charts/{fm['slug']}-{fig}.png"
+            seg = seg.replace('data-chart>', f'data-chart="{fig}" data-chart-img="{img}">')
+            share = (
+                '<div class="chart-share">'
+                f'<span class="cs-label">{esc(lbl["share_label"])}</span>'
+                f'<a class="cs-btn" href="{li}" target="_blank" rel="noopener nofollow" '
+                f'title="{esc(lbl["share_li"])}">in</a>'
+                f'<a class="cs-btn" href="{xu}" target="_blank" rel="noopener nofollow" '
+                f'title="{esc(lbl["share_x"])}">X</a>'
+                f'<a class="cs-btn cs-dl" href="{img}" download '
+                f'title="{esc(lbl["share_dl"])}">&#8595; PNG</a>'
+                "</div>"
+            )
+        else:
+            share = ""
+        out.append(seg + share + "</figure>")
+    out.append(parts[-1])
+    return "".join(out)
+
+
 def build_post(fm, body, L, sibling_exists):
     tpl = open(os.path.join(TPL, L["post_tpl"]), encoding="utf-8").read()
     content, faq_entries = render_body(body, L)
     minutes = read_minutes(fm, body)
     url = f"{BASE}{L['url_prefix']}/{fm['slug']}"
+    content = add_chart_sharing(content, fm, url, L)
     page = (tpl
             .replace("{{TITLE}}", html.escape(fm["title"], quote=False))
             .replace("{{CATEGORY}}", html.escape(fm["category"], quote=False))

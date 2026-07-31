@@ -310,7 +310,17 @@ Every one of these cost a debugging cycle. They are the reason the checks exist.
    "reproductions" of bugs that didn't exist. **Screenshot first, then click what
    you can see.**
 
-8. **A test can rot into the opposite of its intent.** `postdeploy_check.py`
+8. **A silent parser can delete content.** The FAQ builder only matched `<h3>`
+   questions. Every post authored with `**Question**` bold questions rendered a
+   bare `## FAQ` heading and *threw the Q&A away* — three posts, 28 answers,
+   gone, with no warning in the build log. It now accepts both shapes, omits the
+   section entirely when nothing parses, and prints a warning. **Any transform
+   that can produce empty output must say so out loud.**
+
+9. **Headings start with a capital.** Lowercase headings read as a styling bug,
+   not a voice choice. `publish.py` does not enforce it; check the markdown.
+
+10. **A test can rot into the opposite of its intent.** `postdeploy_check.py`
    asserted "Blog appears once in the top 200px" — correct until Blog moved to
    the footer, after which it failed on every page *and* would have passed if
    Blog were accidentally restored to the header. When a design decision

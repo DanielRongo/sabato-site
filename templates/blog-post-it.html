@@ -126,6 +126,23 @@
     .faq .faq-a { font-size: 17px; line-height: 1.65; color: var(--gray); margin: 0; }
     .faq .faq-a a { color: var(--blue); text-decoration: underline; }
 
+    /* chart attribution + sharing */
+    .prose .chart-brand { display: flex; align-items: center; gap: 8px; margin-top: 18px;
+      padding-top: 14px; border-top: 1px solid var(--line); }
+    .prose .chart-brand img { border-radius: 4px; display: block; }
+    .prose .chart-brand span { font-size: 12px; color: var(--gray); opacity: .8; letter-spacing: .2px; }
+    .prose .chart-share { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 12px 0 0; }
+    .prose .chart-share .cs-label { font-size: 12px; color: var(--gray); margin-right: 2px; }
+    .prose .chart-share .cs-btn { display: inline-flex; align-items: center; justify-content: center;
+      min-width: 30px; height: 30px; padding: 0 10px; border-radius: 8px; border: 1px solid var(--line);
+      background: #fff; color: var(--ink); font-size: 12px; font-weight: 700; text-decoration: none;
+      line-height: 1; transition: background .15s ease, border-color .15s ease; }
+    .prose .chart-share .cs-btn:hover { background: var(--lime); border-color: var(--lime); }
+    .prose .chart-share .cs-dl { font-weight: 600; }
+    @media (max-width: 640px) {
+      .prose .chart-share { gap: 6px; }
+      .prose .chart-share .cs-label { width: 100%; margin-bottom: 2px; }
+    }
     /* Sources */
     .sources { border-top: 1px solid var(--line); margin-top: 56px; padding-top: 28px; }
     .sources h2 { font-size: 20px; letter-spacing: -0.3px; margin: 0 0 14px; }

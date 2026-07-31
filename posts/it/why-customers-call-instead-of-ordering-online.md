@@ -19,7 +19,7 @@ Il telefono squilla perché il sito non è creduto, e il sito non è creduto per
 
 La **tassa sull'integrità dei dati** è il tempo stipendiato che spendi a confermare al telefono ciò che il tuo stesso sito già dichiara. Ogni chiamata che si limita a verificare un'affermazione che il sito già fa è quella tassa — e il call log è la fattura dettagliata.
 
-## cosa dicono davvero i buyer che non funziona
+## Cosa dicono davvero i buyer che non funziona
 
 Le modalità di fallimento dichiarate sono in gran parte di accuratezza, e non è nemmeno vicino.
 
@@ -44,7 +44,7 @@ Nessuna di quelle percentuali è però la tua. Un'indagine su 750 buyer in sei p
 
 E la posta in gioco: il 75% cambierebbe fornitore per una migliore esperienza online, che Sana riporta in crescita dal [74% dell'anno precedente](https://www.globenewswire.com/en/news-release/2024/03/07/2842219/0/en/B2B-Web-Stores-Are-Driving-Buyers-Away-According-to-New-Survey.html). Non leggerlo come un trend. Il movimento di un punto sta dentro qualunque margine d'errore, e le due rilevazioni non sono lo stesso campione: il 74% viene da n=1.000 rilevato nell'estate 2023, il 75% da n=750 rilevato a settembre 2024. Leggi il 75% come un livello. Tre quarti dei tuoi buyer sono aperti ad andarsene, e lo sono da almeno due rilevazioni.
 
-## ci si può fidare dell'indagine di un software vendor su quanto serva il software?
+## Ci si può fidare dell'indagine di un software vendor su quanto serva il software?
 
 Condizionatamente sì, e solo se supera un test che la maggior parte dei report dei vendor fallisce.
 
@@ -62,7 +62,7 @@ Gartner non convalida le percentuali di Sana. Convalida che il livello informati
 
 Se il sito e il commerciale non concordano più o meno sette volte su dieci, chiamare non è irrazionale. È una valutazione del rischio accurata. La chiamata è l'audit che il buyer fa dei tuoi dati — e il tuo call log è l'unica copia di quell'audit che ti resta.
 
-## le tre domande che generano le chiamate
+## Le tre domande che generano le chiamate
 
 Quasi tutto il volume di chiamate pre-acquisto si riduce a tre lookup su database, ciascuno di proprietà di un sistema diverso che nessuno ha riconciliato.
 
@@ -76,7 +76,7 @@ Queste non sono conversazioni. Sono query. Una persona viene pagata per eseguire
 
 Una distinzione che gran parte dei contenuti sulla call deflection appiattisce: qui si parla di dubbio pre-acquisto sul fatto che consegnerai davvero. Il [WISMO](/it/casi-duso/dove-e-il-mio-ordine) è post-acquisto, dopo che i soldi si sono mossi, con owner diversi e rimedi diversi. Non metterli nello stesso secchio.
 
-## come misurare quale quota delle tue chiamate sono solo domande sui dati
+## Come misurare quale quota delle tue chiamate sono solo domande sui dati
 
 Il tuo pacchetto di analytics può dirti dove le persone se ne sono andate. Non può dirti quale affermazione hanno smesso di credere. La linea telefonica sì, una volta strumentata: una settimana di setup, due settimane di tagging. Non è un progetto.
 
@@ -100,7 +100,7 @@ Non esiste un benchmark pubblicato per la quota di chiamate ecommerce che sono d
 
 Vale la pena dirlo chiaramente, perché i vendor riempiranno il vuoto. Se un vendor di deflection ti cita una quota, chiedi lo studio primario, il campione e la data di rilevazione. La statistica più riciclata del genere — una cifra molto citata sulla quota di chiamate aziendali che resterebbero senza risposta — non ha uno studio primario, né un ente di ricerca con un nome, né una metodologia da nessuna parte nella sua catena di citazioni. Ed è esattamente il tema in cui quel tipo di numero viene riciclato dentro un board deck.
 
-## ora metti il prezzo del fix sui dati accanto a quello del redesign
+## Ora metti il prezzo del fix sui dati accanto a quello del redesign
 
 Mettili uno accanto all'altro prima che si firmi qualcosa — con le tue due settimane di tagging in mano, perché è l'unica cosa nella stanza che sa in quale colonna vanno i tuoi soldi.
 
@@ -119,7 +119,7 @@ Il fix sui dati è di solito più economico, di solito poco glamour, e non ha ne
 
 L'onestà nella visualizzazione batte la precisione nella visualizzazione. "Disponibile, 4 pezzi, contati stamattina" e "spedizione in 2–3 settimane, confermata dal fornitore" battono entrambi un intero sicuro di sé che poi si rivela sbagliato. La seconda volta che un buyer ci rimette, inizia a telefonare in modo permanente, e ti sei comprato un costo ricorrente per risparmiare una decisione di interfaccia.
 
-## perché togliere il numero di telefono in sordina si ritorce contro
+## Perché togliere il numero di telefono in sordina si ritorce contro
 
 Perché la deflection senza il fix sui dati scambia costo delle chiamate con rimpianto d'acquisto.
 
@@ -133,7 +133,7 @@ L'onda Gartner 2024 (n=632) risolve la questione pratica: il gruppo di preferenz
 
 Togliere il numero di telefono mentre i tuoi dati sono sbagliati non toglie il dubbio. Toglie la tua occasione di risolverlo. E la deflection per abbandono — il numero resta ma non risponde nessuno — è la versione costosa, perché le chiamate abbandonate pesano verso l'alta intenzione d'acquisto. La deflection è legittima dopo che la risposta sulla pagina è corretta. Solo allora.
 
-## la parte che argomenta contro il mio stesso prodotto
+## La parte che argomenta contro il mio stesso prodotto
 
 Vendiamo voice AI. Ecco il caso contro il suo deployment.
 
