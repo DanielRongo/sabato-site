@@ -12,6 +12,8 @@ PAGES = ["/", "/it", "/pricing", "/about", "/contact", "/blog", "/it/blog",
          "/blog/reduce-bracketing-returns", "/it/blog/reduce-bracketing-returns",
          "/blog/multilingual-phone-support-eu-expansion",
          "/it/blog/multilingual-phone-support-eu-expansion",
+         "/blog/why-customers-call-instead-of-ordering-online",
+         "/it/blog/why-customers-call-instead-of-ordering-online",
          "/use-cases/where-is-my-order", "/it/casi-duso/dove-e-il-mio-ordine",
          "/privacy-policy"]
 
