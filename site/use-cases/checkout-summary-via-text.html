@@ -86,7 +86,7 @@
     .hero-visual .hero-mobile { display: none; }
 
     /* ============ 2. Queue picture (dark band) ============ */
-    .queue-band { background: var(--black); border-radius: var(--radius); margin: 0 40px; padding: 84px 72px 76px; }
+    .queue-band { background: var(--black); border-radius: var(--radius); margin: 0 auto; padding: 84px 72px 76px; max-width: 1200px; width: calc(100% - 80px); margin-left: auto; margin-right: auto;}
     .queue-inner { max-width: 1060px; margin: 0 auto; }
     .queue-band .eyebrow { color: var(--lime); font-size: 13px; font-weight: 700; letter-spacing: 2.5px; margin: 0 0 18px; }
     .queue-band h2 { color: #fff; font-size: 38px; font-weight: 700; letter-spacing: -1.1px; line-height: 1.15; margin: 0 0 26px; }
@@ -104,7 +104,7 @@
     .flow-caption { font-size: 16.5px; line-height: 1.7; color: var(--gray); max-width: 680px; margin: 26px auto 0; }
 
     /* ============ 4. Sample call (phone UI) ============ */
-    .call-band { background: var(--off); border-radius: var(--radius); margin: 104px 40px 0; padding: 84px 40px 88px; text-align: center; }
+    .call-band { background: var(--off); border-radius: var(--radius); margin: 104px auto 0; padding: 84px 40px 88px; text-align: center; max-width: 1200px; width: calc(100% - 80px); margin-left: auto; margin-right: auto;}
     .call-band h2 { font-size: 38px; font-weight: 700; letter-spacing: -1.1px; line-height: 1.2; color: var(--ink); margin: 0 0 8px; }
     .call-caption { font-size: 14px; font-weight: 500; color: var(--gray); opacity: .7; margin: 0; }
     .call-panel { width: 100%; max-width: 680px; margin: 42px auto 0; background: var(--black); border-radius: 28px; padding: 30px 38px 30px; text-align: left; }
@@ -131,7 +131,7 @@
     .value-card p { font-size: 16.5px; line-height: 1.7; color: var(--gray); margin: 0; }
 
     /* ============ 6. CTA band ============ */
-    .cta-band { background: var(--black); border-radius: var(--radius); margin: 96px 40px 40px; padding: 88px 40px; text-align: center; }
+    .cta-band { background: var(--black); border-radius: var(--radius); margin: 96px auto 40px; padding: 88px 40px; text-align: center; max-width: 1200px; width: calc(100% - 80px); margin-left: auto; margin-right: auto;}
     .cta-band .hand { font-family: var(--hand); font-weight: 700; font-size: 19px; color: #fff; margin-bottom: 14px; }
     .cta-band h2 { color: #fff; font-size: 48px; font-weight: 700; letter-spacing: -1.5px; line-height: 1.15; max-width: 720px; margin: 0 auto 16px; }
     .cta-band p { color: #fff; opacity: .8; font-size: 19px; line-height: 1.7; max-width: 560px; margin: 0 auto 34px; }
@@ -170,20 +170,20 @@
       .hero-visual .hero-desktop { display: none; }
       .hero-visual .hero-mobile { display: block; max-width: 420px; }
 
-      .queue-band { margin: 0 16px; padding: 56px 26px 52px; }
+      .queue-band { margin: 0 auto; width: calc(100% - 32px); padding: 56px 26px 52px; max-width: 1200px; width: calc(100% - 32px); margin-left: auto; margin-right: auto;}
       .queue-band h2 { font-size: 29px; letter-spacing: -0.9px; margin-bottom: 22px; }
       .queue-grid { grid-template-columns: 1fr; gap: 38px; }
       .queue-grid .qcopy .qbody { font-size: 16.5px; }
       .queue-viz .band-desktop { display: none; }
       .queue-viz .band-mobile { display: block; }
 
-      .flow { padding: 72px 22px 0; }
+      .flow { padding: 72px 22px 0; max-width: 1200px; width: calc(100% - 32px); margin-left: auto; margin-right: auto;}
       .flow h2 { font-size: 29px; }
       .flow-desktop { display: none; }
       .flow-mobile { display: block; }
       .flow-caption { font-size: 16px; }
 
-      .call-band { margin: 72px 16px 0; padding: 60px 18px 64px; }
+      .call-band { margin: 72px auto 0; width: calc(100% - 32px); padding: 60px 18px 64px; max-width: 1200px; width: calc(100% - 32px); margin-left: auto; margin-right: auto;}
       .call-band h2 { font-size: 29px; }
       .call-panel { border-radius: 24px; padding: 24px 22px 22px; }
       .panel-head { padding-bottom: 16px; }
@@ -199,7 +199,7 @@
       .value-card svg { height: 108px; }
       .value-card h3 { font-size: 22px; }
 
-      .cta-band { margin: 72px 16px 24px; padding: 64px 24px; }
+      .cta-band { margin: 72px auto 24px; width: calc(100% - 32px); padding: 64px 24px; max-width: 1200px; width: calc(100% - 32px); margin-left: auto; margin-right: auto;}
       .cta-band h2 { font-size: 32px; letter-spacing: -1px; }
 
       footer.site-footer { margin-top: 64px; padding-top: 72px; }
@@ -212,7 +212,7 @@
       .nav-links { gap: 28px; }
       .split-hero { gap: 40px; padding: 32px 30px 72px; }
       .hero-copy h1 { font-size: 44px; }
-      .queue-band { padding: 64px 44px 60px; }
+      .queue-band { padding: 64px 44px 60px; max-width: 1200px; width: calc(100% - 80px); margin-left: auto; margin-right: auto;}
       .queue-grid { gap: 40px; }
       .footer-grid { grid-template-columns: 1fr 1fr; }
     }
@@ -319,11 +319,11 @@
     </section>
 
     <style>
-      .pilot-band { background: var(--off); border-radius: var(--radius); margin: 96px 40px 0; padding: 76px 48px; text-align: center; }
+      .pilot-band { background: var(--off); border-radius: var(--radius); margin: 96px auto 0; padding: 76px 48px; text-align: center; max-width: 1200px; width: calc(100% - 80px); margin-left: auto; margin-right: auto;}
       .pilot-band h2 { font-size: 36px; font-weight: 700; letter-spacing: -1px; line-height: 1.2; color: var(--ink); margin: 0 0 18px; }
       .pilot-band p { font-size: 18px; line-height: 1.75; color: var(--gray); max-width: 720px; margin: 0 auto 30px; }
       @media (max-width: 809px) {
-        .pilot-band { margin: 72px 16px 0; padding: 56px 24px; }
+        .pilot-band { margin: 72px auto 0; padding: 56px 24px; max-width: 1200px; width: calc(100% - 32px); margin-left: auto; margin-right: auto;}
         .pilot-band h2 { font-size: 28px; }
         .pilot-band p { font-size: 17px; }
       }
