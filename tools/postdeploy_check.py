@@ -17,6 +17,7 @@ PAGES = ["/", "/it", "/pricing", "/about", "/contact", "/blog", "/it/blog",
          "/blog/should-you-remove-the-phone-number",
          "/it/blog/should-you-remove-the-phone-number",
          "/use-cases/where-is-my-order", "/it/casi-duso/dove-e-il-mio-ordine",
+         "/industries/home-improvement", "/industries/fashion-apparel",
          "/privacy-policy"]
 
 NAV_COUNT_JS = """(label) => {

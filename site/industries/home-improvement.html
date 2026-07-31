@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Voice AI for HVAC &amp; Home Improvement E-Commerce | Sabato AI</title>
+  <meta name="description" content="A managed voice agent that sizes the unit, checks the climate zone and books the site visit — from your own kW tables and ERP. Live in two weeks.">
+  <link rel="canonical" href="https://www.sabato.ai/industries/home-improvement">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Voice AI for HVAC &amp; Home Improvement E-Commerce | Sabato AI">
+  <meta property="og:description" content="A managed voice agent that sizes the unit, checks the climate zone and books the site visit — from your own kW tables and ERP. Live in two weeks.">
+  <meta property="og:url" content="https://www.sabato.ai/industries/home-improvement">
+  <meta property="og:image" content="https://www.sabato.ai/fuc/assets/8Q4ofjOgRTqsr8FpanTJF9nzLwU.png">
+  <link rel="icon" href="/fuc/images/hWFOqN6Okd1QgfKhizqgIF1s.png" media="(prefers-color-scheme: light)">
+  <link rel="icon" href="/fuc/images/dEcuqc3xAQ3JJoX4xQDYrMQefA.png" media="(prefers-color-scheme: dark)">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.sabato.ai"}, {"@type": "ListItem", "position": 2, "name": "Industries", "item": "https://www.sabato.ai/industries"}, {"@type": "ListItem", "position": 3, "name": "Home Improvement / HVAC", "item": "https://www.sabato.ai/industries/home-improvement"}]}</script>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Can an AI voice agent really size a heat pump on the phone?", "acceptedAnswer": {"@type": "Answer", "text": "It reads your sizing table against the caller’s floor area, ceiling height and climate zone, and it flags the cases that need a human — borderline emitter compatibility, three-phase supply, anything unmapped. It does not invent a kilowatt figure. Sizing that ends in an order should still be confirmed on the site visit, and the agent books that visit."}}, {"@type": "Question", "name": "Does it work in Italian and English on the same line?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. The agent detects the caller’s language on the first turn and stays in it for the whole call, including the email it sends afterwards. Sabato is built for European merchants, so multilingual is the default, not an add-on."}}, {"@type": "Question", "name": "What happens outside opening hours?", "acceptedAnswer": {"@type": "Answer", "text": "The agent answers, handles what it can from your systems — order status, availability, documents — and books a callback with the installer team for anything that needs a human. Evening and weekend calls are the ones HVAC merchants lose most often."}}, {"@type": "Question", "name": "How does this differ from a chatbot on the product page?", "acceptedAnswer": {"@type": "Answer", "text": "Sabato answers the phone. In high-consideration categories the buyer has already decided that typing is not enough — they want to describe their house to someone. A chat widget cannot take that call, and a voicemail box loses it."}}, {"@type": "Question", "name": "What does it need from our Shopify store to go live?", "acceptedAnswer": {"@type": "Answer", "text": "Read access to orders and products, your sizing and certification documents, and the installer coverage list. Most HVAC merchants have the first two and keep the third in a spreadsheet; that is fine, we map it."}}]}</script>
+  <style>
+@font-face { font-family: "Satoshi"; src: url("/fuc/third-party-assets/fontshare/wf/TTX2Z3BF3P6Y5BQT3IV2VNOK6FL22KUT/7QYRJOI3JIMYHGY6CH7SOIFRQLZOLNJ6/KFIAZD4RUMEZIYV6FQ3T3GP5PDBDB6JY.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 400; }
+    @font-face { font-family: "Satoshi"; src: url("/fuc/third-party-assets/fontshare/wf/P2LQKHE6KA6ZP4AAGN72KDWMHH6ZH3TA/ZC32TK2P7FPS5GFTL46EU6KQJA24ZYDB/7AHDUZ4A7LFLVFUIFSARGIWCRQJHISQP.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 500; }
+    @font-face { font-family: "Satoshi"; src: url("/fuc/third-party-assets/fontshare/wf/LAFFD4SDUCDVQEXFPDC7C53EQ4ZELWQI/PXCT3G6LO6ICM5I3NTYENYPWJAECAWDD/GHM6WVH6MILNYOOCXHXB5GTSGNTMGXZR.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 700; }
+    @font-face { font-family: "Satoshi"; src: url("/fuc/third-party-assets/fontshare/wf/NHPGVFYUXYXE33DZ75OIT4JFGHITX5PE/PSUTMASCDJTVPERDYJZPN23BVUFUCQIF/J64QX5IPOHK56I2KYUNBQ5M2XWZEYKYX.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 900; }
+    @font-face { font-family: "Kalam"; src: url("/fuc/third-party-assets/fontshare/wf/L5Z4DJRD7OROEK74MORC4URSE7ILAXYH/6QNQQQT3NGMLLBQ3J7CCWACN46YUMIJB/GNJHSO7TKXAQJXNY3V3S4VE64D4XKQCP.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 700; }
+    @font-face { font-family: "Inter"; src: url("/fuc/assets/GrgcKwrN6d3Uz8EwcLHZxwEfC4.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 400; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+2000-206F, U+20AC, U+2122; }
+    @font-face { font-family: "Inter"; src: url("/fuc/assets/UjlFhCnUjxhNfep4oYBPqnEssyo.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 500; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+2000-206F, U+20AC, U+2122; }
+    @font-face { font-family: "Inter"; src: url("/fuc/assets/syRNPWzAMIrcJ3wIlPIP43KjQs.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 700; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+2000-206F, U+20AC, U+2122; }
+    :root {
+      --lime: rgb(204, 255, 0);        /* CTA / accent */
+      --black: rgb(0, 0, 0);           /* dark bands */
+      --ink: rgb(18, 10, 11);          /* primary text */
+      --gray: rgb(69, 65, 64);         /* body/secondary text */
+      --off: rgb(248, 244, 241);       /* light card background */
+      --line: rgb(227, 226, 226);      /* hairlines */
+      --blue: rgb(0, 153, 255);        /* text links */
+      --font: "Satoshi", "Inter", -apple-system, "Helvetica Neue", sans-serif;
+      --hand: "Kalam", cursive;
+      --radius: 24px;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font); background: #fff; color: var(--ink); }
+    img { display: block; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+    .site-header { position: sticky; top: 0; z-index: 100; max-width: 1200px; margin: 0 auto; padding: 16px 30px; }
+    .nav-shell { background: #fff; border-radius: var(--radius); height: 88px; padding: 16px 70px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .nav-logo img { width: 132px; height: auto; }
+    .nav-links { display: flex; align-items: center; gap: 48px; }
+    .nav-links a { font-size: 16px; font-weight: 500; line-height: 1.7; color: var(--ink); transition: opacity .2s; }
+    .nav-links a:hover { opacity: .6; }
+    .nav-links a.active { font-weight: 700; }
+    .nav-flag { font-size: 16px; line-height: 1; }
+    .btn-pill { display: inline-block; background: var(--lime); color: #000; border-radius: 100px; padding: 12px 30px; font-family: var(--font); font-size: 16px; font-weight: 700; line-height: 1.7; transition: transform .2s ease; white-space: nowrap; }
+    .btn-pill:hover { transform: scale(1.04); }
+    .shell { max-width: 1200px; margin: 0 auto; padding: 0 30px; }
+    .hero-copy .tag { margin-bottom: 24px; }
+    .hero-copy h1 { font-size: 54px; font-weight: 700; letter-spacing: -1.9px; line-height: 1.1; color: var(--ink); margin: 0 0 22px; }
+    .hero-copy .sub { font-size: 19px; font-weight: 400; line-height: 1.7; color: var(--gray); max-width: 520px; margin: 0 0 32px; }
+    .hero-cta .hand { font-family: var(--hand); font-weight: 700; font-size: 19px; color: var(--ink); transform: rotate(-2deg); }
+    .queue-band .eyebrow { color: var(--lime); font-size: 13px; font-weight: 700; letter-spacing: 2.5px; margin: 0 0 18px; }
+    .queue-grid .qcopy .qbody { color: rgba(248, 244, 241, .82); font-size: 17.5px; line-height: 1.75; margin: 0; }
+    .queue-viz .fine { color: rgba(248, 244, 241, .45); font-size: 12px; line-height: 1.6; margin: 18px 0 0; }
+    .cta-band .hand { font-family: var(--hand); font-weight: 700; font-size: 19px; color: #fff; margin-bottom: 14px; }
+    footer.site-footer { background: var(--black); margin-top: 96px; padding: 110px 0 0; }
+    .footer-grid { display: grid; grid-template-columns: 1.35fr 1fr 1.25fr 1fr; gap: 48px; padding-bottom: 88px; }
+    .footer-brand img.footer-logo { width: 132px; height: auto; }
+    .footer-brand .tagline { color: #fff; font-size: 18px; line-height: 1.65; margin-top: 22px; }
+    .footer-brand .backed { color: #fff; font-size: 18px; margin-top: 64px; margin-bottom: 14px; }
+    .footer-brand img.backed-img { width: 191px; height: auto; }
+    .footer-col h4 { color: #fff; font-size: 18px; font-weight: 500; margin-bottom: 22px; }
+    .footer-col ul { list-style: none; }
+    .footer-col li { margin-bottom: 14px; }
+    .footer-col a, .footer-col span { color: rgba(248, 244, 241, .62); font-size: 18px; line-height: 1.5; transition: color .2s; }
+    .footer-col a:hover { color: #fff; }
+    .footer-bottom { border-top: 1px solid rgba(248, 244, 241, .16); padding: 26px 0 44px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+    .footer-bottom .copy { color: var(--off); font-size: 16px; opacity: .85; }
+    .footer-bottom .legal { display: flex; align-items: center; gap: 24px; }
+    .footer-bottom .legal a { color: var(--off); font-size: 16px; opacity: .85; transition: opacity .2s; }
+    .footer-bottom .legal a:hover { opacity: 1; }
+    .footer-bottom img { width: 20px; height: 20px; }
+
+    @media (max-width: 809px) {
+      .site-header { padding: 12px 16px; }
+      .nav-shell { height: 72px; padding: 12px 22px; border-radius: 20px; }
+      .nav-links { display: none; }
+      .nav-logo img { width: 108px; }
+      .btn-pill { padding: 10px 22px; font-size: 15px; }
+      .shell { padding: 0 20px; }
+
+      .split-hero { grid-template-columns: 1fr; gap: 48px; padding: 20px 24px 64px; }
+      .hero-copy h1 { font-size: 37px; letter-spacing: -1.2px; }
+      .hero-copy .sub { font-size: 17.5px; }
+
+      .queue-band { margin: 0 16px; padding: 56px 26px 52px; }
+      .queue-band h2 { font-size: 29px; letter-spacing: -0.9px; margin-bottom: 22px; }
+      .queue-grid { grid-template-columns: 1fr; gap: 38px; }
+      .queue-grid .qcopy .qbody { font-size: 16.5px; }
+
+      .flow { padding: 72px 22px 0; }
+      .flow h2 { font-size: 29px; }
+      .flow-desktop { display: none; }
+      .flow-mobile { display: block; }
+      .flow-caption { font-size: 16px; }
+
+      .call-band { margin: 72px 16px 0; padding: 60px 18px 64px; }
+      .call-band h2 { font-size: 29px; }
+      .call-panel { border-radius: 24px; padding: 24px 22px 22px; }
+      .panel-head { padding-bottom: 16px; }
+      .panel-head .ph-left { font-size: 13px; white-space: nowrap; }
+      .panel-head .ph-time { font-size: 13px; }
+      .panel-head .ph-wave { display: none; }
+      .t-row { grid-template-columns: 1fr; gap: 7px; padding: 15px 0; }
+      .t-row p { font-size: 15px; }
+      .phone-note { font-size: 16px; }
+
+      .value-row { grid-template-columns: 1fr; gap: 20px; padding: 60px 20px 0; margin-top: 0; }
+      .value-card { padding: 36px 28px 34px; }
+      .value-card svg { height: 108px; }
+      .value-card h3 { font-size: 22px; }
+
+      .cta-band { margin: 72px 16px 24px; padding: 64px 24px; }
+      .cta-band h2 { font-size: 32px; letter-spacing: -1px; }
+
+      footer.site-footer { margin-top: 64px; padding-top: 72px; }
+      .footer-grid { grid-template-columns: 1fr; gap: 40px; padding-bottom: 56px; }
+      .footer-brand .backed { margin-top: 36px; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+    }
+    @media (min-width: 810px) and (max-width: 1099px) {
+      .nav-shell { padding: 16px 36px; }
+      .nav-links { gap: 28px; }
+      .split-hero { gap: 40px; padding: 32px 30px 72px; }
+      .hero-copy h1 { font-size: 44px; }
+      .queue-band { padding: 64px 44px 60px; }
+      .queue-grid { gap: 40px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* ================= industry page ================= */
+    .ind-hero { padding: 92px 0 84px; }
+    .ind-hero .grid { display: grid; grid-template-columns: 1.05fr 1fr; gap: 64px; align-items: center; }
+    .chip { display: inline-block; background: var(--lime); color: var(--ink); font-size: 12px; font-weight: 700;
+            letter-spacing: 1.4px; text-transform: uppercase; padding: 8px 16px; border-radius: 100px; margin-bottom: 26px; }
+    .ind-hero h1 { font-size: 58px; line-height: 1.04; letter-spacing: -2px; font-weight: 900; color: var(--ink); margin: 0 0 22px; }
+    .ind-hero .sub { font-size: 18px; line-height: 1.62; color: var(--gray); max-width: 34em; margin: 0 0 32px; }
+    .hero-cta { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; }
+    .proof { display: flex; align-items: center; gap: 10px; margin: 30px 0 0; padding-top: 22px;
+             border-top: 1px solid var(--line); font-size: 14.5px; color: var(--gray); }
+    .proof-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--lime); flex: none; }
+
+    /* live call card */
+    .callcard { background: var(--black); border-radius: var(--radius); padding: 26px 26px 22px; }
+    .cc-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+    .cc-live { display: flex; align-items: center; gap: 9px; color: var(--lime); font-size: 11.5px; font-weight: 700; letter-spacing: 2px; }
+    .cc-live i { width: 8px; height: 8px; border-radius: 50%; background: var(--lime); display: block; }
+    .cc-time { color: rgba(248,244,241,.5); font-size: 12.5px; font-variant-numeric: tabular-nums; }
+    .wave { display: block; width: 100%; height: 44px; }
+    .cc-ctrls { display: flex; justify-content: center; gap: 14px; margin: 18px 0 22px; }
+    .cc-ctrls span { width: 40px; height: 40px; border-radius: 50%; background: rgba(248,244,241,.1); display: block; }
+    .cc-ctrls span.on { background: var(--lime); }
+    .cc-q { background: rgba(248,244,241,.06); border-radius: 14px; padding: 18px 20px; }
+    .cc-q .lbl { font-size: 10.5px; letter-spacing: 1.6px; color: rgba(248,244,241,.45); margin: 0 0 9px; }
+    .cc-q p { color: #fff; font-size: 15.5px; line-height: 1.5; margin: 0; }
+    .cm-row { display: flex; justify-content: space-between; gap: 16px; padding: 11px 0; border-top: 1px solid rgba(248,244,241,.1); font-size: 12.5px; }
+    .cm-row span { color: rgba(248,244,241,.5); }
+    .cm-row b { color: var(--lime); font-weight: 700; text-align: right; }
+    .cc-note { color: rgba(248,244,241,.32); font-size: 11px; margin: 14px 0 0; }
+
+    /* dark band */
+    .band { background: var(--black); padding: 96px 0; }
+    .band .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+    .band h2 { font-size: 40px; line-height: 1.14; letter-spacing: -1.2px; font-weight: 900; color: #fff; margin: 0 0 24px; }
+    .band p { color: rgba(248,244,241,.72); font-size: 16.5px; line-height: 1.66; margin: 0 0 18px; }
+    .band .eyebrow { color: var(--lime); font-size: 11.5px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin: 0 0 18px; }
+    .rank { background: rgba(248,244,241,.05); border-radius: var(--radius); padding: 30px 32px; }
+    .rank h3 { color: rgba(248,244,241,.55); font-size: 11.5px; letter-spacing: 1.8px; text-transform: uppercase; margin: 0 0 20px; font-weight: 700; }
+    .rank ul { list-style: none; margin: 0; padding: 0; }
+    .rank li { display: flex; align-items: baseline; gap: 16px; padding: 13px 0; border-top: 1px solid rgba(248,244,241,.1); }
+    .rank li:first-child { border-top: 0; }
+    .r-n { color: var(--lime); font-weight: 900; font-size: 14px; min-width: 20px; font-variant-numeric: tabular-nums; }
+    .r-t { color: #fff; font-size: 15px; line-height: 1.45; }
+    .rank .fine { color: rgba(248,244,241,.38); font-size: 11.5px; margin: 20px 0 0; line-height: 1.5; }
+
+    /* questions */
+    .qs { padding: 96px 0; background: var(--off); }
+    .qs h2 { font-size: 38px; line-height: 1.16; letter-spacing: -1.1px; font-weight: 900; color: var(--ink); margin: 0 0 20px; max-width: 20em; }
+    .qs .intro { font-size: 16.5px; line-height: 1.65; color: var(--gray); max-width: 44em; margin: 0 0 44px; }
+    .q-table { background: #fff; border-radius: var(--radius); overflow: hidden; }
+    .q-row { display: grid; grid-template-columns: 1fr 1.25fr; gap: 34px; padding: 26px 34px; border-top: 1px solid var(--line); }
+    .q-row:first-child { border-top: 0; }
+    .q-ask { font-size: 16.5px; font-weight: 700; color: var(--ink); line-height: 1.45; margin: 0; }
+    .q-ans p { font-size: 15px; line-height: 1.6; color: var(--gray); margin: 0 0 10px; }
+    .q-ans code { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 12.5px; background: var(--off);
+                  border: 1px solid var(--line); border-radius: 6px; padding: 3px 8px; color: var(--ink); display: inline-block; }
+    .q-note { font-size: 13px; color: var(--gray); opacity: .75; margin: 20px 0 0; }
+
+    /* mid-page CTA */
+    .midcta { display: flex; align-items: center; justify-content: space-between; gap: 28px; flex-wrap: wrap;
+              background: var(--black); border-radius: var(--radius); padding: 30px 36px; margin: 44px 0 0; }
+    .midcta p { color: #fff; font-size: 19px; font-weight: 700; margin: 0; letter-spacing: -.3px; }
+    .midcta .m-sub { color: rgba(248,244,241,.6); font-size: 14px; font-weight: 400; margin: 6px 0 0; letter-spacing: 0; }
+
+    /* workflows */
+    .wf { padding: 96px 0; }
+    .wf h2 { font-size: 38px; line-height: 1.16; letter-spacing: -1.1px; font-weight: 900; color: var(--ink); margin: 0 0 14px; max-width: 18em; }
+    .wf-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-top: 38px; }
+    .wf-card { display: block; background: var(--off); border-radius: 20px; padding: 26px 24px 28px; text-decoration: none;
+               position: relative; transition: background .16s ease, transform .16s ease; }
+    .wf-card:hover { background: #fff; box-shadow: 0 10px 30px rgba(18,10,11,.08); transform: translateY(-2px); }
+    .wf-n { font-size: 11.5px; font-weight: 700; letter-spacing: 1.6px; color: var(--gray); }
+    .wf-arrow { position: absolute; top: 24px; right: 24px; width: 26px; height: 26px; border-radius: 50%; background: var(--lime);
+                color: var(--ink); font-size: 13px; display: flex; align-items: center; justify-content: center; font-weight: 700; }
+    .wf-card h3 { font-size: 17px; font-weight: 700; color: var(--ink); margin: 26px 0 8px; letter-spacing: -.3px; }
+    .wf-card p { font-size: 13.5px; line-height: 1.55; color: var(--gray); margin: 0; }
+    .scene { display: block; width: 100%; height: auto; margin: 56px 0 0; }
+    .scene-cap { font-size: 12.5px; color: var(--gray); opacity: .72; margin: 14px 0 0; }
+
+    /* transcript */
+    .call-band { background: var(--black); padding: 92px 0; }
+    .call-band h2 { font-size: 38px; font-weight: 900; letter-spacing: -1.1px; color: #fff; margin: 0 0 8px; }
+    .call-meta { color: rgba(248,244,241,.45); font-size: 12.5px; margin: 0 0 34px; }
+    .call-panel { background: rgba(248,244,241,.05); border-radius: var(--radius); padding: 12px 30px 26px; }
+    .t-row { display: grid; grid-template-columns: 108px 1fr; gap: 22px; padding: 17px 0; border-top: 1px solid rgba(248,244,241,.09); align-items: start; }
+    .t-row:first-child { border-top: 0; }
+    .t-spk { display: flex; align-items: center; gap: 8px; padding-top: 2px; }
+    .t-spk b { font-size: 10.5px; letter-spacing: 1.4px; font-weight: 700; }
+    .t-spk .wave { width: 26px; height: 16px; }
+    .t-spk.caller b { color: rgba(248,244,241,.5); }
+    .t-spk.agent b { color: var(--lime); }
+    .t-row p { color: rgba(248,244,241,.9); font-size: 15.5px; line-height: 1.62; margin: 0; }
+    .call-caption { color: rgba(248,244,241,.34); font-size: 11.5px; margin: 22px 0 0; }
+
+    /* data reality */
+    .data { padding: 96px 0; background: var(--off); }
+    .data .grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 60px; align-items: start; }
+    .data h2 { font-size: 36px; line-height: 1.18; letter-spacing: -1.1px; font-weight: 900; color: var(--ink); margin: 0 0 20px; }
+    .data > .shell > .grid > div > p { font-size: 16.5px; line-height: 1.65; color: var(--gray); margin: 0 0 26px; }
+    .honest { background: var(--black); border-radius: 18px; padding: 26px 28px; }
+    .honest .lbl { color: var(--lime); font-size: 11px; font-weight: 700; letter-spacing: 1.8px; margin: 0 0 12px; }
+    .honest p { color: rgba(248,244,241,.85); font-size: 14.5px; line-height: 1.62; margin: 0; }
+    .d-row { background: #fff; border-radius: 16px; padding: 20px 24px; margin-bottom: 12px; display: grid;
+             grid-template-columns: 200px 1fr; gap: 24px; align-items: baseline; }
+    .d-row h3 { font-size: 15px; font-weight: 700; color: var(--ink); margin: 0; letter-spacing: -.2px; }
+    .d-row p { font-size: 14px; line-height: 1.55; color: var(--gray); margin: 0; }
+
+    /* pilot */
+    .pilot { padding: 92px 0; }
+    .pilot .grid { display: grid; grid-template-columns: 1fr 1.15fr; gap: 56px; align-items: start; }
+    .pilot h2 { font-size: 36px; font-weight: 900; letter-spacing: -1.1px; color: var(--ink); margin: 0 0 18px; }
+    .pilot p { font-size: 16.5px; line-height: 1.65; color: var(--gray); margin: 0; }
+    .p-item { display: grid; grid-template-columns: 26px 1fr; gap: 14px; background: var(--off); border-radius: 14px;
+              padding: 18px 22px; margin-bottom: 10px; align-items: start; }
+    .p-tick { width: 22px; height: 22px; border-radius: 50%; background: var(--lime); color: var(--ink); font-size: 12px;
+              font-weight: 900; display: flex; align-items: center; justify-content: center; }
+    .p-item p { font-size: 14.5px; line-height: 1.55; }
+
+    /* faq */
+    .faq-sec { padding: 92px 0; background: var(--off); }
+    .faq-sec h2 { font-size: 36px; font-weight: 900; letter-spacing: -1.1px; color: var(--ink); margin: 0 0 34px; max-width: 20em; }
+    .faq-item { background: #fff; border-radius: 16px; padding: 24px 28px; margin-bottom: 12px; }
+    .faq-q { font-size: 18px; font-weight: 700; color: var(--ink); margin: 0 0 9px; letter-spacing: -.3px; }
+    .faq-a { font-size: 15.5px; line-height: 1.65; color: var(--gray); margin: 0; }
+
+    /* closing cta */
+    .cta-band { background: var(--black); padding: 96px 0; text-align: center; }
+    .cta-band h2 { font-size: 42px; font-weight: 900; letter-spacing: -1.4px; color: #fff; margin: 10px 0 16px; }
+    .cta-band p { color: rgba(248,244,241,.7); font-size: 17px; line-height: 1.6; max-width: 34em; margin: 0 auto 30px; }
+    .cta-band .hand { color: var(--lime); }
+    .nb { white-space: nowrap; }
+
+    @media (max-width: 980px) {
+      .ind-hero .grid, .band .grid, .data .grid, .pilot .grid { grid-template-columns: 1fr; gap: 40px; }
+      .wf-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 809px) {
+      .ind-hero { padding: 60px 0 56px; }
+      .ind-hero h1 { font-size: 38px; letter-spacing: -1.2px; }
+      .band, .qs, .wf, .call-band, .data, .pilot, .faq-sec, .cta-band { padding: 64px 0; }
+      .band h2, .qs h2, .wf h2, .call-band h2, .data h2, .pilot h2, .faq-sec h2 { font-size: 28px; letter-spacing: -.8px; }
+      .cta-band h2 { font-size: 30px; letter-spacing: -1px; }
+      .q-row, .d-row { grid-template-columns: 1fr; gap: 12px; padding: 22px 24px; }
+      .wf-grid { grid-template-columns: 1fr; }
+      .t-row { grid-template-columns: 1fr; gap: 8px; }
+      .call-panel { padding: 12px 20px 22px; }
+      .midcta { padding: 24px 24px; }
+      .rank { padding: 24px 22px; }
+    }
+
+  </style>
+</head>
+<body>
+<header class="site-header">
+    <div class="nav-shell">
+      <a class="nav-logo" href="/" aria-label="Sabato AI — Home">
+        <img src="/fuc/images/UTATYXc6NipXQRoxyaGHHfHSyA4-f2557e25.png" alt="Sabato AI logo" width="132" height="61">
+      </a>
+      <nav class="nav-links" aria-label="Main">
+        <a href="/#usecases">Use Cases</a>
+        <a href="/pricing">Pricing</a>
+        <a href="/about">About</a>
+        <a href="/contact">Contact</a>
+        <a class="nav-flag" href="/it" aria-label="Versione italiana">🇮🇹</a>
+      </nav>
+      <a class="btn-pill" href="https://cal.com/sabatoai/intro" target="_blank" rel="noopener">Start Free Pilot</a>
+    </div>
+  </header>
+
+<section class="ind-hero"><div class="shell"><div class="grid">
+  <div>
+    <span class="chip">Home Improvement / HVAC</span>
+    <h1>Heating and cooling buyers phone before they buy.</h1>
+    <p class="sub">Sabato's managed voice agent sizes the unit, checks the climate zone, says what the installation actually includes — and books the site visit while the caller is still interested.</p>
+    <div class="hero-cta">
+      <a class="btn-pill" href="https://cal.com/sabatoai/intro" target="_blank" rel="noopener">Start Free Pilot</a>
+      <span class="hand">in this category the call is the configurator</span>
+    </div>
+    <p class="proof"><span class="proof-dot"></span>Sabato answers the phone for ClimaConvenienza — heat pumps, boilers and air conditioning, on Shopify.</p>
+  </div>
+  <div class="callcard">
+    <div class="cc-top"><span class="cc-live"><i></i>LIVE CALL</span><span class="cc-time">1:26</span></div>
+    <svg class="wave" viewBox="0 0 390 48" aria-hidden="true"><rect x="0" y="19" width="5" height="10" rx="2.5" fill="rgba(204,255,0,.45)"/><rect x="13" y="13" width="5" height="22" rx="2.5" fill="rgb(204,255,0)"/><rect x="26" y="7" width="5" height="34" rx="2.5" fill="rgb(204,255,0)"/><rect x="39" y="15" width="5" height="18" rx="2.5" fill="rgba(204,255,0,.45)"/><rect x="52" y="4" width="5" height="40" rx="2.5" fill="rgb(204,255,0)"/><rect x="65" y="17" width="5" height="14" rx="2.5" fill="rgb(204,255,0)"/><rect x="78" y="10" width="5" height="28" rx="2.5" fill="rgba(204,255,0,.45)"/><rect x="91" y="2" width="5" height="44" rx="2.5" fill="rgb(204,255,0)"/><rect x="104" y="14" width="5" height="20" rx="2.5" fill="rgb(204,255,0)"/><rect x="117" y="6" width="5" height="36" rx="2.5" fill="rgba(204,255,0,.45)"/><rect x="130" y="18" width="5" height="12" rx="2.5" fill="rgb(204,255,0)"/><rect x="143" y="9" width="5" height="30" rx="2.5" fill="rgb(204,255,0)"/><rect x="156" y="3" width="5" height="42" rx="2.5" fill="rgba(204,255,0,.45)"/><rect x="169" y="16" width="5" height="16" rx="2.5" fill="rgb(204,255,0)"/><rect x="182" y="11" width="5" height="26" rx="2.5" fill="rgb(204,255,0)"/><rect x="195" y="5" width="5" height="38" rx="2.5" fill="rgba(204,255,0,.45)"/><rect x="208" y="13" width="5" height="22" rx="2.5" fill="rgb(204,255,0)"/><rect x="221" y="7" width="5" height="34" rx="2.5" fill="rgb(204,255,0)"/><rect x="234" y="18" width="5" height="12" rx="2.5" fill="rgba(204,255,0,.45)"/><rect x="247" y="10" width="5" height="28" rx="2.5" fill="rgb(204,255,0)"/><rect x="260" y="4" width="5" height="40" rx="2.5" fill="rgb(204,255,0)"/><rect x="273" y="15" width="5" height="18" rx="2.5" fill="rgba(204,255,0,.45)"/><rect x="286" y="12" width="5" height="24" rx="2.5" fill="rgb(204,255,0)"/><rect x="299" y="8" width="5" height="32" rx="2.5" fill="rgb(204,255,0)"/><rect x="312" y="17" width="5" height="14" rx="2.5" fill="rgba(204,255,0,.45)"/><rect x="325" y="14" width="5" height="20" rx="2.5" fill="rgb(204,255,0)"/><rect x="338" y="19" width="5" height="10" rx="2.5" fill="rgb(204,255,0)"/><rect x="351" y="13" width="5" height="22" rx="2.5" fill="rgba(204,255,0,.45)"/><rect x="364" y="7" width="5" height="34" rx="2.5" fill="rgb(204,255,0)"/><rect x="377" y="15" width="5" height="18" rx="2.5" fill="rgb(204,255,0)"/></svg>
+    <div class="cc-ctrls"><span></span><span></span><span class="on"></span></div>
+    <div class="cc-q"><p class="lbl">WHAT THE CALLER JUST ASKED</p><p>&ldquo;I&rsquo;ve got 120 m&sup2; on one floor just outside Milan — is the 9 kW split the right one?&rdquo;</p></div>
+    <div class="cm-row"><span>Detected intent</span><b>Sizing + installation</b></div><div class="cm-row"><span>Data pulled</span><b>kW table &middot; climate zone E</b></div><div class="cm-row"><span>Outcome</span><b>Site visit booked</b></div>
+    <p class="cc-note">Example call. Illustrative interface, not a customer recording.</p>
+  </div>
+</div></div></section>
+
+<section class="band"><div class="shell"><div class="grid">
+  <div>
+    <p class="eyebrow">Why this category phones</p>
+    <h2>A heat pump is a specification decision made by someone who doesn&rsquo;t have the specification.</h2>
+    <p>Nobody buys 12 kW. They buy a house: 120 m&sup2;, built in 1978, single floor, radiators they&rsquo;d rather keep, a postcode with a specific winter design temperature. The product page cannot answer that, so the buyer either phones or leaves.</p><p>That call is not support. It is the last step of the sale, and it lands during working hours on a line that is usually already busy with an installer asking about a delivery.</p>
+  </div>
+  <div class="rank">
+    <h3>What the inbound calls are about</h3>
+    <ul><li><span class="r-n">1</span><span class="r-t">Which unit for my space (sizing)</span></li><li><span class="r-n">2</span><span class="r-t">Installation: included, who, when</span></li><li><span class="r-n">3</span><span class="r-t">Price, discount, quote for a full system</span></li><li><span class="r-n">4</span><span class="r-t">Incentives and certification documents</span></li><li><span class="r-n">5</span><span class="r-t">Delivery timing and where the order is</span></li></ul>
+    <p class="fine">Ordered by how often we hear them in this category. We do not publish a call-mix distribution we have not measured &mdash; replace this with your own tagged call log before you act on it.</p>
+  </div>
+</div></div></section>
+
+<section class="qs"><div class="shell">
+  <h2>Six questions an HVAC line hears every day — and what has to be true in your systems to answer them</h2>
+  <p class="intro">An agent is only as good as what it can read. These are the pairings that matter in heating and cooling: each question resolves against a specific field, not against a general knowledge of HVAC.</p>
+  <div class="q-table"><div class="q-row"><p class="q-ask">&ldquo;Which unit do I need for 120 m&sup2; on one floor?&rdquo;</p><div class="q-ans"><p>kW/BTU sizing table crossed with the climate zone for the caller&rsquo;s postcode and the declared ceiling height.</p><code>product.heating_capacity_kw &middot; zone.design_temp</code></div></div><div class="q-row"><p class="q-ask">&ldquo;Is installation included, and who does it?&rdquo;</p><div class="q-ans"><p>Installer coverage by postcode plus the installation service SKU and its current lead time.</p><code>installers.by_cap &middot; sku.INSTALL_STD</code></div></div><div class="q-row"><p class="q-ask">&ldquo;Will it work with the radiators I already have?&rdquo;</p><div class="q-ans"><p>Maximum flow temperature on the unit against the emitter type the caller describes; hands over to a human when the answer is borderline.</p><code>product.max_flow_temp_c</code></div></div><div class="q-row"><p class="q-ask">&ldquo;Does this model qualify for the incentive scheme?&rdquo;</p><div class="q-ans"><p>ErP energy class and SCOP value from the certification documents held in the DAM, sent by email as the PDF itself.</p><code>docs.erp_class &middot; docs.scop</code></div></div><div class="q-row"><p class="q-ask">&ldquo;If I order today, when does it arrive?&rdquo;</p><div class="q-ans"><p>Available-to-promise in the ERP, plus the supplier lead time when the item is not in the warehouse.</p><code>erp.atp &middot; supplier.lead_days</code></div></div><div class="q-row"><p class="q-ask">&ldquo;Where is the rest of my installation kit?&rdquo;</p><div class="q-ans"><p>Carrier tracking events on the parent order, split shipments reconciled into one answer.</p><code>carrier.events &middot; order.shipments[]</code></div></div></div>
+  <p class="q-note">If a row here could be copied onto another industry page unchanged, it does not belong on this page.</p>
+  <div class="midcta">
+    <div><p>Recognise your own call log?</p><p class="m-sub">We&rsquo;ll run these questions against your catalogue on the intro call.</p></div>
+    <a class="btn-pill" href="https://cal.com/sabatoai/intro" target="_blank" rel="noopener">Start Free Pilot</a>
+  </div>
+</div></section>
+
+<section class="wf"><div class="shell">
+  <h2>4 of the nine workflows carry this category. Start with the first one.</h2>
+  <span class="hand">the order is different on every industry page &mdash; that&rsquo;s the point</span>
+  <div class="wf-grid"><a class="wf-card" href="/use-cases/pre-sales-consultation"><span class="wf-n">01</span><span class="wf-arrow" aria-hidden="true">&rarr;</span><h3>Pre-sales consultation</h3><p>Sizing, compatibility, what&rsquo;s in the box. The call that decides the sale.</p></a><a class="wf-card" href="/use-cases/qualify-and-collect-for-quote"><span class="wf-n">02</span><span class="wf-arrow" aria-hidden="true">&rarr;</span><h3>Qualify &amp; collect for quote</h3><p>Full-system enquiries captured with the fields an installer quote actually needs.</p></a><a class="wf-card" href="/use-cases/where-is-my-order"><span class="wf-n">03</span><span class="wf-arrow" aria-hidden="true">&rarr;</span><h3>Where is my order</h3><p>Split shipments and installation kits, reconciled into one spoken answer.</p></a><a class="wf-card" href="/use-cases/checkout-summary-via-text"><span class="wf-n">04</span><span class="wf-arrow" aria-hidden="true">&rarr;</span><h3>Checkout summary via text</h3><p>Confirming a four-line order with an install slot before the card is charged.</p></a></div>
+  <svg class="scene" viewBox="0 0 720 300" role="img" aria-label="A wall-mounted unit sized against a floor plan and a climate zone">
+  <rect x="0" y="0" width="720" height="300" rx="24" fill="rgb(248,244,241)"/>
+  <!-- floor plan -->
+  <rect x="44" y="60" width="200" height="180" rx="8" fill="none" stroke="rgb(18,10,11)" stroke-width="3"/>
+  <line x1="44" y1="150" x2="150" y2="150" stroke="rgb(18,10,11)" stroke-width="3"/>
+  <line x1="150" y1="150" x2="150" y2="240" stroke="rgb(18,10,11)" stroke-width="3"/>
+  <text x="60" y="98" font-family="Satoshi,sans-serif" font-size="15" font-weight="700" fill="rgb(18,10,11)">120 m&#178;</text>
+  <text x="60" y="120" font-family="Satoshi,sans-serif" font-size="12" fill="rgb(69,65,64)">single floor</text>
+  <!-- the unit -->
+  <rect x="300" y="76" width="150" height="46" rx="10" fill="rgb(18,10,11)"/>
+  <rect x="316" y="92" width="118" height="4" rx="2" fill="rgb(204,255,0)"/>
+  <rect x="316" y="102" width="86" height="4" rx="2" fill="rgba(248,244,241,.35)"/>
+  <!-- airflow -->
+  <path d="M310 140 q40 26 80 0" fill="none" stroke="rgb(204,255,0)" stroke-width="4" stroke-linecap="round"/>
+  <path d="M330 170 q40 26 80 0" fill="none" stroke="rgb(204,255,0)" stroke-width="4" stroke-linecap="round" opacity=".65"/>
+  <path d="M350 200 q40 26 80 0" fill="none" stroke="rgb(204,255,0)" stroke-width="4" stroke-linecap="round" opacity=".35"/>
+  <!-- capacity readout -->
+  <rect x="500" y="60" width="176" height="180" rx="16" fill="rgb(18,10,11)"/>
+  <text x="524" y="100" font-family="Satoshi,sans-serif" font-size="12" letter-spacing="1.6" fill="rgba(248,244,241,.55)">SIZED AT</text>
+  <text x="524" y="146" font-family="Satoshi,sans-serif" font-size="42" font-weight="900" fill="rgb(204,255,0)">12 kW</text>
+  <line x1="524" y1="166" x2="652" y2="166" stroke="rgba(248,244,241,.18)" stroke-width="1"/>
+  <text x="524" y="192" font-family="Satoshi,sans-serif" font-size="13" fill="rgba(248,244,241,.8)">climate zone E</text>
+  <text x="524" y="214" font-family="Satoshi,sans-serif" font-size="13" fill="rgba(248,244,241,.8)">ceiling 2.7 m</text>
+</svg>
+</div></section>
+
+<section class="call-band"><div class="shell">
+  <h2>What the call sounds like</h2>
+  <p class="call-meta">Inbound &middot; 2 min 41 s &middot; language: Italian, translated here &middot; outcome: site check booked</p>
+  <div class="call-panel"><div class="t-row"><span class="t-spk caller"><svg class="wave" viewBox="0 0 52 48" aria-hidden="true"><rect x="0" y="19" width="5" height="10" rx="2.5" fill="rgba(204,255,0,.45)"/><rect x="13" y="13" width="5" height="22" rx="2.5" fill="rgb(204,255,0)"/><rect x="26" y="7" width="5" height="34" rx="2.5" fill="rgb(204,255,0)"/><rect x="39" y="15" width="5" height="18" rx="2.5" fill="rgba(204,255,0,.45)"/></svg><b>CALLER</b></span><p>Hi — I&rsquo;m looking at the 9 kW split on your site. I&rsquo;ve got about 120 square metres, all on one floor, just outside Milan. Is that the right one?</p></div><div class="t-row"><span class="t-spk agent"><svg class="wave" viewBox="0 0 52 48" aria-hidden="true"><rect x="0" y="19" width="5" height="10" rx="2.5" fill="rgba(204,255,0,.45)"/><rect x="13" y="13" width="5" height="22" rx="2.5" fill="rgb(204,255,0)"/><rect x="26" y="7" width="5" height="34" rx="2.5" fill="rgb(204,255,0)"/><rect x="39" y="15" width="5" height="18" rx="2.5" fill="rgba(204,255,0,.45)"/></svg><b>AGENT</b></span><p>Let me check the sizing table. 120 square metres on one floor, climate zone E — for cooling you&rsquo;re at roughly eleven to twelve kilowatts, so the 9 kW would be running flat out in August. The 12 kW is the safer fit. Is the ceiling height standard, around 2.7 metres?</p></div><div class="t-row"><span class="t-spk caller"><svg class="wave" viewBox="0 0 52 48" aria-hidden="true"><rect x="0" y="19" width="5" height="10" rx="2.5" fill="rgba(204,255,0,.45)"/><rect x="13" y="13" width="5" height="22" rx="2.5" fill="rgb(204,255,0)"/><rect x="26" y="7" width="5" height="34" rx="2.5" fill="rgb(204,255,0)"/><rect x="39" y="15" width="5" height="18" rx="2.5" fill="rgba(204,255,0,.45)"/></svg><b>CALLER</b></span><p>Yes, standard. Nothing unusual.</p></div><div class="t-row"><span class="t-spk agent"><svg class="wave" viewBox="0 0 52 48" aria-hidden="true"><rect x="0" y="19" width="5" height="10" rx="2.5" fill="rgba(204,255,0,.45)"/><rect x="13" y="13" width="5" height="22" rx="2.5" fill="rgb(204,255,0)"/><rect x="26" y="7" width="5" height="34" rx="2.5" fill="rgb(204,255,0)"/><rect x="39" y="15" width="5" height="18" rx="2.5" fill="rgba(204,255,0,.45)"/></svg><b>AGENT</b></span><p>Then the 12 kW. One thing to know before you order: it needs a dedicated sixteen-amp line. If you&rsquo;re not sure you have one, the installer checks that on the site visit.</p></div><div class="t-row"><span class="t-spk caller"><svg class="wave" viewBox="0 0 52 48" aria-hidden="true"><rect x="0" y="19" width="5" height="10" rx="2.5" fill="rgba(204,255,0,.45)"/><rect x="13" y="13" width="5" height="22" rx="2.5" fill="rgb(204,255,0)"/><rect x="26" y="7" width="5" height="34" rx="2.5" fill="rgb(204,255,0)"/><rect x="39" y="15" width="5" height="18" rx="2.5" fill="rgba(204,255,0,.45)"/></svg><b>CALLER</b></span><p>That&rsquo;s the other thing — is the installation you, or do I find someone myself?</p></div><div class="t-row"><span class="t-spk agent"><svg class="wave" viewBox="0 0 52 48" aria-hidden="true"><rect x="0" y="19" width="5" height="10" rx="2.5" fill="rgba(204,255,0,.45)"/><rect x="13" y="13" width="5" height="22" rx="2.5" fill="rgb(204,255,0)"/><rect x="26" y="7" width="5" height="34" rx="2.5" fill="rgb(204,255,0)"/><rect x="39" y="15" width="5" height="18" rx="2.5" fill="rgba(204,255,0,.45)"/></svg><b>AGENT</b></span><p>Three certified installers cover your postcode. Installation is quoted separately after the site check, and the site check is free and takes about twenty minutes.</p></div><div class="t-row"><span class="t-spk caller"><svg class="wave" viewBox="0 0 52 48" aria-hidden="true"><rect x="0" y="19" width="5" height="10" rx="2.5" fill="rgba(204,255,0,.45)"/><rect x="13" y="13" width="5" height="22" rx="2.5" fill="rgb(204,255,0)"/><rect x="26" y="7" width="5" height="34" rx="2.5" fill="rgb(204,255,0)"/><rect x="39" y="15" width="5" height="18" rx="2.5" fill="rgba(204,255,0,.45)"/></svg><b>CALLER</b></span><p>And does it qualify for the incentive?</p></div><div class="t-row"><span class="t-spk agent"><svg class="wave" viewBox="0 0 52 48" aria-hidden="true"><rect x="0" y="19" width="5" height="10" rx="2.5" fill="rgba(204,255,0,.45)"/><rect x="13" y="13" width="5" height="22" rx="2.5" fill="rgb(204,255,0)"/><rect x="26" y="7" width="5" height="34" rx="2.5" fill="rgb(204,255,0)"/><rect x="39" y="15" width="5" height="18" rx="2.5" fill="rgba(204,255,0,.45)"/></svg><b>AGENT</b></span><p>This one is ErP class A+++ with an SCOP of 4.6, so yes. I&rsquo;ll email you the certification PDF and the two nearest installers. Shall I book the site check now?</p></div><div class="t-row"><span class="t-spk caller"><svg class="wave" viewBox="0 0 52 48" aria-hidden="true"><rect x="0" y="19" width="5" height="10" rx="2.5" fill="rgba(204,255,0,.45)"/><rect x="13" y="13" width="5" height="22" rx="2.5" fill="rgb(204,255,0)"/><rect x="26" y="7" width="5" height="34" rx="2.5" fill="rgb(204,255,0)"/><rect x="39" y="15" width="5" height="18" rx="2.5" fill="rgba(204,255,0,.45)"/></svg><b>CALLER</b></span><p>Yes, go ahead.</p></div></div>
+  <p class="call-caption">Illustrative transcript built from the workflows above. Not a customer recording; no customer data is shown.</p>
+  <div class="midcta">
+    <div><p>Hear this run against your own data.</p><p class="m-sub">Same call, your catalogue, on the intro call.</p></div>
+    <a class="btn-pill" href="https://cal.com/sabatoai/intro" target="_blank" rel="noopener">Start Free Pilot</a>
+  </div>
+</div></section>
+
+<section class="data"><div class="shell"><div class="grid">
+  <div>
+    <h2>The data reality behind an HVAC answer</h2>
+    <p>Every answer on this page depends on a field somebody has to maintain. Where a field is missing we say so on the call and hand over — we do not let the agent reason its way to a kilowatt figure.</p>
+    <div class="honest">
+      <p class="lbl">THE HONEST PART</p>
+      <p>Bad source data produces confident wrong answers. If a field is stale, the agent will speak it fluently &mdash; and a wrong answer at speed is worse than a slow right one, because it converts into an order that fails. We audit the fields this page depends on before the pilot, and we cap the agent to hand over on anything unmapped.</p>
+    </div>
+  </div>
+  <div><div class="d-row"><h3>kW / BTU sizing tables</h3><p>Per model, with the assumptions stated: floor area, ceiling height, insulation class.</p></div><div class="d-row"><h3>Climate zone by postcode</h3><p>Zones A–F or the local equivalent, mapped to winter design temperature.</p></div><div class="d-row"><h3>ErP class, SCOP, SEER</h3><p>As documents, not as marketing copy — the agent emails the PDF the incentive scheme asks for.</p></div><div class="d-row"><h3>Installer coverage</h3><p>Which certified installers serve which postcodes, and their current booking horizon.</p></div><div class="d-row"><h3>ERP available-to-promise</h3><p>Stock plus inbound purchase orders, so lead times spoken on the phone are the ones the ERP will honour.</p></div></div>
+</div></div></section>
+
+<section class="pilot"><div class="shell"><div class="grid">
+  <div>
+    <span class="hand">no invented numbers, ever</span>
+    <h2>A measured pilot, not a promise</h2>
+    <p>We start with your real call recordings and your real data. Four weeks, one workflow, a baseline measured before the agent goes live and again after. If the numbers don&rsquo;t move, you stop &mdash; no annual lock-in, and no case study written before the result exists.</p>
+  </div>
+  <div>
+    <div class="p-item"><span class="p-tick">&#10003;</span><p>We baseline your current call volume, answer rate and missed-call hours first.</p></div>
+    <div class="p-item"><span class="p-tick">&#10003;</span><p>One workflow live in week one, on your own number, with a human fallback.</p></div>
+    <div class="p-item"><span class="p-tick">&#10003;</span><p>You see the transcripts of every call the agent takes, including the ones it hands over.</p></div>
+    <div class="p-item"><span class="p-tick">&#10003;</span><p>Two named customers, no logo wall &mdash; we won&rsquo;t show you a client we don&rsquo;t have.</p></div>
+  </div>
+</div></div></section>
+
+<section class="faq-sec"><div class="shell">
+  <h2>Common questions</h2>
+  <div class="faq-item"><p class="faq-q">Can an AI voice agent really size a heat pump on the phone?</p><p class="faq-a">It reads your sizing table against the caller&rsquo;s floor area, ceiling height and climate zone, and it flags the cases that need a human — borderline emitter compatibility, three-phase supply, anything unmapped. It does not invent a kilowatt figure. Sizing that ends in an order should still be confirmed on the site visit, and the agent books that visit.</p></div><div class="faq-item"><p class="faq-q">Does it work in Italian and English on the same line?</p><p class="faq-a">Yes. The agent detects the caller&rsquo;s language on the first turn and stays in it for the whole call, including the email it sends afterwards. Sabato is built for European merchants, so multilingual is the default, not an add-on.</p></div><div class="faq-item"><p class="faq-q">What happens outside opening hours?</p><p class="faq-a">The agent answers, handles what it can from your systems — order status, availability, documents — and books a callback with the installer team for anything that needs a human. Evening and weekend calls are the ones HVAC merchants lose most often.</p></div><div class="faq-item"><p class="faq-q">How does this differ from a chatbot on the product page?</p><p class="faq-a">Sabato answers the phone. In high-consideration categories the buyer has already decided that typing is not enough — they want to describe their house to someone. A chat widget cannot take that call, and a voicemail box loses it.</p></div><div class="faq-item"><p class="faq-q">What does it need from our Shopify store to go live?</p><p class="faq-a">Read access to orders and products, your sizing and certification documents, and the installer coverage list. Most HVAC merchants have the first two and keep the third in a spreadsheet; that is fine, we map it.</p></div>
+</div></section>
+
+<section class="cta-band"><div class="shell">
+  <span class="hand">twenty minutes, no deck</span>
+  <h2>Hear the agent take an HVAC sizing call</h2>
+  <p>We&rsquo;ll run a live call against your own catalogue on the intro call — your sizing table, your postcodes, your questions.</p>
+  <a class="btn-pill" href="https://cal.com/sabatoai/intro" target="_blank" rel="noopener">Start Free Pilot</a>
+</div></section>
+
+<footer class="site-footer">
+    <div class="shell">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="/" aria-label="Sabato AI — Home">
+            <img class="footer-logo" src="/fuc/images/KY1UqOX7zKeKJdbxTotIopeeZIU-f2557e25.png" alt="Sabato AI logo" width="132" height="61">
+          </a>
+          <p class="tagline">The #1 managed Voice AI <br>for E-Commerce.</p>
+          <p class="backed">Backed by</p>
+          <img class="backed-img" src="/fuc/images/V9nq776DtkEODcun83ayNz0liCU-28058054.webp" alt="ElevenLabs Grants" width="191" height="16">
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/pricing">Pricing</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/contact">Contact us</a></li>
+            <li><a href="https://cal.com/sabatoai/intro" target="_blank" rel="noopener">Book a Demo</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Use Cases</h4>
+          <ul>
+            <li><a href="/#usecases">Pre-Sales Consultation</a></li>
+            <li><a href="/#usecases">Cart Abandonment Recovery</a></li>
+            <li><a href="/#usecases">Where Is My Order</a></li>
+            <li><a href="/#usecases">Qualify &amp; Collect for Quote</a></li>
+            <li><a href="/#usecases">Open a Complaint</a></li>
+            <li><a href="/#usecases">Checkout Summary via Text</a></li>
+            <li><a href="/#usecases">Managing Returns</a></li>
+            <li><a href="/#usecases">Post-Delivery Feedback</a></li>
+            <li><a href="/#usecases">Back-in-Stock Notification</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Industries</h4>
+          <ul>
+            <li><a href="/industries/home-improvement">Home Improvement</a></li>
+            <li><span>Automotive &amp; Parts</span></li>
+            <li><span>Electronics &amp; Tech</span></li>
+            <li><span>Furniture &amp; Home</span></li>
+            <li><span>Outdoor &amp; Garden</span></li>
+            <li><a href="/industries/fashion-apparel">Fashion &amp; Apparel</a></li>
+            <li><span>Health &amp; Wellness</span></li>
+            <li><span>Sports &amp; Fitness</span></li>
+            <li><span>Industrial &amp; B2B</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="copy">© 2026 Sabato LTD - 71-75, Shelton Street, Covent Garden, London (UK) - All rights reserved.</p>
+        <div class="legal">
+          <a href="/terms">Terms and Conditions</a>
+          <a href="/privacy-policy">Privacy and Cookies</a>
+          <a href="https://www.linkedin.com/company/sabato-ai" target="_blank" rel="noopener" aria-label="Sabato AI on LinkedIn">
+            <img src="/fuc/images/3vdzRTYV1XV6UUX6QKcsDIfU-e464e3f1.svg" alt="LinkedIn" width="20" height="20">
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+<script src="/js/enhance.js?v=6c21bc4c3d"></script>
+</body>
+</html>
