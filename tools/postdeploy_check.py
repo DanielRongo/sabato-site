@@ -71,8 +71,12 @@ with sync_playwright() as p:
             # header, footer or nav by design, so the shared checks below do not
             # apply. What matters is that it actually mounts: a blank #root is
             # exactly how a broken asset path or a Babel failure presents.
+            # It is UNLISTED: nothing on the site links to it and it carries
+            # noindex, so the check also guards that it stays that way.
             if path == "/roi-calculator":
                 checks = {
+                    "noindex_present": pg.evaluate(
+                        """!!document.querySelector('meta[name="robots"][content*="noindex"]')"""),
                     "app_mounted": pg.evaluate(
                         "!!document.querySelector('#root') && document.querySelector('#root').children.length > 0"),
                     "inputs_render": pg.evaluate("document.querySelectorAll('input').length >= 3"),
@@ -110,6 +114,9 @@ with sync_playwright() as p:
                 "no_dup_nav": pg.evaluate(NAV_COUNT_JS, "Prezzi" if it else "Pricing") == 1,
                 "logo_present": pg.evaluate(
                     "!!document.querySelector('img[src*=\"UTATYXc6\"], a[href=\"/\"] img, a[href=\"./\"] img')"),
+                # unlisted means unlisted: no page may link to the calculator
+                "roi_unlinked": pg.evaluate(
+                    """!document.querySelector('a[href*="roi-calculator"]')"""),
                 "no_local_4xx": not bad,
                 "no_console_err": not errs,
                 # GA4 must be present exactly once. Two loaders double-counts
@@ -156,10 +163,7 @@ print("\nclick-through checks:")
 with sync_playwright() as p:
     b = p.chromium.launch(executable_path="/opt/pw-browsers/chromium", args=["--no-sandbox"])
     ctx = b.new_context(viewport={"width": 1440, "height": 900})
-    for src, label, expect in [("/", "ROI Calculator", "/roi-calculator"),
-                               ("/blog", "ROI Calculator", "/roi-calculator"),
-                               ("/it", "ROI Calculator", "/roi-calculator"),
-                               ("/", "Managing Returns", "/use-cases/managing-returns"),
+    for src, label, expect in [("/", "Managing Returns", "/use-cases/managing-returns"),
                                ("/", "Industrial & B2B", "/industries/industrial-b2b"),
                                ("/pricing", "Industries", "/industries"),
                                ("/it", "Automotive e Ricambi", "/it/settori/ricambi-auto"),

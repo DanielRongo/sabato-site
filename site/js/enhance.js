@@ -87,12 +87,15 @@
      (Deliberately not in the top nav — the header stays as designed.)
      Each is a clone of the demo button, so it inherits the footer's styling
      whatever Framer decides that is this week. Order here is the order on the
-     page: ROI Calculator sits directly under Book a Demo because it is a
-     conversion asset, Blog below it. */
+     page.
+
+     /roi-calculator is deliberately NOT in this list. It is hosted but
+     unlisted — reachable only by someone given the URL directly. Adding it
+     here puts it in the footer of all 74 pages, which is the opposite of
+     unlisted. */
   var DEMO_LABEL = IT ? "Prenota una Demo" : "Book a Demo";
   var FOOTER_LINKS = [
-    { label: "ROI Calculator", href: "/roi-calculator", attr: "data-roi-link" },
-    { label: "Blog",           href: BLOG_HREF,         attr: "data-blog-link" }
+    { label: "Blog", href: BLOG_HREF, attr: "data-blog-link" }
   ];
 
   function injectFooterLinks() {
