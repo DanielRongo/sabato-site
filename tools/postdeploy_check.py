@@ -23,7 +23,7 @@ PAGES = ["/", "/it", "/pricing", "/about", "/contact", "/blog", "/it/blog",
          "/industries/furniture-home", "/industries/industrial-b2b",
          "/industries/outdoor-garden", "/industries/health-wellness",
          "/industries/sports-fitness",
-         "/privacy-policy"]
+         "/privacy-policy", "/roi-calculator"]
 
 NAV_COUNT_JS = """(label) => {
   let c = 0;
@@ -66,6 +66,38 @@ with sync_playwright() as p:
         try:
             pg.goto(BASE + path, wait_until="networkidle", timeout=45000)
             pg.wait_for_timeout(2500)
+
+            # The ROI calculator is a standalone React tool page — no site
+            # header, footer or nav by design, so the shared checks below do not
+            # apply. What matters is that it actually mounts: a blank #root is
+            # exactly how a broken asset path or a Babel failure presents.
+            if path == "/roi-calculator":
+                checks = {
+                    "app_mounted": pg.evaluate(
+                        "!!document.querySelector('#root') && document.querySelector('#root').children.length > 0"),
+                    "inputs_render": pg.evaluate("document.querySelectorAll('input').length >= 3"),
+                    "logo_loads": pg.evaluate("""(() => {
+                        const i = document.querySelector('img.brand-logo');
+                        return !!i && i.naturalWidth > 0; })()"""),
+                    "no_local_4xx": not bad,
+                    "no_console_err": not errs,
+                    "ga_tag_once": pg.evaluate("""(id) => {
+                      const loaders = document.querySelectorAll(
+                        'script[src*="googletagmanager.com/gtag/js?id=' + id + '"]').length;
+                      const cfg = (window.dataLayer || []).filter(
+                        a => Array.from(a || [])[0] === 'config').map(a => a[1]);
+                      return loaders === 1 && cfg.length === 1 && cfg[0] === id;
+                    }""", "G-BSK4KH9JJF"),
+                }
+                failed = {k: v for k, v in checks.items() if not v}
+                if failed:
+                    failures.append((path, failed, bad[:3], errs[:3]))
+                    print(f"FAIL {path}: {list(failed)} {bad[:2]} {errs[:2]}")
+                else:
+                    print(f"ok   {path}")
+                pg.close()
+                continue
+
             it = path == "/it" or path.startswith("/it/")
             blog = pg.evaluate(BLOG_PLACEMENT_JS, "/it/blog" if it else "/blog")
             checks = {
@@ -124,7 +156,10 @@ print("\nclick-through checks:")
 with sync_playwright() as p:
     b = p.chromium.launch(executable_path="/opt/pw-browsers/chromium", args=["--no-sandbox"])
     ctx = b.new_context(viewport={"width": 1440, "height": 900})
-    for src, label, expect in [("/", "Managing Returns", "/use-cases/managing-returns"),
+    for src, label, expect in [("/", "ROI Calculator", "/roi-calculator"),
+                               ("/blog", "ROI Calculator", "/roi-calculator"),
+                               ("/it", "ROI Calculator", "/roi-calculator"),
+                               ("/", "Managing Returns", "/use-cases/managing-returns"),
                                ("/", "Industrial & B2B", "/industries/industrial-b2b"),
                                ("/pricing", "Industries", "/industries"),
                                ("/it", "Automotive e Ricambi", "/it/settori/ricambi-auto"),
