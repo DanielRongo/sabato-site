@@ -263,14 +263,27 @@ must point back:
 
 ```bash
 python3 publish.py                                   # blog build
+python3 industries.py                                # industry pages + hubs
+python3 tools/inject_ga.py                           # ALWAYS last: re-stamps GA4
 python3 tools/rehash_edited_assets.py                # after ANY edit under site/fuc/
 python3 tools/postdeploy_check.py <base-url>         # after EVERY deploy
 ```
 
 `postdeploy_check.py` sweeps every page type for: duplicated nav items, missing
-logo, local 4xx, console errors, dropdown presence, footer link targets, and
-**real click-through navigation**. It exists because each of those was a live bug
-at some point.
+logo, local 4xx, console errors, dropdown presence, footer link targets, the GA4
+tag, and **real click-through navigation**. It exists because each of those was a
+live bug at some point.
+
+**Analytics.** Property **G-BSK4KH9JJF**, one tag per page, no tag manager.
+`inject_ga.py` runs last in the build because `publish.py` and `industries.py`
+regenerate pages from templates; the templates carry the tag, so in practice
+nothing is lost, but the injector is the thing that *proves* it — it exits
+non-zero if any page ends up with zero or two copies. Framer-exported pages
+shipped with Framer's placeholder `G-499419803`, malformed for GA4 (nine digits;
+GA4 wants ten alphanumerics after `G-`), so the homepage reported to nothing.
+The injector rewrites that ID in place rather than adding a second tag — a
+second tag double-counts every pageview, which is worse than no tag because it
+looks like it works.
 
 ---
 

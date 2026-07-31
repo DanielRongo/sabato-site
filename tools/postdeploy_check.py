@@ -80,6 +80,15 @@ with sync_playwright() as p:
                     "!!document.querySelector('img[src*=\"UTATYXc6\"], a[href=\"/\"] img, a[href=\"./\"] img')"),
                 "no_local_4xx": not bad,
                 "no_console_err": not errs,
+                # GA4 must be present exactly once. Two loaders double-counts
+                # every pageview; zero silently reports nothing at all.
+                "ga_tag_once": pg.evaluate("""(id) => {
+                  const loaders = document.querySelectorAll(
+                    'script[src*="googletagmanager.com/gtag/js?id=' + id + '"]').length;
+                  const cfg = (window.dataLayer || []).filter(
+                    a => Array.from(a || [])[0] === 'config').map(a => a[1]);
+                  return loaders === 1 && cfg.length === 1 && cfg[0] === id;
+                }""", "G-BSK4KH9JJF"),
             }
             if not it and path in ("/", "/pricing", "/about", "/contact"):
                 checks["dropdown_present"] = pg.evaluate("!!document.querySelector('[data-uc-dropdown]')")
