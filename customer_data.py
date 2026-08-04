@@ -36,33 +36,32 @@ CUSTOMERS = {
         "industry_href": "/industries/home-improvement",
         "chip": "Customer story",
         "title": "ClimaConvenienza — Voice AI Case Study | Sabato AI",
-        "description": ("How ClimaConvenienza answers French and German calls its team cannot take, "
-                        "and absorbed a heatwave demand peak without hiring — 872 cross-border calls "
-                        "handled end to end in the first month."),
-        "h1": "The calls nobody at ClimaConvenienza could answer.",
-        "sub": ("They sell climate equipment across Europe from an Italian team. The French and "
-                "German calls were arriving anyway — and there was nobody on the other end who could "
-                "take them. Then a heatwave doubled the volume of everything else."),
+        "description": ("How ClimaConvenienza scaled phone support across Italy, France and Germany "
+                        "without hiring — 49% of calls resolved with no operator, and a 1,074-call "
+                        "peak day absorbed eight days after go-live."),
+        "h1": "Growing across three markets faster than a phone team can be hired.",
+        "sub": ("ClimaConvenienza sells climate equipment into Italy, France and Germany. Demand "
+                "was climbing in all three — and then a heatwave pushed it to a record eight days "
+                "after go-live. The phone line scaled with the business instead of capping it."),
 
         "situation_eyebrow": "The situation",
-        "situation_h2": "European demand, an Italian-speaking phone line",
+        "situation_h2": "Expansion moves faster than hiring does",
         "situation_body": [
-            "ClimaConvenienza sells heat pumps, boilers and air conditioning on Shopify, and sells "
-            "them well beyond Italy. Demand does not respect the language your support team happens "
-            "to speak. French and German customers were calling about orders, sizing and delivery, "
-            "and reaching a team that could not help them — not for lack of willingness, but because "
-            "hiring a French speaker and a German speaker to cover 6% of call volume is not a "
-            "decision any operator can justify.",
+            "ClimaConvenienza sells heat pumps, boilers and air conditioning on Shopify, and the "
+            "business has been growing well beyond Italy. New markets generate phone calls long "
+            "before they generate the volume that justifies a native-speaking hire — a French line "
+            "and a German line are a full salary each on the day they open, and a fraction of the "
+            "traffic. Growth arrives first; the business case for headcount arrives later.",
             "Then the weather intervened. Climate equipment has one demand curve and it is the "
             "temperature. The agent went live on 22 June 2026 and eight days later took 1,074 calls "
-            "in a single day — the busiest day on record, in its second week of operation, with no "
-            "additional headcount behind it.",
+            "in a single day — the busiest day on record, in its second week of operation, absorbed "
+            "without a single additional hire.",
         ],
         "situation_points": [
-            ("The cross-border calls had no owner",
-             "French and German customers were reaching a line nobody could answer in their language. "
-             "Every one of those calls was a customer already far enough down the funnel to pick up "
-             "the phone."),
+            ("New markets ring before they pay for themselves",
+             "France and Germany were producing calls from customers already far enough down the "
+             "funnel to pick up the phone — well before the volume in either market justified "
+             "dedicated headcount."),
             ("Demand is set by the weather, not the plan",
              "A heatwave does not give notice. The volume that matters most arrives in the days you "
              "could not have staffed for, and it arrives from people ready to buy today."),
@@ -81,9 +80,10 @@ CUSTOMERS = {
              "The biggest queue by far. Order status read live from Shopify and confirmed back to "
              "the caller, with the detail sent as a text so nothing rests on the customer "
              "remembering it."),
-            ("Escalation to the team",
-             "Anything outside the agent's rules — a disputed order, an unusual installation, a case "
-             "that needs judgement — goes to a person with the full call context attached."),
+            ("Configuratore",
+             "The configurator queue, on the phone. The agent takes a caller through sizing and "
+             "compatibility to a specific unit for their space and system — the highest-autonomy "
+             "queue on the line at 57.8%, and 1,035 calls since go-live."),
         ],
         "stack_note": ("Connected to Shopify, so the agent reads the same catalogue, pricing and order "
                        "data the storefront does. Live from 22 June 2026."),
@@ -102,22 +102,21 @@ CUSTOMERS = {
             ("agent", "Le transporteur laisse un avis et repasse le lendemain. Si vous préférez une "
                       "date précise, je note la demande et l'équipe vous confirme le créneau."),
         ],
-        "call_note": ("Order details here are illustrative, and the call above is in French for a "
-                      "reason: before go-live, this call had no answer. On a live call the agent "
-                      "reads ClimaConvenienza's real catalogue and order data."),
+        "call_note": ("Order details here are illustrative. The call above is in French because France "
+                      "is one of the markets growing fastest — on a live call the agent reads "
+                      "ClimaConvenienza's real catalogue and order data."),
 
         "results_eyebrow": "Results · 22 June – 23 July 2026",
         "results_h2": "The first month",
         "results": [
-            ("872", "French and German calls answered",
-             "Every one handled end to end, in the caller's language. Before go-live the team could "
-             "not take these calls at all."),
+            ("49%", "Of calls resolved with no operator",
+             "7,334 of the 14,936 calls handled since go-live, across every queue and language."),
             ("1,074", "Calls on the busiest day",
-             "Eight days after go-live, during a heatwave. No additional headcount was added at any "
-             "point."),
-            ("7,334", "Calls resolved without an operator",
-             "Out of 14,936 handled since go-live — roughly one in two, across every queue and "
-             "language."),
+             "Eight days after go-live, during a heatwave. Absorbed without a single additional "
+             "hire."),
+            ("872", "French and German calls handled",
+             "Cross-border demand answered end to end in the caller's language, from an Italian "
+             "base."),
         ],
         "results_foot": ("Measured from go-live on 22 June 2026 to 23 July 2026. June covers nine "
                          "live days, July twenty-three, so the two months are not compared "

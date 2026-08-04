@@ -415,9 +415,9 @@
 
   var BAND_ITEMS = [
     { slug: "clima-convenienza", name: "ClimaConvenienza", initials: "CC",
-      metric: "872", ph: false,
-      label: IT ? "chiamate in francese e tedesco gestite dall'inizio alla fine — lingue che il team non parla"
-                : "French and German calls handled end to end \u2014 in languages the team does not speak",
+      metric: "49%", ph: false,
+      label: IT ? "delle chiamate risolte senza operatore, su tre mercati e tre lingue"
+                : "of calls resolved with no operator, across three markets and three languages",
       person: "Alessio Perrucci", role: "CEO" },
     { slug: "creative-cables", name: "Creative Cables", initials: "CC",
       metric: "00%", ph: true,
