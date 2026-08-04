@@ -71,21 +71,15 @@ GLYPH = ('<svg viewBox="0 0 16 12" aria-hidden="true"><g fill="currentColor">'
 SPK = {"caller": "CALLER", "agent": "AGENT"}
 
 
-def hero_visual(d):
-    """Monogram + name card. Swapped for the real logo when we have the asset."""
+def hero_mark(d):
+    """The customer's logo above the headline, monogram if we have no asset."""
     if d["logo"]:
         mark = '<img class="cust-logo" src="%s" alt="%s" width="640" height="97">' % (
             d["logo"], html.escape(d["name"]))
     else:
         mark = ('<span class="cust-logo-fallback"><span class="mono">%s</span>%s</span>'
                 % (html.escape(d["initials"]), html.escape(d["name"])))
-    rows = "".join(
-        '<div class="t-row %s"><span class="t-spk">%s%s</span><p>%s</p></div>'
-        % (who, SPK[who], GLYPH, ph(txt)) for who, txt in d["calls"][0]["lines"][:3])
-    return ('<div class="call-panel" style="max-width:none">'
-            '<div class="panel-head"><span class="ph-left"><span class="dot"></span>'
-            'Live call — Sabato Agent</span><span class="ph-time">· 01:12</span></div>'
-            '%s</div>' % rows), mark
+    return mark
 
 
 TICK = ('<svg viewBox="0 0 24 24" fill="none" stroke="rgb(204,255,0)" stroke-width="3.2" '
@@ -255,7 +249,7 @@ def jsonld(slug, d):
 
 def build(slug, d):
     tpl = open(TPL, encoding="utf-8").read()
-    visual, mark = hero_visual(d)
+    mark = hero_mark(d)
     sections = "".join([
         section_situation(d), section_stack(d), section_call(d),
         section_results(d), section_quote(d), section_cta(d),
@@ -269,7 +263,6 @@ def build(slug, d):
             .replace("{{MARK}}", mark)
             .replace("{{H1}}", ph(d["h1"]))
             .replace("{{SUB}}", ph(d["sub"]))
-            .replace("{{HERO_VISUAL}}", visual)
             .replace("{{SECTIONS}}", sections))
     os.makedirs(OUT, exist_ok=True)
     p = os.path.join(OUT, slug + ".html")
