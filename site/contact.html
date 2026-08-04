@@ -195,6 +195,19 @@
 	
 	<!-- Global site tag (gtag.js) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-BSK4KH9JJF"></script>
+<style id="cta-footer-clearance">
+/* Fix: the floating CTA card is absolutely positioned over the top of the
+   footer. Below 1200px it grew taller than the footer's top padding and
+   covered the footer logo. Lift it so it clears the logo by ~48px.
+   Desktop (>=1200px) was already correct and is left untouched. */
+@media (max-width: 1199px) and (min-width: 768px) {
+  /* this one is anchored by `bottom`, so lift it with margin-bottom */
+  .framer-j319ok { margin-bottom: 250px !important; }
+}
+@media (max-width: 767px) {
+  .framer-12czy36 { margin-top: -241px !important; }
+}
+</style>
 </head>
 <body>
 	<script async src="https://events.framer.com/script?v=2" data-fid="f8df6c4a54ed52360813a6139ba37c80b93d4b19af09d316cfe54abf5666c06d" data-no-nt></script>
