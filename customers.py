@@ -119,6 +119,27 @@ def coverage_block(d):
             % (html.escape(c["title"]), head, rows, ph(c["note"])))
 
 
+def kb_block(d):
+    """What the agent knows, as chips. Shown where a coverage matrix would be a
+    2x1 stub."""
+    k = d["kb"]
+    chips = "".join("<span>%s</span>" % html.escape(t) for t in k["topics"])
+    return ('<div class="kb"><p class="kb-h">%s</p><p class="kb-n">%s</p>'
+            '<div class="kb-list">%s</div><p class="kb-note">%s</p></div>'
+            % (html.escape(k["title"]), html.escape(k["number"]), chips, ph(k["note"])))
+
+
+def section_forward(d):
+    if not d.get("forward_h2"):
+        return ""
+    return """
+    <section class="fwd">
+      <p class="eyebrow">%s</p>
+      <h2>%s</h2>
+      <p>%s</p>
+    </section>""" % (ph(d["forward_eyebrow"]), ph(d["forward_h2"]), ph(d["forward_body"]))
+
+
 def section_situation(d):
     # The body colour on this band is scoped to `.queue-grid .qcopy .qbody` in
     # the use-case stylesheet. Reusing `.queue-band` without reproducing that
@@ -134,6 +155,9 @@ def section_situation(d):
     if d.get("coverage"):
         cls = "queue-grid with-shot"
         shot = coverage_block(d)
+    elif d.get("kb"):
+        cls = "queue-grid with-shot"
+        shot = kb_block(d)
     elif d.get("storefront"):
         cls = "queue-grid with-shot"
         shot = ("""<div class="browser"><div class="bar"><i></i><i></i><i></i>"""
@@ -271,7 +295,7 @@ def build(lang, slug, d):
     mark = hero_mark(d)
     sections = "".join([
         section_situation(d), section_stack(d), section_call(d),
-        section_results(d), section_quote(d), section_cta(d),
+        section_results(d), section_quote(d), section_forward(d), section_cta(d),
     ])
 
     # An approved story drops the draft ribbon. Everything else on the page is

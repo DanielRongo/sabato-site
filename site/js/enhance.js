@@ -421,8 +421,9 @@
                 : "of calls handled autonomously - 9 agents live across 3 languages",
       person: "Alessio Perrucci", role: "CEO" },
     { slug: "creative-cables", name: "Creative Cables", initials: "CC",
-      metric: "00%", ph: true,
-      label: IT ? "[metrica da approvare]" : "[metric to be approved]",
+      metric: "39%", ph: false,
+      label: IT ? "delle chiamate risolte dall'inizio alla fine nel primo mese"
+                : "of calls resolved end to end in the first month",
       person: "Marco Logreco", role: "Head of E-Commerce" }
   ];
 

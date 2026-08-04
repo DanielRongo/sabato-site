@@ -166,11 +166,21 @@ CUSTOMERS = {
     "creative-cables": {
         "name": "Creative Cables",
         "initials": "CC",
-        "logo": None,
+        "logo": "/customers/assets/creative-cables-logo.png",
         "person": "Marco Logreco",
         "person_initials": "ML",
         "role": "Head of E-Commerce",
-        "photo": None,
+        "photo": "/customers/assets/marco-logreco.jpg",
+        "coverage": None,
+        "kb": {
+            "title": "What Elena knows",
+            "number": "~50,000 words",
+            "topics": ["Shipping", "Returns & warranty", "Warranty by country", "Customs",
+                       "Payments", "Store services", "Certifications", "The Configurator",
+                       "Product education"],
+            "note": "One knowledge base behind both agents, so the answer to a returns question "
+                    "is the same at 9am on Monday as it is at 7pm on Friday.",
+        },
         "storefront": None,
         "storefront_url": "",
         "platform": "",
@@ -179,87 +189,122 @@ CUSTOMERS = {
         "industry_href": "/industries/furniture-home",
         "chip": "Customer story",
         "title": "Creative Cables - Voice AI Case Study | Sabato AI",
-        "description": ("How Creative Cables handles configuration and order questions across "
-                        "multiple countries with a Sabato voice agent."),
-        "h1": "[[Headline outcome for Creative Cables - to be set once the metric is approved.]]",
-        "sub": ("Configurable lighting and cabling, sold across several countries and several "
-                "languages. A catalogue you assemble rather than pick off a shelf - which means the "
-                "phone rings with questions no filter can answer."),
+        "description": ("How Creative Cables put voice AI on its Italian customer line - 39% of "
+                        "calls resolved end to end in the first month, and 57% of order-status "
+                        "calls fully automated."),
+        "h1": "Elena answers the calls that repeat, in [nb]55 seconds.[/nb]",
+        "sub": ("Creative Cables sells decorative lighting, textile cables and lighting components "
+                "from Turin - seven stores in Italy, one in Paris, shipping worldwide. Most of what "
+                "the phone asks has a known answer. Now the known answers arrive instantly, and the "
+                "team gets the rest."),
 
         "situation_eyebrow": "The situation",
-        "situation_h2": "A configurable catalogue multiplies the questions",
+        "situation_h2": "Most inbound calls have a known answer",
         "situation_body": [
-            "When a product is assembled from components - a cable, a fitting, a shade, a length - the "
-            "number of things a customer can be unsure about grows faster than the catalogue does. "
-            "Compatibility between parts, what is included, whether a finish matches across two "
-            "different items: these are the questions that stop a basket at the last step.",
-            "Selling across borders multiplies it again. The same question arrives in several "
-            "languages, at hours that do not overlap with one team's working day.",
+            "Shipping windows. Return periods. Warranty terms, which differ by country. Customs. "
+            "Payment methods. Store opening hours. How the Configurator works. None of these are "
+            "hard questions - they are the same questions, arriving all day, each one occupying a "
+            "person who could be handling something that genuinely needs judgement.",
+            "Underneath them sits the most repetitive request of all: where is my order. It was "
+            "entirely human-handled, and it is the single most predictable call a retailer takes. "
+            "The answer already exists in the order system; it just needed someone, or something, "
+            "to read it out.",
         ],
         "situation_points": [
-            ("Configuration questions block checkout",
-             "The customer is not browsing. They have chosen, and they need one thing confirmed before "
-             "they pay - which makes the answer worth more than the call costs."),
-            ("Several languages, one team",
-             "Cross-border demand does not queue politely inside one country's office hours."),
-            ("The catalogue changes constantly",
-             "Components, finishes and stock move. An answer that was right last month is a returned "
-             "order this month."),
+            ("The same questions, all day",
+             "Shipping, returns, warranty and payments repeat endlessly. The cost is not difficulty, "
+             "it is volume against a finite team."),
+            ("Where is my order was fully manual",
+             "The most repetitive inbound reason on the line, answered by a person every single "
+             "time, from data a machine can read directly."),
+            ("Consistency is the real requirement",
+             "Return windows, customs rules and warranty terms vary by country. They have to be "
+             "right, and identical, on every call - not approximately right depending on who "
+             "answered."),
         ],
 
         "stack_h2": "What went live",
         "stack": [
-            ("configurator", "Pre-sales consultation",
-             "Component and compatibility questions answered against the live catalogue, in the "
-             "caller's language."),
-            ("wismo", "Checkout summary via text",
-             "What was discussed - items, specs, a direct link - sent as a message after the call, so "
-             "the customer can complete the order without reconstructing it from memory."),
-            ("languages", "Escalation to the team",
-             "Bespoke configurations and anything commercially unusual routed to a person with the "
-             "full context."),
+            ("languages", "Elena, on the general line",
+             "An Italian-native agent handling company, shipping, returns, warranty, payments and "
+             "store questions from a single knowledge base - so the answer does not depend on who "
+             "picked up."),
+            ("wismo", "Where is my order, with live data",
+             "A dedicated order-status agent with a real-time lookup into the order system. The "
+             "caller gets the actual status of their actual order, with no human in the loop."),
+            ("configurator", "Triage that protects the team",
+             "Damaged items, address changes and cancellations are recognised as genuine post-sale "
+             "cases and routed to a person with the context already gathered."),
         ],
-        "stack_note": "[[Platform, languages live, and go-live date to be confirmed.]]",
+        "stack_note": "Two agents, live from 10 July 2026.",
 
         "call_h2": "What a Creative Cables call sounds like",
-        "call_caption": "Example call",
         "calls": [
-            {"label": "Product Configurator", "icon": "configurator",
-             "caption": "Example call · configuration",
-             "duration": "01:05",
+            {"label": "WISMO", "icon": "wismo",
+             "caption": "Order status, read live from the order system",
+             "duration": "00:48",
              "lines": [
-            ("caller", "I've got a fabric cable in the basket and a brass fitting - will the two "
-                       "actually go together?"),
-            ("agent", "They will, as long as the cable is the 2-core and not the 3-core - the brass "
-                      "fitting takes the 2-core. Can you tell me the colour code in your basket?"),
-            ("caller", "It says RM09."),
-            ("agent", "That's the 2-core, so you're fine. One thing worth knowing: that fitting doesn't "
-                      "include the ceiling rose, which people often assume. Do you want me to add it "
-                      "and text you the updated basket?"),
-            ("caller", "Yes - and does it come in the same brass finish?"),
-            ("agent", "It does. I'm sending you the link now with both in the matching finish."),
-            ]},
+                 ("caller", "Hi, I ordered a pendant lamp and some cable last week and I'd like to "
+                            "know where it is."),
+                 ("agent", "Of course. I'm Elena from Creative Cables. Can I take the order number, "
+                           "or the email address you ordered with?"),
+                 ("caller", "The email is easier."),
+                 ("agent", "Thank you. I can see the order - it left us on Tuesday and the courier "
+                           "has it out for delivery today. I'm sending you the tracking link by "
+                           "text now."),
+                 ("caller", "Perfect. And the cable was on the same order?"),
+                 ("agent", "It was, both items are in the same parcel."),
+             ]},
+            {"label": "General information", "icon": "languages",
+             "caption": "A returns question, answered the same way every time",
+             "duration": "01:02",
+             "lines": [
+                 ("caller", "If I order a lamp and it isn't right for the room, how long do I have "
+                            "to send it back?"),
+                 ("agent", "You have thirty days from delivery to request a return, and the item "
+                           "needs to be unused and in its original packaging."),
+                 ("caller", "I'm ordering from outside Italy - does that change anything?"),
+                 ("agent", "The window is the same. What changes is the return shipping and any "
+                           "customs charges, which depend on your country. If you tell me where "
+                           "you're ordering from I'll give you the exact terms."),
+                 ("caller", "Switzerland."),
+                 ("agent", "Then customs applies on the way in and is refunded separately from the "
+                           "order value. I'll text you the full terms so you have them in writing."),
+             ]},
         ],
-        "call_note": ("Product details here are illustrative. On a live call the agent reads Creative "
-                      "Cables' real catalogue and stock."),
+        "call_note": ("Order and policy details here are illustrative. On a live call Elena reads "
+                      "the real order system and the real policy base."),
 
-        "results_eyebrow": "Results",
-        "results_h2": "What changed",
+        "results_eyebrow": "Results · first month, from 10 July 2026",
+        "results_h2": "The first month",
         "results": [
-            ("[[00%]]", "[[Headline metric]]",
-             "[[The one number Creative Cables has approved for publication, and what it measures.]]"),
-            ("[[+00%]]", "[[Metric two]]", "[[Second approved figure.]]"),
-            ("[[+00%]]", "[[Metric three]]", "[[Third approved figure.]]"),
+            ("39%", "Calls resolved end to end",
+             "Closed by the agent with no human involved, blended across both lines, in the first "
+             "four weeks live."),
+            ("57%", "Of order-status calls automated",
+             "The highest-volume, most repetitive query on the line, answered from live order data."),
+            ("55s", "Average handle time",
+             "The time it takes the agent to answer and close a call."),
         ],
-        "results_foot": ("[[Measurement window and method to be confirmed with Creative Cables before "
-                         "publication.]]"),
+        "results_foot": "Measured from go-live on 10 July 2026 to the end of the first four weeks.",
 
-        "quote": "[[Approved quote from Marco Logreco to be supplied - one or two sentences, in his "
-                 "words, on what changed for the business.]]",
+        "quote": ("Elena handles our most repetitive calls - order status, shipping, returns - "
+                  "on-brand and instantly. Our team now focuses on the cases that actually need a "
+                  "person."),
+        "quote_pending": True,
+
+        "forward_eyebrow": "What happens next",
+        "forward_h2": "The resolution rate is still climbing",
+        "forward_body": ("Four weeks is early, and the number is designed to move. Reviewing the "
+                         "calls that were transferred surfaced specific, fixable gaps - store "
+                         "hours, reseller lookup, a correction to payment information - each of "
+                         "which goes back into the knowledge base. Weekly volume roughly quadrupled "
+                         "through July as routing ramped up, and the line absorbed it with no added "
+                         "headcount."),
 
         "cta_h2": "Want the same for your e-commerce store?",
-        "cta_sub": ("A pilot runs on your real calls for two weeks and measures what changed against "
-                    "your own baseline."),
+        "cta_sub": ("A pilot runs on your real calls and measures what changed against your own "
+                    "baseline. No slideware."),
     },
 }
 

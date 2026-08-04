@@ -24,7 +24,8 @@ PAGES = ["/", "/it", "/pricing", "/about", "/contact", "/blog", "/it/blog",
          "/industries/outdoor-garden", "/industries/health-wellness",
          "/industries/sports-fitness",
          "/privacy-policy", "/roi-calculator",
-         "/customers/clima-convenienza", "/it/clienti/clima-convenienza"]
+         "/customers/clima-convenienza", "/it/clienti/clima-convenienza",
+         "/customers/creative-cables"]
 
 NAV_COUNT_JS = """(label) => {
   let c = 0;
@@ -59,9 +60,17 @@ with sync_playwright() as p:
     ctx = b.new_context(viewport={"width": 1440, "height": 900})
     for path in PAGES:
         pg = ctx.new_page()
-        errs, bad = [], []
+        errs, bad, ext = [], [], []
+        # "Failed to load resource" carries no URL in its text, so it cannot be
+        # attributed on its own. Collect those separately: if no local response
+        # 4xx'd, the failure was third-party (a font CDN, an analytics beacon)
+        # and is environmental, not a site defect. Re-running until green would
+        # have hidden a real local 404 the same way.
         pg.on("console", lambda m: errs.append(m.text[:100]) if m.type == "error"
-              and "ERR_" not in m.text and "framer.com/edit" not in m.text else None)
+              and "ERR_" not in m.text and "framer.com/edit" not in m.text
+              and "Failed to load resource" not in m.text else None)
+        pg.on("console", lambda m: ext.append(m.text[:100]) if m.type == "error"
+              and "Failed to load resource" in m.text else None)
         pg.on("response", lambda r: bad.append(f"{r.status} {r.url[-60:]}")
               if r.status >= 400 and BASE.split("//")[1].split("/")[0] in r.url else None)
         try:

@@ -4,13 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Creative Cables - Voice AI Case Study | Sabato AI</title>
-  <meta name="description" content="How Creative Cables handles configuration and order questions across multiple countries with a Sabato voice agent.">
+  <meta name="description" content="How Creative Cables put voice AI on its Italian customer line - 39% of calls resolved end to end in the first month, and 57% of order-status calls fully automated.">
   <meta name="robots" content="noindex, nofollow">
   <link rel="canonical" href="https://www.sabato.ai/customers/creative-cables">
 
   <meta property="og:type" content="website">
   <meta property="og:title" content="Creative Cables - Voice AI Case Study | Sabato AI">
-  <meta property="og:description" content="How Creative Cables handles configuration and order questions across multiple countries with a Sabato voice agent.">
+  <meta property="og:description" content="How Creative Cables put voice AI on its Italian customer line - 39% of calls resolved end to end in the first month, and 57% of order-status calls fully automated.">
   <meta property="og:url" content="https://www.sabato.ai/customers/creative-cables">
   <meta property="og:image" content="https://www.sabato.ai/fuc/assets/8Q4ofjOgRTqsr8FpanTJF9nzLwU.png">
   <meta property="og:locale" content="en_US">
@@ -262,6 +262,35 @@
       .cov-cell { height: 34px; }
     }
 
+
+    /* Knowledge-base panel. Used where a coverage matrix would be thin - two
+       agents in one language is a 2x1 grid, which reads as a stub. This shows
+       what the agent actually knows, which is the point that section argues. */
+    .kb { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.14);
+          border-radius: 20px; padding: 34px 32px; height: 100%;
+          display: flex; flex-direction: column; justify-content: center; }
+    .kb-h { font-size: 12px; font-weight: 800; letter-spacing: .13em; text-transform: uppercase;
+            color: var(--lime); margin: 0 0 8px; }
+    .kb-n { font-size: 40px; font-weight: 900; letter-spacing: -1.4px; color: #fff; margin: 0 0 22px; }
+    .kb-list { display: flex; flex-wrap: wrap; gap: 8px; }
+    .kb-list span { font-size: 13.5px; font-weight: 600; color: rgba(255,255,255,.86);
+                    background: rgba(204,255,0,.13); border: 1px solid rgba(204,255,0,.32);
+                    border-radius: 999px; padding: 7px 14px; }
+    .kb-note { font-size: 13.5px; line-height: 1.6; color: rgba(255,255,255,.6); margin: 22px 0 0; }
+    @media (max-width: 809px) { .kb { padding: 26px 20px; } .kb-n { font-size: 32px; } }
+
+    /* Forward look - the closing "this is still climbing" band */
+    .fwd { max-width: 1200px; width: calc(100% - 80px); margin: 96px auto 0;
+           border: 1px solid var(--line); border-radius: var(--radius); padding: 56px 48px; }
+    .fwd .eyebrow { font-size: 12px; font-weight: 800; letter-spacing: .13em;
+                    text-transform: uppercase; color: var(--gray); margin: 0 0 12px; }
+    .fwd h2 { font-size: 30px; font-weight: 700; letter-spacing: -.8px; margin: 0 0 14px; }
+    .fwd p { font-size: 17px; line-height: 1.75; color: var(--gray); max-width: 820px; margin: 0; }
+    @media (max-width: 809px) {
+      .fwd { width: calc(100% - 32px); margin-top: 72px; padding: 40px 24px; }
+      .fwd h2 { font-size: 25px; }
+    }
+
     /* icon per tile */
     .stack-card .ic-chip { display: grid; place-items: center; width: 52px; height: 52px;
                           border-radius: 14px; background: var(--ink); margin-bottom: 20px; }
@@ -281,7 +310,11 @@
     .call-band .call-sub:first-of-type { margin-top: 44px; }
 
     /* customer logo in the hero */
-    .cust-logo { height: 30px; width: auto; margin-bottom: 18px; }
+    /* Constrain on both axes: ClimaConvenienza's mark is 6.6:1 and Creative
+       Cables' is 3.1:1, so a height-only rule lands them at very different
+       visual weights. */
+    .cust-logo { height: auto; width: auto; max-height: 42px; max-width: 200px;
+                 margin-bottom: 18px; }
 
     @media (max-width: 809px) {
       .pq { grid-template-columns: 1fr; gap: 26px; text-align: center; justify-items: center; }
@@ -419,9 +452,9 @@
     <section class="split-hero centered">
       <div class="hero-copy">
         <span class="tag">Customer story</span>
-        <span class="cust-logo-fallback"><span class="mono">CC</span>Creative Cables</span>
-        <h1><span class="ph">Headline outcome for Creative Cables - to be set once the metric is approved.</span></h1>
-        <p class="sub">Configurable lighting and cabling, sold across several countries and several languages. A catalogue you assemble rather than pick off a shelf - which means the phone rings with questions no filter can answer.</p>
+        <img class="cust-logo" src="/customers/assets/creative-cables-logo.png" alt="Creative Cables" width="640" height="97">
+        <h1>Elena answers the calls that repeat, in <span class="nb">55 seconds.</span></h1>
+        <p class="sub">Creative Cables sells decorative lighting, textile cables and lighting components from Turin - seven stores in Italy, one in Paris, shipping worldwide. Most of what the phone asks has a known answer. Now the known answers arrive instantly, and the team gets the rest.</p>
         <div class="hero-cta">
           <a class="btn-pill" href="https://cal.com/sabatoai/intro" target="_blank" rel="noopener">Start Free Pilot</a>
         </div>
@@ -430,50 +463,62 @@
 
 
     <section class="queue-band">
-      <div class="queue-grid">
+      <div class="queue-grid with-shot">
         <div class="qcopy">
           <p class="eyebrow">The situation</p>
-          <h2>A configurable catalogue multiplies the questions</h2>
-          <p class="qbody">When a product is assembled from components - a cable, a fitting, a shade, a length - the number of things a customer can be unsure about grows faster than the catalogue does. Compatibility between parts, what is included, whether a finish matches across two different items: these are the questions that stop a basket at the last step.</p><p class="qbody">Selling across borders multiplies it again. The same question arrives in several languages, at hours that do not overlap with one team&#x27;s working day.</p>
+          <h2>Most inbound calls have a known answer</h2>
+          <p class="qbody">Shipping windows. Return periods. Warranty terms, which differ by country. Customs. Payment methods. Store opening hours. How the Configurator works. None of these are hard questions - they are the same questions, arriving all day, each one occupying a person who could be handling something that genuinely needs judgement.</p><p class="qbody">Underneath them sits the most repetitive request of all: where is my order. It was entirely human-handled, and it is the single most predictable call a retailer takes. The answer already exists in the order system; it just needed someone, or something, to read it out.</p>
         </div>
-        
+        <div class="kb"><p class="kb-h">What Elena knows</p><p class="kb-n">~50,000 words</p><div class="kb-list"><span>Shipping</span><span>Returns &amp; warranty</span><span>Warranty by country</span><span>Customs</span><span>Payments</span><span>Store services</span><span>Certifications</span><span>The Configurator</span><span>Product education</span></div><p class="kb-note">One knowledge base behind both agents, so the answer to a returns question is the same at 9am on Monday as it is at 7pm on Friday.</p></div>
       </div>
     </section>
-    <section class="stack"><div class="stack-grid"><div class="stack-card"><h3>Configuration questions block checkout</h3><p>The customer is not browsing. They have chosen, and they need one thing confirmed before they pay - which makes the answer worth more than the call costs.</p></div><div class="stack-card"><h3>Several languages, one team</h3><p>Cross-border demand does not queue politely inside one country&#x27;s office hours.</p></div><div class="stack-card"><h3>The catalogue changes constantly</h3><p>Components, finishes and stock move. An answer that was right last month is a returned order this month.</p></div></div></section>
+    <section class="stack"><div class="stack-grid"><div class="stack-card"><h3>The same questions, all day</h3><p>Shipping, returns, warranty and payments repeat endlessly. The cost is not difficulty, it is volume against a finite team.</p></div><div class="stack-card"><h3>Where is my order was fully manual</h3><p>The most repetitive inbound reason on the line, answered by a person every single time, from data a machine can read directly.</p></div><div class="stack-card"><h3>Consistency is the real requirement</h3><p>Return windows, customs rules and warranty terms vary by country. They have to be right, and identical, on every call - not approximately right depending on who answered.</p></div></div></section>
     <section class="stack">
       <h2>What went live</h2>
-      <div class="stack-grid"><div class="stack-card"><span class="ic-chip"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="rgb(204,255,0)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/><circle cx="9" cy="7" r="2.2"/><circle cx="15" cy="12" r="2.2"/><circle cx="8" cy="17" r="2.2"/></svg></span><h3>Pre-sales consultation</h3><p>Component and compatibility questions answered against the live catalogue, in the caller&#x27;s language.</p></div><div class="stack-card"><span class="ic-chip"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="rgb(204,255,0)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7.5 12 3l9 4.5v9L12 21l-9-4.5z"/><path d="M3 7.5 12 12l9-4.5"/><path d="M12 12v9"/></svg></span><h3>Checkout summary via text</h3><p>What was discussed - items, specs, a direct link - sent as a message after the call, so the customer can complete the order without reconstructing it from memory.</p></div><div class="stack-card"><span class="ic-chip"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="rgb(204,255,0)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7.5"/><path d="M3.5 11h15"/><path d="M11 3.5c2 2.4 3 5 3 7.5s-1 5.1-3 7.5"/><path d="M11 3.5c-2 2.4-3 5-3 7.5s1 5.1 3 7.5"/></svg></span><h3>Escalation to the team</h3><p>Bespoke configurations and anything commercially unusual routed to a person with the full context.</p></div></div>
-      <div class="stack-note-row"><p><span class="ph">Platform, languages live, and go-live date to be confirmed.</span></p></div>
+      <div class="stack-grid"><div class="stack-card"><span class="ic-chip"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="rgb(204,255,0)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7.5"/><path d="M3.5 11h15"/><path d="M11 3.5c2 2.4 3 5 3 7.5s-1 5.1-3 7.5"/><path d="M11 3.5c-2 2.4-3 5-3 7.5s1 5.1 3 7.5"/></svg></span><h3>Elena, on the general line</h3><p>An Italian-native agent handling company, shipping, returns, warranty, payments and store questions from a single knowledge base - so the answer does not depend on who picked up.</p></div><div class="stack-card"><span class="ic-chip"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="rgb(204,255,0)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7.5 12 3l9 4.5v9L12 21l-9-4.5z"/><path d="M3 7.5 12 12l9-4.5"/><path d="M12 12v9"/></svg></span><h3>Where is my order, with live data</h3><p>A dedicated order-status agent with a real-time lookup into the order system. The caller gets the actual status of their actual order, with no human in the loop.</p></div><div class="stack-card"><span class="ic-chip"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="rgb(204,255,0)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/><circle cx="9" cy="7" r="2.2"/><circle cx="15" cy="12" r="2.2"/><circle cx="8" cy="17" r="2.2"/></svg></span><h3>Triage that protects the team</h3><p>Damaged items, address changes and cancellations are recognised as genuine post-sale cases and routed to a person with the context already gathered.</p></div></div>
+      <div class="stack-note-row"><p>Two agents, live from 10 July 2026.</p></div>
     </section>
     <section class="call-band">
       <h2>What a Creative Cables call sounds like</h2>
       
-      <p class="call-sub"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="rgb(204,255,0)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/><circle cx="9" cy="7" r="2.2"/><circle cx="15" cy="12" r="2.2"/><circle cx="8" cy="17" r="2.2"/></svg><span>Product Configurator</span></p>
-      <p class="call-caption">Example call · configuration</p>
+      <p class="call-sub"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="rgb(204,255,0)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7.5 12 3l9 4.5v9L12 21l-9-4.5z"/><path d="M3 7.5 12 12l9-4.5"/><path d="M12 12v9"/></svg><span>WISMO</span></p>
+      <p class="call-caption">Order status, read live from the order system</p>
       <div class="call-panel">
         <div class="panel-head"><span class="ph-left"><span class="dot"></span>Live call - Sabato Agent</span>
-          <span class="ph-time">· 01:05</span></div>
-        <div class="t-row caller"><span class="t-spk">CALLER<svg viewBox="0 0 16 12" aria-hidden="true"><g fill="currentColor"><rect x="0" y="3.5" width="2.5" height="5" rx="1.25"/><rect x="4.5" y="1.5" width="2.5" height="9" rx="1.25"/><rect x="9" y="0" width="2.5" height="12" rx="1.25"/><rect x="13.5" y="3.5" width="2.5" height="5" rx="1.25"/></g></svg></span><p>I&#x27;ve got a fabric cable in the basket and a brass fitting - will the two actually go together?</p></div><div class="t-row agent"><span class="t-spk">AGENT<svg viewBox="0 0 16 12" aria-hidden="true"><g fill="currentColor"><rect x="0" y="3.5" width="2.5" height="5" rx="1.25"/><rect x="4.5" y="1.5" width="2.5" height="9" rx="1.25"/><rect x="9" y="0" width="2.5" height="12" rx="1.25"/><rect x="13.5" y="3.5" width="2.5" height="5" rx="1.25"/></g></svg></span><p>They will, as long as the cable is the 2-core and not the 3-core - the brass fitting takes the 2-core. Can you tell me the colour code in your basket?</p></div><div class="t-row caller"><span class="t-spk">CALLER<svg viewBox="0 0 16 12" aria-hidden="true"><g fill="currentColor"><rect x="0" y="3.5" width="2.5" height="5" rx="1.25"/><rect x="4.5" y="1.5" width="2.5" height="9" rx="1.25"/><rect x="9" y="0" width="2.5" height="12" rx="1.25"/><rect x="13.5" y="3.5" width="2.5" height="5" rx="1.25"/></g></svg></span><p>It says RM09.</p></div><div class="t-row agent"><span class="t-spk">AGENT<svg viewBox="0 0 16 12" aria-hidden="true"><g fill="currentColor"><rect x="0" y="3.5" width="2.5" height="5" rx="1.25"/><rect x="4.5" y="1.5" width="2.5" height="9" rx="1.25"/><rect x="9" y="0" width="2.5" height="12" rx="1.25"/><rect x="13.5" y="3.5" width="2.5" height="5" rx="1.25"/></g></svg></span><p>That&#x27;s the 2-core, so you&#x27;re fine. One thing worth knowing: that fitting doesn&#x27;t include the ceiling rose, which people often assume. Do you want me to add it and text you the updated basket?</p></div><div class="t-row caller"><span class="t-spk">CALLER<svg viewBox="0 0 16 12" aria-hidden="true"><g fill="currentColor"><rect x="0" y="3.5" width="2.5" height="5" rx="1.25"/><rect x="4.5" y="1.5" width="2.5" height="9" rx="1.25"/><rect x="9" y="0" width="2.5" height="12" rx="1.25"/><rect x="13.5" y="3.5" width="2.5" height="5" rx="1.25"/></g></svg></span><p>Yes - and does it come in the same brass finish?</p></div><div class="t-row agent"><span class="t-spk">AGENT<svg viewBox="0 0 16 12" aria-hidden="true"><g fill="currentColor"><rect x="0" y="3.5" width="2.5" height="5" rx="1.25"/><rect x="4.5" y="1.5" width="2.5" height="9" rx="1.25"/><rect x="9" y="0" width="2.5" height="12" rx="1.25"/><rect x="13.5" y="3.5" width="2.5" height="5" rx="1.25"/></g></svg></span><p>It does. I&#x27;m sending you the link now with both in the matching finish.</p></div>
+          <span class="ph-time">· 00:48</span></div>
+        <div class="t-row caller"><span class="t-spk">CALLER<svg viewBox="0 0 16 12" aria-hidden="true"><g fill="currentColor"><rect x="0" y="3.5" width="2.5" height="5" rx="1.25"/><rect x="4.5" y="1.5" width="2.5" height="9" rx="1.25"/><rect x="9" y="0" width="2.5" height="12" rx="1.25"/><rect x="13.5" y="3.5" width="2.5" height="5" rx="1.25"/></g></svg></span><p>Hi, I ordered a pendant lamp and some cable last week and I&#x27;d like to know where it is.</p></div><div class="t-row agent"><span class="t-spk">AGENT<svg viewBox="0 0 16 12" aria-hidden="true"><g fill="currentColor"><rect x="0" y="3.5" width="2.5" height="5" rx="1.25"/><rect x="4.5" y="1.5" width="2.5" height="9" rx="1.25"/><rect x="9" y="0" width="2.5" height="12" rx="1.25"/><rect x="13.5" y="3.5" width="2.5" height="5" rx="1.25"/></g></svg></span><p>Of course. I&#x27;m Elena from Creative Cables. Can I take the order number, or the email address you ordered with?</p></div><div class="t-row caller"><span class="t-spk">CALLER<svg viewBox="0 0 16 12" aria-hidden="true"><g fill="currentColor"><rect x="0" y="3.5" width="2.5" height="5" rx="1.25"/><rect x="4.5" y="1.5" width="2.5" height="9" rx="1.25"/><rect x="9" y="0" width="2.5" height="12" rx="1.25"/><rect x="13.5" y="3.5" width="2.5" height="5" rx="1.25"/></g></svg></span><p>The email is easier.</p></div><div class="t-row agent"><span class="t-spk">AGENT<svg viewBox="0 0 16 12" aria-hidden="true"><g fill="currentColor"><rect x="0" y="3.5" width="2.5" height="5" rx="1.25"/><rect x="4.5" y="1.5" width="2.5" height="9" rx="1.25"/><rect x="9" y="0" width="2.5" height="12" rx="1.25"/><rect x="13.5" y="3.5" width="2.5" height="5" rx="1.25"/></g></svg></span><p>Thank you. I can see the order - it left us on Tuesday and the courier has it out for delivery today. I&#x27;m sending you the tracking link by text now.</p></div><div class="t-row caller"><span class="t-spk">CALLER<svg viewBox="0 0 16 12" aria-hidden="true"><g fill="currentColor"><rect x="0" y="3.5" width="2.5" height="5" rx="1.25"/><rect x="4.5" y="1.5" width="2.5" height="9" rx="1.25"/><rect x="9" y="0" width="2.5" height="12" rx="1.25"/><rect x="13.5" y="3.5" width="2.5" height="5" rx="1.25"/></g></svg></span><p>Perfect. And the cable was on the same order?</p></div><div class="t-row agent"><span class="t-spk">AGENT<svg viewBox="0 0 16 12" aria-hidden="true"><g fill="currentColor"><rect x="0" y="3.5" width="2.5" height="5" rx="1.25"/><rect x="4.5" y="1.5" width="2.5" height="9" rx="1.25"/><rect x="9" y="0" width="2.5" height="12" rx="1.25"/><rect x="13.5" y="3.5" width="2.5" height="5" rx="1.25"/></g></svg></span><p>It was, both items are in the same parcel.</p></div>
       </div>
-      <p class="phone-note">Product details here are illustrative. On a live call the agent reads Creative Cables&#x27; real catalogue and stock.</p>
+      <p class="call-sub"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="rgb(204,255,0)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7.5"/><path d="M3.5 11h15"/><path d="M11 3.5c2 2.4 3 5 3 7.5s-1 5.1-3 7.5"/><path d="M11 3.5c-2 2.4-3 5-3 7.5s1 5.1 3 7.5"/></svg><span>General information</span></p>
+      <p class="call-caption">A returns question, answered the same way every time</p>
+      <div class="call-panel">
+        <div class="panel-head"><span class="ph-left"><span class="dot"></span>Live call - Sabato Agent</span>
+          <span class="ph-time">· 01:02</span></div>
+        <div class="t-row caller"><span class="t-spk">CALLER<svg viewBox="0 0 16 12" aria-hidden="true"><g fill="currentColor"><rect x="0" y="3.5" width="2.5" height="5" rx="1.25"/><rect x="4.5" y="1.5" width="2.5" height="9" rx="1.25"/><rect x="9" y="0" width="2.5" height="12" rx="1.25"/><rect x="13.5" y="3.5" width="2.5" height="5" rx="1.25"/></g></svg></span><p>If I order a lamp and it isn&#x27;t right for the room, how long do I have to send it back?</p></div><div class="t-row agent"><span class="t-spk">AGENT<svg viewBox="0 0 16 12" aria-hidden="true"><g fill="currentColor"><rect x="0" y="3.5" width="2.5" height="5" rx="1.25"/><rect x="4.5" y="1.5" width="2.5" height="9" rx="1.25"/><rect x="9" y="0" width="2.5" height="12" rx="1.25"/><rect x="13.5" y="3.5" width="2.5" height="5" rx="1.25"/></g></svg></span><p>You have thirty days from delivery to request a return, and the item needs to be unused and in its original packaging.</p></div><div class="t-row caller"><span class="t-spk">CALLER<svg viewBox="0 0 16 12" aria-hidden="true"><g fill="currentColor"><rect x="0" y="3.5" width="2.5" height="5" rx="1.25"/><rect x="4.5" y="1.5" width="2.5" height="9" rx="1.25"/><rect x="9" y="0" width="2.5" height="12" rx="1.25"/><rect x="13.5" y="3.5" width="2.5" height="5" rx="1.25"/></g></svg></span><p>I&#x27;m ordering from outside Italy - does that change anything?</p></div><div class="t-row agent"><span class="t-spk">AGENT<svg viewBox="0 0 16 12" aria-hidden="true"><g fill="currentColor"><rect x="0" y="3.5" width="2.5" height="5" rx="1.25"/><rect x="4.5" y="1.5" width="2.5" height="9" rx="1.25"/><rect x="9" y="0" width="2.5" height="12" rx="1.25"/><rect x="13.5" y="3.5" width="2.5" height="5" rx="1.25"/></g></svg></span><p>The window is the same. What changes is the return shipping and any customs charges, which depend on your country. If you tell me where you&#x27;re ordering from I&#x27;ll give you the exact terms.</p></div><div class="t-row caller"><span class="t-spk">CALLER<svg viewBox="0 0 16 12" aria-hidden="true"><g fill="currentColor"><rect x="0" y="3.5" width="2.5" height="5" rx="1.25"/><rect x="4.5" y="1.5" width="2.5" height="9" rx="1.25"/><rect x="9" y="0" width="2.5" height="12" rx="1.25"/><rect x="13.5" y="3.5" width="2.5" height="5" rx="1.25"/></g></svg></span><p>Switzerland.</p></div><div class="t-row agent"><span class="t-spk">AGENT<svg viewBox="0 0 16 12" aria-hidden="true"><g fill="currentColor"><rect x="0" y="3.5" width="2.5" height="5" rx="1.25"/><rect x="4.5" y="1.5" width="2.5" height="9" rx="1.25"/><rect x="9" y="0" width="2.5" height="12" rx="1.25"/><rect x="13.5" y="3.5" width="2.5" height="5" rx="1.25"/></g></svg></span><p>Then customs applies on the way in and is refunded separately from the order value. I&#x27;ll text you the full terms so you have them in writing.</p></div>
+      </div>
+      <p class="phone-note">Order and policy details here are illustrative. On a live call Elena reads the real order system and the real policy base.</p>
     </section>
     <section class="results">
-      <p class="eyebrow">Results</p>
-      <h2>What changed</h2>
-      <div class="res-grid"><div class="res-card"><p class="res-num"><span class="ph">00%</span></p><p class="res-lab"><span class="ph">Headline metric</span></p><p class="res-sub"><span class="ph">The one number Creative Cables has approved for publication, and what it measures.</span></p></div><div class="res-card"><p class="res-num"><span class="ph">+00%</span></p><p class="res-lab"><span class="ph">Metric two</span></p><p class="res-sub"><span class="ph">Second approved figure.</span></p></div><div class="res-card"><p class="res-num"><span class="ph">+00%</span></p><p class="res-lab"><span class="ph">Metric three</span></p><p class="res-sub"><span class="ph">Third approved figure.</span></p></div></div>
-      <p class="res-foot"><span class="ph">Measurement window and method to be confirmed with Creative Cables before publication.</span></p>
+      <p class="eyebrow">Results · first month, from 10 July 2026</p>
+      <h2>The first month</h2>
+      <div class="res-grid"><div class="res-card"><p class="res-num">39%</p><p class="res-lab">Calls resolved end to end</p><p class="res-sub">Closed by the agent with no human involved, blended across both lines, in the first four weeks live.</p></div><div class="res-card"><p class="res-num">57%</p><p class="res-lab">Of order-status calls automated</p><p class="res-sub">The highest-volume, most repetitive query on the line, answered from live order data.</p></div><div class="res-card"><p class="res-num">55s</p><p class="res-lab">Average handle time</p><p class="res-sub">The time it takes the agent to answer and close a call.</p></div></div>
+      <p class="res-foot">Measured from go-live on 10 July 2026 to the end of the first four weeks.</p>
     </section>
     <section class="pq">
-      <span class="mono-lg">ML</span>
+      <img class="portrait" src="/customers/assets/marco-logreco.jpg" alt="Marco Logreco, Head of E-Commerce at Creative Cables" width="720" height="720">
       <div>
-        <blockquote><span class="ph">Approved quote from Marco Logreco to be supplied - one or two sentences, in his words, on what changed for the business.</span></blockquote>
+        <blockquote>Elena handles our most repetitive calls - order status, shipping, returns - on-brand and instantly. Our team now focuses on the cases that actually need a person.</blockquote>
         <div class="who"><strong>Marco Logreco</strong><span>Head of E-Commerce, Creative Cables</span></div>
-        
+        <p class="pending">Draft wording - awaiting written sign-off from Marco Logreco</p>
       </div>
+    </section>
+    <section class="fwd">
+      <p class="eyebrow">What happens next</p>
+      <h2>The resolution rate is still climbing</h2>
+      <p>Four weeks is early, and the number is designed to move. Reviewing the calls that were transferred surfaced specific, fixable gaps - store hours, reseller lookup, a correction to payment information - each of which goes back into the knowledge base. Weekly volume roughly quadrupled through July as routing ramped up, and the line absorbed it with no added headcount.</p>
     </section>
     <section class="cta-band">
       <h2>Want the same for your <span class="nb">e-commerce</span> store?</h2>
-      <p>A pilot runs on your real calls for two weeks and measures what changed against your own baseline.</p>
+      <p>A pilot runs on your real calls and measures what changed against your own baseline. No slideware.</p>
       <a class="btn-pill" href="https://cal.com/sabatoai/intro" target="_blank" rel="noopener">Start Free Pilot</a>
     </section>
   </main>
@@ -540,6 +585,6 @@
       </div>
     </div>
   </footer>
-<script src="/js/enhance.js?v=ff073dc688" defer></script>
+<script src="/js/enhance.js?v=0b99c0a865" defer></script>
 </body>
 </html>

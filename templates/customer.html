@@ -262,6 +262,35 @@
       .cov-cell { height: 34px; }
     }
 
+
+    /* Knowledge-base panel. Used where a coverage matrix would be thin - two
+       agents in one language is a 2x1 grid, which reads as a stub. This shows
+       what the agent actually knows, which is the point that section argues. */
+    .kb { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.14);
+          border-radius: 20px; padding: 34px 32px; height: 100%;
+          display: flex; flex-direction: column; justify-content: center; }
+    .kb-h { font-size: 12px; font-weight: 800; letter-spacing: .13em; text-transform: uppercase;
+            color: var(--lime); margin: 0 0 8px; }
+    .kb-n { font-size: 40px; font-weight: 900; letter-spacing: -1.4px; color: #fff; margin: 0 0 22px; }
+    .kb-list { display: flex; flex-wrap: wrap; gap: 8px; }
+    .kb-list span { font-size: 13.5px; font-weight: 600; color: rgba(255,255,255,.86);
+                    background: rgba(204,255,0,.13); border: 1px solid rgba(204,255,0,.32);
+                    border-radius: 999px; padding: 7px 14px; }
+    .kb-note { font-size: 13.5px; line-height: 1.6; color: rgba(255,255,255,.6); margin: 22px 0 0; }
+    @media (max-width: 809px) { .kb { padding: 26px 20px; } .kb-n { font-size: 32px; } }
+
+    /* Forward look - the closing "this is still climbing" band */
+    .fwd { max-width: 1200px; width: calc(100% - 80px); margin: 96px auto 0;
+           border: 1px solid var(--line); border-radius: var(--radius); padding: 56px 48px; }
+    .fwd .eyebrow { font-size: 12px; font-weight: 800; letter-spacing: .13em;
+                    text-transform: uppercase; color: var(--gray); margin: 0 0 12px; }
+    .fwd h2 { font-size: 30px; font-weight: 700; letter-spacing: -.8px; margin: 0 0 14px; }
+    .fwd p { font-size: 17px; line-height: 1.75; color: var(--gray); max-width: 820px; margin: 0; }
+    @media (max-width: 809px) {
+      .fwd { width: calc(100% - 32px); margin-top: 72px; padding: 40px 24px; }
+      .fwd h2 { font-size: 25px; }
+    }
+
     /* icon per tile */
     .stack-card .ic-chip { display: grid; place-items: center; width: 52px; height: 52px;
                           border-radius: 14px; background: var(--ink); margin-bottom: 20px; }
@@ -281,7 +310,11 @@
     .call-band .call-sub:first-of-type { margin-top: 44px; }
 
     /* customer logo in the hero */
-    .cust-logo { height: 30px; width: auto; margin-bottom: 18px; }
+    /* Constrain on both axes: ClimaConvenienza's mark is 6.6:1 and Creative
+       Cables' is 3.1:1, so a height-only rule lands them at very different
+       visual weights. */
+    .cust-logo { height: auto; width: auto; max-height: 42px; max-width: 200px;
+                 margin-bottom: 18px; }
 
     @media (max-width: 809px) {
       .pq { grid-template-columns: 1fr; gap: 26px; text-align: center; justify-items: center; }
@@ -493,6 +526,6 @@
       </div>
     </div>
   </footer>
-<script src="/js/enhance.js?v=ff073dc688" defer></script>
+<script src="/js/enhance.js?v=0b99c0a865" defer></script>
 </body>
 </html>
