@@ -170,15 +170,21 @@
     /* pull quote — the named human */
     .pq { max-width: 1200px; width: calc(100% - 80px); margin: 96px auto 0; background: var(--off);
           border-radius: var(--radius); padding: 76px 48px; text-align: center; }
-    .pq blockquote { font-size: 32px; font-weight: 700; letter-spacing: -.8px; line-height: 1.35;
-                     color: var(--ink); max-width: 860px; margin: 0 auto; }
-    .pq .who { display: flex; align-items: center; justify-content: center; gap: 14px; margin-top: 32px; }
-    .pq .who img { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; }
-    .pq .who .mono { width: 56px; height: 56px; border-radius: 50%; background: var(--ink); color: var(--lime);
-                     display: grid; place-items: center; font-size: 17px; font-weight: 900; }
-    .pq .who .n { text-align: left; }
-    .pq .who .n strong { display: block; font-size: 16px; font-weight: 700; color: var(--ink); }
-    .pq .who .n span { font-size: 14px; color: var(--gray); }
+    /* Portrait carries real weight here. A named CEO shown at 260px reads as a
+       company standing behind the words; the same face at 56px reads as a stock
+       avatar and does the opposite. */
+    .pq { display: grid; grid-template-columns: 260px 1fr; gap: 52px; align-items: center;
+          text-align: left; padding: 68px 56px; }
+    .pq .portrait { width: 260px; height: 260px; border-radius: 20px; object-fit: cover;
+                    display: block; }
+    .pq .mono-lg { width: 260px; height: 260px; border-radius: 20px; background: var(--ink);
+                   color: var(--lime); display: grid; place-items: center;
+                   font-size: 62px; font-weight: 900; }
+    .pq blockquote { font-size: 30px; font-weight: 700; letter-spacing: -.8px; line-height: 1.36;
+                     color: var(--ink); margin: 0; }
+    .pq .who { margin-top: 26px; }
+    .pq .who strong { display: block; font-size: 17px; font-weight: 700; color: var(--ink); }
+    .pq .who span { font-size: 15px; color: var(--gray); }
     .pq .pending { display: inline-block; margin-top: 26px; border: 2px dashed rgb(196,102,0);
                    background: rgb(255,236,208); color: rgb(102,50,0); border-radius: 8px;
                    padding: 6px 14px; font-size: 13px; font-weight: 700; }
@@ -210,6 +216,37 @@
       .pq { padding-top: 56px; padding-bottom: 56px; }
       .honest { padding: 40px 24px; }
       .stack h2 { font-size: 26px; }
+    }
+
+
+    /* browser frame for the customer's storefront */
+    .browser { border-radius: 14px; overflow: hidden; background: #fff;
+               box-shadow: 0 24px 60px rgba(0,0,0,.34); border: 1px solid rgba(255,255,255,.14); }
+    .browser .bar { display: flex; align-items: center; gap: 7px; padding: 11px 14px;
+                    background: rgb(238,236,234); border-bottom: 1px solid rgb(219,216,214); }
+    .browser .bar i { width: 10px; height: 10px; border-radius: 50%; background: rgb(203,199,196); }
+    .browser .bar .url { flex: 1; margin-left: 8px; background: #fff; border-radius: 6px;
+                         font-size: 11.5px; color: rgb(110,106,104); padding: 4px 10px;
+                         font-family: var(--font); }
+    .browser img { width: 100%; height: auto; display: block; }
+    .queue-grid.with-shot { display: grid; grid-template-columns: 1fr 1fr; gap: 48px;
+                            align-items: center; }
+
+    /* icon per tile */
+    .stack-card .ic { display: block; width: 34px; height: 34px; margin-bottom: 16px; }
+    .stack-note-row { display: flex; align-items: center; gap: 12px; justify-content: center;
+                      margin-top: 26px; flex-wrap: wrap; }
+    .stack-note-row img { height: 22px; width: auto; }
+    .stack-note-row p { font-size: 15.5px; line-height: 1.7; color: var(--gray); margin: 0; }
+
+    /* customer logo in the hero */
+    .cust-logo { height: 30px; width: auto; margin-bottom: 18px; }
+
+    @media (max-width: 809px) {
+      .pq { grid-template-columns: 1fr; gap: 26px; text-align: center; justify-items: center; }
+      .pq .portrait, .pq .mono-lg { width: 180px; height: 180px; }
+      .pq blockquote { font-size: 22px; }
+      .queue-grid.with-shot { grid-template-columns: 1fr; gap: 30px; }
     }
 
     /* ============ Footer ============ */
@@ -328,7 +365,6 @@
         <p class="sub">Configurable lighting and cabling, sold across several countries and several languages. A catalogue you assemble rather than pick off a shelf — which means the phone rings with questions no filter can answer.</p>
         <div class="hero-cta">
           <a class="btn-pill" href="https://cal.com/sabatoai/intro" target="_blank" rel="noopener">Start Free Pilot</a>
-          <span class="hand">live in two weeks</span>
         </div>
       </div>
       <div class="hero-visual" aria-hidden="true">
@@ -344,20 +380,22 @@
           <h2>A configurable catalogue multiplies the questions</h2>
           <p class="qbody">When a product is assembled from components — a cable, a fitting, a shade, a length — the number of things a customer can be unsure about grows faster than the catalogue does. Compatibility between parts, what is included, whether a finish matches across two different items: these are the questions that stop a basket at the last step.</p><p class="qbody">Selling across borders multiplies it again. The same question arrives in several languages, at hours that do not overlap with one team&#x27;s working day.</p>
         </div>
+        
       </div>
     </section>
     <section class="stack"><div class="stack-grid"><div class="stack-card"><h3>Configuration questions block checkout</h3><p>The customer is not browsing. They have chosen, and they need one thing confirmed before they pay — which makes the answer worth more than the call costs.</p></div><div class="stack-card"><h3>Several languages, one team</h3><p>Cross-border demand does not queue politely inside one country&#x27;s office hours.</p></div><div class="stack-card"><h3>The catalogue changes constantly</h3><p>Components, finishes and stock move. An answer that was right last month is a returned order this month.</p></div></div></section>
     <section class="stack">
       <h2>What went live</h2>
-      <div class="stack-grid"><div class="stack-card"><h3>Pre-sales consultation</h3><p>Component and compatibility questions answered against the live catalogue, in the caller&#x27;s language.</p></div><div class="stack-card"><h3>Checkout summary via text</h3><p>What was discussed — items, specs, a direct link — sent as a message after the call, so the customer can complete the order without reconstructing it from memory.</p></div><div class="stack-card"><h3>Escalation to the team</h3><p>Bespoke configurations and anything commercially unusual routed to a person with the full context.</p></div></div>
-      <p class="flow-caption"><span class="ph">Platform, languages live, and go-live date to be confirmed.</span></p>
+      <div class="stack-grid"><div class="stack-card"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="rgb(204,255,0)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/><circle cx="9" cy="7" r="2.2"/><circle cx="15" cy="12" r="2.2"/><circle cx="8" cy="17" r="2.2"/></svg><h3>Pre-sales consultation</h3><p>Component and compatibility questions answered against the live catalogue, in the caller&#x27;s language.</p></div><div class="stack-card"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="rgb(204,255,0)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7.5 12 3l9 4.5v9L12 21l-9-4.5z"/><path d="M3 7.5 12 12l9-4.5"/><path d="M12 12v9"/></svg><h3>Checkout summary via text</h3><p>What was discussed — items, specs, a direct link — sent as a message after the call, so the customer can complete the order without reconstructing it from memory.</p></div><div class="stack-card"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="rgb(204,255,0)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7.5"/><path d="M3.5 11h15"/><path d="M11 3.5c2 2.4 3 5 3 7.5s-1 5.1-3 7.5"/><path d="M11 3.5c-2 2.4-3 5-3 7.5s1 5.1 3 7.5"/></svg><h3>Escalation to the team</h3><p>Bespoke configurations and anything commercially unusual routed to a person with the full context.</p></div></div>
+      <div class="stack-note-row"><p><span class="ph">Platform, languages live, and go-live date to be confirmed.</span></p></div>
     </section>
     <section class="call-band">
       <h2>What a Creative Cables call sounds like</h2>
-      <p class="call-caption">Example call</p>
+      
+      <p class="call-caption">Example call · configuration</p>
       <div class="call-panel">
         <div class="panel-head"><span class="ph-left"><span class="dot"></span>Live call — Sabato Agent</span>
-          <span class="ph-time">· 01:12</span></div>
+          <span class="ph-time">· 01:05</span></div>
         <div class="t-row caller"><span class="t-spk">CALLER<svg viewBox="0 0 16 12" aria-hidden="true"><g fill="currentColor"><rect x="0" y="3.5" width="2.5" height="5" rx="1.25"/><rect x="4.5" y="1.5" width="2.5" height="9" rx="1.25"/><rect x="9" y="0" width="2.5" height="12" rx="1.25"/><rect x="13.5" y="3.5" width="2.5" height="5" rx="1.25"/></g></svg></span><p>I&#x27;ve got a fabric cable in the basket and a brass fitting — will the two actually go together?</p></div><div class="t-row agent"><span class="t-spk">AGENT<svg viewBox="0 0 16 12" aria-hidden="true"><g fill="currentColor"><rect x="0" y="3.5" width="2.5" height="5" rx="1.25"/><rect x="4.5" y="1.5" width="2.5" height="9" rx="1.25"/><rect x="9" y="0" width="2.5" height="12" rx="1.25"/><rect x="13.5" y="3.5" width="2.5" height="5" rx="1.25"/></g></svg></span><p>They will, as long as the cable is the 2-core and not the 3-core — the brass fitting takes the 2-core. Can you tell me the colour code in your basket?</p></div><div class="t-row caller"><span class="t-spk">CALLER<svg viewBox="0 0 16 12" aria-hidden="true"><g fill="currentColor"><rect x="0" y="3.5" width="2.5" height="5" rx="1.25"/><rect x="4.5" y="1.5" width="2.5" height="9" rx="1.25"/><rect x="9" y="0" width="2.5" height="12" rx="1.25"/><rect x="13.5" y="3.5" width="2.5" height="5" rx="1.25"/></g></svg></span><p>It says RM09.</p></div><div class="t-row agent"><span class="t-spk">AGENT<svg viewBox="0 0 16 12" aria-hidden="true"><g fill="currentColor"><rect x="0" y="3.5" width="2.5" height="5" rx="1.25"/><rect x="4.5" y="1.5" width="2.5" height="9" rx="1.25"/><rect x="9" y="0" width="2.5" height="12" rx="1.25"/><rect x="13.5" y="3.5" width="2.5" height="5" rx="1.25"/></g></svg></span><p>That&#x27;s the 2-core, so you&#x27;re fine. One thing worth knowing: that fitting doesn&#x27;t include the ceiling rose, which people often assume. Do you want me to add it and text you the updated basket?</p></div><div class="t-row caller"><span class="t-spk">CALLER<svg viewBox="0 0 16 12" aria-hidden="true"><g fill="currentColor"><rect x="0" y="3.5" width="2.5" height="5" rx="1.25"/><rect x="4.5" y="1.5" width="2.5" height="9" rx="1.25"/><rect x="9" y="0" width="2.5" height="12" rx="1.25"/><rect x="13.5" y="3.5" width="2.5" height="5" rx="1.25"/></g></svg></span><p>Yes — and does it come in the same brass finish?</p></div><div class="t-row agent"><span class="t-spk">AGENT<svg viewBox="0 0 16 12" aria-hidden="true"><g fill="currentColor"><rect x="0" y="3.5" width="2.5" height="5" rx="1.25"/><rect x="4.5" y="1.5" width="2.5" height="9" rx="1.25"/><rect x="9" y="0" width="2.5" height="12" rx="1.25"/><rect x="13.5" y="3.5" width="2.5" height="5" rx="1.25"/></g></svg></span><p>It does. I&#x27;m sending you the link now with both in the matching finish.</p></div>
       </div>
       <p class="phone-note">Product details here are illustrative. On a live call the agent reads Creative Cables&#x27; real catalogue and stock.</p>
@@ -369,20 +407,17 @@
       <p class="res-foot"><span class="ph">Measurement window and method to be confirmed with Creative Cables before publication.</span></p>
     </section>
     <section class="pq">
-      <blockquote><span class="ph">Approved quote from Marco Logreco to be supplied — one or two sentences, in his words, on what changed for the business.</span></blockquote>
-      <div class="who"><span class="mono">ML</span><span class="n"><strong>Marco Logreco</strong><span>Head of E-Commerce, Creative Cables</span></span></div>
-      
-    </section>
-    <section class="honest">
-      <h2>What it does not do</h2>
-      <p>The limits are part of the reason this works. The agent handles the questions that repeat; it does not handle the ones that need a specialist.</p>
-      <ul><li>It does not design bespoke configurations. Anything genuinely custom is captured and handed to the team.</li><li>It does not approve exceptions. Pricing, out-of-policy returns and disputes are routed, never decided.</li><li>It does not pretend to be a person. Callers are told they are speaking to Sabato.</li></ul>
+      <span class="mono-lg">ML</span>
+      <div>
+        <blockquote><span class="ph">Approved quote from Marco Logreco to be supplied — one or two sentences, in his words, on what changed for the business.</span></blockquote>
+        <div class="who"><strong>Marco Logreco</strong><span>Head of E-Commerce, Creative Cables</span></div>
+        
+      </div>
     </section>
     <section class="cta-band">
       <h2>Want the same for your catalogue?</h2>
       <p>A pilot runs on your real calls for two weeks and measures what changed against your own baseline.</p>
       <a class="btn-pill" href="https://cal.com/sabatoai/intro" target="_blank" rel="noopener">Start Free Pilot</a>
-      <span class="hand">live in two weeks</span>
     </section>
   </main>
 

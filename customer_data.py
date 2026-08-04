@@ -27,11 +27,15 @@ CUSTOMERS = {
     "clima-convenienza": {
         "name": "ClimaConvenienza",
         "initials": "CC",
-        "logo": None,
+        "logo": "/customers/assets/climaconvenienza-logo.png",
         "person": "Alessio Perrucci",
         "person_initials": "AP",
         "role": "CEO",
-        "photo": None,
+        "photo": "/customers/assets/alessio-perrucci.jpg",
+        "storefront": "/customers/assets/climaconvenienza-store.jpg",
+        "storefront_url": "climaconvenienza.it",
+        "platform": "Shopify",
+        "platform_logo": "/customers/assets/shopify.png",
         "industry": "Home Improvement",
         "industry_href": "/industries/home-improvement",
         "chip": "Customer story",
@@ -72,15 +76,15 @@ CUSTOMERS = {
 
         "stack_h2": "What went live",
         "stack": [
-            ("Multilingual pre-sales and support",
+            ("languages", "Multilingual pre-sales and support",
              "The agent takes calls in Italian, French and German across all three queues — general "
              "information, order tracking and the product configurator — on the same catalogue and "
              "the same rules."),
-            ("Where is my order",
+            ("wismo", "Where is my order",
              "The biggest queue by far. Order status read live from Shopify and confirmed back to "
              "the caller, with the detail sent as a text so nothing rests on the customer "
              "remembering it."),
-            ("Configuratore",
+            ("configurator", "Configuratore",
              "The configurator queue, on the phone. The agent takes a caller through sizing and "
              "compatibility to a specific unit for their space and system. It is the "
              "highest-autonomy queue on the line, at 57.8%."),
@@ -89,22 +93,41 @@ CUSTOMERS = {
                        "data the storefront does. Live from 22 June 2026."),
 
         "call_h2": "What a ClimaConvenienza call sounds like",
-        "call_caption": "Example call · order tracking",
-        "call": [
-            ("caller", "Bonjour, j'ai commandé une pompe à chaleur la semaine dernière et je n'ai "
-                       "aucune nouvelle."),
-            ("agent", "Bien sûr, je peux vérifier. Vous avez le numéro de commande, ou l'adresse "
-                      "e-mail utilisée pour commander ?"),
-            ("caller", "L'e-mail, oui."),
-            ("agent", "Merci. Votre commande est partie de l'entrepôt hier et la livraison est prévue "
-                      "jeudi. Je vous envoie le lien de suivi par SMS tout de suite."),
-            ("caller", "Parfait. Et si personne n'est là à la livraison ?"),
-            ("agent", "Le transporteur laisse un avis et repasse le lendemain. Si vous préférez une "
-                      "date précise, je note la demande et l'équipe vous confirme le créneau."),
+        "calls": [
+            {"caption": "Configurator call · picking the right unit",
+             "duration": "01:24",
+             "lines": [
+                 ("caller", "I need air conditioning for a bedroom, about 30 square metres. "
+                            "I've no idea which size to get."),
+                 ("agent", "I can work that out with you. Is the room on a top floor, and does it "
+                           "get much direct sun in the afternoon?"),
+                 ("caller", "Top floor, and yes, sun all afternoon."),
+                 ("agent", "Then 9000 BTU would be under-sized for that room — 12000 is the right "
+                           "match. We have a dual-split Hisense at 12000 with built-in Wi-Fi in "
+                           "stock, and a Mitsubishi in the same class if you'd prefer that brand."),
+                 ("caller", "What's the difference in price?"),
+                 ("agent", "The Hisense is €313.95 including VAT, the Mitsubishi starts at €525. "
+                           "Both are A++ on cooling. Shall I text you both so you can compare?"),
+                 ("caller", "Yes, send them over."),
+             ]},
+            {"caption": "Order tracking call · where is my order",
+             "duration": "00:51",
+             "lines": [
+                 ("caller", "Hi, I ordered a heat pump last week and I've not heard anything."),
+                 ("agent", "I can check that now. Do you have the order number, or the email "
+                           "address you ordered with?"),
+                 ("caller", "The email is fine."),
+                 ("agent", "Thank you. Your order left the warehouse yesterday and it's due "
+                           "Thursday. I'm sending you the tracking link by text now."),
+                 ("caller", "And what if nobody's home when it arrives?"),
+                 ("agent", "The courier leaves a card and tries again the next day. If you'd rather "
+                           "fix a specific slot, I'll note that and the team will confirm it with "
+                           "you."),
+             ]},
         ],
-        "call_note": ("Order details here are illustrative. The call above is in French because France "
-                      "is one of the markets growing fastest — on a live call the agent reads "
-                      "ClimaConvenienza's real catalogue and order data."),
+        "call_note": ("Product and order details here are illustrative. On a live call the agent "
+                      "reads ClimaConvenienza's real catalogue, stock and order data — and takes "
+                      "the same two calls in French and German."),
 
         "results_eyebrow": "Results · 22 June – 23 July 2026",
         "results_h2": "The first month",
@@ -120,35 +143,13 @@ CUSTOMERS = {
              "[[Source needed: the June–July report shows a peak of 1,074 on 30 June. "
              "If 1,535 is a later peak, send the report it comes from.]]"),
         ],
-        "results_foot": ("Measured from go-live on 22 June 2026 to 23 July 2026. The autonomy figure "
-                         "above is the first month; it was 46.8% in July as volume grew — the reason "
-                         "is below. "
+        "results_foot": ("Measured from go-live on 22 June 2026 to 23 July 2026. "
                          "[[Figures to be confirmed in writing with ClimaConvenienza before publication.]]"),
 
         "quote": ("We faced a massive demand spike without hiring anyone — and we moved a large part "
                   "of the customer support team into B2B sales, so they are growing the business "
                   "instead of repeating the same thing on the phone all day."),
         "quote_pending": True,
-
-        "honest_h2": "What the numbers do not say",
-        "honest_body": ("This is one month of live service, and publishing only the flattering half "
-                        "of it would make the rest less believable. So here is the whole picture."),
-        "honest_points": [
-            "Autonomy fell, not rose. The agent resolved 53.1% of calls without a human in June and "
-            "46.8% in July. The reason is mix: volume grew and the growth landed in the hardest "
-            "Italian queues — general information sits at 39.2% autonomy and is now the largest "
-            "queue on the line.",
-            "Where is my order got harder as it got bigger. Italian WISMO volume more than doubled "
-            "and its autonomy fell from 56.6% to 46.3% — scale surfaced order scenarios the agent "
-            "had not been taught. Those are being mapped into the prompt; that work is ongoing, "
-            "not finished.",
-            "French and German show 100% autonomy partly because there is no French or German "
-            "speaker to transfer to. It means those callers got a complete answer instead of no "
-            "answer — it does not mean the agent handles every case a native speaker could.",
-            "It does not give installation advice, and it does not approve exceptions. Discounts, "
-            "out-of-policy returns and disputed orders are captured with full context and routed to "
-            "a person, never decided.",
-        ],
 
         "cta_h2": "Want the same for your catalogue?",
         "cta_sub": ("A pilot runs on your real calls for two weeks and measures what changed against "
@@ -164,6 +165,10 @@ CUSTOMERS = {
         "person_initials": "ML",
         "role": "Head of E-Commerce",
         "photo": None,
+        "storefront": None,
+        "storefront_url": "",
+        "platform": "",
+        "platform_logo": None,
         "industry": "Furniture & Home",
         "industry_href": "/industries/furniture-home",
         "chip": "Customer story",
@@ -198,13 +203,13 @@ CUSTOMERS = {
 
         "stack_h2": "What went live",
         "stack": [
-            ("Pre-sales consultation",
+            ("configurator", "Pre-sales consultation",
              "Component and compatibility questions answered against the live catalogue, in the "
              "caller's language."),
-            ("Checkout summary via text",
+            ("wismo", "Checkout summary via text",
              "What was discussed — items, specs, a direct link — sent as a message after the call, so "
              "the customer can complete the order without reconstructing it from memory."),
-            ("Escalation to the team",
+            ("languages", "Escalation to the team",
              "Bespoke configurations and anything commercially unusual routed to a person with the "
              "full context."),
         ],
@@ -212,7 +217,10 @@ CUSTOMERS = {
 
         "call_h2": "What a Creative Cables call sounds like",
         "call_caption": "Example call",
-        "call": [
+        "calls": [
+            {"caption": "Example call · configuration",
+             "duration": "01:05",
+             "lines": [
             ("caller", "I've got a fabric cable in the basket and a brass fitting — will the two "
                        "actually go together?"),
             ("agent", "They will, as long as the cable is the 2-core and not the 3-core — the brass "
@@ -223,6 +231,7 @@ CUSTOMERS = {
                       "and text you the updated basket?"),
             ("caller", "Yes — and does it come in the same brass finish?"),
             ("agent", "It does. I'm sending you the link now with both in the matching finish."),
+            ]},
         ],
         "call_note": ("Product details here are illustrative. On a live call the agent reads Creative "
                       "Cables' real catalogue and stock."),
@@ -240,17 +249,6 @@ CUSTOMERS = {
 
         "quote": "[[Approved quote from Marco Logreco to be supplied — one or two sentences, in his "
                  "words, on what changed for the business.]]",
-
-        "honest_h2": "What it does not do",
-        "honest_body": ("The limits are part of the reason this works. The agent handles the questions "
-                        "that repeat; it does not handle the ones that need a specialist."),
-        "honest_points": [
-            "It does not design bespoke configurations. Anything genuinely custom is captured and "
-            "handed to the team.",
-            "It does not approve exceptions. Pricing, out-of-policy returns and disputes are routed, "
-            "never decided.",
-            "It does not pretend to be a person. Callers are told they are speaking to Sabato.",
-        ],
 
         "cta_h2": "Want the same for your catalogue?",
         "cta_sub": ("A pilot runs on your real calls for two weeks and measures what changed against "

@@ -39,6 +39,24 @@ def is_ph(text):
     return bool(PH_RX.search(text))
 
 
+
+_IW = ('<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="rgb(204,255,0)" stroke-width="2" '
+       'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">%s</svg>')
+
+ICONS = {
+    # globe with a speech tail — multilingual
+    "languages": _IW % ('<circle cx="11" cy="11" r="7.5"/><path d="M3.5 11h15"/>'
+                        '<path d="M11 3.5c2 2.4 3 5 3 7.5s-1 5.1-3 7.5"/>'
+                        '<path d="M11 3.5c-2 2.4-3 5-3 7.5s1 5.1 3 7.5"/>'),
+    # parcel in transit — where is my order
+    "wismo": _IW % ('<path d="M3 7.5 12 3l9 4.5v9L12 21l-9-4.5z"/>'
+                    '<path d="M3 7.5 12 12l9-4.5"/><path d="M12 12v9"/>'),
+    # sliders — configurator
+    "configurator": _IW % ('<line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/>'
+                           '<line x1="4" y1="17" x2="20" y2="17"/><circle cx="9" cy="7" r="2.2"/>'
+                           '<circle cx="15" cy="12" r="2.2"/><circle cx="8" cy="17" r="2.2"/>'),
+}
+
 GLYPH = ('<svg viewBox="0 0 16 12" aria-hidden="true"><g fill="currentColor">'
          '<rect x="0" y="3.5" width="2.5" height="5" rx="1.25"/>'
          '<rect x="4.5" y="1.5" width="2.5" height="9" rx="1.25"/>'
@@ -50,13 +68,14 @@ SPK = {"caller": "CALLER", "agent": "AGENT"}
 def hero_visual(d):
     """Monogram + name card. Swapped for the real logo when we have the asset."""
     if d["logo"]:
-        mark = '<img class="cust-logo" src="%s" alt="%s logo">' % (d["logo"], html.escape(d["name"]))
+        mark = '<img class="cust-logo" src="%s" alt="%s" width="640" height="97">' % (
+            d["logo"], html.escape(d["name"]))
     else:
         mark = ('<span class="cust-logo-fallback"><span class="mono">%s</span>%s</span>'
                 % (html.escape(d["initials"]), html.escape(d["name"])))
     rows = "".join(
         '<div class="t-row %s"><span class="t-spk">%s%s</span><p>%s</p></div>'
-        % (who, SPK[who], GLYPH, ph(txt)) for who, txt in d["call"][:3])
+        % (who, SPK[who], GLYPH, ph(txt)) for who, txt in d["calls"][0]["lines"][:3])
     return ('<div class="call-panel" style="max-width:none">'
             '<div class="panel-head"><span class="ph-left"><span class="dot"></span>'
             'Live call — Sabato Agent</span><span class="ph-time">· 01:12</span></div>'
@@ -73,47 +92,65 @@ def section_situation(d):
         '<div class="stack-card"><h3>%s</h3><p>%s</p></div>' % (ph(t), ph(b))
         for t, b in d["situation_points"])
     body = "".join('<p class="qbody">%s</p>' % ph(p) for p in d["situation_body"])
+    shot = ""
+    cls = "queue-grid"
+    if d.get("storefront"):
+        cls = "queue-grid with-shot"
+        shot = ("""<div class="browser"><div class="bar"><i></i><i></i><i></i>"""
+                """<span class="url">%s</span></div><img src="%s" alt="%s storefront" """
+                """loading="lazy"></div>""" % (html.escape(d["storefront_url"]),
+                                               d["storefront"], html.escape(d["name"])))
     return """
     <section class="queue-band">
-      <div class="queue-grid">
+      <div class="%s">
         <div class="qcopy">
           <p class="eyebrow">%s</p>
           <h2>%s</h2>
           %s
         </div>
+        %s
       </div>
     </section>
     <section class="stack"><div class="stack-grid">%s</div></section>""" % (
-        ph(d["situation_eyebrow"]), ph(d["situation_h2"]), body, cards)
+        cls, ph(d["situation_eyebrow"]), ph(d["situation_h2"]), body, shot, cards)
 
 
 def section_stack(d):
     cards = "".join(
-        '<div class="stack-card"><h3>%s</h3><p>%s</p></div>' % (ph(t), ph(b))
-        for t, b in d["stack"])
+        '<div class="stack-card">%s<h3>%s</h3><p>%s</p></div>'
+        % (ICONS.get(icon, ""), ph(t), ph(b))
+        for icon, t, b in d["stack"])
+    logo = ('<img src="%s" alt="%s" loading="lazy">' % (d["platform_logo"], d["platform"])
+            if d.get("platform_logo") else "")
     return """
     <section class="stack">
       <h2>%s</h2>
       <div class="stack-grid">%s</div>
-      <p class="flow-caption">%s</p>
-    </section>""" % (ph(d["stack_h2"]), cards, ph(d["stack_note"]))
+      <div class="stack-note-row">%s<p>%s</p></div>
+    </section>""" % (ph(d["stack_h2"]), cards, logo, ph(d["stack_note"]))
 
 
 def section_call(d):
-    rows = "".join(
-        '<div class="t-row %s"><span class="t-spk">%s%s</span><p>%s</p></div>'
-        % (who, SPK[who], GLYPH, ph(txt)) for who, txt in d["call"])
-    return """
-    <section class="call-band">
-      <h2>%s</h2>
+    """One panel per call. Two short, specific calls beat one long generic one:
+    a buyer recognises their own situation faster in the one that matches it."""
+    panels = ""
+    for c in d["calls"]:
+        rows = "".join(
+            '<div class="t-row %s"><span class="t-spk">%s%s</span><p>%s</p></div>'
+            % (who, SPK[who], GLYPH, ph(txt)) for who, txt in c["lines"])
+        panels += """
       <p class="call-caption">%s</p>
       <div class="call-panel">
         <div class="panel-head"><span class="ph-left"><span class="dot"></span>Live call — Sabato Agent</span>
-          <span class="ph-time">· 01:12</span></div>
+          <span class="ph-time">· %s</span></div>
         %s
-      </div>
+      </div>""" % (ph(c["caption"]), ph(c["duration"]), rows)
+    return """
+    <section class="call-band">
+      <h2>%s</h2>
+      %s
       <p class="phone-note">%s</p>
-    </section>""" % (ph(d["call_h2"]), ph(d["call_caption"]), rows, ph(d["call_note"]))
+    </section>""" % (ph(d["call_h2"]), panels, ph(d["call_note"]))
 
 
 def section_results(d):
@@ -132,17 +169,22 @@ def section_results(d):
 
 def section_quote(d):
     if d["photo"]:
-        face = '<img src="%s" alt="%s">' % (d["photo"], html.escape(d["person"]))
+        face = ('<img class="portrait" src="%s" alt="%s, %s at %s" width="720" height="720">'
+                % (d["photo"], html.escape(d["person"]), html.escape(d["role"]),
+                   html.escape(d["name"])))
     else:
-        face = '<span class="mono">%s</span>' % html.escape(d["person_initials"])
+        face = '<span class="mono-lg">%s</span>' % html.escape(d["person_initials"])
     pending = ('<p class="pending">Draft wording — awaiting written sign-off from %s</p>'
                % html.escape(d["person"])) if d.get("quote_pending") else ""
     return """
     <section class="pq">
-      <blockquote>%s</blockquote>
-      <div class="who">%s<span class="n"><strong>%s</strong><span>%s, %s</span></span></div>
       %s
-    </section>""" % (ph(d["quote"]), face, html.escape(d["person"]),
+      <div>
+        <blockquote>%s</blockquote>
+        <div class="who"><strong>%s</strong><span>%s, %s</span></div>
+        %s
+      </div>
+    </section>""" % (face, ph(d["quote"]), html.escape(d["person"]),
                      html.escape(d["role"]), html.escape(d["name"]), pending)
 
 
@@ -162,7 +204,6 @@ def section_cta(d):
       <h2>%s</h2>
       <p>%s</p>
       <a class="btn-pill" href="https://cal.com/sabatoai/intro" target="_blank" rel="noopener">Start Free Pilot</a>
-      <span class="hand">live in two weeks</span>
     </section>""" % (ph(d["cta_h2"]), ph(d["cta_sub"]))
 
 
@@ -186,7 +227,7 @@ def build(slug, d):
     visual, mark = hero_visual(d)
     sections = "".join([
         section_situation(d), section_stack(d), section_call(d),
-        section_results(d), section_quote(d), section_honest(d), section_cta(d),
+        section_results(d), section_quote(d), section_cta(d),
     ])
     page = (tpl
             .replace("{{TITLE}}", html.escape(d["title"]))

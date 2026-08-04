@@ -170,15 +170,21 @@
     /* pull quote — the named human */
     .pq { max-width: 1200px; width: calc(100% - 80px); margin: 96px auto 0; background: var(--off);
           border-radius: var(--radius); padding: 76px 48px; text-align: center; }
-    .pq blockquote { font-size: 32px; font-weight: 700; letter-spacing: -.8px; line-height: 1.35;
-                     color: var(--ink); max-width: 860px; margin: 0 auto; }
-    .pq .who { display: flex; align-items: center; justify-content: center; gap: 14px; margin-top: 32px; }
-    .pq .who img { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; }
-    .pq .who .mono { width: 56px; height: 56px; border-radius: 50%; background: var(--ink); color: var(--lime);
-                     display: grid; place-items: center; font-size: 17px; font-weight: 900; }
-    .pq .who .n { text-align: left; }
-    .pq .who .n strong { display: block; font-size: 16px; font-weight: 700; color: var(--ink); }
-    .pq .who .n span { font-size: 14px; color: var(--gray); }
+    /* Portrait carries real weight here. A named CEO shown at 260px reads as a
+       company standing behind the words; the same face at 56px reads as a stock
+       avatar and does the opposite. */
+    .pq { display: grid; grid-template-columns: 260px 1fr; gap: 52px; align-items: center;
+          text-align: left; padding: 68px 56px; }
+    .pq .portrait { width: 260px; height: 260px; border-radius: 20px; object-fit: cover;
+                    display: block; }
+    .pq .mono-lg { width: 260px; height: 260px; border-radius: 20px; background: var(--ink);
+                   color: var(--lime); display: grid; place-items: center;
+                   font-size: 62px; font-weight: 900; }
+    .pq blockquote { font-size: 30px; font-weight: 700; letter-spacing: -.8px; line-height: 1.36;
+                     color: var(--ink); margin: 0; }
+    .pq .who { margin-top: 26px; }
+    .pq .who strong { display: block; font-size: 17px; font-weight: 700; color: var(--ink); }
+    .pq .who span { font-size: 15px; color: var(--gray); }
     .pq .pending { display: inline-block; margin-top: 26px; border: 2px dashed rgb(196,102,0);
                    background: rgb(255,236,208); color: rgb(102,50,0); border-radius: 8px;
                    padding: 6px 14px; font-size: 13px; font-weight: 700; }
@@ -210,6 +216,37 @@
       .pq { padding-top: 56px; padding-bottom: 56px; }
       .honest { padding: 40px 24px; }
       .stack h2 { font-size: 26px; }
+    }
+
+
+    /* browser frame for the customer's storefront */
+    .browser { border-radius: 14px; overflow: hidden; background: #fff;
+               box-shadow: 0 24px 60px rgba(0,0,0,.34); border: 1px solid rgba(255,255,255,.14); }
+    .browser .bar { display: flex; align-items: center; gap: 7px; padding: 11px 14px;
+                    background: rgb(238,236,234); border-bottom: 1px solid rgb(219,216,214); }
+    .browser .bar i { width: 10px; height: 10px; border-radius: 50%; background: rgb(203,199,196); }
+    .browser .bar .url { flex: 1; margin-left: 8px; background: #fff; border-radius: 6px;
+                         font-size: 11.5px; color: rgb(110,106,104); padding: 4px 10px;
+                         font-family: var(--font); }
+    .browser img { width: 100%; height: auto; display: block; }
+    .queue-grid.with-shot { display: grid; grid-template-columns: 1fr 1fr; gap: 48px;
+                            align-items: center; }
+
+    /* icon per tile */
+    .stack-card .ic { display: block; width: 34px; height: 34px; margin-bottom: 16px; }
+    .stack-note-row { display: flex; align-items: center; gap: 12px; justify-content: center;
+                      margin-top: 26px; flex-wrap: wrap; }
+    .stack-note-row img { height: 22px; width: auto; }
+    .stack-note-row p { font-size: 15.5px; line-height: 1.7; color: var(--gray); margin: 0; }
+
+    /* customer logo in the hero */
+    .cust-logo { height: 30px; width: auto; margin-bottom: 18px; }
+
+    @media (max-width: 809px) {
+      .pq { grid-template-columns: 1fr; gap: 26px; text-align: center; justify-items: center; }
+      .pq .portrait, .pq .mono-lg { width: 180px; height: 180px; }
+      .pq blockquote { font-size: 22px; }
+      .queue-grid.with-shot { grid-template-columns: 1fr; gap: 30px; }
     }
 
     /* ============ Footer ============ */
@@ -328,7 +365,6 @@
         <p class="sub">{{SUB}}</p>
         <div class="hero-cta">
           <a class="btn-pill" href="https://cal.com/sabatoai/intro" target="_blank" rel="noopener">Start Free Pilot</a>
-          <span class="hand">live in two weeks</span>
         </div>
       </div>
       <div class="hero-visual" aria-hidden="true">
