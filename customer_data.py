@@ -37,8 +37,8 @@ CUSTOMERS = {
         "chip": "Customer story",
         "title": "ClimaConvenienza — Voice AI Case Study | Sabato AI",
         "description": ("How ClimaConvenienza scaled phone support across Italy, France and Germany "
-                        "without hiring — 49% of calls resolved with no operator, and a 1,074-call "
-                        "peak day absorbed eight days after go-live."),
+                        "without hiring — 53.1% of calls handled autonomously, at a run rate of "
+                        "roughly 12,800 calls a month."),
         "h1": "Growing across three markets faster than a phone team can be hired.",
         "sub": ("ClimaConvenienza sells climate equipment into Italy, France and Germany. Demand "
                 "was climbing in all three — and then a heatwave pushed it to a record eight days "
@@ -109,18 +109,19 @@ CUSTOMERS = {
         "results_eyebrow": "Results · 22 June – 23 July 2026",
         "results_h2": "The first month",
         "results": [
-            ("49%", "Of calls resolved with no operator",
-             "7,334 of the 14,936 calls handled since go-live, across every queue and language."),
+            ("53.1%", "Calls handled autonomously",
+             "Resolved by the agent with no operator involved, in the first month live "
+             "(22–30 June 2026)."),
+            ("~12,800", "Calls a month at current run rate",
+             "414 a day through July, rising to around 730 at weekday peaks."),
             ("1,074", "Calls on the busiest day",
              "Eight days after go-live, during a heatwave. Absorbed without a single additional "
              "hire."),
-            ("872", "French and German calls handled",
-             "Cross-border demand answered end to end in the caller's language, from an Italian "
-             "base."),
         ],
-        "results_foot": ("Measured from go-live on 22 June 2026 to 23 July 2026. June covers nine "
-                         "live days, July twenty-three, so the two months are not compared "
-                         "like for like anywhere on this page. "
+        "results_foot": ("Measured from go-live on 22 June 2026 to 23 July 2026. The autonomy figure "
+                         "above is the first month; it was 46.8% in July as volume grew — the reason "
+                         "is below. June covers nine live days and July twenty-three, so the two are "
+                         "not compared like for like anywhere on this page. "
                          "[[Figures to be confirmed in writing with ClimaConvenienza before publication.]]"),
 
         "quote": ("We faced a massive demand spike without hiring anyone — and we moved a large part "
