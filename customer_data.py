@@ -53,9 +53,9 @@ CUSTOMERS = {
             "and a German line are a full salary each on the day they open, and a fraction of the "
             "traffic. Growth arrives first; the business case for headcount arrives later.",
             "Then the weather intervened. Climate equipment has one demand curve and it is the "
-            "temperature. The agent went live on 22 June 2026 and eight days later took 1,074 calls "
-            "in a single day — the busiest day on record, in its second week of operation, absorbed "
-            "without a single additional hire.",
+            "temperature. The agent went live on 22 June 2026 and days later was taking its "
+            "busiest day on record — in its second week of operation, absorbed without a single "
+            "additional hire.",
         ],
         "situation_points": [
             ("New markets ring before they pay for themselves",
@@ -112,12 +112,13 @@ CUSTOMERS = {
             ("53.1%", "Calls handled autonomously",
              "Resolved by the agent with no operator involved, in the first month live "
              "(22–30 June 2026)."),
-            ("9", "Multilingual agents live",
-             "Three workflows — general information, order tracking and the configurator — running "
-             "in Italian, French and German."),
             ("435", "Hours of support time returned",
              "Phone time the agent absorbed instead of an operator, redeployed into B2B sales. "
              "[[Confirm derivation before publication: resolved calls × average handle time.]]"),
+            ("[[1,535]]", "Calls on the busiest day",
+             "Absorbed during a heatwave, without a single additional hire. "
+             "[[Source needed: the June–July report shows a peak of 1,074 on 30 June. "
+             "If 1,535 is a later peak, send the report it comes from.]]"),
         ],
         "results_foot": ("Measured from go-live on 22 June 2026 to 23 July 2026. The autonomy figure "
                          "above is the first month; it was 46.8% in July as volume grew — the reason "
