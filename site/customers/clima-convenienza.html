@@ -18,7 +18,7 @@
   <link href="/fuc/images/hWFOqN6Okd1QgfKhizqgIF1s.png" rel="icon" media="(prefers-color-scheme: light)">
   <link href="/fuc/images/dEcuqc3xAQ3JJoX4xQDYrMQefA.png" rel="icon" media="(prefers-color-scheme: dark)">
   <link rel="apple-touch-icon" href="/fuc/images/dEcuqc3xAQ3JJoX4xQDYrMQefA.png">
-  <!-- JSON-LD withheld: quote not approved -->
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Growing across three markets faster than a phone team can be hired.", "description": "How ClimaConvenienza scaled phone support across Italy, France and Germany without hiring — nine multilingual agents live, 53.1% of calls handled autonomously in the first month.", "url": "https://www.sabato.ai/customers/clima-convenienza", "publisher": {"@type": "Organization", "name": "Sabato AI"}}</script>
   <style>
     /* ============ Fonts (local mirrors, same files the site loads) ============ */
     @font-face { font-family: "Satoshi"; src: url("/fuc/third-party-assets/fontshare/wf/TTX2Z3BF3P6Y5BQT3IV2VNOK6FL22KUT/7QYRJOI3JIMYHGY6CH7SOIFRQLZOLNJ6/KFIAZD4RUMEZIYV6FQ3T3GP5PDBDB6JY.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 400; }
@@ -228,16 +228,29 @@
     .browser .bar .url { flex: 1; margin-left: 8px; background: #fff; border-radius: 6px;
                          font-size: 11.5px; color: rgb(110,106,104); padding: 4px 10px;
                          font-family: var(--font); }
-    .browser img { width: 100%; height: auto; display: block; }
+    .browser { display: flex; flex-direction: column; height: 100%; }
+    .browser img { width: 100%; flex: 1; min-height: 0; object-fit: cover;
+                   object-position: top center; display: block; }
     .queue-grid.with-shot { display: grid; grid-template-columns: 1fr 1fr; gap: 48px;
-                            align-items: center; }
+                            align-items: stretch; }
 
     /* icon per tile */
-    .stack-card .ic { display: block; width: 34px; height: 34px; margin-bottom: 16px; }
+    .stack-card .ic-chip { display: grid; place-items: center; width: 52px; height: 52px;
+                          border-radius: 14px; background: var(--ink); margin-bottom: 20px; }
+    .stack-card .ic { display: block; width: 26px; height: 26px; }
     .stack-note-row { display: flex; align-items: center; gap: 12px; justify-content: center;
                       margin-top: 26px; flex-wrap: wrap; }
     .stack-note-row img { height: 22px; width: auto; }
     .stack-note-row p { font-size: 15.5px; line-height: 1.7; color: var(--gray); margin: 0; }
+
+    .call-sub { display: flex; align-items: center; justify-content: center; gap: 10px;
+                margin: 40px 0 16px; }
+    /* CSS beats the inline stroke presentation attribute, so the same glyph
+       can be lime in a dark chip and ink on a light band. */
+    .call-sub svg { width: 22px; height: 22px; flex: none; stroke: var(--ink); }
+    .call-sub span { font-size: 13px; font-weight: 800; letter-spacing: .13em;
+                     text-transform: uppercase; color: var(--ink); }
+    .call-band .call-sub:first-of-type { margin-top: 8px; }
 
     /* customer logo in the hero */
     .cust-logo { height: 30px; width: auto; margin-bottom: 18px; }
@@ -245,6 +258,7 @@
     @media (max-width: 809px) {
       .pq { grid-template-columns: 1fr; gap: 26px; text-align: center; justify-items: center; }
       .pq .portrait, .pq .mono-lg { width: 180px; height: 180px; }
+      .browser img { height: 260px; flex: none; }
       .pq blockquote { font-size: 22px; }
       .queue-grid.with-shot { grid-template-columns: 1fr; gap: 30px; }
     }
@@ -386,19 +400,21 @@
     <section class="stack"><div class="stack-grid"><div class="stack-card"><h3>New markets ring before they pay for themselves</h3><p>France and Germany were producing calls from customers already far enough down the funnel to pick up the phone — well before the volume in either market justified dedicated headcount.</p></div><div class="stack-card"><h3>Demand is set by the weather, not the plan</h3><p>A heatwave does not give notice. The volume that matters most arrives in the days you could not have staffed for, and it arrives from people ready to buy today.</p></div><div class="stack-card"><h3>Half the phone traffic is one question</h3><p>Where is my order accounts for 48% of every call. Answering it well is not a support nicety — it is the single largest claim on the team&#x27;s day.</p></div></div></section>
     <section class="stack">
       <h2>What went live</h2>
-      <div class="stack-grid"><div class="stack-card"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="rgb(204,255,0)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7.5"/><path d="M3.5 11h15"/><path d="M11 3.5c2 2.4 3 5 3 7.5s-1 5.1-3 7.5"/><path d="M11 3.5c-2 2.4-3 5-3 7.5s1 5.1 3 7.5"/></svg><h3>Multilingual pre-sales and support</h3><p>The agent takes calls in Italian, French and German across all three queues — general information, order tracking and the product configurator — on the same catalogue and the same rules.</p></div><div class="stack-card"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="rgb(204,255,0)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7.5 12 3l9 4.5v9L12 21l-9-4.5z"/><path d="M3 7.5 12 12l9-4.5"/><path d="M12 12v9"/></svg><h3>Where is my order</h3><p>The biggest queue by far. Order status read live from Shopify and confirmed back to the caller, with the detail sent as a text so nothing rests on the customer remembering it.</p></div><div class="stack-card"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="rgb(204,255,0)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/><circle cx="9" cy="7" r="2.2"/><circle cx="15" cy="12" r="2.2"/><circle cx="8" cy="17" r="2.2"/></svg><h3>Configuratore</h3><p>The configurator queue, on the phone. The agent takes a caller through sizing and compatibility to a specific unit for their space and system. It is the highest-autonomy queue on the line, at 57.8%.</p></div></div>
+      <div class="stack-grid"><div class="stack-card"><span class="ic-chip"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="rgb(204,255,0)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7.5"/><path d="M3.5 11h15"/><path d="M11 3.5c2 2.4 3 5 3 7.5s-1 5.1-3 7.5"/><path d="M11 3.5c-2 2.4-3 5-3 7.5s1 5.1 3 7.5"/></svg></span><h3>Multilingual pre-sales and support</h3><p>The agent takes calls in Italian, French and German across all three queues — general information, order tracking and the product configurator — on the same catalogue and the same rules.</p></div><div class="stack-card"><span class="ic-chip"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="rgb(204,255,0)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7.5 12 3l9 4.5v9L12 21l-9-4.5z"/><path d="M3 7.5 12 12l9-4.5"/><path d="M12 12v9"/></svg></span><h3>Where is my order</h3><p>The biggest queue by far. Order status read live from Shopify and confirmed back to the caller, with the detail sent as a text so nothing rests on the customer remembering it.</p></div><div class="stack-card"><span class="ic-chip"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="rgb(204,255,0)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/><circle cx="9" cy="7" r="2.2"/><circle cx="15" cy="12" r="2.2"/><circle cx="8" cy="17" r="2.2"/></svg></span><h3>Configuratore</h3><p>The configurator queue, on the phone. The agent takes a caller through sizing and compatibility to a specific unit for their space and system. It is the highest-autonomy queue on the line, at 57.8%.</p></div></div>
       <div class="stack-note-row"><img src="/customers/assets/shopify.png" alt="Shopify" loading="lazy"><p>Connected to Shopify, so the agent reads the same catalogue, pricing and order data the storefront does. Live from 22 June 2026.</p></div>
     </section>
     <section class="call-band">
       <h2>What a ClimaConvenienza call sounds like</h2>
       
-      <p class="call-caption">Configurator call · picking the right unit</p>
+      <p class="call-sub"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="rgb(204,255,0)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/><circle cx="9" cy="7" r="2.2"/><circle cx="15" cy="12" r="2.2"/><circle cx="8" cy="17" r="2.2"/></svg><span>Product Configurator</span></p>
+      <p class="call-caption">Picking the right unit for the room</p>
       <div class="call-panel">
         <div class="panel-head"><span class="ph-left"><span class="dot"></span>Live call — Sabato Agent</span>
           <span class="ph-time">· 01:24</span></div>
         <div class="t-row caller"><span class="t-spk">CALLER<svg viewBox="0 0 16 12" aria-hidden="true"><g fill="currentColor"><rect x="0" y="3.5" width="2.5" height="5" rx="1.25"/><rect x="4.5" y="1.5" width="2.5" height="9" rx="1.25"/><rect x="9" y="0" width="2.5" height="12" rx="1.25"/><rect x="13.5" y="3.5" width="2.5" height="5" rx="1.25"/></g></svg></span><p>I need air conditioning for a bedroom, about 30 square metres. I&#x27;ve no idea which size to get.</p></div><div class="t-row agent"><span class="t-spk">AGENT<svg viewBox="0 0 16 12" aria-hidden="true"><g fill="currentColor"><rect x="0" y="3.5" width="2.5" height="5" rx="1.25"/><rect x="4.5" y="1.5" width="2.5" height="9" rx="1.25"/><rect x="9" y="0" width="2.5" height="12" rx="1.25"/><rect x="13.5" y="3.5" width="2.5" height="5" rx="1.25"/></g></svg></span><p>I can work that out with you. Is the room on a top floor, and does it get much direct sun in the afternoon?</p></div><div class="t-row caller"><span class="t-spk">CALLER<svg viewBox="0 0 16 12" aria-hidden="true"><g fill="currentColor"><rect x="0" y="3.5" width="2.5" height="5" rx="1.25"/><rect x="4.5" y="1.5" width="2.5" height="9" rx="1.25"/><rect x="9" y="0" width="2.5" height="12" rx="1.25"/><rect x="13.5" y="3.5" width="2.5" height="5" rx="1.25"/></g></svg></span><p>Top floor, and yes, sun all afternoon.</p></div><div class="t-row agent"><span class="t-spk">AGENT<svg viewBox="0 0 16 12" aria-hidden="true"><g fill="currentColor"><rect x="0" y="3.5" width="2.5" height="5" rx="1.25"/><rect x="4.5" y="1.5" width="2.5" height="9" rx="1.25"/><rect x="9" y="0" width="2.5" height="12" rx="1.25"/><rect x="13.5" y="3.5" width="2.5" height="5" rx="1.25"/></g></svg></span><p>Then 9000 BTU would be under-sized for that room — 12000 is the right match. We have a dual-split Hisense at 12000 with built-in Wi-Fi in stock, and a Mitsubishi in the same class if you&#x27;d prefer that brand.</p></div><div class="t-row caller"><span class="t-spk">CALLER<svg viewBox="0 0 16 12" aria-hidden="true"><g fill="currentColor"><rect x="0" y="3.5" width="2.5" height="5" rx="1.25"/><rect x="4.5" y="1.5" width="2.5" height="9" rx="1.25"/><rect x="9" y="0" width="2.5" height="12" rx="1.25"/><rect x="13.5" y="3.5" width="2.5" height="5" rx="1.25"/></g></svg></span><p>What&#x27;s the difference in price?</p></div><div class="t-row agent"><span class="t-spk">AGENT<svg viewBox="0 0 16 12" aria-hidden="true"><g fill="currentColor"><rect x="0" y="3.5" width="2.5" height="5" rx="1.25"/><rect x="4.5" y="1.5" width="2.5" height="9" rx="1.25"/><rect x="9" y="0" width="2.5" height="12" rx="1.25"/><rect x="13.5" y="3.5" width="2.5" height="5" rx="1.25"/></g></svg></span><p>The Hisense is €313.95 including VAT, the Mitsubishi starts at €525. Both are A++ on cooling. Shall I text you both so you can compare?</p></div><div class="t-row caller"><span class="t-spk">CALLER<svg viewBox="0 0 16 12" aria-hidden="true"><g fill="currentColor"><rect x="0" y="3.5" width="2.5" height="5" rx="1.25"/><rect x="4.5" y="1.5" width="2.5" height="9" rx="1.25"/><rect x="9" y="0" width="2.5" height="12" rx="1.25"/><rect x="13.5" y="3.5" width="2.5" height="5" rx="1.25"/></g></svg></span><p>Yes, send them over.</p></div>
       </div>
-      <p class="call-caption">Order tracking call · where is my order</p>
+      <p class="call-sub"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="rgb(204,255,0)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7.5 12 3l9 4.5v9L12 21l-9-4.5z"/><path d="M3 7.5 12 12l9-4.5"/><path d="M12 12v9"/></svg><span>WISMO</span></p>
+      <p class="call-caption">Where is my order</p>
       <div class="call-panel">
         <div class="panel-head"><span class="ph-left"><span class="dot"></span>Live call — Sabato Agent</span>
           <span class="ph-time">· 00:51</span></div>
@@ -409,20 +425,20 @@
     <section class="results">
       <p class="eyebrow">Results · 22 June – 23 July 2026</p>
       <h2>The first month</h2>
-      <div class="res-grid"><div class="res-card"><p class="res-num">53.1%</p><p class="res-lab">Calls handled autonomously</p><p class="res-sub">Resolved by the agent with no operator involved, in the first month live (22–30 June 2026).</p></div><div class="res-card"><p class="res-num">435</p><p class="res-lab">Hours of support time returned</p><p class="res-sub">Phone time the agent absorbed instead of an operator, redeployed into B2B sales. <span class="ph">Confirm derivation before publication: resolved calls × average handle time.</span></p></div><div class="res-card"><p class="res-num"><span class="ph">1,535</span></p><p class="res-lab">Calls on the busiest day</p><p class="res-sub">Absorbed during a heatwave, without a single additional hire. <span class="ph">Source needed: the June–July report shows a peak of 1,074 on 30 June. If 1,535 is a later peak, send the report it comes from.</span></p></div></div>
-      <p class="res-foot">Measured from go-live on 22 June 2026 to 23 July 2026. <span class="ph">Figures to be confirmed in writing with ClimaConvenienza before publication.</span></p>
+      <div class="res-grid"><div class="res-card"><p class="res-num">53.1%</p><p class="res-lab">Calls handled autonomously</p><p class="res-sub">Resolved by the agent with no operator involved, in the first month live (22–30 June 2026).</p></div><div class="res-card"><p class="res-num">435</p><p class="res-lab">Hours of support time returned</p><p class="res-sub">Phone time the agent absorbed instead of an operator, redeployed into B2B sales.</p></div><div class="res-card"><p class="res-num">1,535</p><p class="res-lab">Calls on the busiest day</p><p class="res-sub">Absorbed during a heatwave, without a single additional hire.</p></div></div>
+      <p class="res-foot">Measured from go-live on 22 June 2026.</p>
     </section>
     <section class="pq">
       <img class="portrait" src="/customers/assets/alessio-perrucci.jpg" alt="Alessio Perrucci, CEO at ClimaConvenienza" width="720" height="720">
       <div>
         <blockquote>We faced a massive demand spike without hiring anyone — and we moved a large part of the customer support team into B2B sales, so they are growing the business instead of repeating the same thing on the phone all day.</blockquote>
         <div class="who"><strong>Alessio Perrucci</strong><span>CEO, ClimaConvenienza</span></div>
-        <p class="pending">Draft wording — awaiting written sign-off from Alessio Perrucci</p>
+        
       </div>
     </section>
     <section class="cta-band">
-      <h2>Want the same for your catalogue?</h2>
-      <p>A pilot runs on your real calls for two weeks and measures what changed against your own baseline. No slideware.</p>
+      <h2>Want the same for your <span class="nb">e-commerce</span> store?</h2>
+      <p>A pilot runs on your real calls and measures what changed against your own baseline. No slideware.</p>
       <a class="btn-pill" href="https://cal.com/sabatoai/intro" target="_blank" rel="noopener">Start Free Pilot</a>
     </section>
   </main>

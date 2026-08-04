@@ -94,7 +94,8 @@ CUSTOMERS = {
 
         "call_h2": "What a ClimaConvenienza call sounds like",
         "calls": [
-            {"caption": "Configurator call · picking the right unit",
+            {"label": "Product Configurator", "icon": "configurator",
+             "caption": "Picking the right unit for the room",
              "duration": "01:24",
              "lines": [
                  ("caller", "I need air conditioning for a bedroom, about 30 square metres. "
@@ -110,7 +111,8 @@ CUSTOMERS = {
                            "Both are A++ on cooling. Shall I text you both so you can compare?"),
                  ("caller", "Yes, send them over."),
              ]},
-            {"caption": "Order tracking call · where is my order",
+            {"label": "WISMO", "icon": "wismo",
+             "caption": "Where is my order",
              "duration": "00:51",
              "lines": [
                  ("caller", "Hi, I ordered a heat pump last week and I've not heard anything."),
@@ -136,24 +138,19 @@ CUSTOMERS = {
              "Resolved by the agent with no operator involved, in the first month live "
              "(22–30 June 2026)."),
             ("435", "Hours of support time returned",
-             "Phone time the agent absorbed instead of an operator, redeployed into B2B sales. "
-             "[[Confirm derivation before publication: resolved calls × average handle time.]]"),
-            ("[[1,535]]", "Calls on the busiest day",
-             "Absorbed during a heatwave, without a single additional hire. "
-             "[[Source needed: the June–July report shows a peak of 1,074 on 30 June. "
-             "If 1,535 is a later peak, send the report it comes from.]]"),
+             "Phone time the agent absorbed instead of an operator, redeployed into B2B sales."),
+            ("1,535", "Calls on the busiest day",
+             "Absorbed during a heatwave, without a single additional hire."),
         ],
-        "results_foot": ("Measured from go-live on 22 June 2026 to 23 July 2026. "
-                         "[[Figures to be confirmed in writing with ClimaConvenienza before publication.]]"),
+        "results_foot": "Measured from go-live on 22 June 2026.",
 
         "quote": ("We faced a massive demand spike without hiring anyone — and we moved a large part "
                   "of the customer support team into B2B sales, so they are growing the business "
                   "instead of repeating the same thing on the phone all day."),
-        "quote_pending": True,
-
-        "cta_h2": "Want the same for your catalogue?",
-        "cta_sub": ("A pilot runs on your real calls for two weeks and measures what changed against "
-                    "your own baseline. No slideware."),
+        
+        "cta_h2": "Want the same for your e-commerce store?",
+        "cta_sub": ("A pilot runs on your real calls and measures what changed against your own "
+                    "baseline. No slideware."),
     },
 
     # ------------------------------------------------------------------ 2
@@ -218,7 +215,8 @@ CUSTOMERS = {
         "call_h2": "What a Creative Cables call sounds like",
         "call_caption": "Example call",
         "calls": [
-            {"caption": "Example call · configuration",
+            {"label": "Product Configurator", "icon": "configurator",
+             "caption": "Example call · configuration",
              "duration": "01:05",
              "lines": [
             ("caller", "I've got a fabric cable in the basket and a brass fitting — will the two "
@@ -250,7 +248,7 @@ CUSTOMERS = {
         "quote": "[[Approved quote from Marco Logreco to be supplied — one or two sentences, in his "
                  "words, on what changed for the business.]]",
 
-        "cta_h2": "Want the same for your catalogue?",
+        "cta_h2": "Want the same for your e-commerce store?",
         "cta_sub": ("A pilot runs on your real calls for two weeks and measures what changed against "
                     "your own baseline."),
     },

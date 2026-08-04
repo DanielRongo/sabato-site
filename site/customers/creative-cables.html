@@ -228,16 +228,29 @@
     .browser .bar .url { flex: 1; margin-left: 8px; background: #fff; border-radius: 6px;
                          font-size: 11.5px; color: rgb(110,106,104); padding: 4px 10px;
                          font-family: var(--font); }
-    .browser img { width: 100%; height: auto; display: block; }
+    .browser { display: flex; flex-direction: column; height: 100%; }
+    .browser img { width: 100%; flex: 1; min-height: 0; object-fit: cover;
+                   object-position: top center; display: block; }
     .queue-grid.with-shot { display: grid; grid-template-columns: 1fr 1fr; gap: 48px;
-                            align-items: center; }
+                            align-items: stretch; }
 
     /* icon per tile */
-    .stack-card .ic { display: block; width: 34px; height: 34px; margin-bottom: 16px; }
+    .stack-card .ic-chip { display: grid; place-items: center; width: 52px; height: 52px;
+                          border-radius: 14px; background: var(--ink); margin-bottom: 20px; }
+    .stack-card .ic { display: block; width: 26px; height: 26px; }
     .stack-note-row { display: flex; align-items: center; gap: 12px; justify-content: center;
                       margin-top: 26px; flex-wrap: wrap; }
     .stack-note-row img { height: 22px; width: auto; }
     .stack-note-row p { font-size: 15.5px; line-height: 1.7; color: var(--gray); margin: 0; }
+
+    .call-sub { display: flex; align-items: center; justify-content: center; gap: 10px;
+                margin: 40px 0 16px; }
+    /* CSS beats the inline stroke presentation attribute, so the same glyph
+       can be lime in a dark chip and ink on a light band. */
+    .call-sub svg { width: 22px; height: 22px; flex: none; stroke: var(--ink); }
+    .call-sub span { font-size: 13px; font-weight: 800; letter-spacing: .13em;
+                     text-transform: uppercase; color: var(--ink); }
+    .call-band .call-sub:first-of-type { margin-top: 8px; }
 
     /* customer logo in the hero */
     .cust-logo { height: 30px; width: auto; margin-bottom: 18px; }
@@ -245,6 +258,7 @@
     @media (max-width: 809px) {
       .pq { grid-template-columns: 1fr; gap: 26px; text-align: center; justify-items: center; }
       .pq .portrait, .pq .mono-lg { width: 180px; height: 180px; }
+      .browser img { height: 260px; flex: none; }
       .pq blockquote { font-size: 22px; }
       .queue-grid.with-shot { grid-template-columns: 1fr; gap: 30px; }
     }
@@ -386,12 +400,13 @@
     <section class="stack"><div class="stack-grid"><div class="stack-card"><h3>Configuration questions block checkout</h3><p>The customer is not browsing. They have chosen, and they need one thing confirmed before they pay — which makes the answer worth more than the call costs.</p></div><div class="stack-card"><h3>Several languages, one team</h3><p>Cross-border demand does not queue politely inside one country&#x27;s office hours.</p></div><div class="stack-card"><h3>The catalogue changes constantly</h3><p>Components, finishes and stock move. An answer that was right last month is a returned order this month.</p></div></div></section>
     <section class="stack">
       <h2>What went live</h2>
-      <div class="stack-grid"><div class="stack-card"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="rgb(204,255,0)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/><circle cx="9" cy="7" r="2.2"/><circle cx="15" cy="12" r="2.2"/><circle cx="8" cy="17" r="2.2"/></svg><h3>Pre-sales consultation</h3><p>Component and compatibility questions answered against the live catalogue, in the caller&#x27;s language.</p></div><div class="stack-card"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="rgb(204,255,0)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7.5 12 3l9 4.5v9L12 21l-9-4.5z"/><path d="M3 7.5 12 12l9-4.5"/><path d="M12 12v9"/></svg><h3>Checkout summary via text</h3><p>What was discussed — items, specs, a direct link — sent as a message after the call, so the customer can complete the order without reconstructing it from memory.</p></div><div class="stack-card"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="rgb(204,255,0)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7.5"/><path d="M3.5 11h15"/><path d="M11 3.5c2 2.4 3 5 3 7.5s-1 5.1-3 7.5"/><path d="M11 3.5c-2 2.4-3 5-3 7.5s1 5.1 3 7.5"/></svg><h3>Escalation to the team</h3><p>Bespoke configurations and anything commercially unusual routed to a person with the full context.</p></div></div>
+      <div class="stack-grid"><div class="stack-card"><span class="ic-chip"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="rgb(204,255,0)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/><circle cx="9" cy="7" r="2.2"/><circle cx="15" cy="12" r="2.2"/><circle cx="8" cy="17" r="2.2"/></svg></span><h3>Pre-sales consultation</h3><p>Component and compatibility questions answered against the live catalogue, in the caller&#x27;s language.</p></div><div class="stack-card"><span class="ic-chip"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="rgb(204,255,0)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7.5 12 3l9 4.5v9L12 21l-9-4.5z"/><path d="M3 7.5 12 12l9-4.5"/><path d="M12 12v9"/></svg></span><h3>Checkout summary via text</h3><p>What was discussed — items, specs, a direct link — sent as a message after the call, so the customer can complete the order without reconstructing it from memory.</p></div><div class="stack-card"><span class="ic-chip"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="rgb(204,255,0)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7.5"/><path d="M3.5 11h15"/><path d="M11 3.5c2 2.4 3 5 3 7.5s-1 5.1-3 7.5"/><path d="M11 3.5c-2 2.4-3 5-3 7.5s1 5.1 3 7.5"/></svg></span><h3>Escalation to the team</h3><p>Bespoke configurations and anything commercially unusual routed to a person with the full context.</p></div></div>
       <div class="stack-note-row"><p><span class="ph">Platform, languages live, and go-live date to be confirmed.</span></p></div>
     </section>
     <section class="call-band">
       <h2>What a Creative Cables call sounds like</h2>
       
+      <p class="call-sub"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="rgb(204,255,0)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/><circle cx="9" cy="7" r="2.2"/><circle cx="15" cy="12" r="2.2"/><circle cx="8" cy="17" r="2.2"/></svg><span>Product Configurator</span></p>
       <p class="call-caption">Example call · configuration</p>
       <div class="call-panel">
         <div class="panel-head"><span class="ph-left"><span class="dot"></span>Live call — Sabato Agent</span>
@@ -415,7 +430,7 @@
       </div>
     </section>
     <section class="cta-band">
-      <h2>Want the same for your catalogue?</h2>
+      <h2>Want the same for your <span class="nb">e-commerce</span> store?</h2>
       <p>A pilot runs on your real calls for two weeks and measures what changed against your own baseline.</p>
       <a class="btn-pill" href="https://cal.com/sabatoai/intro" target="_blank" rel="noopener">Start Free Pilot</a>
     </section>

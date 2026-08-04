@@ -24,15 +24,21 @@ OUT = "site/customers"
 PH_RX = re.compile(r"\[\[(.+?)\]\]", re.DOTALL)
 
 
+NB_RX = re.compile(r"\b([eE]-[cC]ommerce)\b")
+
+
 def ph(text):
-    """Escape, then turn [[...]] into a visible TBC chip."""
+    """Escape, turn [[...]] into a visible TBC chip, and keep 'e-commerce' whole.
+
+    Browsers treat the hyphen as a break opportunity, so a headline can split as
+    'e-' / 'commerce'. Site convention is the .nb nowrap span."""
     out, last = [], 0
     for m in PH_RX.finditer(text):
         out.append(html.escape(text[last:m.start()]))
         out.append('<span class="ph">%s</span>' % html.escape(m.group(1)))
         last = m.end()
     out.append(html.escape(text[last:]))
-    return "".join(out)
+    return NB_RX.sub(r'<span class="nb">\1</span>', "".join(out))
 
 
 def is_ph(text):
@@ -117,7 +123,7 @@ def section_situation(d):
 
 def section_stack(d):
     cards = "".join(
-        '<div class="stack-card">%s<h3>%s</h3><p>%s</p></div>'
+        '<div class="stack-card"><span class="ic-chip">%s</span><h3>%s</h3><p>%s</p></div>'
         % (ICONS.get(icon, ""), ph(t), ph(b))
         for icon, t, b in d["stack"])
     logo = ('<img src="%s" alt="%s" loading="lazy">' % (d["platform_logo"], d["platform"])
@@ -139,12 +145,14 @@ def section_call(d):
             '<div class="t-row %s"><span class="t-spk">%s%s</span><p>%s</p></div>'
             % (who, SPK[who], GLYPH, ph(txt)) for who, txt in c["lines"])
         panels += """
+      <p class="call-sub">%s<span>%s</span></p>
       <p class="call-caption">%s</p>
       <div class="call-panel">
         <div class="panel-head"><span class="ph-left"><span class="dot"></span>Live call — Sabato Agent</span>
           <span class="ph-time">· %s</span></div>
         %s
-      </div>""" % (ph(c["caption"]), ph(c["duration"]), rows)
+      </div>""" % (ICONS.get(c.get("icon"), ""), ph(c["label"]), ph(c["caption"]),
+             ph(c["duration"]), rows)
     return """
     <section class="call-band">
       <h2>%s</h2>
