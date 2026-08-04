@@ -17,6 +17,7 @@ PAGES = ["/", "/it", "/pricing", "/about", "/contact", "/blog", "/it/blog",
          "/blog/should-you-remove-the-phone-number",
          "/it/blog/should-you-remove-the-phone-number",
          "/blog/what-a-conversation-actually-costs",
+         "/it/blog/what-a-conversation-actually-costs",
          "/use-cases/where-is-my-order", "/it/casi-duso/dove-e-il-mio-ordine",
          "/industries", "/industries/home-improvement", "/industries/fashion-apparel",
          "/it/settori", "/it/settori/clima-e-riscaldamento", "/it/settori/moda-abbigliamento",
@@ -142,6 +143,19 @@ with sync_playwright() as p:
             }
             if not it and path in ("/", "/pricing", "/about", "/contact"):
                 checks["dropdown_present"] = pg.evaluate("!!document.querySelector('[data-uc-dropdown]')")
+            # A blog post that has a sibling in the other language must declare
+            # it both ways. The visible language-switch link is for humans and
+            # proves nothing to a crawler; blog posts shipped without these tags
+            # for months while use-case pages had them.
+            if "/blog/" in path:
+                checks["hreflang_pair"] = pg.evaluate("""(slug) => {
+                  const a = {};
+                  document.querySelectorAll('link[rel=alternate]').forEach(l => {
+                    a[l.getAttribute('hreflang')] = (l.getAttribute('href')||'')
+                      .replace('https://www.sabato.ai', ''); });
+                  const en = '/blog/' + slug, it = '/it/blog/' + slug;
+                  return a.en === en && a.it === it && a['x-default'] === en;
+                }""", path.rsplit("/", 1)[1])
             if not it:
                 # every footer use-case link must point at its real page, not the old anchor
                 checks["footer_uc_links"] = pg.evaluate("""(() => {

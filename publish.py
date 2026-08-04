@@ -574,6 +574,16 @@ def build_post(fm, body, L, sibling_exists):
                 f'style="color:#fff;text-decoration:underline;text-underline-offset:3px;">'
                 f'{L["switch_label"]}</a></span>')
         page = page.replace(L["byline"], L["byline"] + link)
+        # hreflang, both directions, English as x-default - the same convention
+        # the use-case and industry pages already follow. The visible "Read in
+        # English" link is for humans; without these tags a search engine is
+        # free to serve the wrong language version of the same slug.
+        en = f"{BASE}/blog/{fm['slug']}"
+        it = f"{BASE}/it/blog/{fm['slug']}"
+        alts = (f'<link rel="alternate" hreflang="en" href="{en}">\n'
+                f'  <link rel="alternate" hreflang="it" href="{it}">\n'
+                f'  <link rel="alternate" hreflang="x-default" href="{en}">\n  ')
+        page = page.replace('<link rel="canonical"', alts + '<link rel="canonical"', 1)
     return page, minutes
 
 
