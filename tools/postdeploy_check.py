@@ -35,7 +35,7 @@ NAV_COUNT_JS = """(label) => {
 
 # Blog lives in the FOOTER, not the header (right after Book a Demo / Prenota una
 # Demo). Assert both halves: absent from the header, present exactly once in the
-# footer, pointing at the right language and NOT opening in a new tab — the
+# footer, pointing at the right language and NOT opening in a new tab - the
 # footer link is cloned from the cal.com demo button, which carries target=_blank.
 BLOG_PLACEMENT_JS = """(expectedHref) => {
   const pageH = document.body.scrollHeight;
@@ -67,7 +67,7 @@ with sync_playwright() as p:
             pg.goto(BASE + path, wait_until="networkidle", timeout=45000)
             pg.wait_for_timeout(2500)
 
-            # The ROI calculator is a standalone React tool page — no site
+            # The ROI calculator is a standalone React tool page - no site
             # header, footer or nav by design, so the shared checks below do not
             # apply. What matters is that it actually mounts: a blank #root is
             # exactly how a broken asset path or a Babel failure presents.
@@ -158,7 +158,7 @@ with sync_playwright() as p:
         pg.close()
     b.close()
 
-# click-through test: an href alone is not proof — Framer's router can intercept
+# click-through test: an href alone is not proof - Framer's router can intercept
 print("\nclick-through checks:")
 with sync_playwright() as p:
     b = p.chromium.launch(executable_path="/opt/pw-browsers/chromium", args=["--no-sandbox"])

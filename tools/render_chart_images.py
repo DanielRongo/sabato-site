@@ -3,7 +3,7 @@
 
 Each `:::chart bar` figure already carries the Sabato mark and the
 "© 2026 Sabato LTD · sabato.ai" credit inside the figure, so the credit
-survives a screenshot or a right-click-save — not just a link. This tool
+survives a screenshot or a right-click-save - not just a link. This tool
 screenshots those figures at 2x into site/blog/charts/ (and site/it/blog/charts/)
 so the "↓ PNG" button on each chart resolves to a real file.
 
@@ -55,7 +55,7 @@ def main():
             pg = ctx.new_page()
             pg.goto(BASE + url_path, wait_until="networkidle", timeout=45000)
             pg.wait_for_timeout(1200)
-            # hide the share row itself — it is UI, not part of the graphic
+            # hide the share row itself - it is UI, not part of the graphic
             pg.add_style_tag(content=".chart-share{display:none !important}"
                                      ".chart-card{background:#F8F4F1 !important}")
             figs = pg.query_selector_all("figure.chart-card")

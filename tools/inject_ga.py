@@ -6,8 +6,8 @@ Run after every build:  python3 tools/inject_ga.py
 Two things this has to handle, because the site has two DOM families:
 
 1. Framer-exported pages (/, /it, /pricing, /about, /contact, ...) already ship
-   a gtag pair — an init block early in <head> and the async loader just before
-   </head> — wired to Framer's placeholder property G-499419803. That ID is
+   a gtag pair - an init block early in <head> and the async loader just before
+   </head> - wired to Framer's placeholder property G-499419803. That ID is
    malformed for GA4 (nine digits; GA4 wants ten alphanumerics after "G-"), so
    those pages have been reporting to nothing. We rewrite the ID in place
    rather than adding a second tag, which would double-count every pageview.
@@ -16,7 +16,7 @@ Two things this has to handle, because the site has two DOM families:
    them have no tag at all. They get the standard snippet inserted before
    </head>, fenced by a marker comment so re-runs are no-ops.
 
-Templates are patched too — otherwise the next publish.py / industries.py run
+Templates are patched too - otherwise the next publish.py / industries.py run
 silently strips the tag off every page it regenerates.
 """
 import glob
@@ -81,7 +81,7 @@ def main():
     files = sorted(set(glob.glob("site/**/*.html", recursive=True) +
                        glob.glob("templates/*.html")))
     if not files:
-        sys.exit("no HTML found — run this from the repo root")
+        sys.exit("no HTML found - run this from the repo root")
 
     tally = {}
     changed = 0

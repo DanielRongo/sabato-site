@@ -3,7 +3,7 @@
 
 enhance.js is what injects the footer Blog link, the Use Cases dropdown and the
 click interceptor. It is referenced by a bare, unversioned path, so a browser
-holding an old copy keeps running old behaviour indefinitely — the user sees a
+holding an old copy keeps running old behaviour indefinitely - the user sees a
 site that is missing features the repo clearly contains, and nothing on our side
 reproduces it. (This is the same class of bug as the immutable /fuc/ cache, but
 worse: /fuc/ files are at least hash-named by Framer.)

@@ -159,7 +159,7 @@ BLOCK_RE = re.compile(r"^:::[ \t]*([A-Za-z][\w-]*)[ \t]*([^\n]*)\n(.*?)^:::[ \t]
                       re.S | re.M)
 BLOCK_TOKEN = "SABATOBLOCK%dENDBLOCK"
 SRC_RE = re.compile(r"^\s*(?:sources?|fonte|fonti)\s*:\s*", re.I)
-BULLET_RE = re.compile(r"^\s*(?:[-*•–]|\d+[.)])\s+")
+BULLET_RE = re.compile(r"^\s*(?:[-*• - ]|\d+[.)])\s+")
 
 
 def esc(s):
@@ -310,13 +310,13 @@ def blk_quote(arg, raw, L):
     if not lines:
         raise ValueError("empty quote")
     attrib = ""
-    if len(lines) > 1 and re.match(r"^(—|–|--)\s*", lines[-1]):
-        attrib = re.sub(r"^(—|–|--)\s*", "", lines[-1]).strip()
+    if len(lines) > 1 and re.match(r"^( - | - |--)\s*", lines[-1]):
+        attrib = re.sub(r"^( - | - |--)\s*", "", lines[-1]).strip()
         lines = lines[:-1]
     if not lines:
         raise ValueError("quote is attribution only")
     text = " ".join(lines)
-    cap = f'<figcaption>— {inl(attrib)}</figcaption>' if attrib else ""
+    cap = f'<figcaption> - {inl(attrib)}</figcaption>' if attrib else ""
     return (f'<figure class="pullquote"><blockquote><p>{inl(text)}</p></blockquote>'
             f'{cap}</figure>')
 
@@ -413,7 +413,7 @@ def render_block(name, arg, raw, L):
     try:
         return fn(arg, raw, L)
     except Exception as e:          # a malformed block must never break the page
-        print(f"    ! :::{name} skipped ({e}) — rendered as plain text")
+        print(f"    ! :::{name} skipped ({e}) - rendered as plain text")
         return raw_fallback(name, arg, raw)
 
 
@@ -520,7 +520,7 @@ def jsonld(fm, url, faq_entries, L):
 def add_chart_sharing(content, fm, url, L):
     """Give every chart a share row that shares the IMAGE, not the post URL.
 
-    LinkedIn and X share-intents only accept a URL to unfurl — a site cannot push
+    LinkedIn and X share-intents only accept a URL to unfurl - a site cannot push
     an image into their composer. So the buttons here move the PNG itself:
     the native share sheet with the file attached where the browser supports it
     (mobile), copy-to-clipboard to paste straight into a composer (desktop), and

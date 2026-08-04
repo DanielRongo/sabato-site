@@ -59,7 +59,7 @@ FOOTER_INDUSTRIES = [
 
 
 # --------------------------------------------------------------------------
-# SVG category scenes — flat, geometric, palette only. Written as code so they
+# SVG category scenes - flat, geometric, palette only. Written as code so they
 # scale, restyle from tokens and weigh a few KB. No raster, no photography.
 # --------------------------------------------------------------------------
 SCENES = {
@@ -116,7 +116,7 @@ SCENES = {
   <circle cx="116" cy="130" r="24" fill="rgb(18,10,11)"/>
   <text x="44" y="234" class="s-s">M10 &#215; 40 &#183; A4-316</text>
   <rect x="230" y="76" width="216" height="52" rx="8" fill="none" stroke="rgb(227,226,226)" stroke-width="2"/>
-  <text x="248" y="108" class="s-s" font-size="15">1&#8211;99 &#183; &#163;1.18</text>
+  <text x="248" y="108" class="s-s" font-size="15">1-99 &#183; &#163;1.18</text>
   <rect x="230" y="140" width="216" height="52" rx="8" fill="rgb(204,255,0)"/>
   <text x="248" y="172" class="s-b" font-size="15">200+ &#183; &#163;0.94</text>
   <text x="230" y="222" class="s-s">Harlow Engineering &#183; contract price</text>''',
@@ -178,7 +178,7 @@ SCENES = {
 
 def scene(kind):
     """Flat geometric SVG per category. One layout law across all nine: the
-    situation on the left, the resolved answer in a dark card on the right —
+    situation on the left, the resolved answer in a dark card on the right -
     so the family reads as one system rather than nine separate drawings."""
     alt, body, lbl, big, notes = SCENES[kind]
     ns = "".join(
@@ -356,7 +356,7 @@ def build_index(lang="en"):
 
 
 def link_footer_industries():
-    """Footer industries ship as plain <span>. Make them real links — and point
+    """Footer industries ship as plain <span>. Make them real links - and point
     Italian pages at Italian pages. An earlier version keyed only on the English
     label and put /industries/ hrefs onto nine Italian pages, which is a worse
     bug than leaving them unlinked."""

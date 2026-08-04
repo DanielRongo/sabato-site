@@ -1,2 +1,0 @@
-import{t as e}from"./rolldown-runtime.Dh6celcD.mjs";function t(e,t){return{description:`Managed voice AI that guides buyers through complex product decisions — sizing, compatibility, specs. We build it, we run it. You capture the sales.`,favicon:`/fuc/assets/hWFOqN6Okd1QgfKhizqgIF1s.png`,robots:`max-image-preview:large`,socialImage:`/fuc/assets/yjZrQNnxTtFKw7SYnjSNx0JyJ8g.png`,title:`Voice AI Agent Platform for E-Commerce | Sabato AI`}}var n=e((()=>{}));export{t as n,n as t};
-//# sourceMappingURL=siteMetadata.BuI7ZWsO.mjs.map

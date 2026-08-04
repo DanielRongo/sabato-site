@@ -5,7 +5,7 @@ One 24x24 lime line-glyph per industry, so a visitor knows which vertical they
 are on before reading a word. Written as SVG code, like every other graphic on
 the site: flat, geometric, palette-only, no raster.
 
-Drawn on a 24x24 grid with a 2px stroke so all nine share a weight — a mixed
+Drawn on a 24x24 grid with a 2px stroke so all nine share a weight - a mixed
 set of stroke widths is the fastest way to make a glyph family look bought
 rather than designed.
 """

@@ -24,7 +24,7 @@
   }
 
   /* Use-case pages that exist. label = exact text on the site; href = live page.
-     Italian list holds only the pages actually built — unbuilt ones keep their
+     Italian list holds only the pages actually built - unbuilt ones keep their
      original anchor so nothing links to a 404. */
   var USECASES_EN = [
     { label: "Pre-Sales Consultation", href: "/use-cases/pre-sales-consultation" },
@@ -84,13 +84,13 @@
   var IND_ALL_HREF = IT ? "/it/settori" : "/industries";
 
   /* ---------- 1. Extra links in the FOOTER, right after "Book a Demo" ----------
-     (Deliberately not in the top nav — the header stays as designed.)
+     (Deliberately not in the top nav - the header stays as designed.)
      Each is a clone of the demo button, so it inherits the footer's styling
      whatever Framer decides that is this week. Order here is the order on the
      page.
 
      /roi-calculator is deliberately NOT in this list. It is hosted but
-     unlisted — reachable only by someone given the URL directly. Adding it
+     unlisted - reachable only by someone given the URL directly. Adding it
      here puts it in the footer of all 74 pages, which is the opposite of
      unlisted. */
   var DEMO_LABEL = IT ? "Prenota una Demo" : "Book a Demo";
@@ -100,7 +100,7 @@
 
   function injectFooterLinks() {
     /* "Book a Demo" appears several times (mid-page CTAs + footer). The footer
-       one is always the lowest on the page — pick that, never a hero CTA. */
+       one is always the lowest on the page - pick that, never a hero CTA. */
     var links = document.querySelectorAll("a");
     var target = null, targetY = -1;
     for (var i = 0; i < links.length; i++) {
@@ -129,7 +129,7 @@
       ca.href = spec.href;
       ca.setAttribute(spec.attr, "1");
       ca.removeAttribute("data-uc-wired");
-      /* the demo button opens cal.com in a new tab — these are internal */
+      /* the demo button opens cal.com in a new tab - these are internal */
       ca.removeAttribute("target");
       ca.removeAttribute("rel");
       wrapper.parentElement.insertBefore(clone, wrapper.nextSibling);
@@ -139,12 +139,12 @@
   /* ---------- 2. Use Cases dropdown ----------
      Two structural problems this solves:
      (a) nav markup differs between Framer pages (one wrapper per link) and our
-         own templates (one shared <nav>), so parent-relative centring drifts —
+         own templates (one shared <nav>), so parent-relative centring drifts -
          we position fixed against the LINK's own bounding box instead;
      (b) Framer re-renders the nav after hydration, orphaning listeners bound to
-         a specific element — so we delegate off document and resolve the link
+         a specific element - so we delegate off document and resolve the link
          fresh on every hover. */
-  /* A nav link in the top 200px whose label matches — the trigger for a menu. */
+  /* A nav link in the top 200px whose label matches - the trigger for a menu. */
   function currentNavLink(node, label) {
     var a = node && node.closest ? node.closest("a") : null;
     if (!a) return null;
@@ -278,7 +278,7 @@
 
   /* ---------- 4. Beat Framer's client-side router to the click ----------
      Framer hydrates its own router, which intercepts link clicks, calls
-     preventDefault() and navigates via an internal route table — so rewriting
+     preventDefault() and navigates via an internal route table - so rewriting
      an anchor's href is not enough on Framer-rendered pages: the click still
      goes to the original destination. We listen on `window` in the CAPTURE
      phase (the earliest point in the event path, before any document-level
@@ -304,7 +304,7 @@
     /* Framer wraps each nav link in its own container div; our templates put the
        anchors straight into <nav>. Cloning the anchor on a Framer page drops a
        second link INSIDE that 75px wrapper, which stacks it onto a second row.
-       So clone the wrapper when it holds exactly one anchor — and only then,
+       So clone the wrapper when it holds exactly one anchor - and only then,
        because cloning a wrapper that holds the whole nav duplicates the header. */
     var wrap = src.parentElement;
     var cloneWrapper = wrap && wrap !== document.body &&
@@ -328,7 +328,7 @@
     node.parentNode.insertBefore(el, node.nextSibling);
 
     /* A sixth item can push a fixed-gap nav onto two rows. Only shrink the gap
-       if that actually happened — measured, not assumed. */
+       if that actually happened - measured, not assumed. */
     var row = el.parentElement;
     if (row && getComputedStyle(row).display.indexOf("flex") === 0) {
       var tops = {}, kids = row.children, count = 0;
@@ -342,7 +342,7 @@
 
   /* ---------- Footer industry links ----------
      On Framer pages these labels sit inside <a> elements that have no href at
-     all, so they need one setting rather than retargeting — a different repair
+     all, so they need one setting rather than retargeting - a different repair
      from the use-case links, which had a wrong href. */
   function wireIndustryTargets() {
     for (var i = 0; i < INDUSTRIES.length; i++) {
@@ -389,7 +389,7 @@
 
   /* ---------- 6. Customer stories band on the homepage ----------
      DRAFT. Placeholders render as loud orange TBC chips and the band is only
-     injected on staging hosts — see BAND_ENABLED below.
+     injected on staging hosts - see BAND_ENABLED below.
 
      Why this is injected rather than written into index.html: Framer pages are
      React-hydrated, so markup added to the HTML is thrown away the moment React
@@ -400,7 +400,7 @@
 
      Position: directly after the workflows section. That is the moment the
      visitor has understood what the product does and is silently asking whether
-     it works for someone like them — and it puts evidence immediately before
+     it works for someone like them - and it puts evidence immediately before
      the 9 / 24-7 / 2-weeks stat block, so those read as track record rather
      than claim. */
   var BAND_ANCHOR = IT ? "Scegli i workflow. Al resto pensiamo noi."
@@ -416,8 +416,8 @@
   var BAND_ITEMS = [
     { slug: "clima-convenienza", name: "ClimaConvenienza", initials: "CC",
       metric: "53.1%", ph: false,
-      label: IT ? "delle chiamate gestite in autonomia \u2014 9 agenti live in 3 lingue"
-                : "of calls handled autonomously \u2014 9 agents live across 3 languages",
+      label: IT ? "delle chiamate gestite in autonomia - 9 agenti live in 3 lingue"
+                : "of calls handled autonomously - 9 agents live across 3 languages",
       person: "Alessio Perrucci", role: "CEO" },
     { slug: "creative-cables", name: "Creative Cables", initials: "CC",
       metric: "00%", ph: true,

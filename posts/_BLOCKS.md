@@ -1,4 +1,4 @@
-# Blog blocks — authoring cheat-sheet
+# Blog blocks - authoring cheat-sheet
 
 Paste these straight into a post body (`posts/en/*.md`, `posts/it/*.md`) or into a
 Google Sheet cell. Every block is a fence: a line that starts with `:::name`, then
@@ -8,18 +8,18 @@ Rules that apply to all blocks:
 
 * **One item per line.** No indentation needed. Blank lines inside a block are ignored
   (except in `:::keystat`, where a blank line starts a second stat card).
-* **Nothing is invented.** A block renders exactly the text you give it — numbers, labels,
+* **Nothing is invented.** A block renders exactly the text you give it - numbers, labels,
   sources, order. If you don't supply a source line, no source line appears.
 * **A typo can't break the page.** If a block is malformed, its lines are rendered as
   ordinary paragraphs and `publish.py` prints a warning in the build log.
 * Inline markdown works on every line: `**bold**`, `*italic*`, `[link](https://…)`, `` `code` ``.
 * Fixed labels follow the post's language automatically: *The takeaway* / *In sintesi*,
   *What to do* / *Cosa fare*, *Source:* / *Fonte:*.
-* Leading `-` or `1.` bullets are optional — they're stripped either way.
+* Leading `-` or `1.` bullets are optional - they're stripped either way.
 
 ---
 
-## 1. `:::keystat` — big lime number on a black card
+## 1. `:::keystat` - big lime number on a black card
 
 ```
 :::keystat
@@ -44,7 +44,7 @@ Source: CSA Research, 2020
 :::
 ```
 
-## 2. `:::takeaway` — the save-worthy summary box
+## 2. `:::takeaway` - the save-worthy summary box
 
 ```
 :::takeaway
@@ -57,7 +57,7 @@ One language at a time. Prove it, then add the next.
 Off-white card with a lime rule. The heading is automatic (*The takeaway* / *In sintesi*).
 Override it if you must: `:::takeaway What this means for you`.
 
-## 3. `:::action` — numbered "do this" checklist
+## 3. `:::action` - numbered "do this" checklist
 
 ```
 :::action
@@ -72,12 +72,12 @@ Score each market: revenue × language dependence × AOV.
 Start the first line with `-` (or skip the heading entirely) to get the default
 heading *What to do* / *Cosa fare*.
 
-## 4. `:::compare` — two-column comparison card
+## 4. `:::compare` - two-column comparison card
 
 ```
 :::compare Same question, two channels
 Email flow | Voice call
-First response | 4–12 hours | Under 30 seconds
+First response | 4-12 hours | Under 30 seconds
 Turns to resolve | 3 messages | One call
 Data captured | Whatever they type | Order number, issue, photos
 :::
@@ -88,19 +88,19 @@ Every line after = `row label | left value | right value` (exactly three).
 The right-hand column is the highlighted one. Text after `:::compare` is an optional
 title above the card. On mobile the rows stack into labelled cards.
 
-## 5. `:::quote` — pull quote
+## 5. `:::quote` - pull quote
 
 ```
 :::quote
 A monolingual line doesn't produce complaints. It produces silence.
-— Daniel Rongo, Sabato AI
+ - Daniel Rongo, Sabato AI
 :::
 ```
 
-Large italic Satoshi with a lime vertical rule. A last line starting with `—` (em dash)
+Large italic Satoshi with a lime vertical rule. A last line starting with ` - ` (em dash)
 becomes the attribution; leave it out and you just get the quote.
 
-## 6. Markdown tables — no fence needed
+## 6. Markdown tables - no fence needed
 
 ```
 | Market | Share of revenue | AOV |
@@ -112,7 +112,7 @@ becomes the attribution; leave it out and you just get the quote.
 Renders as a rounded card: uppercase header row on off-white with a lime underline,
 striped rows, bold first column, horizontal scroll on mobile.
 
-## 7. `:::chart bar` — horizontal bar chart
+## 7. `:::chart bar` - horizontal bar chart
 
 ```
 :::chart bar
@@ -142,4 +142,4 @@ python3 publish.py
 ```
 
 Warnings that read `! :::name skipped (…)` mean a block was malformed and got rendered as
-plain text — fix the line the message quotes and re-run.
+plain text - fix the line the message quotes and re-run.

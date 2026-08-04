@@ -36,7 +36,7 @@ class NetlifyLike(SimpleHTTPRequestHandler):
         # Mirror the site/_headers rule for Framer's hash-suffixed icon modules
         # (e.g. plus.js@0.0.29). Must override guess_type, not add a header in
         # end_headers: SimpleHTTPRequestHandler already sent one Content-Type by
-        # then, and the browser honours the first — which rejects ES modules.
+        # then, and the browser honours the first - which rejects ES modules.
         if ".js@" in path or path.endswith((".js", ".mjs")):
             return "text/javascript"
         return super().guess_type(path)

@@ -1,7 +1,7 @@
-# Session handoff — 3 Aug 2026
+# Session handoff - 3 Aug 2026
 
 Read this **after** `SABATO-SITE-HANDBOOK.md`. The handbook is the permanent
-playbook; this file is the volatile part — what just shipped, what is half-done,
+playbook; this file is the volatile part - what just shipped, what is half-done,
 and what is waiting on a decision. Delete sections as they are resolved.
 
 ## How to bootstrap a new chat
@@ -35,16 +35,16 @@ it up without re-deriving anything.
 
 Notes that are easy to lose:
 
-- **GA4** — Framer pages shipped with Framer's placeholder property
+- **GA4** - Framer pages shipped with Framer's placeholder property
   `G-499419803`, malformed for GA4 (nine digits, GA4 wants ten alphanumerics), so
   the homepage reported to nothing for months. `tools/inject_ga.py` rewrites it in
   place rather than adding a second tag; run it **last** in every build.
-- **ROI calculator** — hosted but unlisted: `noindex,nofollow`, absent from the
+- **ROI calculator** - hosted but unlisted: `noindex,nofollow`, absent from the
   sitemap, and nothing links to it. `robots.txt` is deliberately untouched (a
   `Disallow` line would publish the path and would also stop crawlers seeing the
   `noindex`). Daniel's reasoning: "cost of a human vs our robot" is fine to walk a
   CFO through on a call, dangerous unattended on a public page.
-  It weighs 4.4MB raw / ~900KB gzipped — React *development* build plus in-browser
+  It weighs 4.4MB raw / ~900KB gzipped - React *development* build plus in-browser
   Babel. Swapping to React production and pre-compiling the JSX would take it to
   ~60KB gzipped without touching a line of the calculator's code.
 - **Crisp** was a Framer `bodyEnd` snippet (`BWQzQLg24`), website ID
@@ -52,16 +52,16 @@ Notes that are easy to lose:
 
 ---
 
-## Fixed — CTA panel covering the footer logo (`b8db75f`)
+## Fixed - CTA panel covering the footer logo (`b8db75f`)
 
 Shipped as a per-page, per-breakpoint `<style id="cta-footer-clearance">` block
-lifting the CTA card at 768–1199px and ≤767px. Desktop untouched. Applied to
+lifting the CTA card at 768-1199px and ≤767px. Desktop untouched. Applied to
 index, pricing, contact, it, it/prezzi, it/contatti, it/chi-siamo; about.html was
 already clear.
 
-**Two cases still covered — decide whether they are worth another pass:**
+**Two cases still covered - decide whether they are worth another pass:**
 
-- `/it` at 600–767px: lifted 118px, measurement says it needs ~150. Still 32px of
+- `/it` at 600-767px: lifted 118px, measurement says it needs ~150. Still 32px of
   overlap.
 - `/404` at 900px: same CTA structure but not included in the fix at all.
 - Everywhere else the gap lands between −5 and +7px rather than the intended
@@ -72,7 +72,7 @@ Background below is kept because it explains why the obvious fixes do not work.
 
 On Framer pages at mobile widths the final lime CTA panel is painted on top of
 the footer's Sabato logo, so the footer reads as an unlabelled block of links.
-Reproduced at 390px, 600px and 767px on `/` (107–119px of overlap) and on
+Reproduced at 390px, 600px and 767px on `/` (107-119px of overlap) and on
 `/pricing`. Clean at 1440px. Authored pages (use-cases, industries, blog) are
 clean at every width.
 
@@ -93,7 +93,7 @@ reserve space for it, and `z-index: 1` puts it over the footer.
 **Dead end already tested:** adding `padding-top` to the footer moves the overlap
 by only 6px (107 → 101). The CTA is positioned as a *percentage* of a container
 that includes the footer, so growing the footer pushes the CTA down by almost the
-same amount. Any fix that grows the footer is circular — do not retry it.
+same amount. Any fix that grows the footer is circular - do not retry it.
 
 **Live lever:** shift the panel itself. Either put it back in flow at mobile
 (`position: relative; top: auto; transform: none`) or shift it by a fixed pixel
@@ -110,7 +110,7 @@ overlapping the footer logo" generically.
 class names): scroll the footer logo to the middle of the viewport, then
 `document.elementFromPoint` at its centre. If the hit is not the logo, something
 is painted over it. Two probes were written before this one and both gave false
-results — one matched `QRoxyaGHHfHSyA4`, which is the *header* logo, so it kept
+results - one matched `QRoxyaGHHfHSyA4`, which is the *header* logo, so it kept
 "finding" the header covering itself; the other anchored on the last image on the
 page, which is the LinkedIn icon sitting below the logo. The footer logo's asset
 is `KY1UqOX7…` (white/inverted); the header's is `UTATYXc6…`.
@@ -127,7 +127,7 @@ is `KY1UqOX7…` (white/inverted); the header's is `UTATYXc6…`.
    deployment number) on either page; CTA drift between "Start Free Pilot",
    "Start a Pilot" and "Book a Demo"; minutes are the wrong unit for a CEO
    (calls are); homepage claims "9 voice workflows" while three are marked
-   Coming Soon. Recommendation: keep three tiers, cut ambiguity — who each tier
+   Coming Soon. Recommendation: keep three tiers, cut ambiguity - who each tier
    is for, calls not minutes, stated overage, escalation everywhere, one pilot
    promise. Mechanical fixes were approved but **not yet applied**.
 2. **Cookie consent.** GA4 sets `_ga` before any consent and there is no banner
@@ -139,5 +139,5 @@ is `KY1UqOX7…` (white/inverted); the header's is `UTATYXc6…`.
 4. **This repo is public.** The reverted ROI-calculator commits are still in
    history, so the calculator is readable by anyone who looks at the git log.
    Squashing it out is possible if that matters.
-5. **Footer layout differs between the two page families on mobile** — Framer
+5. **Footer layout differs between the two page families on mobile** - Framer
    pages centre the footer, authored pages left-align it. Not yet raised as a fix.

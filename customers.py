@@ -6,7 +6,7 @@
 Renders site/customers/<slug>.html from templates/customer.html using the
 content in customer_data.py. Sections are composed from the classes the
 use-case pages already define, so these pages inherit the design system rather
-than restating it — the only new CSS lives in the template.
+than restating it - the only new CSS lives in the template.
 
 Draft handling: any [[bracketed]] string becomes a loud orange TBC chip, and
 every page carries noindex + a DRAFT ribbon until Daniel has written sign-off on
@@ -49,7 +49,7 @@ def is_ph(text):
 
 
 def plain(text):
-    """Marker-free text for anywhere the string is not rendered as HTML —
+    """Marker-free text for anywhere the string is not rendered as HTML -
     JSON-LD, meta tags, alt text. Without this the [nb] markers leak into
     structured data, which is both wrong and visible to Google."""
     return NBM_RX.sub(r"\1", PH_RX.sub(r"\1", text))
@@ -60,14 +60,14 @@ _IW = ('<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="rgb(204,255,0)" 
        'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">%s</svg>')
 
 ICONS = {
-    # globe with a speech tail — multilingual
+    # globe with a speech tail - multilingual
     "languages": _IW % ('<circle cx="11" cy="11" r="7.5"/><path d="M3.5 11h15"/>'
                         '<path d="M11 3.5c2 2.4 3 5 3 7.5s-1 5.1-3 7.5"/>'
                         '<path d="M11 3.5c-2 2.4-3 5-3 7.5s1 5.1 3 7.5"/>'),
-    # parcel in transit — where is my order
+    # parcel in transit - where is my order
     "wismo": _IW % ('<path d="M3 7.5 12 3l9 4.5v9L12 21l-9-4.5z"/>'
                     '<path d="M3 7.5 12 12l9-4.5"/><path d="M12 12v9"/>'),
-    # sliders — configurator
+    # sliders - configurator
     "configurator": _IW % ('<line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/>'
                            '<line x1="4" y1="17" x2="20" y2="17"/><circle cx="9" cy="7" r="2.2"/>'
                            '<circle cx="15" cy="12" r="2.2"/><circle cx="8" cy="17" r="2.2"/>'),
@@ -115,7 +115,7 @@ def coverage_block(d):
 def section_situation(d):
     # The body colour on this band is scoped to `.queue-grid .qcopy .qbody` in
     # the use-case stylesheet. Reusing `.queue-band` without reproducing that
-    # exact ancestor chain silently renders ink-on-black — which is how the
+    # exact ancestor chain silently renders ink-on-black - which is how the
     # first draft of this page came out unreadable. Match their markup, don't
     # patch the colour.
     cards = "".join(
@@ -243,7 +243,7 @@ def section_cta(d):
 
 
 def jsonld(slug, d):
-    """Only emit review/quote markup once the quote is real — marking up a
+    """Only emit review/quote markup once the quote is real - marking up a
     placeholder as a genuine customer statement is exactly the kind of thing
     that gets a site penalised, and deserved."""
     if is_ph(d["quote"]) or d.get("quote_pending"):

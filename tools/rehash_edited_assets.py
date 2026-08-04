@@ -102,7 +102,7 @@ def main():
         all_renames.update(renames)
 
     if not all_renames:
-        print("nothing to rehash — all edited assets already have fresh names")
+        print("nothing to rehash - all edited assets already have fresh names")
         return 0
     print(f"\nrenamed {len(all_renames)} file(s) across {round_no} round(s)")
 
