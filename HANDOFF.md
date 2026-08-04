@@ -31,6 +31,7 @@ it up without re-deriving anything.
 | GA4 `G-BSK4KH9JJF` on all 73 pages, exactly once | `bf30113` |
 | ROI calculator hosted **unlisted** at `/roi-calculator` | `0d3e807` |
 | Crisp live chat removed; `Becked by` → `Backed by` | `16976fe` |
+| CTA card no longer covers the footer logo below 1200px | `b8db75f` |
 
 Notes that are easy to lose:
 
@@ -51,9 +52,23 @@ Notes that are easy to lose:
 
 ---
 
-## In flight — mobile CTA panel covers the footer logo
+## Fixed — CTA panel covering the footer logo (`b8db75f`)
 
-**Not fixed. Diagnosis is complete; do not redo it.**
+Shipped as a per-page, per-breakpoint `<style id="cta-footer-clearance">` block
+lifting the CTA card at 768–1199px and ≤767px. Desktop untouched. Applied to
+index, pricing, contact, it, it/prezzi, it/contatti, it/chi-siamo; about.html was
+already clear.
+
+**Two cases still covered — decide whether they are worth another pass:**
+
+- `/it` at 600–767px: lifted 118px, measurement says it needs ~150. Still 32px of
+  overlap.
+- `/404` at 900px: same CTA structure but not included in the fix at all.
+- Everywhere else the gap lands between −5 and +7px rather than the intended
+  ~48px, so the logo is visible but its top edge touches the card. Looks tight
+  rather than deliberate. Desktop keeps its original +39px.
+
+Background below is kept because it explains why the obvious fixes do not work.
 
 On Framer pages at mobile widths the final lime CTA panel is painted on top of
 the footer's Sabato logo, so the footer reads as an unlabelled block of links.
