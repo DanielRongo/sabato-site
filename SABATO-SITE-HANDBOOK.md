@@ -264,10 +264,22 @@ must point back:
 ```bash
 python3 publish.py                                   # blog build
 python3 industries.py                                # industry pages + hubs
+python3 customers.py                                 # customer stories, EN + IT
 python3 tools/inject_ga.py                           # ALWAYS last: re-stamps GA4
+python3 tools/dedash.py --dry                        # must report 0
 python3 tools/rehash_edited_assets.py                # after ANY edit under site/fuc/
 python3 tools/postdeploy_check.py <base-url>         # after EVERY deploy
 ```
+
+**Run the whole chain, in that order, even for a one-line blog change.** The
+page templates carry the Industries footer column as plain `<span>`s;
+`industries.py` is what turns them into links, site-wide, on every page it finds
+already built (`link_footer_industries()`). So `publish.py` on its own silently
+un-links nine footer entries on all ten blog pages. It looks like a build
+artefact in the diff, not a bug, and `postdeploy_check.py` does not catch it -
+its `footer_uc_links` check covers Use Cases only, and those *are* rewritten at
+runtime by `enhance.js`. Read the `git status` after a build: if a file you did
+not touch changed, find out why before committing.
 
 `postdeploy_check.py` sweeps every page type for: duplicated nav items, missing
 logo, local 4xx, console errors, dropdown presence, footer link targets, the GA4
