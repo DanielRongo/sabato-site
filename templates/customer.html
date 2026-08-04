@@ -142,6 +142,7 @@
                     color: #000; font-size: 11px; font-weight: 900; letter-spacing: .1em;
                     padding: 5px 14px; border-bottom-right-radius: 10px; }
 
+    .qcopy .qbody + .qbody { margin-top: 18px; }
     .cust-logo { height: 34px; width: auto; margin-bottom: 20px; }
     .cust-logo-fallback { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 20px;
                           font-size: 19px; font-weight: 900; letter-spacing: -.4px; color: var(--ink); }
@@ -178,6 +179,9 @@
     .pq .who .n { text-align: left; }
     .pq .who .n strong { display: block; font-size: 16px; font-weight: 700; color: var(--ink); }
     .pq .who .n span { font-size: 14px; color: var(--gray); }
+    .pq .pending { display: inline-block; margin-top: 26px; border: 2px dashed rgb(196,102,0);
+                   background: rgb(255,236,208); color: rgb(102,50,0); border-radius: 8px;
+                   padding: 6px 14px; font-size: 13px; font-weight: 700; }
 
     /* honest limits — what it does NOT do */
     .honest { max-width: 1200px; width: calc(100% - 80px); margin: 96px auto 0; border: 1px solid var(--line);
@@ -319,6 +323,7 @@
     <section class="split-hero">
       <div class="hero-copy">
         <span class="tag">{{CHIP}}</span>
+        {{MARK}}
         <h1>{{H1}}</h1>
         <p class="sub">{{SUB}}</p>
         <div class="hero-cta">
@@ -396,6 +401,6 @@
       </div>
     </div>
   </footer>
-<script src="/js/enhance.js?v=3175ed89c7" defer></script>
+<script src="/js/enhance.js?v=7c8b91e769" defer></script>
 </body>
 </html>

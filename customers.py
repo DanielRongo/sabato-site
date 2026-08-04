@@ -135,12 +135,15 @@ def section_quote(d):
         face = '<img src="%s" alt="%s">' % (d["photo"], html.escape(d["person"]))
     else:
         face = '<span class="mono">%s</span>' % html.escape(d["person_initials"])
+    pending = ('<p class="pending">Draft wording — awaiting written sign-off from %s</p>'
+               % html.escape(d["person"])) if d.get("quote_pending") else ""
     return """
     <section class="pq">
       <blockquote>%s</blockquote>
       <div class="who">%s<span class="n"><strong>%s</strong><span>%s, %s</span></span></div>
+      %s
     </section>""" % (ph(d["quote"]), face, html.escape(d["person"]),
-                     html.escape(d["role"]), html.escape(d["name"]))
+                     html.escape(d["role"]), html.escape(d["name"]), pending)
 
 
 def section_honest(d):
@@ -167,7 +170,7 @@ def jsonld(slug, d):
     """Only emit review/quote markup once the quote is real — marking up a
     placeholder as a genuine customer statement is exactly the kind of thing
     that gets a site penalised, and deserved."""
-    if is_ph(d["quote"]):
+    if is_ph(d["quote"]) or d.get("quote_pending"):
         return "<!-- JSON-LD withheld: quote not approved -->"
     import json
     return '<script type="application/ld+json">%s</script>' % json.dumps({
@@ -191,7 +194,8 @@ def build(slug, d):
             .replace("{{SLUG}}", slug)
             .replace("{{JSONLD}}", jsonld(slug, d))
             .replace("{{CHIP}}", ph(d["chip"]))
-            .replace("{{H1}}", mark + ph(d["h1"]))
+            .replace("{{MARK}}", mark)
+            .replace("{{H1}}", ph(d["h1"]))
             .replace("{{SUB}}", ph(d["sub"]))
             .replace("{{HERO_VISUAL}}", visual)
             .replace("{{SECTIONS}}", sections))

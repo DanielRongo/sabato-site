@@ -27,118 +27,126 @@ CUSTOMERS = {
     "clima-convenienza": {
         "name": "ClimaConvenienza",
         "initials": "CC",
-        "logo": None,                       # no asset yet -> monogram fallback
+        "logo": None,
         "person": "Alessio Perrucci",
         "person_initials": "AP",
         "role": "CEO",
-        "photo": None,                      # no headshot yet -> monogram fallback
+        "photo": None,
         "industry": "Home Improvement",
         "industry_href": "/industries/home-improvement",
         "chip": "Customer story",
         "title": "ClimaConvenienza — Voice AI Case Study | Sabato AI",
-        "description": ("How ClimaConvenienza handles pre-sales and order calls on heat pumps, "
-                        "boilers and air conditioning with a Sabato voice agent — 53.1% of calls "
-                        "resolved without a human."),
-        "h1": "ClimaConvenienza resolves half its phone calls without a human.",
-        "sub": ("Heat pumps, boilers and air conditioning sold on Shopify. Every one of those is a "
-                "sizing question before it is a sale — and every sizing question used to be a person "
-                "on the phone."),
+        "description": ("How ClimaConvenienza answers French and German calls its team cannot take, "
+                        "and absorbed a heatwave demand peak without hiring — 872 cross-border calls "
+                        "handled end to end in the first month."),
+        "h1": "The calls nobody at ClimaConvenienza could answer.",
+        "sub": ("They sell climate equipment across Europe from an Italian team. The French and "
+                "German calls were arriving anyway — and there was nobody on the other end who could "
+                "take them. Then a heatwave doubled the volume of everything else."),
 
-        # ---- the situation
         "situation_eyebrow": "The situation",
-        "situation_h2": "A catalogue where nobody buys without asking first",
+        "situation_h2": "European demand, an Italian-speaking phone line",
         "situation_body": [
-            "Climate equipment does not sell itself off a product page. Before a customer commits to "
-            "a heat pump they want to know whether it fits the room, whether it works with the "
-            "existing system, what the installation involves, and what happens if it arrives and the "
-            "plumber says no. Those questions arrive by phone, in bursts, and they arrive from people "
-            "who are ready to spend.",
-            "The calls were being answered by the same small team running the shop. Which meant they "
-            "were answered well when someone was free, and not at all when nobody was — evenings, "
-            "weekends, and the hours around a promotion when volume spikes and the questions are at "
-            "their most valuable.",
+            "ClimaConvenienza sells heat pumps, boilers and air conditioning on Shopify, and sells "
+            "them well beyond Italy. Demand does not respect the language your support team happens "
+            "to speak. French and German customers were calling about orders, sizing and delivery, "
+            "and reaching a team that could not help them — not for lack of willingness, but because "
+            "hiring a French speaker and a German speaker to cover 6% of call volume is not a "
+            "decision any operator can justify.",
+            "Then the weather intervened. Climate equipment has one demand curve and it is the "
+            "temperature. The agent went live on 22 June 2026 and eight days later took 1,074 calls "
+            "in a single day — the busiest day on record, in its second week of operation, with no "
+            "additional headcount behind it.",
         ],
         "situation_points": [
-            ("The expensive questions come by phone",
-             "Sizing, compatibility and installation — the questions that decide a four-figure order — "
-             "are the ones customers will not resolve from a spec sheet."),
-            ("Volume is spiky, staffing is not",
-             "A promotion or a cold snap doubles the calls in a day. Headcount cannot follow that curve, "
-             "so the peak is exactly when calls go unanswered."),
-            ("A missed call is not a missed ticket",
-             "In this category the caller is mid-decision. An unanswered phone is a customer who buys "
-             "the equivalent product from whoever picks up."),
+            ("The cross-border calls had no owner",
+             "French and German customers were reaching a line nobody could answer in their language. "
+             "Every one of those calls was a customer already far enough down the funnel to pick up "
+             "the phone."),
+            ("Demand is set by the weather, not the plan",
+             "A heatwave does not give notice. The volume that matters most arrives in the days you "
+             "could not have staffed for, and it arrives from people ready to buy today."),
+            ("Half the phone traffic is one question",
+             "Where is my order accounts for 48% of every call. Answering it well is not a support "
+             "nicety — it is the single largest claim on the team's day."),
         ],
 
-        # ---- what went live
         "stack_h2": "What went live",
         "stack": [
-            ("Pre-sales consultation",
-             "The agent answers product questions against the live catalogue — models, specs, stock — "
-             "and points the caller to the right configuration for their situation."),
+            ("Multilingual pre-sales and support",
+             "The agent takes calls in Italian, French and German across all three queues — general "
+             "information, order tracking and the product configurator — on the same catalogue and "
+             "the same rules."),
             ("Where is my order",
-             "Order status pulled in real time and confirmed back to the customer, with the details "
-             "sent as a text so nothing depends on the caller remembering it."),
+             "The biggest queue by far. Order status read live from Shopify and confirmed back to "
+             "the caller, with the detail sent as a text so nothing rests on the customer "
+             "remembering it."),
             ("Escalation to the team",
-             "Anything outside the agent's rules — a disputed order, an unusual install, a case that "
-             "needs judgement — goes to a person with the full call context attached."),
+             "Anything outside the agent's rules — a disputed order, an unusual installation, a case "
+             "that needs judgement — goes to a person with the full call context attached."),
         ],
         "stack_note": ("Connected to Shopify, so the agent reads the same catalogue, pricing and order "
-                       "data the storefront does. Live in two weeks."),
+                       "data the storefront does. Live from 22 June 2026."),
 
-        # ---- transcript: illustrative, and the page says so
         "call_h2": "What a ClimaConvenienza call sounds like",
-        "call_caption": "Example call",
+        "call_caption": "Example call · order tracking",
         "call": [
-            ("caller", "Hi, I'm looking at a heat pump for a room of about 30 square metres. "
-                       "Do you know if the 9000 BTU is enough?"),
-            ("agent", "For 30 square metres with standard insulation, 9000 BTU is usually under-sized — "
-                      "12000 is the safer match. Is the room on a top floor, or does it get a lot of "
-                      "direct sun?"),
-            ("caller", "Top floor, and yes, sun most of the afternoon."),
-            ("agent", "Then I'd go 12000. The model you're looking at comes in that size and it's in "
-                      "stock. Do you want me to text you the link to the exact configuration?"),
-            ("caller", "Yes please. And how long is delivery?"),
-            ("agent", "Three to five working days to your area. One thing I can't confirm is whether "
-                      "your existing wiring supports it — that's a question for the installer, and I "
-                      "can have someone from the team call you about it tomorrow if you'd like."),
-            ("caller", "That would help, thanks."),
+            ("caller", "Bonjour, j'ai commandé une pompe à chaleur la semaine dernière et je n'ai "
+                       "aucune nouvelle."),
+            ("agent", "Bien sûr, je peux vérifier. Vous avez le numéro de commande, ou l'adresse "
+                      "e-mail utilisée pour commander ?"),
+            ("caller", "L'e-mail, oui."),
+            ("agent", "Merci. Votre commande est partie de l'entrepôt hier et la livraison est prévue "
+                      "jeudi. Je vous envoie le lien de suivi par SMS tout de suite."),
+            ("caller", "Parfait. Et si personne n'est là à la livraison ?"),
+            ("agent", "Le transporteur laisse un avis et repasse le lendemain. Si vous préférez une "
+                      "date précise, je note la demande et l'équipe vous confirme le créneau."),
         ],
-        "call_note": ("Product details here are illustrative. On a live call the agent reads "
-                      "ClimaConvenienza's real catalogue and stock, and anything outside its rules "
-                      "goes to the team."),
+        "call_note": ("Order details here are illustrative, and the call above is in French for a "
+                      "reason: before go-live, this call had no answer. On a live call the agent "
+                      "reads ClimaConvenienza's real catalogue and order data."),
 
-        # ---- results
-        "results_eyebrow": "Results",
-        "results_h2": "What changed",
+        "results_eyebrow": "Results · 22 June – 23 July 2026",
+        "results_h2": "The first month",
         "results": [
-            ("53.1%", "Autonomy rate",
-             "Share of calls the agent resolved end to end, with no human involved."),
-            ("[[+00%]]", "[[Metric two]]",
-             "[[Second approved figure — e.g. calls answered outside business hours, "
-             "or average time to answer.]]"),
-            ("[[+00%]]", "[[Metric three]]",
-             "[[Third approved figure — e.g. conversion on calls handled, or orders "
-             "attributed to phone.]]"),
+            ("872", "French and German calls answered",
+             "Every one handled end to end, in the caller's language. Before go-live the team could "
+             "not take these calls at all."),
+            ("1,074", "Calls on the busiest day",
+             "Eight days after go-live, during a heatwave. No additional headcount was added at any "
+             "point."),
+            ("7,334", "Calls resolved without an operator",
+             "Out of 14,936 handled since go-live — roughly one in two, across every queue and "
+             "language."),
         ],
-        "results_foot": ("[[Measurement window and method to be confirmed with ClimaConvenienza "
-                         "before publication — over what period, against what baseline.]]"),
+        "results_foot": ("Measured from go-live on 22 June 2026 to 23 July 2026. June covers nine "
+                         "live days, July twenty-three, so the two months are not compared "
+                         "like for like anywhere on this page. "
+                         "[[Figures to be confirmed in writing with ClimaConvenienza before publication.]]"),
 
-        # ---- quote: NOT invented. Placeholder until approved in writing.
-        "quote": "[[Approved quote from Alessio Perrucci to be supplied — one or two sentences, "
-                 "in his words, on what changed for the business.]]",
+        "quote": ("We faced a massive demand spike without hiring anyone — and we moved a large part "
+                  "of the customer support team into B2B sales, so they are growing the business "
+                  "instead of repeating the same thing on the phone all day."),
+        "quote_pending": True,
 
-        # ---- honest limits
-        "honest_h2": "What it does not do",
-        "honest_body": ("Every case study is more believable with this section in it, so here it is. "
-                        "The agent is not a replacement for the people who know this category."),
+        "honest_h2": "What the numbers do not say",
+        "honest_body": ("This is one month of live service, and publishing only the flattering half "
+                        "of it would make the rest less believable. So here is the whole picture."),
         "honest_points": [
-            "It does not give installation advice. Anything that depends on the customer's existing "
-            "system, wiring or plumbing goes to a human — as it does in the call above.",
-            "It does not approve exceptions. Discounts, out-of-policy returns and disputed orders are "
-            "captured with full context and routed, never decided.",
-            "It does not pretend to be a person. Callers are told they are speaking to Sabato, and can "
-            "ask for the team at any point.",
+            "Autonomy fell, not rose. The agent resolved 53.1% of calls without a human in June and "
+            "46.8% in July. The reason is mix: volume grew and the growth landed in the hardest "
+            "Italian queues — general information sits at 39.2% autonomy and is now the largest "
+            "queue on the line.",
+            "Where is my order got harder as it got bigger. Italian WISMO volume more than doubled "
+            "and its autonomy fell from 56.6% to 46.3% — scale surfaced order scenarios the agent "
+            "had not been taught. Those are being mapped into the prompt; that work is ongoing, "
+            "not finished.",
+            "French and German show 100% autonomy partly because there is no French or German "
+            "speaker to transfer to. It means those callers got a complete answer instead of no "
+            "answer — it does not mean the agent handles every case a native speaker could.",
+            "It does not give installation advice, and it does not approve exceptions. Discounts, "
+            "out-of-policy returns and disputed orders are captured with full context and routed to "
+            "a person, never decided.",
         ],
 
         "cta_h2": "Want the same for your catalogue?",
