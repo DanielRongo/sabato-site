@@ -125,9 +125,8 @@ CUSTOMERS = {
              "duration": "00:51",
              "lines": [
                  ("caller", "Hi, I ordered a heat pump last week and I've not heard anything."),
-                 ("agent", "I can check that now. Do you have the order number, or the email "
-                           "address you ordered with?"),
-                 ("caller", "The email is fine."),
+                 ("agent", "I can check that now. Do you have the order number to hand?"),
+                 ("caller", "One moment - it's 48120."),
                  ("agent", "Thank you. Your order left the warehouse yesterday and it's due "
                            "Thursday. I'm sending you the tracking link by text now."),
                  ("caller", "And what if nobody's home when it arrives?"),
@@ -176,7 +175,7 @@ CUSTOMERS = {
             "title": "What Elena knows",
             "number": "~50,000 words",
             "topics": ["Shipping", "Returns & warranty", "Warranty by country", "Customs",
-                       "Payments", "Store services", "Certifications", "The Configurator",
+                       "Payments", "Store services", "Certifications", "Order tracking",
                        "Product education"],
             "note": "One knowledge base behind both agents, so the answer to a returns question "
                     "is the same at 9am on Monday as it is at 7pm on Friday.",
@@ -202,7 +201,7 @@ CUSTOMERS = {
         "situation_h2": "Most inbound calls have a known answer",
         "situation_body": [
             "Shipping windows. Return periods. Warranty terms, which differ by country. Customs. "
-            "Payment methods. Store opening hours. How the Configurator works. None of these are "
+            "Payment methods. Store opening hours. None of these are "
             "hard questions - they are the same questions, arriving all day, each one occupying a "
             "person who could be handling something that genuinely needs judgement.",
             "Underneath them sits the most repetitive request of all: where is my order. It was "
@@ -246,9 +245,9 @@ CUSTOMERS = {
              "lines": [
                  ("caller", "Hi, I ordered a pendant lamp and some cable last week and I'd like to "
                             "know where it is."),
-                 ("agent", "Of course. I'm Elena from Creative Cables. Can I take the order number, "
-                           "or the email address you ordered with?"),
-                 ("caller", "The email is easier."),
+                 ("agent", "Of course. I'm Elena from Creative Cables. Can I take the order "
+                           "number?"),
+                 ("caller", "It's 30294."),
                  ("agent", "Thank you. I can see the order - it left us on Tuesday and the courier "
                            "has it out for delivery today. I'm sending you the tracking link by "
                            "text now."),
@@ -292,15 +291,6 @@ CUSTOMERS = {
                   "on-brand and instantly. Our team now focuses on the cases that actually need a "
                   "person."),
         "quote_pending": True,
-
-        "forward_eyebrow": "What happens next",
-        "forward_h2": "The resolution rate is still climbing",
-        "forward_body": ("Four weeks is early, and the number is designed to move. Reviewing the "
-                         "calls that were transferred surfaced specific, fixable gaps - store "
-                         "hours, reseller lookup, a correction to payment information - each of "
-                         "which goes back into the knowledge base. Weekly volume roughly quadrupled "
-                         "through July as routing ramped up, and the line absorbed it with no added "
-                         "headcount."),
 
         "cta_h2": "Want the same for your e-commerce store?",
         "cta_sub": ("A pilot runs on your real calls and measures what changed against your own "

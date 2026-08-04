@@ -119,9 +119,8 @@ CUSTOMERS_IT = {
              "lines": [
                  ("caller", "Buongiorno, ho ordinato una pompa di calore la settimana scorsa e non "
                             "ho più saputo nulla."),
-                 ("agent", "Controllo subito. Ha il numero d'ordine, oppure l'email con cui ha "
-                           "ordinato?"),
-                 ("caller", "L'email va bene."),
+                 ("agent", "Controllo subito. Mi può dare il numero d'ordine?"),
+                 ("caller", "Un attimo - 48120."),
                  ("agent", "Grazie. Il suo ordine è partito dal magazzino ieri ed è previsto per "
                            "giovedì. Le mando adesso il link di tracking via messaggio."),
                  ("caller", "E se non c'è nessuno in casa alla consegna?"),
