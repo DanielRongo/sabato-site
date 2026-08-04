@@ -88,6 +88,26 @@ def hero_visual(d):
             '%s</div>' % rows), mark
 
 
+TICK = ('<svg viewBox="0 0 24 24" fill="none" stroke="rgb(204,255,0)" stroke-width="3.2" '
+        'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
+        '<path d="M4 12.5 9.5 18 20 6.5"/></svg>')
+
+
+def coverage_block(d):
+    """A queue x language matrix. Reads as breadth of deployment at a glance and,
+    unlike any volume graphic, discloses nothing about the customer's traffic."""
+    c = d["coverage"]
+    head = "".join('<span class="lang">%s</span>' % html.escape(l) for l in c["languages"])
+    rows = ""
+    for q in c["queues"]:
+        rows += '<span class="queue">%s</span>' % html.escape(q)
+        rows += '<span class="cov-cell">%s</span>' % TICK * len(c["languages"])
+    return ('<div class="cov"><p class="cov-h">%s</p>'
+            '<div class="cov-grid"><span></span>%s%s</div>'
+            '<p class="cov-note">%s</p></div>'
+            % (html.escape(c["title"]), head, rows, ph(c["note"])))
+
+
 def section_situation(d):
     # The body colour on this band is scoped to `.queue-grid .qcopy .qbody` in
     # the use-case stylesheet. Reusing `.queue-band` without reproducing that
@@ -100,7 +120,10 @@ def section_situation(d):
     body = "".join('<p class="qbody">%s</p>' % ph(p) for p in d["situation_body"])
     shot = ""
     cls = "queue-grid"
-    if d.get("storefront"):
+    if d.get("coverage"):
+        cls = "queue-grid with-shot"
+        shot = coverage_block(d)
+    elif d.get("storefront"):
         cls = "queue-grid with-shot"
         shot = ("""<div class="browser"><div class="bar"><i></i><i></i><i></i>"""
                 """<span class="url">%s</span></div><img src="%s" alt="%s storefront" """

@@ -32,6 +32,14 @@ CUSTOMERS = {
         "person_initials": "AP",
         "role": "CEO",
         "photo": "/customers/assets/alessio-perrucci.jpg",
+        # the graphic in the situation band. "coverage" wins over "storefront".
+        "coverage": {
+            "title": "One agent · every queue · every market",
+            "languages": ["Italiano", "Français", "Deutsch"],
+            "queues": ["General information", "Where is my order", "Product configurator"],
+            "note": "Every queue answered in every market, from one Italian team — "
+                    "no market waiting on a hire before it gets a phone line.",
+        },
         "storefront": "/customers/assets/climaconvenienza-store.jpg",
         "storefront_url": "climaconvenienza.it",
         "platform": "Shopify",

@@ -234,6 +234,33 @@
     .queue-grid.with-shot { display: grid; grid-template-columns: 1fr 1fr; gap: 48px;
                             align-items: stretch; }
 
+
+    /* Coverage matrix — identity, not magnitude, so it is a diagram and not a
+       chart: no axis, no scale, nothing to mis-encode. It also carries no call
+       volumes, which is the constraint the storefront screenshot met but a
+       demand curve could not. */
+    .cov { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.14);
+           border-radius: 20px; padding: 34px 32px; height: 100%;
+           display: flex; flex-direction: column; justify-content: center; }
+    .cov-h { font-size: 12px; font-weight: 800; letter-spacing: .13em; text-transform: uppercase;
+             color: var(--lime); margin: 0 0 22px; }
+    .cov-grid { display: grid; grid-template-columns: 1.5fr repeat(3, 1fr); gap: 10px 8px;
+                align-items: center; }
+    .cov-grid .lang { font-size: 12px; font-weight: 800; letter-spacing: .06em;
+                      color: rgba(255,255,255,.66); text-align: center; text-transform: uppercase; }
+    .cov-grid .queue { font-size: 15px; font-weight: 600; color: #fff; line-height: 1.35; }
+    .cov-cell { height: 40px; border-radius: 10px; background: rgba(204,255,0,.13);
+                border: 1px solid rgba(204,255,0,.34); display: grid; place-items: center; }
+    .cov-cell svg { width: 17px; height: 17px; }
+    .cov-note { font-size: 13.5px; line-height: 1.6; color: rgba(255,255,255,.6);
+                margin: 22px 0 0; }
+    @media (max-width: 809px) {
+      .cov { padding: 26px 20px; }
+      .cov-grid { grid-template-columns: 1.3fr repeat(3, 1fr); gap: 8px 6px; }
+      .cov-grid .queue { font-size: 13.5px; }
+      .cov-cell { height: 34px; }
+    }
+
     /* icon per tile */
     .stack-card .ic-chip { display: grid; place-items: center; width: 52px; height: 52px;
                           border-radius: 14px; background: var(--ink); margin-bottom: 20px; }
