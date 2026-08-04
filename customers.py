@@ -25,6 +25,7 @@ PH_RX = re.compile(r"\[\[(.+?)\]\]", re.DOTALL)
 
 
 NB_RX = re.compile(r"\b([eE]-[cC]ommerce)\b")
+NBM_RX = re.compile(r"\[nb\](.+?)\[/nb\]", re.DOTALL)
 
 
 def ph(text):
@@ -38,11 +39,20 @@ def ph(text):
         out.append('<span class="ph">%s</span>' % html.escape(m.group(1)))
         last = m.end()
     out.append(html.escape(text[last:]))
-    return NB_RX.sub(r'<span class="nb">\1</span>', "".join(out))
+    out = NB_RX.sub(r'<span class="nb">\1</span>', "".join(out))
+    # [nb]...[/nb] in the content keeps a phrase on one line
+    return NBM_RX.sub(r'<span class="nb">\1</span>', out)
 
 
 def is_ph(text):
     return bool(PH_RX.search(text))
+
+
+def plain(text):
+    """Marker-free text for anywhere the string is not rendered as HTML —
+    JSON-LD, meta tags, alt text. Without this the [nb] markers leak into
+    structured data, which is both wrong and visible to Google."""
+    return NBM_RX.sub(r"\1", PH_RX.sub(r"\1", text))
 
 
 
@@ -165,7 +175,7 @@ def section_call(d):
       <p class="call-sub">%s<span>%s</span></p>
       <p class="call-caption">%s</p>
       <div class="call-panel">
-        <div class="panel-head"><span class="ph-left"><span class="dot"></span>Live call — Sabato Agent</span>
+        <div class="panel-head"><span class="ph-left"><span class="dot"></span>Live call - Sabato Agent</span>
           <span class="ph-time">· %s</span></div>
         %s
       </div>""" % (ICONS.get(c.get("icon"), ""), ph(c["label"]), ph(c["caption"]),
@@ -199,7 +209,7 @@ def section_quote(d):
                    html.escape(d["name"])))
     else:
         face = '<span class="mono-lg">%s</span>' % html.escape(d["person_initials"])
-    pending = ('<p class="pending">Draft wording — awaiting written sign-off from %s</p>'
+    pending = ('<p class="pending">Draft wording - awaiting written sign-off from %s</p>'
                % html.escape(d["person"])) if d.get("quote_pending") else ""
     return """
     <section class="pq">
@@ -241,7 +251,7 @@ def jsonld(slug, d):
     import json
     return '<script type="application/ld+json">%s</script>' % json.dumps({
         "@context": "https://schema.org", "@type": "Article",
-        "headline": d["h1"], "description": d["description"],
+        "headline": plain(d["h1"]), "description": plain(d["description"]),
         "url": "https://www.sabato.ai/customers/%s" % slug,
         "publisher": {"@type": "Organization", "name": "Sabato AI"},
     }, ensure_ascii=False)

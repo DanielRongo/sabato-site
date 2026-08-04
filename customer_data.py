@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Customer story content.
 
-DRAFT STATUS — read before touching anything here.
+DRAFT STATUS - read before touching anything here.
 
 Every page built from this file carries `noindex, nofollow` and a DRAFT ribbon,
 and nothing links to them from production. That is deliberate: these pages put
@@ -16,7 +16,7 @@ Two rules that matter more than they look:
 
 1. NEVER write a quote for a named person and leave it unmarked. A plausible
    invented quote is far more dangerous than an obvious blank, because it is the
-   one thing a reviewer skims past — and the person it is attributed to will not.
+   one thing a reviewer skims past - and the person it is attributed to will not.
 2. A number without a definition is not a number. `53.1% autonomy rate` means
    nothing to a buyer until the page says what was counted and over what period.
    Every metric therefore carries a `sub` explaining what it measures.
@@ -37,7 +37,7 @@ CUSTOMERS = {
             "title": "One agent · every queue · every market",
             "languages": ["Italiano", "Français", "Deutsch"],
             "queues": ["General information", "Where is my order", "Product configurator"],
-            "note": "Every queue answered in every market, from one Italian team — "
+            "note": "Every queue answered in every market, from one Italian team - "
                     "no market waiting on a hire before it gets a phone line.",
         },
         "storefront": "/customers/assets/climaconvenienza-store.jpg",
@@ -47,13 +47,13 @@ CUSTOMERS = {
         "industry": "Home Improvement",
         "industry_href": "/industries/home-improvement",
         "chip": "Customer story",
-        "title": "ClimaConvenienza — Voice AI Case Study | Sabato AI",
+        "title": "ClimaConvenienza - Voice AI Case Study | Sabato AI",
         "description": ("How ClimaConvenienza scaled phone support across Italy, France and Germany "
-                        "without hiring — nine multilingual agents live, 53.1% of calls handled "
+                        "without hiring - nine multilingual agents live, 53.1% of calls handled "
                         "autonomously in the first month."),
-        "h1": "Growing across three markets faster than a phone team can be hired.",
+        "h1": "Growing across three markets faster than a phone team [nb]can be hired.[/nb]",
         "sub": ("ClimaConvenienza sells climate equipment into Italy, France and Germany. Demand "
-                "was climbing in all three — and then a heatwave pushed it to a record eight days "
+                "was climbing in all three - and then a heatwave pushed it to a record eight days "
                 "after go-live. The phone line scaled with the business instead of capping it."),
 
         "situation_eyebrow": "The situation",
@@ -61,32 +61,32 @@ CUSTOMERS = {
         "situation_body": [
             "ClimaConvenienza sells heat pumps, boilers and air conditioning on Shopify, and the "
             "business has been growing well beyond Italy. New markets generate phone calls long "
-            "before they generate the volume that justifies a native-speaking hire — a French line "
+            "before they generate the volume that justifies a native-speaking hire - a French line "
             "and a German line are a full salary each on the day they open, and a fraction of the "
             "traffic. Growth arrives first; the business case for headcount arrives later.",
             "Then the weather intervened. Climate equipment has one demand curve and it is the "
             "temperature. The agent went live on 22 June 2026 and days later was taking its "
-            "busiest day on record — in its second week of operation, absorbed without a single "
+            "busiest day on record - in its second week of operation, absorbed without a single "
             "additional hire.",
         ],
         "situation_points": [
             ("New markets ring before they pay for themselves",
              "France and Germany were producing calls from customers already far enough down the "
-             "funnel to pick up the phone — well before the volume in either market justified "
+             "funnel to pick up the phone - well before the volume in either market justified "
              "dedicated headcount."),
             ("Demand is set by the weather, not the plan",
              "A heatwave does not give notice. The volume that matters most arrives in the days you "
              "could not have staffed for, and it arrives from people ready to buy today."),
             ("Half the phone traffic is one question",
              "Where is my order accounts for 48% of every call. Answering it well is not a support "
-             "nicety — it is the single largest claim on the team's day."),
+             "nicety - it is the single largest claim on the team's day."),
         ],
 
         "stack_h2": "What went live",
         "stack": [
             ("languages", "Multilingual pre-sales and support",
-             "The agent takes calls in Italian, French and German across all three queues — general "
-             "information, order tracking and the product configurator — on the same catalogue and "
+             "The agent takes calls in Italian, French and German across all three queues - general "
+             "information, order tracking and the product configurator - on the same catalogue and "
              "the same rules."),
             ("wismo", "Where is my order",
              "The biggest queue by far. Order status read live from Shopify and confirmed back to "
@@ -111,7 +111,7 @@ CUSTOMERS = {
                  ("agent", "I can work that out with you. Is the room on a top floor, and does it "
                            "get much direct sun in the afternoon?"),
                  ("caller", "Top floor, and yes, sun all afternoon."),
-                 ("agent", "Then 9000 BTU would be under-sized for that room — 12000 is the right "
+                 ("agent", "Then 9000 BTU would be under-sized for that room - 12000 is the right "
                            "match. We have a dual-split Hisense at 12000 with built-in Wi-Fi in "
                            "stock, and a Mitsubishi in the same class if you'd prefer that brand."),
                  ("caller", "What's the difference in price?"),
@@ -136,15 +136,15 @@ CUSTOMERS = {
              ]},
         ],
         "call_note": ("Product and order details here are illustrative. On a live call the agent "
-                      "reads ClimaConvenienza's real catalogue, stock and order data — and takes "
+                      "reads ClimaConvenienza's real catalogue, stock and order data - and takes "
                       "the same two calls in French and German."),
 
-        "results_eyebrow": "Results · 22 June – 23 July 2026",
+        "results_eyebrow": "Results · 22 June - 23 July 2026",
         "results_h2": "The first month",
         "results": [
             ("53.1%", "Calls handled autonomously",
              "Resolved by the agent with no operator involved, in the first month live "
-             "(22–30 June 2026)."),
+             "(22-30 June 2026)."),
             ("435", "Hours of support time returned",
              "Phone time the agent absorbed instead of an operator, redeployed into B2B sales."),
             ("1,535", "Calls on the busiest day",
@@ -152,7 +152,7 @@ CUSTOMERS = {
         ],
         "results_foot": "Measured from go-live on 22 June 2026.",
 
-        "quote": ("We faced a massive demand spike without hiring anyone — and we moved a large part "
+        "quote": ("We faced a massive demand spike without hiring anyone - and we moved a large part "
                   "of the customer support team into B2B sales, so they are growing the business "
                   "instead of repeating the same thing on the phone all day."),
         
@@ -177,18 +177,18 @@ CUSTOMERS = {
         "industry": "Furniture & Home",
         "industry_href": "/industries/furniture-home",
         "chip": "Customer story",
-        "title": "Creative Cables — Voice AI Case Study | Sabato AI",
+        "title": "Creative Cables - Voice AI Case Study | Sabato AI",
         "description": ("How Creative Cables handles configuration and order questions across "
                         "multiple countries with a Sabato voice agent."),
-        "h1": "[[Headline outcome for Creative Cables — to be set once the metric is approved.]]",
+        "h1": "[[Headline outcome for Creative Cables - to be set once the metric is approved.]]",
         "sub": ("Configurable lighting and cabling, sold across several countries and several "
-                "languages. A catalogue you assemble rather than pick off a shelf — which means the "
+                "languages. A catalogue you assemble rather than pick off a shelf - which means the "
                 "phone rings with questions no filter can answer."),
 
         "situation_eyebrow": "The situation",
         "situation_h2": "A configurable catalogue multiplies the questions",
         "situation_body": [
-            "When a product is assembled from components — a cable, a fitting, a shade, a length — the "
+            "When a product is assembled from components - a cable, a fitting, a shade, a length - the "
             "number of things a customer can be unsure about grows faster than the catalogue does. "
             "Compatibility between parts, what is included, whether a finish matches across two "
             "different items: these are the questions that stop a basket at the last step.",
@@ -198,7 +198,7 @@ CUSTOMERS = {
         "situation_points": [
             ("Configuration questions block checkout",
              "The customer is not browsing. They have chosen, and they need one thing confirmed before "
-             "they pay — which makes the answer worth more than the call costs."),
+             "they pay - which makes the answer worth more than the call costs."),
             ("Several languages, one team",
              "Cross-border demand does not queue politely inside one country's office hours."),
             ("The catalogue changes constantly",
@@ -212,7 +212,7 @@ CUSTOMERS = {
              "Component and compatibility questions answered against the live catalogue, in the "
              "caller's language."),
             ("wismo", "Checkout summary via text",
-             "What was discussed — items, specs, a direct link — sent as a message after the call, so "
+             "What was discussed - items, specs, a direct link - sent as a message after the call, so "
              "the customer can complete the order without reconstructing it from memory."),
             ("languages", "Escalation to the team",
              "Bespoke configurations and anything commercially unusual routed to a person with the "
@@ -227,15 +227,15 @@ CUSTOMERS = {
              "caption": "Example call · configuration",
              "duration": "01:05",
              "lines": [
-            ("caller", "I've got a fabric cable in the basket and a brass fitting — will the two "
+            ("caller", "I've got a fabric cable in the basket and a brass fitting - will the two "
                        "actually go together?"),
-            ("agent", "They will, as long as the cable is the 2-core and not the 3-core — the brass "
+            ("agent", "They will, as long as the cable is the 2-core and not the 3-core - the brass "
                       "fitting takes the 2-core. Can you tell me the colour code in your basket?"),
             ("caller", "It says RM09."),
             ("agent", "That's the 2-core, so you're fine. One thing worth knowing: that fitting doesn't "
                       "include the ceiling rose, which people often assume. Do you want me to add it "
                       "and text you the updated basket?"),
-            ("caller", "Yes — and does it come in the same brass finish?"),
+            ("caller", "Yes - and does it come in the same brass finish?"),
             ("agent", "It does. I'm sending you the link now with both in the matching finish."),
             ]},
         ],
@@ -253,7 +253,7 @@ CUSTOMERS = {
         "results_foot": ("[[Measurement window and method to be confirmed with Creative Cables before "
                          "publication.]]"),
 
-        "quote": "[[Approved quote from Marco Logreco to be supplied — one or two sentences, in his "
+        "quote": "[[Approved quote from Marco Logreco to be supplied - one or two sentences, in his "
                  "words, on what changed for the business.]]",
 
         "cta_h2": "Want the same for your e-commerce store?",
