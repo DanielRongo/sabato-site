@@ -377,7 +377,8 @@
                  href.indexOf("/industries/") === 0 || href === "/industries" ||
                  href.indexOf("/it/settori/") === 0 || href === "/it/settori" ||
                  a.hasAttribute("data-blog-link") || href === "/blog" || href === "/it/blog" ||
-                 a.hasAttribute("data-roi-link") || href === "/roi-calculator";
+                 a.hasAttribute("data-roi-link") || href === "/roi-calculator" ||
+                 href.indexOf("/customers/") === 0;
       if (!ours) return;
       if (a.target === "_blank") return;
       e.preventDefault();
@@ -386,9 +387,128 @@
     }, true);
   }
 
+  /* ---------- 6. Customer stories band on the homepage ----------
+     DRAFT. Placeholders render as loud orange TBC chips and the band is only
+     injected on staging hosts — see BAND_ENABLED below.
+
+     Why this is injected rather than written into index.html: Framer pages are
+     React-hydrated, so markup added to the HTML is thrown away the moment React
+     takes over. (That is exactly how an earlier copy fix appeared to ship while
+     staying visibly broken.) Injecting after hydration, and re-asserting on the
+     MutationObserver pass that already drives this file, is the only placement
+     that survives.
+
+     Position: directly after the workflows section. That is the moment the
+     visitor has understood what the product does and is silently asking whether
+     it works for someone like them — and it puts evidence immediately before
+     the 9 / 24-7 / 2-weeks stat block, so those read as track record rather
+     than claim. */
+  var BAND_ANCHOR = IT ? "Scegli i workflow. Al resto pensiamo noi."
+                       : "Pick the workflows that move your numbers";
+  var BAND_COPY = IT
+    ? { eyebrow: "Storie dei clienti", h2: "Cataloghi veri, chiamate vere",
+        sub: "Due e-commerce dove il telefono era il collo di bottiglia.",
+        cta: "Leggi la storia" }
+    : { eyebrow: "Customer stories", h2: "Real catalogues, real calls",
+        sub: "Two stores where the phone was the bottleneck.",
+        cta: "Read the full story" };
+
+  var BAND_ITEMS = [
+    { slug: "clima-convenienza", name: "ClimaConvenienza", initials: "CC",
+      metric: "53.1%", ph: false,
+      label: IT ? "delle chiamate risolte senza un umano"
+                : "of calls resolved without a human",
+      person: "Alessio Perrucci", role: "CEO" },
+    { slug: "creative-cables", name: "Creative Cables", initials: "CC",
+      metric: "00%", ph: true,
+      label: IT ? "[metrica da approvare]" : "[metric to be approved]",
+      person: "Marco Logreco", role: "Head of E-Commerce" }
+  ];
+
+  /* Staging only: these pages name real customers and carry unapproved figures.
+     Production gets the band the day Daniel has sign-off, by flipping this. */
+  var BAND_ENABLED = /netlify\.app$/.test(location.hostname) ||
+                     location.hostname === "localhost" ||
+                     location.hostname === "127.0.0.1";
+
+  var BAND_CSS =
+    ".sb-cust{max-width:1200px;width:calc(100% - 80px);margin:0 auto;background:#000;" +
+    "border-radius:24px;padding:76px 48px;font-family:'Satoshi',Inter,-apple-system,sans-serif}" +
+    ".sb-cust .sb-eyebrow{font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;" +
+    "color:rgb(204,255,0);text-align:center;margin:0 0 14px}" +
+    ".sb-cust h2{font-size:42px;font-weight:700;letter-spacing:-1.2px;line-height:1.15;color:#fff;" +
+    "text-align:center;margin:0 0 12px}" +
+    ".sb-cust .sb-sub{font-size:18px;line-height:1.7;color:rgba(255,255,255,.66);text-align:center;" +
+    "max-width:620px;margin:0 auto 46px}" +
+    ".sb-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:1000px;margin:0 auto}" +
+    ".sb-card,.sb-card *{text-decoration:none!important}" +
+    ".sb-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:18px;" +
+    "padding:34px 30px;display:flex;flex-direction:column;gap:6px;transition:border-color .2s,background .2s}" +
+    ".sb-card:hover{background:rgba(255,255,255,.09);border-color:rgba(204,255,0,.45)}" +
+    ".sb-brand{display:flex;align-items:center;gap:10px;margin-bottom:18px}" +
+    ".sb-mono{width:32px;height:32px;border-radius:9px;background:rgb(204,255,0);color:#000;display:grid;" +
+    "place-items:center;font-size:12px;font-weight:900}" +
+    ".sb-brand b{font-size:13px;font-weight:800;color:rgba(255,255,255,.75);letter-spacing:.13em;text-transform:uppercase}" +
+    ".sb-num{font-size:58px;font-weight:900;letter-spacing:-2px;line-height:1;color:rgb(204,255,0)}" +
+    ".sb-lab{font-size:15px;line-height:1.6;color:#fff;margin-top:10px}" +
+    ".sb-who{font-size:14px;line-height:1.6;color:rgba(255,255,255,.55);margin-top:20px}" +
+    ".sb-more{font-size:15px;font-weight:700;color:rgb(204,255,0);margin-top:22px}" +
+    ".sb-ph{display:inline-block;border:2px dashed rgb(255,138,0);background:rgba(255,138,0,.16);" +
+    "border-radius:8px;padding:0 10px;color:rgb(255,176,92)}" +
+    "@media(max-width:809px){.sb-cust{width:calc(100% - 32px);padding:56px 24px}" +
+    ".sb-cust h2{font-size:30px}.sb-grid{grid-template-columns:1fr}.sb-num{font-size:46px}}";
+
+  function injectCustomerBand() {
+    if (!BAND_ENABLED) return;
+    if (document.querySelector("[data-sb-cust]")) return;
+
+    var anchor = null;
+    var hs = document.querySelectorAll("h1, h2");
+    for (var i = 0; i < hs.length; i++) {
+      if (normLabel(hs[i].textContent) === normLabel(BAND_ANCHOR)) {
+        anchor = hs[i].closest("section"); break;
+      }
+    }
+    if (!anchor || !anchor.parentElement) return;
+
+    if (!document.getElementById("sb-cust-css")) {
+      var st = document.createElement("style");
+      st.id = "sb-cust-css"; st.textContent = BAND_CSS;
+      (document.head || document.documentElement).appendChild(st);
+    }
+
+    var cards = "";
+    for (var j = 0; j < BAND_ITEMS.length; j++) {
+      var c = BAND_ITEMS[j];
+      var num = c.ph ? '<span class="sb-ph">' + c.metric + "</span>" : c.metric;
+      var lab = c.ph ? '<span class="sb-ph">' + c.label + "</span>" : c.label;
+      cards +=
+        '<a class="sb-card" href="/customers/' + c.slug + '">' +
+          '<span class="sb-brand"><b>' + c.name + "</b></span>" +
+          '<span class="sb-num">' + num + "</span>" +
+          '<span class="sb-lab">' + lab + "</span>" +
+          '<span class="sb-who">' + c.person + " · " + c.role + ", " + c.name + "</span>" +
+          '<span class="sb-more">' + BAND_COPY.cta + " &rarr;</span>" +
+        "</a>";
+    }
+
+    var wrap = document.createElement("div");
+    wrap.setAttribute("data-sb-cust", "1");
+    wrap.style.cssText = "margin:96px 0 0";
+    wrap.innerHTML =
+      '<section class="sb-cust">' +
+        '<p class="sb-eyebrow">' + BAND_COPY.eyebrow + "</p>" +
+        "<h2>" + BAND_COPY.h2 + "</h2>" +
+        '<p class="sb-sub">' + BAND_COPY.sub + "</p>" +
+        '<div class="sb-grid">' + cards + "</div>" +
+      "</section>";
+    anchor.parentElement.insertBefore(wrap, anchor.nextSibling);
+  }
+
   function run() {
     injectFooterLinks(); injectIndustriesNav(); injectDropdown();
     wireUseCaseTargets(); wireIndustryTargets(); installClickInterceptor();
+    injectCustomerBand();
   }
   if (document.readyState !== "loading") run();
   else document.addEventListener("DOMContentLoaded", run);
