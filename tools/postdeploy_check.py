@@ -23,7 +23,8 @@ PAGES = ["/", "/it", "/pricing", "/about", "/contact", "/blog", "/it/blog",
          "/industries/furniture-home", "/industries/industrial-b2b",
          "/industries/outdoor-garden", "/industries/health-wellness",
          "/industries/sports-fitness",
-         "/privacy-policy", "/roi-calculator"]
+         "/privacy-policy", "/roi-calculator",
+         "/customers/clima-convenienza", "/it/clienti/clima-convenienza"]
 
 NAV_COUNT_JS = """(label) => {
   let c = 0;

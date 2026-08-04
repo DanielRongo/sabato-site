@@ -378,7 +378,8 @@
                  href.indexOf("/it/settori/") === 0 || href === "/it/settori" ||
                  a.hasAttribute("data-blog-link") || href === "/blog" || href === "/it/blog" ||
                  a.hasAttribute("data-roi-link") || href === "/roi-calculator" ||
-                 href.indexOf("/customers/") === 0;
+                 href.indexOf("/customers/") === 0 ||
+                 href.indexOf("/it/clienti/") === 0;
       if (!ours) return;
       if (a.target === "_blank") return;
       e.preventDefault();
@@ -483,7 +484,7 @@
       var num = c.ph ? '<span class="sb-ph">' + c.metric + "</span>" : c.metric;
       var lab = c.ph ? '<span class="sb-ph">' + c.label + "</span>" : c.label;
       cards +=
-        '<a class="sb-card" href="/customers/' + c.slug + '">' +
+        '<a class="sb-card" href="' + (IT ? "/it/clienti/" : "/customers/") + c.slug + '">' +
           '<span class="sb-brand"><b>' + c.name + "</b></span>" +
           '<span class="sb-num">' + num + "</span>" +
           '<span class="sb-lab">' + lab + "</span>" +

@@ -47,6 +47,7 @@ CUSTOMERS = {
         "industry": "Home Improvement",
         "industry_href": "/industries/home-improvement",
         "chip": "Customer story",
+        "approved": True,
         "title": "ClimaConvenienza - Voice AI Case Study | Sabato AI",
         "description": ("How ClimaConvenienza scaled phone support across Italy, France and Germany "
                         "without hiring - nine multilingual agents live, 53.1% of calls handled "

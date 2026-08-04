@@ -17,9 +17,16 @@ import os
 import re
 
 from customer_data import CUSTOMERS, ORDER
+from customer_data_it import CUSTOMERS_IT, ORDER_IT
 
-TPL = "templates/customer.html"
-OUT = "site/customers"
+LANGS = {
+    "en": {"tpl": "templates/customer.html",    "out": "site/customers",
+           "base": "/customers/%s",     "data": None, "order": None,
+           "cta": "Start Free Pilot"},
+    "it": {"tpl": "templates/customer-it.html", "out": "site/it/clienti",
+           "base": "/it/clienti/%s",    "data": None, "order": None,
+           "cta": "Inizia Pilot Gratuito"},
+}
 
 PH_RX = re.compile(r"\[\[(.+?)\]\]", re.DOTALL)
 
@@ -238,8 +245,8 @@ def section_cta(d):
     <section class="cta-band">
       <h2>%s</h2>
       <p>%s</p>
-      <a class="btn-pill" href="https://cal.com/sabatoai/intro" target="_blank" rel="noopener">Start Free Pilot</a>
-    </section>""" % (ph(d["cta_h2"]), ph(d["cta_sub"]))
+      <a class="btn-pill" href="https://cal.com/sabatoai/intro" target="_blank" rel="noopener">%s</a>
+    </section>""" % (ph(d["cta_h2"]), ph(d["cta_sub"]), LANGS[d["_lang"]]["cta"])
 
 
 def jsonld(slug, d):
@@ -252,40 +259,70 @@ def jsonld(slug, d):
     return '<script type="application/ld+json">%s</script>' % json.dumps({
         "@context": "https://schema.org", "@type": "Article",
         "headline": plain(d["h1"]), "description": plain(d["description"]),
-        "url": "https://www.sabato.ai/customers/%s" % slug,
+        "url": "https://www.sabato.ai%s" % (LANGS[d["_lang"]]["base"] % slug),
         "publisher": {"@type": "Organization", "name": "Sabato AI"},
     }, ensure_ascii=False)
 
 
-def build(slug, d):
-    tpl = open(TPL, encoding="utf-8").read()
+def build(lang, slug, d):
+    cfg = LANGS[lang]
+    d["_lang"] = lang
+    tpl = open(cfg["tpl"], encoding="utf-8").read()
     mark = hero_mark(d)
     sections = "".join([
         section_situation(d), section_stack(d), section_call(d),
         section_results(d), section_quote(d), section_cta(d),
     ])
+
+    # An approved story drops the draft ribbon. Everything else on the page is
+    # unchanged: the pages are still unlinked and still carry noindex until
+    # Daniel decides how they should be reached.
+    if d.get("approved"):
+        tpl = re.sub(r'\s*<div class="draft-ribbon">[^<]*</div>', "", tpl)
+
     page = (tpl
             .replace("{{TITLE}}", html.escape(d["title"]))
             .replace("{{DESCRIPTION}}", html.escape(d["description"]))
             .replace("{{SLUG}}", slug)
-            .replace("{{JSONLD}}", jsonld(slug, d))
+            .replace("{{JSONLD}}", jsonld(slug, d) + hreflang(lang, slug, d))
             .replace("{{CHIP}}", ph(d["chip"]))
             .replace("{{MARK}}", mark)
             .replace("{{H1}}", ph(d["h1"]))
             .replace("{{SUB}}", ph(d["sub"]))
             .replace("{{SECTIONS}}", sections))
-    os.makedirs(OUT, exist_ok=True)
-    p = os.path.join(OUT, slug + ".html")
+    os.makedirs(cfg["out"], exist_ok=True)
+    p = os.path.join(cfg["out"], slug + ".html")
     open(p, "w", encoding="utf-8").write(page)
     n_ph = page.count('class="ph"')
-    print("  wrote %-34s %d placeholder(s)" % (p, n_ph))
+    state = "approved" if d.get("approved") else "DRAFT"
+    print("  wrote %-40s %-8s %d placeholder(s)" % (p, state, n_ph))
     return p
+
+
+def hreflang(lang, slug, d):
+    """Bidirectional alternates. A one-sided hreflang is worse than none: Google
+    ignores the pair and may treat the two pages as duplicates."""
+    en_slug = d["en"] if lang == "it" else slug
+    it_slug = slug if lang == "it" else _IT_FOR_EN.get(slug)
+    if not it_slug:
+        return ""
+    return ('<link rel="alternate" hreflang="en" href="https://www.sabato.ai/customers/%s">'
+            '<link rel="alternate" hreflang="it" href="https://www.sabato.ai/it/clienti/%s">'
+            '<link rel="alternate" hreflang="x-default" href="https://www.sabato.ai/customers/%s">'
+            % (en_slug, it_slug, en_slug))
+
+
+_IT_FOR_EN = {v["en"]: k for k, v in CUSTOMERS_IT.items()}
 
 
 def main():
     for slug in ORDER:
-        build(slug, CUSTOMERS[slug])
-    print("\n%d customer page(s). All noindex + DRAFT until sign-off." % len(ORDER))
+        build("en", slug, CUSTOMERS[slug])
+    for slug in ORDER_IT:
+        build("it", slug, CUSTOMERS_IT[slug])
+    print("\n%d page(s). Approved stories drop the ribbon; all stay noindex and\n"
+          "unlinked until Daniel decides how they should be reached."
+          % (len(ORDER) + len(ORDER_IT)))
 
 
 if __name__ == "__main__":
