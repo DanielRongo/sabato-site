@@ -416,8 +416,8 @@
   var BAND_ITEMS = [
     { slug: "clima-convenienza", name: "ClimaConvenienza", initials: "CC",
       metric: "53.1%", ph: false,
-      label: IT ? "delle chiamate gestite in autonomia dall'AI, primo mese live"
-                : "of calls handled autonomously by the agent, first month live",
+      label: IT ? "delle chiamate gestite in autonomia \u2014 9 agenti live in 3 lingue"
+                : "of calls handled autonomously \u2014 9 agents live across 3 languages",
       person: "Alessio Perrucci", role: "CEO" },
     { slug: "creative-cables", name: "Creative Cables", initials: "CC",
       metric: "00%", ph: true,

@@ -37,8 +37,8 @@ CUSTOMERS = {
         "chip": "Customer story",
         "title": "ClimaConvenienza — Voice AI Case Study | Sabato AI",
         "description": ("How ClimaConvenienza scaled phone support across Italy, France and Germany "
-                        "without hiring — 53.1% of calls handled autonomously, at a run rate of "
-                        "roughly 12,800 calls a month."),
+                        "without hiring — nine multilingual agents live, 53.1% of calls handled "
+                        "autonomously in the first month."),
         "h1": "Growing across three markets faster than a phone team can be hired.",
         "sub": ("ClimaConvenienza sells climate equipment into Italy, France and Germany. Demand "
                 "was climbing in all three — and then a heatwave pushed it to a record eight days "
@@ -82,8 +82,8 @@ CUSTOMERS = {
              "remembering it."),
             ("Configuratore",
              "The configurator queue, on the phone. The agent takes a caller through sizing and "
-             "compatibility to a specific unit for their space and system — the highest-autonomy "
-             "queue on the line at 57.8%, and 1,035 calls since go-live."),
+             "compatibility to a specific unit for their space and system. It is the "
+             "highest-autonomy queue on the line, at 57.8%."),
         ],
         "stack_note": ("Connected to Shopify, so the agent reads the same catalogue, pricing and order "
                        "data the storefront does. Live from 22 June 2026."),
@@ -112,16 +112,16 @@ CUSTOMERS = {
             ("53.1%", "Calls handled autonomously",
              "Resolved by the agent with no operator involved, in the first month live "
              "(22–30 June 2026)."),
-            ("~12,800", "Calls a month at current run rate",
-             "414 a day through July, rising to around 730 at weekday peaks."),
-            ("1,074", "Calls on the busiest day",
-             "Eight days after go-live, during a heatwave. Absorbed without a single additional "
-             "hire."),
+            ("9", "Multilingual agents live",
+             "Three workflows — general information, order tracking and the configurator — running "
+             "in Italian, French and German."),
+            ("435", "Hours of support time returned",
+             "Phone time the agent absorbed instead of an operator, redeployed into B2B sales. "
+             "[[Confirm derivation before publication: resolved calls × average handle time.]]"),
         ],
         "results_foot": ("Measured from go-live on 22 June 2026 to 23 July 2026. The autonomy figure "
                          "above is the first month; it was 46.8% in July as volume grew — the reason "
-                         "is below. June covers nine live days and July twenty-three, so the two are "
-                         "not compared like for like anywhere on this page. "
+                         "is below. "
                          "[[Figures to be confirmed in writing with ClimaConvenienza before publication.]]"),
 
         "quote": ("We faced a massive demand spike without hiring anyone — and we moved a large part "
