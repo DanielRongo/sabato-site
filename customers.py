@@ -88,6 +88,36 @@ GLYPH = ('<svg viewBox="0 0 16 12" aria-hidden="true"><g fill="currentColor">'
 SPK = {"caller": "CALLER", "agent": "AGENT"}
 
 
+def _block(s, a, b):
+    i = s.index(a); return s[i:s.index(b, i) + len(b)]
+
+
+def italian_template():
+    """Derive the Italian template from the English one at build time.
+
+    It used to be a checked-in copy, and that copy went stale the moment new CSS
+    was added to the English template: the knowledge-base panel rendered
+    ink-on-black on the Italian page because those rules only existed in the
+    English file. A snapshot of a stylesheet is a bug with a delay on it.
+
+    Only the chrome and the locale differ, and the chrome is taken verbatim from
+    the shipped Italian industry template so the two page families cannot drift.
+    """
+    en = open("templates/customer.html", encoding="utf-8").read()
+    it_ind = open("templates/industry-it.html", encoding="utf-8").read()
+    HDR = ('<header class="site-header">', '</header>')
+    FTR = ('<footer class="site-footer">', '</footer>')
+    out = en.replace(_block(en, *HDR), _block(it_ind, *HDR))
+    out = out.replace(_block(en, *FTR), _block(it_ind, *FTR))
+    out = out.replace('<html lang="en">', '<html lang="it">')
+    out = out.replace("https://www.sabato.ai/customers/{{SLUG}}",
+                      "https://www.sabato.ai/it/clienti/{{SLUG}}")
+    out = out.replace('<meta property="og:locale" content="en_US">',
+                      '<meta property="og:locale" content="it_IT">')
+    out = out.replace("DRAFT - NOT APPROVED", "BOZZA - NON APPROVATA")
+    return out
+
+
 def hero_mark(d):
     """The customer's logo above the headline, monogram if we have no asset."""
     if d["logo"]:
@@ -291,7 +321,7 @@ def jsonld(slug, d):
 def build(lang, slug, d):
     cfg = LANGS[lang]
     d["_lang"] = lang
-    tpl = open(cfg["tpl"], encoding="utf-8").read()
+    tpl = italian_template() if lang == "it" else open(cfg["tpl"], encoding="utf-8").read()
     mark = hero_mark(d)
     sections = "".join([
         section_situation(d), section_stack(d), section_call(d),

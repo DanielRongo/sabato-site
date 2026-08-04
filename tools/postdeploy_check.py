@@ -25,7 +25,7 @@ PAGES = ["/", "/it", "/pricing", "/about", "/contact", "/blog", "/it/blog",
          "/industries/sports-fitness",
          "/privacy-policy", "/roi-calculator",
          "/customers/clima-convenienza", "/it/clienti/clima-convenienza",
-         "/customers/creative-cables"]
+         "/customers/creative-cables", "/it/clienti/creative-cables"]
 
 NAV_COUNT_JS = """(label) => {
   let c = 0;

@@ -66,7 +66,7 @@ CUSTOMERS = {
             "and a German line are a full salary each on the day they open, and a fraction of the "
             "traffic. Growth arrives first; the business case for headcount arrives later.",
             "Then the weather intervened. Climate equipment has one demand curve and it is the "
-            "temperature. The agent went live on 22 June 2026 and days later was taking its "
+            "temperature. Days after the agent went live it was taking its "
             "busiest day on record - in its second week of operation, absorbed without a single "
             "additional hire.",
         ],
@@ -99,7 +99,7 @@ CUSTOMERS = {
              "highest-autonomy queue on the line, at 57.8%."),
         ],
         "stack_note": ("Connected to Shopify, so the agent reads the same catalogue, pricing and order "
-                       "data the storefront does. Live from 22 June 2026."),
+                       "data the storefront does."),
 
         "call_h2": "What a ClimaConvenienza call sounds like",
         "calls": [
@@ -139,18 +139,17 @@ CUSTOMERS = {
                       "reads ClimaConvenienza's real catalogue, stock and order data - and takes "
                       "the same two calls in French and German."),
 
-        "results_eyebrow": "Results · 22 June - 23 July 2026",
+        "results_eyebrow": "Results · the first month live",
         "results_h2": "The first month",
         "results": [
             ("53.1%", "Calls handled autonomously",
-             "Resolved by the agent with no operator involved, in the first month live "
-             "(22-30 June 2026)."),
+             "Resolved by the agent with no operator involved, in the first month live."),
             ("435", "Hours of support time returned",
              "Phone time the agent absorbed instead of an operator, redeployed into B2B sales."),
             ("1,535", "Calls on the busiest day",
              "Absorbed during a heatwave, without a single additional hire."),
         ],
-        "results_foot": "Measured from go-live on 22 June 2026.",
+        "results_foot": "Measured over the first month from go-live.",
 
         "quote": ("We faced a massive demand spike without hiring anyone - and we moved a large part "
                   "of the customer support team into B2B sales, so they are growing the business "
@@ -187,6 +186,7 @@ CUSTOMERS = {
         "industry": "Furniture & Home",
         "industry_href": "/industries/furniture-home",
         "chip": "Customer story",
+        "approved": True,
         "title": "Creative Cables - Voice AI Case Study | Sabato AI",
         "description": ("How Creative Cables put voice AI on its Italian customer line - 39% of "
                         "calls resolved end to end in the first month, and 57% of order-status "
@@ -235,7 +235,7 @@ CUSTOMERS = {
              "Damaged items, address changes and cancellations are recognised as genuine post-sale "
              "cases and routed to a person with the context already gathered."),
         ],
-        "stack_note": "Two agents, live from 10 July 2026.",
+        "stack_note": "Two agents, live on the Italian customer line.",
 
         "call_h2": "What a Creative Cables call sounds like",
         "calls": [
@@ -274,7 +274,7 @@ CUSTOMERS = {
         "call_note": ("Order and policy details here are illustrative. On a live call Elena reads "
                       "the real order system and the real policy base."),
 
-        "results_eyebrow": "Results · first month, from 10 July 2026",
+        "results_eyebrow": "Results · the first month live",
         "results_h2": "The first month",
         "results": [
             ("39%", "Calls resolved end to end",
@@ -285,12 +285,11 @@ CUSTOMERS = {
             ("55s", "Average handle time",
              "The time it takes the agent to answer and close a call."),
         ],
-        "results_foot": "Measured from go-live on 10 July 2026 to the end of the first four weeks.",
+        "results_foot": "Measured over the first four weeks from go-live.",
 
         "quote": ("Elena handles our most repetitive calls - order status, shipping, returns - "
                   "on-brand and instantly. Our team now focuses on the cases that actually need a "
                   "person."),
-        "quote_pending": True,
 
         "cta_h2": "Want the same for your e-commerce store?",
         "cta_sub": ("A pilot runs on your real calls and measures what changed against your own "
