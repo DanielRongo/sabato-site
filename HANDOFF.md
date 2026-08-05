@@ -1,8 +1,8 @@
-# Session handoff - 3 Aug 2026
+# Session handoff - 5 Aug 2026
 
-Read this **after** `SABATO-SITE-HANDBOOK.md`. The handbook is the permanent
-playbook; this file is the volatile part - what just shipped, what is half-done,
-and what is waiting on a decision. Delete sections as they are resolved.
+Read this **after** `SABATO-SITE-HANDBOOK.md` (permanent playbook) and
+`DEPLOY.md` (how to ship). This file is the volatile part: what just shipped,
+what is next, and what is waiting on a decision. Delete sections as they resolve.
 
 ## How to bootstrap a new chat
 
@@ -19,20 +19,15 @@ Read DEPLOY.md, SABATO-SITE-HANDBOOK.md and HANDOFF.md in
 before handing anything back.
 ```
 
-If the folder is not connected to the session, Claude can clone instead -
-`git clone https://github.com/DanielRongo/sabato-site.git`, public, no
-credentials - but then it can only hand files back, not write into the working
-copy.
+If the folder is not connected, Claude can `git clone
+https://github.com/DanielRongo/sabato-site.git` - public, no credentials - but
+then it can only hand files back, not write into the working copy.
 
-**Deploying is now a defined procedure, not an improvisation.** See `DEPLOY.md`.
-Short version: Claude verifies in its container (`bash tools/verify.sh`), which
-writes `.deploy-receipt.json`; Daniel pushes from his own Terminal
-(`./tools/ship.sh staging "msg"`, then `./tools/ship.sh live`). Claude never
-pushes and never holds a credential. `ship.sh` refuses to push a `site/` tree
-that does not match the receipt.
-
-Everything below is written so a session that has never seen this work can pick
-it up without re-deriving anything.
+**Deploying is a defined procedure now.** See `DEPLOY.md`. Claude verifies in its
+container (`bash tools/verify.sh`), which writes `.deploy-receipt.json`; Daniel
+pushes from his own Terminal (`./tools/ship.sh staging "msg"`, then `./tools/ship.sh
+live`); Claude confirms the deployed result in Daniel's browser with Claude in
+Chrome. Claude never pushes and never holds a credential.
 
 ---
 
@@ -40,117 +35,155 @@ it up without re-deriving anything.
 
 | What | Commit |
 |---|---|
-| Every band constrained to the homepage 1200px grid, desktop + mobile gutters | `05126f3` |
-| GA4 `G-BSK4KH9JJF` on all 73 pages, exactly once | `bf30113` |
-| ROI calculator hosted **unlisted** at `/roi-calculator` | `0d3e807` |
-| Crisp live chat removed; `Becked by` → `Backed by` | `16976fe` |
-| CTA card no longer covers the footer logo below 1200px | `b8db75f` |
+| Deploy bridge: `verify.sh`, `ship.sh`, `site_digest.py`, receipt gate | `b6c7a99` |
+| Staging branch deploy noindexed via `netlify.toml` contexts | `b6c7a99` |
+| Corrected: cloud container cannot reach deployed URLs | `7ff5ad8` |
+| **63 redirects recovering the pre-pivot URL space** | `009062f` |
+| Browser-verification leg documented | `613925c` |
 
-Notes that are easy to lose:
+Verified on production: 44/44 redirects land correctly, 18/18 live pages still
+serve themselves, `x-robots-tag` null on prod and `noindex, nofollow` on staging.
 
-- **GA4** - Framer pages shipped with Framer's placeholder property
-  `G-499419803`, malformed for GA4 (nine digits, GA4 wants ten alphanumerics), so
-  the homepage reported to nothing for months. `tools/inject_ga.py` rewrites it in
-  place rather than adding a second tag; run it **last** in every build.
-- **ROI calculator** - hosted but unlisted: `noindex,nofollow`, absent from the
-  sitemap, and nothing links to it. `robots.txt` is deliberately untouched (a
-  `Disallow` line would publish the path and would also stop crawlers seeing the
-  `noindex`). Daniel's reasoning: "cost of a human vs our robot" is fine to walk a
-  CFO through on a call, dangerous unattended on a public page.
-  It weighs 4.4MB raw / ~900KB gzipped - React *development* build plus in-browser
-  Babel. Swapping to React production and pre-compiling the JSX would take it to
-  ~60KB gzipped without touching a line of the calculator's code.
-- **Crisp** was a Framer `bodyEnd` snippet (`BWQzQLg24`), website ID
-  `27aa4aad-…`, on all 16 exported pages.
+**Why the redirects mattered.** Search Console showed 78 URLs not indexed, 48 of
+them 404s - the entire pre-pivot URL space (`/banking`, `/saas`, `/insurance`,
+`/real-estate`, a WordPress-era blog) shipped with no redirects at all. Those
+were the only URLs on the domain Google had actually crawled. They now point at
+live pages.
+
+**What was NOT the problem:** the sitemap. It was submitted 30 Jul, re-read by
+Google 4 Aug unprompted, 60 pages discovered, status Success. Do not build
+sitemap-submission automation; Google re-fetches on its own.
 
 ---
 
-## Fixed - CTA panel covering the footer logo (`b8db75f`)
+## NEXT: the backlog, in priority order
 
-Shipped as a per-page, per-breakpoint `<style id="cta-footer-clearance">` block
-lifting the CTA card at 768-1199px and ≤767px. Desktop untouched. Applied to
-index, pricing, contact, it, it/prezzi, it/contatti, it/chi-siamo; about.html was
-already clear.
+### 1. Fix the six pages wearing the homepage's clothes  ← do this first
 
-**Two cases still covered - decide whether they are worth another pass:**
+`/`, `/it`, `/privacy-policy`, `/terms`, `/thank-you-page` and `/it/grazie` all
+carry the **identical** title *"Voice AI Agent Platform for E-Commerce | Sabato
+AI"*. Four of them also share the homepage's meta description verbatim.
 
-- `/it` at 600-767px: lifted 118px, measurement says it needs ~150. Still 32px of
-  overlap.
-- `/404` at 900px: same CTA structure but not included in the fix at all.
-- Everywhere else the gap lands between −5 and +7px rather than the intended
-  ~48px, so the logo is visible but its top edge touches the card. Looks tight
-  rather than deliberate. Desktop keeps its original +39px.
+This is not cosmetic. `/terms` is one of only **five** pages Google has indexed -
+so a legal page is currently competing with the homepage in search results
+wearing its title and description. Cheapest, highest-value fix on this list.
 
-Background below is kept because it explains why the obvious fixes do not work.
+### 2. The Italian site is wearing English titles
 
-On Framer pages at mobile widths the final lime CTA panel is painted on top of
-the footer's Sabato logo, so the footer reads as an unlabelled block of links.
-Reproduced at 390px, 600px and 767px on `/` (107-119px of overlap) and on
-`/pricing`. Clean at 1440px. Authored pages (use-cases, industries, blog) are
-clean at every width.
+Every Framer-exported Italian page carries an English `<title>`:
 
-Root cause, from `site/index.html`:
+| Page | Current title |
+|---|---|
+| `/it` | Voice AI Agent Platform for E-Commerce \| Sabato AI |
+| `/it/prezzi` | Pricing for Managed Voice AI \| Sabato AI |
+| `/it/contatti` | Get in Touch with Sabato AI \| Book a Demo |
+| `/it/chi-siamo` | Meet the Team Behind Sabato \| AI Voice Agents… |
+| `/it/blog` | Blog \| Sabato AI |
+| `/it/grazie` | Voice AI Agent Platform for E-Commerce \| Sabato AI |
+| `/it/clienti/clima-convenienza` | ClimaConvenienza - Case Study Voice AI \| Sabato AI |
+| `/it/clienti/creative-cables` | Creative Cables - Case Study Voice AI \| Sabato AI |
 
-```css
-/* base */
-.framer-12u8b35 { position: relative; z-index: 1; }
-/* @media (max-width: 767.98px) */
-.framer-12u8b35 { position: absolute; height: 547px; padding: 50px 20px;
-                  top: calc(-119.585% - 273.5px); left: 0; right: 0 }
-.framer-qg4q0x  { top: 92%; transform: translate(-50%,-50%); bottom: unset }
-```
+Italian searchers see English in Google.it. For an Italy-based company selling to
+Italian merchants that is a direct commercial cost. Note the **Italian blog posts
+already have Italian titles** - `publish.py` does this correctly. It is only the
+Framer-exported pages that were never localised.
 
-At the mobile breakpoint Framer takes the CTA out of flow, so the footer does not
-reserve space for it, and `z-index: 1` puts it over the footer.
+### 3. Rest of the SEO metadata pass
 
-**Dead end already tested:** adding `padding-top` to the footer moves the overlap
-by only 6px (107 → 101). The CTA is positioned as a *percentage* of a container
-that includes the footer, so growing the footer pushes the CTA down by almost the
-same amount. Any fix that grows the footer is circular - do not retry it.
+Audited 5 Aug across 66 indexable pages. Nothing is missing - every page has a
+title and a description - but:
 
-**Live lever:** shift the panel itself. Either put it back in flow at mobile
-(`position: relative; top: auto; transform: none`) or shift it by a fixed pixel
-amount (`transform: translate(-50%, calc(-50% - 130px))`), which is independent of
-page height. Check it does not then collide with the section above.
+- **43 titles exceed 60 characters** and get truncated in results
+- **29 descriptions exceed 160 characters** and get truncated
+- 4 descriptions are under 70 characters, wasting the space
+- 2 titles are under 25 characters
 
-**Complication:** the footer class `framer-PFscP` is shared by all 8 Framer pages,
-but the CTA section classes (`framer-qg4q0x`, `framer-12u8b35`) are generated
-per page and exist only on `/`. A CSS-only fix needs the equivalent class from
-each page; a JS fix in `enhance.js` can find "the absolutely-positioned element
-overlapping the footer logo" generically.
+Reproduce the audit before starting; the numbers will have moved.
 
-**Verification harness that works** (page-agnostic, survives Framer's generated
-class names): scroll the footer logo to the middle of the viewport, then
-`document.elementFromPoint` at its centre. If the hit is not the logo, something
-is painted over it. Two probes were written before this one and both gave false
-results - one matched `QRoxyaGHHfHSyA4`, which is the *header* logo, so it kept
-"finding" the header covering itself; the other anchored on the last image on the
-page, which is the LinkedIn icon sitting below the logo. The footer logo's asset
-is `KY1UqOX7…` (white/inverted); the header's is `UTATYXc6…`.
+### 4. Build a `/use-cases` hub page
+
+Nine use-case pages exist with **no index page**. Industries has `/industries`;
+use-cases has nothing. They are reachable only through footer links, which is why
+Google has to be told about each one individually rather than discovering them as
+a group. A hub is the single biggest structural gap left, and it is a page real
+visitors want too.
+
+### 5. Pricing page rewrite - approved 3 Aug, still not applied
+
+Findings in order of damage:
+
+- live typo **"2 languags"**
+- **"Human escalation workflows" is gated to the Merchant tier**, which reads as
+  "the cheap plan cannot reach a human"
+- "One predictable monthly price" sits directly above three "Starting from"
+  tiers with **no overage rate stated**
+- no proof anywhere - no logos, testimonial or real deployment number
+- CTA drift between "Start Free Pilot", "Start a Pilot" and "Book a Demo"
+- minutes are the wrong unit for a CEO; calls are
+- homepage claims "9 voice workflows" while three are marked Coming Soon
+
+Recommendation: keep three tiers, cut ambiguity - who each tier is for, calls not
+minutes, stated overage, escalation everywhere, one pilot promise.
+
+### 6. Live test numbers - US, UK, IT
+
+Publish phone numbers so a prospect can call the agent and hear it work. Strongest
+possible demo for a voice product: no form, no calendar, just call it.
+
+**Decide these before building anything:**
+
+- **Cost is unmetered by default.** A public number pointing at a voice agent
+  bills per minute with no natural ceiling. One bored crawler, one bot, or one
+  competitor on a loop is a real bill against a 70%-net-margin target. Needs a
+  hard cap: per-number daily spend limit, max call duration, per-caller-ID rate
+  limit, and an out-of-hours message rather than a live agent.
+- **Provisioning is not uniform.** Italian and UK numbers generally require
+  local address or ID documentation and take days, not minutes. US is immediate.
+  Do not promise all three at once.
+- **Which agent answers?** A generic demo agent is unimpressive. A catalogue-
+  connected one is the actual product - but that means exposing a real or
+  seeded catalogue to anonymous callers.
+- **Where do the numbers live on the site?** Homepage hero is highest intent;
+  pricing page converts better; a dedicated `/try` page is measurable. Pick one,
+  do not scatter them.
+
+Open question for Daniel: is this a **marketing asset** (always-on, hardened,
+capped) or a **sales tool** (a number handed out on calls, unlisted)? The answer
+changes the whole build.
 
 ---
 
-## Open decisions for Daniel
+## Still open from earlier sessions
 
-1. **Pricing page rewrite.** Reviewed this session; findings in order of damage:
-   "One predictable monthly price" sits directly above three "Starting from"
-   tiers with no overage rate stated; **"Human escalation workflows" is gated to
-   the Merchant tier**, which reads as "the cheap plan cannot reach a human";
-   live typo **"2 languags"**; no proof anywhere (no logos, testimonial or real
-   deployment number) on either page; CTA drift between "Start Free Pilot",
-   "Start a Pilot" and "Book a Demo"; minutes are the wrong unit for a CEO
-   (calls are); homepage claims "9 voice workflows" while three are marked
-   Coming Soon. Recommendation: keep three tiers, cut ambiguity - who each tier
-   is for, calls not minutes, stated overage, escalation everywhere, one pilot
-   promise. Mechanical fixes were approved but **not yet applied**.
-2. **Cookie consent.** GA4 sets `_ga` before any consent and there is no banner
-   anywhere on the site. Standard ePrivacy exposure for an Italy-based, EU-facing
-   business. Fix is Consent Mode v2 with defaults denied plus a light banner.
+1. **Cookie consent.** GA4 sets `_ga` before any consent and there is no banner.
+   Standard ePrivacy exposure for an Italy-based, EU-facing business. Fix is
+   Consent Mode v2 with defaults denied plus a light banner.
+2. **CTA panel over the footer logo** - two cases remain: `/it` at 600-767px
+   (lifted 118px, needs ~150, so 32px still overlaps) and `/404` at 900px, which
+   was never included. Elsewhere the gap is -5 to +7px rather than the intended
+   ~48px: visible but tight. Full root-cause analysis and the dead ends already
+   tested are in git history at `b8db75f`.
 3. **Sources blocks** still on `reduce-bracketing-returns` and
-   `multilingual-phone-support-eu-expansion`; the later "skip the sources"
-   instruction post-dates them.
-4. **This repo is public.** The reverted ROI-calculator commits are still in
-   history, so the calculator is readable by anyone who looks at the git log.
-   Squashing it out is possible if that matters.
-5. **Footer layout differs between the two page families on mobile** - Framer
-   pages centre the footer, authored pages left-align it. Not yet raised as a fix.
+   `multilingual-phone-support-eu-expansion`; the "skip the sources" instruction
+   post-dates them.
+4. **This repo is public.** Reverted ROI-calculator commits remain in history.
+5. **Footer layout differs between page families on mobile** - Framer pages
+   centre it, authored pages left-align it.
+6. **ROI calculator** is 4.4MB raw / ~900KB gzipped - React *development* build
+   plus in-browser Babel. Production React + pre-compiled JSX takes it to ~60KB
+   gzipped without touching the calculator's code.
+
+---
+
+## Search Console - check back 12 Aug
+
+Requested indexing 5 Aug on six hub pages: `/industries`, `/blog`, `/it/settori`,
+`/it/blog`, `/it/prezzi`, `/use-cases/cart-abandonment-recovery`.
+
+**Do not re-request them.** Google's own message: submitting a page repeatedly
+does not change its queue position.
+
+Expect the 48 "Not found (404)" to collapse as the redirects are crawled. The
+Page Indexing report lags roughly two weeks, so read dates before drawing
+conclusions - on 5 Aug it was still showing a snapshot from 24 Jul, which is what
+made the site look far worse than it was.
