@@ -3,7 +3,7 @@ title: "Quanto costa davvero una conversazione, e perché non si prezza mai come
 slug: what-a-conversation-actually-costs
 description: "Il costo per contatto sul telefono, costruito dal basso sui dati Eurostat del costo del lavoro in otto Paesi europei - più il divisore di occupancy, il carico contributivo e il break-even che dice quando automatizzare non conviene."
 category: Economia
-date: 2026-07-30
+date: 2026-08-05
 cover_style: offwhite
 ---
 

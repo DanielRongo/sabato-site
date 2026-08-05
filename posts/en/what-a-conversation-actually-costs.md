@@ -3,7 +3,7 @@ title: "What a Conversation Actually Costs, and Why It Never Prices Like a Ticke
 slug: what-a-conversation-actually-costs
 description: "Cost per contact for voice, built bottom-up from Eurostat labour cost data across eight European countries - plus the occupancy divisor, the employer load and the break-even test that says when automating doesn't pay."
 category: Economics
-date: 2026-07-30
+date: 2026-08-05
 cover_style: offwhite
 ---
 

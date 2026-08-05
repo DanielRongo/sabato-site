@@ -157,6 +157,12 @@ read_time: 7 min read      # optional - computed from word count if absent
 `cover_style` sets the index card's cover block: `black` (lime text), `lime`
 (black text), `offwhite` (black text + hairline). Rotate them so the grid reads well.
 
+**`date` is the day the post is pushed, not a date carried over from the draft.**
+Daniel's drafts often arrive with a date in them; ignore it. Check the real date
+(`date -u +%F`) at push time and put that in the frontmatter for both languages.
+The date is the visible byline, the sitemap `lastmod` and the `datePublished` in
+the Article JSON-LD, so a stale one publishes as backdated to a crawler.
+
 Special sections, by heading name:
 - `## FAQ` → renders as FAQ cards **and** emits FAQPage JSON-LD.
 - `## Sources` / `## Fonti` → renders as the sources block.
@@ -267,9 +273,18 @@ python3 industries.py                                # industry pages + hubs
 python3 customers.py                                 # customer stories, EN + IT
 python3 tools/inject_ga.py                           # ALWAYS last: re-stamps GA4
 python3 tools/dedash.py --dry                        # must report 0
+python3 tools/contrast_audit.py /page [/page ...]    # WCAG AA, after any colour change
 python3 tools/rehash_edited_assets.py                # after ANY edit under site/fuc/
 python3 tools/postdeploy_check.py <base-url>         # after EVERY deploy
 ```
+
+`contrast_audit.py` is the answer to "the two pages declare the same styles, so
+it must look right". It doesn't - twice here a page declared the right colours
+and still painted unreadable text. It climbs to the first opaque ancestor for
+the background and applies the real AA thresholds (3:1 for large text, 4.5:1
+otherwise). It deliberately skips SVG: chart labels paint with `fill`, not CSS
+`color`, and their background is a sibling rect, so any verdict it gave there
+would be noise. Check charts on a screenshot.
 
 **Run the whole chain, in that order, even for a one-line blog change.** The
 page templates carry the Industries footer column as plain `<span>`s;
