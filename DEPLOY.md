@@ -206,6 +206,41 @@ into your working copy.
 
 ---
 
+## The third leg: verify in Daniel's browser with Claude in Chrome
+
+The local gate cannot test `site/_redirects` - `serve_like_netlify.py` does not
+process redirects - and the cloud container cannot reach any deployed URL. That
+leaves a real gap: redirects would ship on faith.
+
+**Claude in Chrome closes it.** It runs in Daniel's own browser, so it has real
+network access and can read response headers. Navigate to the origin under test,
+then use `javascript_tool` to fetch same-origin paths and assert on the results:
+
+```js
+const r = await fetch("/banking", { redirect: "follow" });
+new URL(r.url).pathname;              // -> "/industries"
+r.headers.get("x-robots-tag");        // -> null on prod, "noindex, nofollow" on staging
+```
+
+Always assert BOTH directions:
+
+1. every old path lands on its intended target, and
+2. a list of **live pages still serve themselves** - a redirect rule that
+   shadows a real page is the dangerous failure, and it is invisible unless
+   explicitly tested.
+
+Used on 5 Aug 2026 to check 63 rules on staging and then production: 44 redirect
+assertions plus 18 live-page assertions, both clean, before and after go-live.
+
+Note `fetch` is same-origin only - a cross-origin call to another host fails
+CORS. Navigate to the origin first, then use relative paths.
+
+So the full shape is three legs, not two:
+
+```
+verify locally (cloud)  ->  ship (Daniel's Mac)  ->  confirm (Daniel's browser)
+```
+
 ## Claude must never run git through the Cowork bridge
 
 `device_bash` on the Mac side **cannot delete files** - `rm` returns
