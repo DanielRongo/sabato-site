@@ -57,6 +57,31 @@ fi
 if [ -n "$REMOTE_URL" ]; then
   echo
   echo "==> 4b/5  Playwright sweep against $REMOTE_URL"
+  # A Cowork cloud container cannot reach the public internet from Chromium -
+  # egress is proxied to package registries only, so sabato.ai, *.netlify.app
+  # and everything else fail with ERR_TUNNEL_CONNECTION_FAILED. Probe first, so
+  # a network wall is never mistaken for a broken website.
+  if ! python3 - "$REMOTE_URL" <<'PROBE'
+import sys
+from playwright.sync_api import sync_playwright
+url = sys.argv[1]
+with sync_playwright() as p:
+    b = p.chromium.launch(executable_path="/opt/pw-browsers/chromium", args=["--no-sandbox"])
+    pg = b.new_page()
+    try:
+        pg.goto(url, wait_until="domcontentloaded", timeout=20000)
+    except Exception as e:
+        print(str(e).splitlines()[0][:120]); b.close(); sys.exit(1)
+    b.close()
+PROBE
+  then
+    echo
+    echo "CANNOT REACH $REMOTE_URL from this container." >&2
+    echo "This is almost certainly the sandbox egress wall, NOT a broken site." >&2
+    echo "Verify a DEPLOYED url with Claude in Chrome (runs in Daniel's own" >&2
+    echo "browser) or have Daniel look. The local sweep above is the real gate." >&2
+    exit 1
+  fi
   if ! python3 tools/postdeploy_check.py "$REMOTE_URL"; then
     echo
     echo "DEPLOYED SITE FAILED at $REMOTE_URL" >&2

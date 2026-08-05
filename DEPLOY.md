@@ -95,8 +95,31 @@ disagree.
 
 ```bash
 bash tools/verify.sh                        # gate the local build, write receipt
-bash tools/verify.sh https://staging--...   # also sweep the deployed staging site
 ```
+
+### Claude cannot sweep a deployed URL from the cloud container
+
+Tested 5 Aug 2026: Chromium inside a Cowork container cannot reach `sabato.ai`,
+`main--delicate-valkyrie-20e427.netlify.app` or the staging URL. All three fail
+with `ERR_TUNNEL_CONNECTION_FAILED` - egress is proxied to package registries
+only. `verify.sh <url>` now probes first and says so, rather than reporting a
+perfectly healthy site as broken.
+
+So the **local sweep is the real gate**, and it is a good one: it runs the same
+40+ page Playwright check against the exact bytes that get deployed, served
+through `serve_like_netlify.py`. What it cannot catch is anything introduced
+*by Netlify itself* - header rules, redirects, context build commands.
+
+To check a deployed URL, in order of preference:
+
+1. **Claude in Chrome** - drives Daniel's own browser, so it has real network
+   access and can read response headers. The only option that can confirm
+   Netlify-side behaviour such as `X-Robots-Tag`.
+2. **WebFetch** - works, but returns page text only. No headers, one page at a
+   time. Fine for "did it deploy and does it look right", useless for header
+   rules.
+3. **Daniel's eyes**, plus the Netlify deploy log at
+   `app.netlify.com/projects/delicate-valkyrie-20e427/deploys`.
 
 ---
 
