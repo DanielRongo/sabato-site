@@ -1,3 +1,18 @@
 [build]
   publish = "site"
   command = ""
+
+# Production = the main branch = www.sabato.ai. Ships exactly what is committed.
+[context.production]
+  command = ""
+
+# The staging branch gets a Netlify branch deploy at
+#   https://staging--delicate-valkyrie-20e427.netlify.app
+# It is a complete public copy of the site, so it must never be indexed or it
+# will compete with www.sabato.ai for our own terms.
+[context.branch-deploy]
+  command = "bash tools/mark_noindex.sh"
+
+# Same protection for any pull-request preview.
+[context.deploy-preview]
+  command = "bash tools/mark_noindex.sh"

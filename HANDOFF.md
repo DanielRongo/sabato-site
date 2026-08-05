@@ -14,9 +14,22 @@ block are account-level and follow you automatically.
 Opening prompt for a fresh session:
 
 ```
-Clone github.com/danielrongo/sabato-site, read SABATO-SITE-HANDBOOK.md
-and HANDOFF.md, then <the task>.
+Read DEPLOY.md, SABATO-SITE-HANDBOOK.md and HANDOFF.md in
+~/Documents/sabato-site, then <the task>. Verify with tools/verify.sh
+before handing anything back.
 ```
+
+If the folder is not connected to the session, Claude can clone instead -
+`git clone https://github.com/DanielRongo/sabato-site.git`, public, no
+credentials - but then it can only hand files back, not write into the working
+copy.
+
+**Deploying is now a defined procedure, not an improvisation.** See `DEPLOY.md`.
+Short version: Claude verifies in its container (`bash tools/verify.sh`), which
+writes `.deploy-receipt.json`; Daniel pushes from his own Terminal
+(`./tools/ship.sh staging "msg"`, then `./tools/ship.sh live`). Claude never
+pushes and never holds a credential. `ship.sh` refuses to push a `site/` tree
+that does not match the receipt.
 
 Everything below is written so a session that has never seen this work can pick
 it up without re-deriving anything.

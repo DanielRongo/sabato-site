@@ -10,6 +10,17 @@ Static clone of the Sabato Framer site, self-hosted on Netlify (git-connected: p
 
 Publishing flow: Trello board "Sabato Blog Pipeline" → Approved column → daily publisher task renders, commits, pushes.
 
+## Deploying
+
+Read `DEPLOY.md`. Claude verifies in its cloud container (`bash tools/verify.sh`,
+needs Playwright); Daniel pushes from his Mac (`./tools/ship.sh staging "msg"`,
+then `./tools/ship.sh live`). `staging` branch → noindexed Netlify preview;
+`main` → production, fast-forwarded from staging only.
+
+Do NOT run `tools/rehash_edited_assets.py` with no argument - it defaults to the
+repo's first commit and will rename hundreds of assets. Pass a ref
+(`origin/main`), or just let `tools/verify.sh` handle it.
+
 ## Editing files under site/fuc/
 
 Those files are served with `Cache-Control: immutable, max-age=1y` (Framer names
