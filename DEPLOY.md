@@ -230,6 +230,25 @@ state, use the cloud clone (`git clone https://github.com/DanielRongo/sabato-sit
 or ask Daniel to run the command. This happened once, on 5 Aug 2026, from a
 `ship.sh status` run used as a test. Do not repeat it.
 
+## device_commit_files strips the executable bit
+
+Every file Claude writes to the Mac through the bridge lands as `100644`. A shell
+script delivered that way arrives **non-executable**, and `./tools/ship.sh` then
+fails with `permission denied`. It bit `verify.sh` on 5 Aug 2026, which was
+committed as `100644` an hour after being created `100755`.
+
+So: **after any `device_commit_files` that touches a script, chmod it back.**
+
+```bash
+chmod +x tools/ship.sh tools/verify.sh tools/mark_noindex.sh tools/site_digest.py
+```
+
+Claude can run that itself through the bridge - `chmod` is permitted, only
+deleting is not. Do it in the same turn as the delivery, not later.
+
+Fallback if the bit is ever missing and Daniel is mid-deploy: `bash
+tools/ship.sh staging "msg"` works regardless of the mode.
+
 ## Known sharp edges
 
 - **The repo is public.** No secrets, tokens or `.env` files, ever. Reverted ROI
