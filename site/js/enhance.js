@@ -427,11 +427,19 @@
       person: "Marco Logreco", role: "Head of E-Commerce" }
   ];
 
-  /* Staging only: these pages name real customers and carry unapproved figures.
-     Production gets the band the day Daniel has sign-off, by flipping this. */
-  var BAND_ENABLED = /netlify\.app$/.test(location.hostname) ||
-                     location.hostname === "localhost" ||
-                     location.hostname === "127.0.0.1";
+  /* OFF EVERYWHERE, including staging. Daniel's call, 5 Aug 2026: the two
+     customers have not signed off on their stories being used as homepage
+     marketing, and what belongs on the homepage is a design decision he has
+     not made yet - it may not be this band at all.
+
+     Do NOT flip this back on to "just show him what it looks like". Named
+     customers and their metrics do not go in front of visitors before the
+     customers have approved it, and that approval is Daniel's to obtain, not
+     something a session can infer from the figures being confirmed. The
+     /customers/ pages themselves stay built, noindex and unlinked.
+
+     The band below is kept as reference for whatever replaces it. */
+  var BAND_ENABLED = false;
 
   var BAND_CSS =
     ".sb-cust{max-width:1200px;width:calc(100% - 80px);margin:0 auto;background:#000;" +

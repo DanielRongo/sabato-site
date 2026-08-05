@@ -143,6 +143,13 @@ with sync_playwright() as p:
             }
             if not it and path in ("/", "/pricing", "/about", "/contact"):
                 checks["dropdown_present"] = pg.evaluate("!!document.querySelector('[data-uc-dropdown]')")
+            # No customer names or their metrics on the homepage until the
+            # customers have approved that use and Daniel has designed the
+            # section. enhance.js can inject a band; this asserts it doesn't.
+            if path in ("/", "/it"):
+                checks["no_customer_band"] = pg.evaluate(
+                    """!document.querySelector('[data-sb-cust]')
+                       && !/ClimaConvenienza|Creative Cables/.test(document.body.innerText)""")
             # A blog post that has a sibling in the other language must declare
             # it both ways. The visible language-switch link is for humans and
             # proves nothing to a crawler; blog posts shipped without these tags
