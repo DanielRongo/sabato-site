@@ -1,3 +1,6 @@
 __pycache__/
 .DS_Store
 .deploy-receipt.json
+
+# transfer archives from Cowork sessions (bridge cannot delete; ignore instead)
+*.tar.gz
