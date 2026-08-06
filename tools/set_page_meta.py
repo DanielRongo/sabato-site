@@ -88,17 +88,18 @@ PAGES = {
         desc="Abbiamo ricevuto la tua richiesta. Il team Sabato AI ti contatterà a breve.",
         robots="noindex, nofollow",
     ),
-    # Description already correct in Italian - title only.
-    "it/blog": dict(
-        title="Blog sull'AI vocale per l'e-commerce | Sabato AI",
-        desc=None,
-    ),
-    # noindex case studies: not searchable, but the title still shows when the
-    # link is shared, which is exactly how these pages get used in sales.
-    "it/clienti/clima-convenienza": dict(
-        title="ClimaConvenienza: case study agenti vocali | Sabato AI", desc=None),
-    "it/clienti/creative-cables": dict(
-        title="Creative Cables: case study agenti vocali | Sabato AI", desc=None),
+    # DO NOT ADD GENERATED PAGES HERE. This tool patches built HTML, so anything
+    # a generator rebuilds will silently revert to the generator's value on the
+    # next run - and the revert is invisible until someone diffs the output.
+    # Proven on 6 Aug 2026: /it/blog was set here, publish.py rebuilt it, and the
+    # title went back to the English "Blog | Sabato AI"; running customers.py
+    # likewise reverted both Italian case-study titles.
+    #
+    # Metadata belongs with whatever owns the page:
+    #   /blog, /it/blog, blog posts  -> templates/blog-index-*.html, post frontmatter
+    #   /industries/*, /it/settori/* -> industry_data.py / industry_data_it.py
+    #   /customers/*, /it/clienti/*  -> customer_data.py / customer_data_it.py
+    #   everything below             -> static, no generator, so this tool owns it
 
     # ---- use-case pages ----------------------------------------------------
     # These 18 have no generator: templates/use-case.html exists but nothing in

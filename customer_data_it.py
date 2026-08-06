@@ -40,7 +40,7 @@ CUSTOMERS_IT = {
         "industry_href": "/it/settori/clima-e-riscaldamento",
         "chip": "Storia cliente",
         "approved": True,
-        "title": "ClimaConvenienza - Case Study Voice AI | Sabato AI",
+        "title": "ClimaConvenienza: case study agenti vocali | Sabato AI",
         "description": ("Come ClimaConvenienza ha scalato il supporto telefonico su Italia, Francia "
                         "e Germania senza assumere - nove agenti multilingua live e il 53,1% delle "
                         "chiamate gestite in autonomia nel primo mese."),
@@ -181,7 +181,7 @@ CUSTOMERS_IT = {
         "industry_href": "/it/settori/arredamento",
         "chip": "Storia cliente",
         "approved": True,
-        "title": "Creative Cables - Case Study Voice AI | Sabato AI",
+        "title": "Creative Cables: case study agenti vocali | Sabato AI",
         "description": ("Come Creative Cables ha portato la voice AI sulla linea clienti italiana - "
                         "39% delle chiamate risolte dall'inizio alla fine nel primo mese e 57% delle "
                         "richieste sullo stato ordine automatizzate."),
