@@ -311,6 +311,27 @@ carried the clone's older `.gitignore`, overwrote it, removed the rule, and
 `ship.sh`'s `git add -A` then committed a 260KB archive into the repo. Change it
 in both places, or change it in the clone and let the transfer carry it.
 
+## Build order matters - use build.py
+
+```bash
+python3 build.py && bash tools/verify.sh
+```
+
+Do not run the generators by hand. `industries.py` ends with
+`link_footer_industries()`, which rewrites the footer industry list on ~38 pages
+it does not own - blog, use-case, hub and customer pages - turning inert
+`<span>` labels into real links. Any generator that rebuilds a page from a
+template must therefore run BEFORE it.
+
+On 6 Aug 2026 the order was publish → industries → customers. `customers.py`
+regenerated the case studies from `templates/customer.html`, which ships spans,
+and silently wiped nine footer links from every customer page. It shipped to
+production that way and was only caught by diffing a later build.
+
+`build.py` encodes the one correct order. `inject_ga.py` is deliberately not in
+it: it must be the last thing to touch any HTML, and `tools/verify.sh` already
+runs it as part of the gate.
+
 ## Transferring many files at once
 
 `device_commit_files` caps at 50 files, and a large batch floods the chat with
