@@ -54,6 +54,17 @@ if ! python3 tools/postdeploy_check.py "http://127.0.0.1:$PORT"; then
   exit 1
 fi
 
+echo
+echo "==> 4a/5  cold-load footer clicks (regression, 6 Aug 2026)"
+# The sweep above clicks links that enhance.js has already wired, so it cannot
+# see the bug where footer links are dead on a first visit and alive after a
+# reload. This test reverts the wiring first and only then clicks.
+if ! python3 tools/test_footer_clicks.py "http://127.0.0.1:$PORT"; then
+  echo
+  echo "GATE FAILED - no receipt written. Nothing is safe to push." >&2
+  exit 1
+fi
+
 if [ -n "$REMOTE_URL" ]; then
   echo
   echo "==> 4b/5  Playwright sweep against $REMOTE_URL"

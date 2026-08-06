@@ -417,6 +417,19 @@
     }
   }
 
+  /* Resolve a destination from an element's own label, for when the DOM has not
+     been wired yet. Leaf nodes only, short text only, so a click on a container
+     cannot match half the page. */
+  function resolveByLabel(node) {
+    if (!node || (node.children && node.children.length)) return null;
+    var t = normLabel(node.textContent || "");
+    if (!t || t.length > 40) return null;
+    var i;
+    for (i = 0; i < USECASES.length; i++) if (matchesUC(t, USECASES[i])) return USECASES[i].href;
+    for (i = 0; i < INDUSTRIES.length; i++) if (matchesUC(t, INDUSTRIES[i])) return INDUSTRIES[i].href;
+    return null;
+  }
+
   function installClickInterceptor() {
     if (window.__ucClickInterceptor) return;
     window.__ucClickInterceptor = true;
@@ -427,8 +440,7 @@
       if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
       var node = e.target;
       var a = node && node.closest ? node.closest("a") : null;
-      if (!a) return;
-      var href = a.getAttribute("href") || "";
+      var href = a ? (a.getAttribute("href") || "") : "";
       var ours = href.indexOf("/use-cases/") === 0 || href.indexOf("/it/casi-duso/") === 0 ||
                  href.indexOf("/industries/") === 0 || href === "/industries" ||
                  href.indexOf("/it/settori/") === 0 || href === "/it/settori" ||
@@ -436,8 +448,30 @@
                  a.hasAttribute("data-roi-link") || href === "/roi-calculator" ||
                  href.indexOf("/customers/") === 0 ||
                  href.indexOf("/it/clienti/") === 0;
+      /* TIMING-PROOF FALLBACK.
+         Everything above assumes wireUseCaseTargets()/wireIndustryTargets() has
+         already rewritten this anchor. On a cold first load that is not
+         guaranteed: enhance.js is a separate request while Framer's bundles
+         hydrate, and hydration is known to revert our DOM edits (proved 6 Aug
+         2026 - the served HTML had 0 malformed hrefs while the live DOM had 3).
+         Reported symptom: footer links do nothing on the first visit, then work
+         after a reload.
+
+         So if the anchor still carries the /#usecases hook - or there is no
+         anchor at all, because Framer renders the footer entry as a <span> -
+         resolve the destination from the label instead. Then the click works
+         whether or not any wiring has run. */
+      if (!ours) {
+        var hooked = !a || href === "" || href === "#" ||
+                     href.indexOf("#usecases") !== -1 || href.indexOf("#casiduso") !== -1;
+        if (hooked) {
+          var alt = resolveByLabel(node);
+          if (!alt && a) alt = resolveByLabel(a.querySelector("p, span, h3, h4") || a);
+          if (alt) { href = alt; ours = true; }
+        }
+      }
       if (!ours) return;
-      if (a.target === "_blank") return;
+      if (a && a.target === "_blank") return;
       e.preventDefault();
       e.stopImmediatePropagation();
       window.location.assign(href);
