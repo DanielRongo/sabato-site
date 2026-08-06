@@ -612,8 +612,47 @@
     wireUseCaseTargets(); wireIndustryTargets(); installClickInterceptor();
     injectCustomerBand();
   }
-  if (document.readyState !== "loading") run();
-  else document.addEventListener("DOMContentLoaded", run);
-  new MutationObserver(run).observe(document.documentElement, { childList: true, subtree: true });
-  window.addEventListener("load", function () { setTimeout(run, 800); });
+  /* SELF-FEEDING OBSERVER - fixed 6 Aug 2026.
+
+     This used to be `new MutationObserver(run)`. run() writes to the DOM, so
+     every write we made re-triggered the observer, which called run() again,
+     which wrote again. Measured on the local build: ~5,200 mutation records in
+     the first 300ms and a steady ~180/second afterwards that NEVER settles.
+
+     That is not just wasted CPU. A browser only fires `click` when mousedown and
+     mouseup land on the same node - so if React replaces a footer node between
+     the two, no click event is generated at all and no click handler, ours
+     included, can rescue it. That is the reported symptom: footer links that do
+     nothing, intermittently, worse right after a page appears.
+
+     So: coalesce to at most one pass per animation frame, and deafen the
+     observer while that pass runs so our own edits cannot feed back into it. */
+  var __mo = null, __pending = false, __busy = false;
+
+  function runGuarded() {
+    if (__busy) return;
+    __busy = true;
+    if (__mo) __mo.disconnect();
+    try { run(); }
+    finally {
+      __busy = false;
+      if (__mo) __mo.observe(document.documentElement, { childList: true, subtree: true });
+    }
+  }
+
+  function schedule() {
+    if (__pending) return;
+    __pending = true;
+    var fire = function () { __pending = false; runGuarded(); };
+    if (window.requestAnimationFrame) window.requestAnimationFrame(fire);
+    else setTimeout(fire, 16);
+  }
+
+  if (document.readyState !== "loading") runGuarded();
+  else document.addEventListener("DOMContentLoaded", runGuarded);
+  __mo = new MutationObserver(schedule);
+  __mo.observe(document.documentElement, { childList: true, subtree: true });
+  /* Belt and braces: hydration can land after our last pass, and disconnecting
+     during a pass means we can miss what React did in that window. */
+  window.addEventListener("load", function () { setTimeout(runGuarded, 800); });
 })();

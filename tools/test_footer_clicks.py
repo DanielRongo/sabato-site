@@ -34,6 +34,27 @@ CASES = [
 
 # Undo everything enhance.js does to the use-case links, so the click happens in
 # exactly the state a cold visitor sees.
+# Same three checks, but reached by clicking the header logo back to the home
+# page first - the path Daniel reported the failure on.
+VIA_LOGO = [
+    ("/pricing", "Managing Returns",  "/use-cases/managing-returns"),
+    ("/about",   "Open a Complaint",  "/use-cases/open-a-complaint"),
+    ("/it/prezzi", "Gestione Resi",   "/it/casi-duso/gestione-resi"),
+]
+
+# The header logo is the only header anchor carrying an image or SVG.
+LOGO_CLICK = """
+(() => {
+  const a = [...document.querySelectorAll('a')].find(x => {
+    const r = x.getBoundingClientRect();
+    return r.top < 160 && r.width > 0 && x.querySelector('img,svg');
+  });
+  if (!a) return false;
+  a.click();
+  return true;
+})()
+"""
+
 UNWIRE = """
 (() => {
   let n = 0;
@@ -58,10 +79,35 @@ def main():
         # a fixed path and needs --no-sandbox.
         browser = p.chromium.launch(executable_path="/opt/pw-browsers/chromium",
                                     args=["--no-sandbox"])
-        for path, label, expect in CASES:
+        for path, label, expect in CASES + VIA_LOGO:
+            via_logo = (path, label, expect) in VIA_LOGO
             ctx = browser.new_context(viewport={"width": 1440, "height": 900})
             page = ctx.new_page()
             page.goto(base + path, wait_until="networkidle")
+
+            if via_logo:
+                # Daniel's exact repro, 6 Aug 2026: "it happens when I navigate
+                # back to the home page clicking the sabato logo in the header -
+                # that's when the footer links stop working."
+                clicked = page.evaluate(LOGO_CLICK)
+                if not clicked:
+                    print(f"FAIL {path:9} - no header logo link found")
+                    bad += 1
+                    ctx.close()
+                    continue
+                page.wait_for_load_state("networkidle")
+                page.wait_for_timeout(600)
+                # "Home" is / in English and /it in Italian - the logo is
+                # language-aware and both are correct.
+                home = "/it" if path.startswith("/it") else ""
+                landed = page.url[len(base):].split("?")[0].rstrip("/")
+                if landed != home:
+                    print(f"FAIL {path:9} - logo went to {landed or '/'}, expected {home or '/'}")
+                    bad += 1
+                    ctx.close()
+                    continue
+                path = path + "->" + (home or "/")
+
             unwired = page.evaluate(UNWIRE)
             if not unwired:
                 print(f"SKIP {path:9} '{label}' - nothing to unwire (page has no wired use-case links)")
