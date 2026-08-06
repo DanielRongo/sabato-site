@@ -49,9 +49,7 @@ CUSTOMERS = {
         "chip": "Customer story",
         "approved": True,
         "title": "ClimaConvenienza - Voice AI Case Study | Sabato AI",
-        "description": ("How ClimaConvenienza scaled phone support across Italy, France and Germany "
-                        "without hiring - nine multilingual agents live, 53.1% of calls handled "
-                        "autonomously in the first month."),
+        "description": "How ClimaConvenienza scaled phone support across Italy, France and Germany without hiring: 53.1% of calls handled autonomously in month one.",
         "h1": "Growing across three markets faster than a phone team [nb]can be hired.[/nb]",
         "sub": ("ClimaConvenienza sells climate equipment into Italy, France and Germany. Demand "
                 "was climbing in all three - and then a heatwave pushed it to a record eight days "
@@ -188,9 +186,7 @@ CUSTOMERS = {
         "chip": "Customer story",
         "approved": True,
         "title": "Creative Cables - Voice AI Case Study | Sabato AI",
-        "description": ("How Creative Cables put voice AI on its Italian customer line - 39% of "
-                        "calls resolved end to end in the first month, and 57% of order-status "
-                        "calls fully automated."),
+        "description": "How Creative Cables put voice AI on its Italian customer line: 39% of calls resolved end to end in month one, 57% of order-status calls automated.",
         "h1": "Elena answers the calls that repeat, in [nb]55 seconds.[/nb]",
         "sub": ("Creative Cables sells decorative lighting, textile cables and lighting components "
                 "from Turin - seven stores in Italy, one in Paris, shipping worldwide. Most of what "

@@ -41,9 +41,7 @@ CUSTOMERS_IT = {
         "chip": "Storia cliente",
         "approved": True,
         "title": "ClimaConvenienza: case study agenti vocali | Sabato AI",
-        "description": ("Come ClimaConvenienza ha scalato il supporto telefonico su Italia, Francia "
-                        "e Germania senza assumere - nove agenti multilingua live e il 53,1% delle "
-                        "chiamate gestite in autonomia nel primo mese."),
+        "description": "Come ClimaConvenienza ha scalato il supporto telefonico su Italia, Francia e Germania senza assumere: 53,1% delle chiamate gestite in autonomia.",
         "h1": "Cresce su tre mercati più in fretta di quanto si possa [nb]assumere.[/nb]",
         "sub": ("ClimaConvenienza vende climatizzazione in Italia, Francia e Germania. La domanda "
                 "saliva in tutti e tre - poi un'ondata di caldo l'ha portata a un record otto giorni "
@@ -182,9 +180,7 @@ CUSTOMERS_IT = {
         "chip": "Storia cliente",
         "approved": True,
         "title": "Creative Cables: case study agenti vocali | Sabato AI",
-        "description": ("Come Creative Cables ha portato la voice AI sulla linea clienti italiana - "
-                        "39% delle chiamate risolte dall'inizio alla fine nel primo mese e 57% delle "
-                        "richieste sullo stato ordine automatizzate."),
+        "description": "Come Creative Cables ha portato la voice AI sulla linea clienti italiana: 39% delle chiamate risolte dall'inizio alla fine nel primo mese.",
         "h1": "Elena risponde alle chiamate che si ripetono, in [nb]55 secondi.[/nb]",
         "sub": ("Creative Cables vende illuminazione decorativa, cavi tessili e componenti da Torino "
                 "- sette negozi in Italia, uno a Parigi, spedizioni in tutto il mondo. Quasi tutto "

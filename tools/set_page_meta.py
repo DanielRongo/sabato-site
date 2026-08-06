@@ -46,6 +46,12 @@ BASE = "https://www.sabato.ai"
 # copy was already correct and only the title was still English.
 PAGES = {
     # ---- English pages wearing the homepage's identity --------------------
+    # Title kept exactly as the Framer export had it - 59 chars, unique, and it
+    # carries the category keyword. Only the description was over length.
+    "about": dict(
+        title="Meet the Team Behind Sabato | AI Voice Agents for E-Commerce",
+        desc="The team behind Sabato - from Google, Meta, Leroy Merlin and more - building AI voice agents that make e-commerce support instant and revenue-driving.",
+    ),
     "privacy-policy": dict(
         title="Privacy Policy | Sabato AI",
         desc="How Sabato AI collects, uses and protects personal data, including "
@@ -119,36 +125,49 @@ PAGES = {
     "use-cases/checkout-summary-via-text": dict(
         title="Checkout Summary Voice AI | Close the Call | Sabato AI", desc=None),
     "use-cases/managing-returns": dict(
-        title="Returns Voice AI | Policy Check to Refund | Sabato AI", desc=None),
+        title="Returns Voice AI | Policy Check to Refund | Sabato AI",
+        desc="A managed voice agent that takes the return call, captures the reason, checks it against your policy and starts the process before it becomes a ticket."),
     "use-cases/open-a-complaint": dict(
-        title="Complaints Voice AI | Capture, Ticket, Route | Sabato AI", desc=None),
+        title="Complaints Voice AI | Capture, Ticket, Route | Sabato AI",
+        desc="A managed voice agent that answers complaint calls instantly, captures the issue in full and routes a complete ticket to the right person. Nobody waits on hold."),
     "use-cases/post-delivery-feedback": dict(
-        title="Post-Delivery Voice AI | Earn More Reviews | Sabato AI", desc=None),
+        title="Post-Delivery Voice AI | Earn More Reviews | Sabato AI",
+        desc="A managed voice agent that calls every customer after delivery, surfaces problems while they're still fixable, and invites reviews without filtering."),
     "use-cases/pre-sales-consultation": dict(
         title="Pre-Sales Voice AI | Product Consultation Calls | Sabato AI", desc=None),
     "use-cases/qualify-and-collect-for-quote": dict(
-        title="Quote Requests Voice AI | Qualify by Phone | Sabato AI", desc=None),
+        title="Quote Requests Voice AI | Qualify by Phone | Sabato AI",
+        desc="A managed voice agent that qualifies quote requests, collects every requirement on the call and sends a structured quote by email before your team touches it."),
     "use-cases/where-is-my-order": dict(
         title="WISMO Voice AI | Order Status Calls, Automated | Sabato AI", desc=None),
 
     "it/casi-duso/apertura-reclamo": dict(
-        title="Reclami: Voice AI | Raccolta e smistamento | Sabato AI", desc=None),
+        title="Reclami: Voice AI | Raccolta e smistamento | Sabato AI",
+        desc="Un agente vocale gestito che risponde subito alle chiamate di reclamo, registra il problema per intero e smista un ticket completo alla persona giusta."),
     "it/casi-duso/consulenza-pre-vendita": dict(
-        title="Pre-vendita: Voice AI | Consulenza al telefono | Sabato AI", desc=None),
+        title="Pre-vendita: Voice AI | Consulenza al telefono | Sabato AI",
+        desc="Un agente vocale gestito che conosce il tuo catalogo - misure, compatibilità, schede tecniche - e porta chi chiama dal dubbio alla decisione, 24/7."),
     "it/casi-duso/dove-e-il-mio-ordine": dict(
-        title="WISMO: Voice AI | Stato ordine al telefono | Sabato AI", desc=None),
+        title="WISMO: Voice AI | Stato ordine al telefono | Sabato AI",
+        desc="Un agente vocale gestito che risponde alle chiamate WISMO 24/7 dai dati reali di ordini e corrieri. Fino a metà della coda in alta stagione."),
     "it/casi-duso/feedback-post-consegna": dict(
-        title="Feedback post-consegna: Voice AI | Recensioni | Sabato AI", desc=None),
+        title="Feedback post-consegna: Voice AI | Recensioni | Sabato AI",
+        desc="Un agente vocale gestito che chiama dopo la consegna, fa emergere i problemi finché si possono risolvere e invita a recensire, senza filtrare nessuno."),
     "it/casi-duso/gestione-resi": dict(
-        title="Gestione resi: Voice AI | Motivo, policy, reso | Sabato AI", desc=None),
+        title="Gestione resi: Voice AI | Motivo, policy, reso | Sabato AI",
+        desc="Un agente vocale gestito che risponde alla chiamata di reso, registra il motivo, verifica la tua policy e avvia la pratica prima che diventi un ticket."),
     "it/casi-duso/notifica-ritorno-in-stock": dict(
-        title="Ritorno in stock: Voice AI | Recupera la domanda | Sabato AI", desc=None),
+        title="Ritorno in stock: Voice AI | Recupera la domanda | Sabato AI",
+        desc="Quando la merce torna a magazzino, un agente vocale chiama chi l'aveva chiesta, finché l'intenzione è ancora reale. Non un'altra email tra le promozioni."),
     "it/casi-duso/preventivi-automatici": dict(
-        title="Preventivi: Voice AI | Qualifica e raccolta dati | Sabato AI", desc=None),
+        title="Preventivi: Voice AI | Qualifica e raccolta dati | Sabato AI",
+        desc="Un agente vocale gestito che qualifica le richieste di preventivo, raccoglie tutti i requisiti in chiamata e manda un preventivo strutturato via email."),
     "it/casi-duso/recupero-carrelli-abbandonati": dict(
-        title="Carrelli abbandonati: Voice AI | Recupero | Sabato AI", desc=None),
+        title="Carrelli abbandonati: Voice AI | Recupero | Sabato AI",
+        desc="Un agente vocale gestito che chiama chi ha lasciato il checkout a metà, scopre cosa l'ha fermato e gli manda il link al carrello su WhatsApp."),
     "it/casi-duso/riepilogo-checkout-via-messaggio": dict(
-        title="Riepilogo checkout via SMS: Voice AI | Sabato AI", desc=None),
+        title="Riepilogo checkout via SMS: Voice AI | Sabato AI",
+        desc="Dopo ogni chiamata, un messaggio con i prodotti di cui avete parlato e il link diretto al checkout. La conversazione finisce, il carrello no."),
 }
 
 

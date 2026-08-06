@@ -2,7 +2,7 @@
 title: "Hai nascosto il numero di telefono proprio sugli SKU dove una chiamata cambia l'ordine"
 seo_title: "Conviene nascondere il numero di telefono? | Sabato AI"
 slug: should-you-remove-the-phone-number
-description: "Conviene togliere il numero di telefono dall'ecommerce? Non sugli SKU configurabili ad alto scontrino. Cosa dice e cosa non dice il 67% rep-free, e come misurarne il costo sui tuoi ordini."
+description: "Conviene togliere il numero di telefono dall'ecommerce? Non sugli SKU configurabili ad alto scontrino. Cosa dice e cosa non dice il 67% rep-free."
 category: Strategia
 date: 2026-07-31
 cover_style: black

@@ -2,7 +2,7 @@
 title: "Come ridurre i resi da bracketing senza perdere la vendita"
 seo_title: "Come ridurre i resi da bracketing | Sabato AI"
 slug: reduce-bracketing-returns
-description: "Come ridurre i resi da bracketing senza perdere la vendita: la query SQL per misurarlo, il costo reale per ordine e il break-even che quasi nessun brand calcola."
+description: "Come ridurre i resi da bracketing senza perdere la vendita: la query SQL per misurarlo, il costo reale per ordine e il break-even da calcolare."
 category: Resi
 date: 2026-07-30
 cover_style: lime

@@ -2,7 +2,7 @@
 title: "You Buried the Phone Number on the SKUs Where a Call Changes the Order"
 seo_title: "Should You Hide Your Phone Number? | Sabato AI"
 slug: should-you-remove-the-phone-number
-description: "Should you remove the phone number from your ecommerce site? Not on high-ticket configurable SKUs. What the 67% rep-free stat does and doesn't say, and how to measure the cost on your own orders."
+description: "Should you remove the phone number from your ecommerce site? Not on high-ticket configurable SKUs. What the 67% rep-free stat does and doesn't say."
 category: Strategy
 date: 2026-07-31
 cover_style: black

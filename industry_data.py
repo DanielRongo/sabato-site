@@ -132,7 +132,7 @@ INDUSTRIES = {
 "electronics-tech": {
   "label": "Electronics &amp; Tech", "when": "before", "scene": "electronics",
   "title": "Electronics Voice AI | Compatibility Calls | Sabato AI",
-  "description": "Electronics buyers call about compatibility and spec differences. A managed voice agent that answers from your attribute matrix, then handles the returns queue behind it.",
+  "description": "Electronics buyers call about compatibility and spec differences. A managed voice agent that answers from your attribute matrix, then handles returns.",
   "h1": "&ldquo;Will it work with what I already own?&rdquo;",
   "sub": "Electronics buyers are comparing two models and one of them is already in their house. Sabato's agent reads the attribute matrix out loud, states the actual difference, and stops the wrong-model order before it ships.",
   "hand": "spec questions, answered from spec data",
@@ -402,7 +402,7 @@ INDUSTRIES = {
 "health-wellness": {
   "label": "Health &amp; Wellness", "when": "after", "scene": "health",
   "title": "Health &amp; Wellness Voice AI | Subscription Calls | Sabato AI",
-  "description": "Health and wellness calls are mostly subscriptions, deliveries and returns on opened goods. A managed voice agent that handles them - and refuses to give health advice.",
+  "description": "Health and wellness calls are mostly subscriptions, deliveries and returns on opened goods. A managed voice agent that handles them, with no health advice.",
   "h1": "Most of these calls are about a subscription, not a product.",
   "sub": "Skip this month, change the address, where is it, can I send it back. Sabato's agent handles the repeat-order queue that wellness brands run on - and hands anything resembling health advice straight to a human.",
   "hand": "the agent never gives health advice",
