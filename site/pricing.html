@@ -207,6 +207,16 @@
   .framer-1sduyza { margin-top: -239px !important; }
 }
 </style>
+<style id="header-logo-clearance">
+/* Between 768 and 1199px the header logo's right edge touches the first nav
+   item: measured gap -1px (EN) and -6px (IT), while every other nav gap is
+   +18/+23. Desktop (>=1200px) has +90px and is untouched.
+   Shifts the logo rather than shrinking it, so the mark stays the same size at
+   every breakpoint. */
+@media (min-width: 768px) and (max-width: 1199px) {
+  .framer-cfhbxh { translate: -24px 0 !important; }
+}
+</style>
 </head>
 <body>
 	<script async src="https://events.framer.com/script?v=2" data-fid="f8df6c4a54ed52360813a6139ba37c80b93d4b19af09d316cfe54abf5666c06d" data-no-nt></script>
@@ -249,6 +259,6 @@
   new MutationObserver(scan).observe(document.documentElement,{childList:true,subtree:true});
 })();
 </script>
-<script src="/js/enhance.js?v=b34239c4e1" defer></script>
+<script src="/js/enhance.js?v=54d4ffd662" defer></script>
 </body>
 </html>

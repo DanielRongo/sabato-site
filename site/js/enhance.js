@@ -98,6 +98,62 @@
     { label: "Blog", href: BLOG_HREF, attr: "data-blog-link" }
   ];
 
+  /* ---------- 0. Repair malformed hrefs authored in Framer ----------
+     Four Italian pages ship footer links written as `it/prezzi` in Framer's URL
+     field, which Framer stored as `https://it/prezzi` - an absolute URL whose
+     HOSTNAME is "it". Clicking them leaves the site and fails to resolve. They
+     also carry target="_blank".
+
+     Fixing the static HTML is not enough: Framer's client runtime re-hydrates
+     these anchors from its own bundle and puts the bad href back. Verified 6 Aug
+     2026 - the served HTML contained 0 occurrences while the live DOM had 3. So
+     the repair has to run here, after hydration.
+
+     Generic on purpose: any http(s) URL whose host contains no dot cannot be a
+     real domain, so it is a mistyped path. Rewriting it root-relative fixes this
+     class of Framer authoring error, not just the three we found. */
+  function repairMistypedHrefs() {
+    var as = document.querySelectorAll('a[href^="http://"], a[href^="https://"]');
+    for (var i = 0; i < as.length; i++) {
+      var a = as[i], h = a.getAttribute("href") || "";
+      var m = h.match(/^https?:\/\/([^\/?#]+)(\/[^?#]*)?/);
+      if (!m) continue;
+      var host = m[1];
+      if (host.indexOf(".") !== -1 || host.indexOf(":") !== -1) continue; /* real domain */
+      a.setAttribute("href", "/" + host + (m[2] || ""));
+      a.removeAttribute("target");
+      a.removeAttribute("rel");
+    }
+  }
+
+  /* The same four Italian pages lost "Chi Siamo" from the MOBILE footer copy:
+     Framer renders it as a second "Prezzi" pointing at /it/prezzi. The desktop
+     copy in the same file is correct (Home / Prezzi / Chi Siamo / Contattaci),
+     so this restores the mobile one to match. Scoped to anchors below the footer
+     logo so the header's own Prezzi link is never touched. */
+  function restoreChiSiamo() {
+    if (!IT) return;
+    var logo = null, imgs = document.querySelectorAll("img");
+    for (var i = 0; i < imgs.length; i++) {
+      var src = imgs[i].currentSrc || imgs[i].src || "";
+      if (src.indexOf("KY1UqOX7") !== -1) { logo = imgs[i]; break; }
+    }
+    if (!logo) return;
+    var cut = logo.getBoundingClientRect().top + window.scrollY;
+    var as = document.querySelectorAll('a[href="/it/prezzi"], a[href="./it/prezzi"]');
+    var seen = 0;
+    for (var j = 0; j < as.length; j++) {
+      var a = as[j];
+      if (a.getBoundingClientRect().top + window.scrollY < cut) continue; /* header */
+      if (normLabel(a.textContent) !== "Prezzi") continue;
+      seen++;
+      if (seen < 2) continue;                    /* the first one is correct */
+      a.setAttribute("href", "/it/chi-siamo");
+      var tw = a.querySelector("p, span, h1, h2, h3, h4, h5, h6") || a;
+      tw.textContent = "Chi Siamo";
+    }
+  }
+
   function injectFooterLinks() {
     /* "Book a Demo" appears several times (mid-page CTAs + footer). The footer
        one is always the lowest on the page - pick that, never a hero CTA. */
@@ -516,6 +572,8 @@
   }
 
   function run() {
+    repairMistypedHrefs();
+    restoreChiSiamo();
     injectFooterLinks(); injectIndustriesNav(); injectDropdown();
     wireUseCaseTargets(); wireIndustryTargets(); installClickInterceptor();
     injectCustomerBand();
