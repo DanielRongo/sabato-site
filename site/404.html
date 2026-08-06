@@ -219,8 +219,12 @@
 }
 /* This page's sticky header shipped with z-index:1; every other page uses 10.
    The card is also z-index:1, so it won the tie and painted over the header
-   once the lift above raised it that far. Match the rest of the site. */
-.framer-172kj65 { z-index: 10 !important; }
+   once the lift above raised it that far. Match the rest of the site.
+   NB the sticky element is .framer-172kj65-CONTAINER, not .framer-172kj65.
+   A class-extraction regex of framer-[A-Za-z0-9]+ truncates at the hyphen and
+   reports the wrong (child) name - which is exactly how the first attempt at
+   this rule silently did nothing. */
+.framer-172kj65-container { z-index: 10 !important; }
 </style>
 </head>
 <body>
