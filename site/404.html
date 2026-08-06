@@ -195,6 +195,33 @@
 	
 	<!-- Global site tag (gtag.js) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-BSK4KH9JJF"></script>
+<style id="cta-footer-clearance">
+/* Fix: the floating CTA card (.framer-44ln3j) is absolutely positioned at
+   top:1350px and paints over the footer logo. Measured against the footer logo
+   box at each breakpoint, not guessed:
+     <=767px      card sits BELOW the logo (589-1191 vs 369-430) - no overlap
+     768-1199px   card 259-731 covers logo 370-431  -> lift 410 for ~48px clear
+     >=1200px     card -106-386 covers logo 370-431 -> lift  65 for ~48px clear
+   /404 was the one page in this family that never got a clearance block.
+   Uses transform, NOT margin-top: `top` here is a percentage of a container
+   whose height tracks the card, so a negative margin is cancelled out exactly
+   (measured: top jumped 1350.09 -> 1760.09px, net movement zero). transform is
+   independent of layout and cannot be fed back into that calculation.
+   Uses the standalone `translate` property, NOT `transform`: this element
+   already carries a transform that does the horizontal centring, and
+   overriding it slid the card off the right edge. `translate` composes with
+   an existing `transform` rather than replacing it. */
+@media (min-width: 768px) and (max-width: 1199px) {
+  .framer-44ln3j { translate: 0 -410px !important; }
+}
+@media (min-width: 1200px) {
+  .framer-44ln3j { translate: 0 -65px !important; }
+}
+/* This page's sticky header shipped with z-index:1; every other page uses 10.
+   The card is also z-index:1, so it won the tie and painted over the header
+   once the lift above raised it that far. Match the rest of the site. */
+.framer-172kj65 { z-index: 10 !important; }
+</style>
 </head>
 <body>
 	<script async src="https://events.framer.com/script?v=2" data-fid="f8df6c4a54ed52360813a6139ba37c80b93d4b19af09d316cfe54abf5666c06d" data-no-nt></script>
