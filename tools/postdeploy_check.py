@@ -9,6 +9,7 @@ from playwright.sync_api import sync_playwright
 
 BASE = sys.argv[1].rstrip("/") if len(sys.argv) > 1 else "http://127.0.0.1:8909"
 PAGES = ["/", "/it", "/pricing", "/about", "/contact", "/blog", "/it/blog",
+         "/use-cases", "/it/casi-duso",
          "/blog/reduce-bracketing-returns", "/it/blog/reduce-bracketing-returns",
          "/blog/multilingual-phone-support-eu-expansion",
          "/it/blog/multilingual-phone-support-eu-expansion",

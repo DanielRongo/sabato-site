@@ -51,7 +51,7 @@
   ];
   var USECASES = IT ? USECASES_IT : USECASES_EN;
   var ALL_LABEL = IT ? "Tutti i casi d'uso" : "All use cases";
-  var ALL_HREF = IT ? "/it#casiduso" : "/#usecases";
+  var ALL_HREF = IT ? "/it/casi-duso" : "/use-cases";
 
   /* Industry pages, both languages. The Italian footer names some categories
      differently between the Framer build and our own templates (and left
