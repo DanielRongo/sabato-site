@@ -19,7 +19,7 @@ INDUSTRIES_IT = {
 "clima-e-riscaldamento": {
   "en": "home-improvement", "alias": ["Home Improvement", "Miglioramento Casa"],
   "label": "Clima e Riscaldamento", "when": "before", "scene": "hvac",
-  "title": "Voice AI per E-Commerce di Clima e Riscaldamento | Sabato AI",
+  "title": "Clima e Riscaldamento: Voice AI | Sabato AI",
   "description": "Un agente vocale gestito che dimensiona l'unità, controlla la zona climatica e fissa il sopralluogo - dalle tue tabelle kW e dal tuo ERP. Attivo in due settimane.",
   "h1": "Chi compra clima e riscaldamento telefona prima di comprare.",
   "sub": "L'agente vocale gestito di Sabato dimensiona l'unità, controlla la zona climatica, dice cosa comprende davvero l'installazione - e fissa il sopralluogo mentre il cliente è ancora interessato.",
@@ -75,7 +75,7 @@ INDUSTRIES_IT = {
 "ricambi-auto": {
   "en": "automotive-parts", "alias": ["Automotive e Ricambi", "Automotive &amp; Parts"],
   "label": "Automotive e Ricambi", "when": "before", "scene": "auto",
-  "title": "Voice AI per E-Commerce di Ricambi Auto | Compatibilità | Sabato AI",
+  "title": "Ricambi Auto: Voice AI | Compatibilità | Sabato AI",
   "description": "Chi compra ricambi telefona per una domanda sola: è compatibile con la mia auto? Un agente vocale che risponde da targa, dati di compatibilità e codici sostitutivi.",
   "h1": "Ogni chiamata sui ricambi è la stessa domanda con un&rsquo;auto diversa.",
   "sub": "È compatibile con la mia? L&rsquo;agente di Sabato prende la targa o il telaio, controlla la tabella di compatibilità e risponde sì, no, oppure &ldquo;quel codice è stato sostituito - il ricambio attuale è questo&rdquo;.",
@@ -130,7 +130,7 @@ INDUSTRIES_IT = {
 "elettronica": {
   "en": "electronics-tech", "alias": ["Elettronica e Tech", "Electronics &amp; Tech"],
   "label": "Elettronica e Tech", "when": "before", "scene": "electronics",
-  "title": "Voice AI per E-Commerce di Elettronica | Compatibilità | Sabato AI",
+  "title": "Elettronica: Voice AI | Compatibilità | Sabato AI",
   "description": "Chi compra elettronica chiama per compatibilità e differenze di specifica. Un agente vocale che risponde dalla tua matrice attributi e gestisce la coda resi dietro.",
   "h1": "&ldquo;Funziona con quello che ho già?&rdquo;",
   "sub": "Chi compra elettronica sta confrontando due modelli, e uno dei due ce l&rsquo;ha già in casa. L&rsquo;agente di Sabato legge la matrice degli attributi, dice qual è la differenza reale, e ferma l&rsquo;ordine sbagliato prima che parta.",
@@ -183,7 +183,7 @@ INDUSTRIES_IT = {
 "arredamento": {
   "en": "furniture-home", "alias": ["Arredamento e Casa", "Furniture &amp; Home"],
   "label": "Arredamento e Casa", "when": "before", "scene": "furniture",
-  "title": "Voice AI per E-Commerce di Arredamento | Misure e Consegna | Sabato AI",
+  "title": "Arredamento: Voice AI | Misure e Consegna | Sabato AI",
   "description": "Chi compra arredamento chiama per misure, accessi e finestre di consegna. Un agente vocale che risponde dai tuoi dati prodotto e dal calendario consegne, 24/7.",
   "h1": "Nella stanza ci sta. Il problema sono le scale.",
   "sub": "Chi compra un divano la nicchia l&rsquo;ha già misurata. Quello che non sa è la curva del pianerottolo, la finestra di consegna, e se il vecchio divano lo portate via. L&rsquo;agente di Sabato risponde a tutte e tre.",
@@ -237,7 +237,7 @@ INDUSTRIES_IT = {
 "industria-b2b": {
   "en": "industrial-b2b", "alias": ["Industria e B2B", "Industrial &amp; B2B"],
   "label": "Industria e B2B", "when": "before", "scene": "industrial",
-  "title": "Voice AI per E-Commerce Industriale e B2B | Preventivi | Sabato AI",
+  "title": "Industria e B2B: Voice AI | Preventivi | Sabato AI",
   "description": "I buyer industriali chiamano per conferme di capitolato, prezzi di contratto e tempi. Un agente vocale che legge l'ERP e raccoglie le richieste di preventivo.",
   "h1": "L&rsquo;ordine è piccolo. Le conseguenze di sbagliarlo no.",
   "sub": "I buyer industriali chiamano per confermare una tolleranza, una certificazione, un prezzo di contratto o un tempo di consegna prima di fermare una linea. L&rsquo;agente di Sabato risponde dall&rsquo;ERP e raccoglie la richiesta con i campi che servono davvero.",
@@ -292,7 +292,7 @@ INDUSTRIES_IT = {
 "giardino-outdoor": {
   "en": "outdoor-garden", "alias": ["Outdoor e Giardino", "Outdoor &amp; Garden"],
   "label": "Outdoor e Giardino", "when": "mixed", "scene": "outdoor",
-  "title": "Voice AI per E-Commerce Giardino e Outdoor | Picchi Stagionali | Sabato AI",
+  "title": "Giardino e Outdoor: Voice AI | Picchi Stagionali | Sabato AI",
   "description": "Il giardinaggio ha il picco stagionale di chiamate più netto dell'e-commerce. Un agente vocale che lo assorbe: dimensionamento, ricambi, riassortimenti e consegne.",
   "h1": "Il tuo volume di chiamate è una previsione meteo.",
   "sub": "La domanda arriva in una manciata di weekend caldi e sparisce. L&rsquo;agente di Sabato assorbe il picco senza un&rsquo;assunzione stagionale, gestisce le chiamate su ricambi e dimensionamento, e richiama chi voleva la cosa esaurita.",
@@ -346,7 +346,7 @@ INDUSTRIES_IT = {
 "moda-abbigliamento": {
   "en": "fashion-apparel", "alias": ["Fashion e Abbigliamento", "Fashion &amp; Apparel"],
   "label": "Fashion e Abbigliamento", "when": "after", "scene": "fashion",
-  "title": "Voice AI per E-Commerce Moda e Abbigliamento | Sabato AI",
+  "title": "Moda e Abbigliamento: Voice AI | Taglie | Sabato AI",
   "description": "Chi compra moda quasi mai telefona prima: telefona dopo. Un agente vocale che gestisce stato ordine, cambi taglia e riassortimenti dai dati d'ordine in tempo reale.",
   "h1": "Chi compra moda non telefona prima. Telefona dopo.",
   "sub": "Nessuno chiama per una t-shirt. Chiamano perché il pacco è in ritardo, la taglia era sbagliata, o il capo che volevano è tornato disponibile. Quella coda è post-acquisto, è stagionale, ed è quella che salta.",
@@ -400,7 +400,7 @@ INDUSTRIES_IT = {
 "salute-benessere": {
   "en": "health-wellness", "alias": ["Salute e Benessere", "Health &amp; Wellness"],
   "label": "Salute e Benessere", "when": "after", "scene": "health",
-  "title": "Voice AI per E-Commerce Salute e Benessere | Abbonamenti | Sabato AI",
+  "title": "Salute e Benessere: Voice AI | Abbonamenti | Sabato AI",
   "description": "Nel benessere le chiamate sono soprattutto abbonamenti, consegne e resi su prodotti aperti. Un agente vocale che le gestisce - e che non dà consigli sulla salute.",
   "h1": "Quasi tutte queste chiamate riguardano un abbonamento, non un prodotto.",
   "sub": "Salta il mese, cambia l&rsquo;indirizzo, dov&rsquo;è, posso rimandarlo indietro. L&rsquo;agente di Sabato gestisce la coda degli ordini ricorrenti su cui girano i brand del benessere - e passa a una persona qualunque cosa somigli a un consiglio sanitario.",
@@ -454,7 +454,7 @@ INDUSTRIES_IT = {
 "sport-fitness": {
   "en": "sports-fitness", "alias": ["Sport e Fitness", "Sports &amp; Fitness"],
   "label": "Sport e Fitness", "when": "after", "scene": "sports",
-  "title": "Voice AI per E-Commerce Sport e Fitness | Taglie e Consegne | Sabato AI",
+  "title": "Sport e Fitness: Voice AI | Taglie e Consegne | Sabato AI",
   "description": "Lo sport si divide in due: abbigliamento che chiama dopo l'acquisto, attrezzatura che chiama prima. Un agente vocale che gestisce entrambe le code.",
   "h1": "Due cataloghi, una linea telefonica.",
   "sub": "La canotta da running genera una chiamata di reso. Il vogatore genera una chiamata su misure e consegna prima ancora che qualcuno lo compri. L&rsquo;agente di Sabato gestisce entrambe, e le tratta per i lavori diversi che sono.",

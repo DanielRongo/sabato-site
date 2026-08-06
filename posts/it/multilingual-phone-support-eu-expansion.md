@@ -1,5 +1,6 @@
 ---
 title: "Rispondere al telefono in cinque lingue senza assumere in cinque paesi"
+seo_title: "Supporto telefonico multilingue senza assumere | Sabato AI"
 slug: multilingual-phone-support-eu-expansion
 description: Un playbook passo per passo per rispondere al telefono in cinque lingue senza assumere in cinque paesi: sequenza dei mercati, costi reali e soglie di decisione.
 category: Operations

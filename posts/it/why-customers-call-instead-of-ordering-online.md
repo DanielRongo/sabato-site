@@ -1,5 +1,6 @@
 ---
 title: "I tuoi clienti non chiamano perché il sito è confuso. Chiamano perché è sbagliato."
+seo_title: "Perché i clienti chiamano invece di ordinare | Sabato AI"
 slug: why-customers-call-instead-of-ordering-online
 description: "Perché i clienti chiamano invece di ordinare online: è un problema di accuratezza dei dati, non di navigazione. Come misurare la tua tassa sull'integrità dei dati dal call log."
 category: Dati

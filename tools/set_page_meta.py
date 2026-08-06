@@ -99,6 +99,55 @@ PAGES = {
         title="ClimaConvenienza: case study agenti vocali | Sabato AI", desc=None),
     "it/clienti/creative-cables": dict(
         title="Creative Cables: case study agenti vocali | Sabato AI", desc=None),
+
+    # ---- use-case pages ----------------------------------------------------
+    # These 18 have no generator: templates/use-case.html exists but nothing in
+    # the repo renders it, so the pages are static and this tool is their only
+    # metadata source. (Industry pages are the opposite - they regenerate from
+    # industry_data.py, so their titles live there, not here.)
+    #
+    # Every one of them used to open with "Voice AI for" / "Voice AI per".
+    # Thirty-six pages starting with the same three words are indistinguishable
+    # in a results list once Google truncates, and it truncates from the end -
+    # cutting off precisely the part that identifies the page. Distinguisher
+    # first, keyword second, brand last.
+    "use-cases/back-in-stock-notification": dict(
+        title="Back-in-Stock Voice AI | Recapture Waitlist | Sabato AI", desc=None),
+    "use-cases/cart-abandonment-recovery": dict(
+        title="Cart Abandonment Voice AI | Recovery Calls | Sabato AI", desc=None),
+    "use-cases/checkout-summary-via-text": dict(
+        title="Checkout Summary Voice AI | Close the Call | Sabato AI", desc=None),
+    "use-cases/managing-returns": dict(
+        title="Returns Voice AI | Policy Check to Refund | Sabato AI", desc=None),
+    "use-cases/open-a-complaint": dict(
+        title="Complaints Voice AI | Capture, Ticket, Route | Sabato AI", desc=None),
+    "use-cases/post-delivery-feedback": dict(
+        title="Post-Delivery Voice AI | Earn More Reviews | Sabato AI", desc=None),
+    "use-cases/pre-sales-consultation": dict(
+        title="Pre-Sales Voice AI | Product Consultation Calls | Sabato AI", desc=None),
+    "use-cases/qualify-and-collect-for-quote": dict(
+        title="Quote Requests Voice AI | Qualify by Phone | Sabato AI", desc=None),
+    "use-cases/where-is-my-order": dict(
+        title="WISMO Voice AI | Order Status Calls, Automated | Sabato AI", desc=None),
+
+    "it/casi-duso/apertura-reclamo": dict(
+        title="Reclami: Voice AI | Raccolta e smistamento | Sabato AI", desc=None),
+    "it/casi-duso/consulenza-pre-vendita": dict(
+        title="Pre-vendita: Voice AI | Consulenza al telefono | Sabato AI", desc=None),
+    "it/casi-duso/dove-e-il-mio-ordine": dict(
+        title="WISMO: Voice AI | Stato ordine al telefono | Sabato AI", desc=None),
+    "it/casi-duso/feedback-post-consegna": dict(
+        title="Feedback post-consegna: Voice AI | Recensioni | Sabato AI", desc=None),
+    "it/casi-duso/gestione-resi": dict(
+        title="Gestione resi: Voice AI | Motivo, policy, reso | Sabato AI", desc=None),
+    "it/casi-duso/notifica-ritorno-in-stock": dict(
+        title="Ritorno in stock: Voice AI | Recupera la domanda | Sabato AI", desc=None),
+    "it/casi-duso/preventivi-automatici": dict(
+        title="Preventivi: Voice AI | Qualifica e raccolta dati | Sabato AI", desc=None),
+    "it/casi-duso/recupero-carrelli-abbandonati": dict(
+        title="Carrelli abbandonati: Voice AI | Recupero | Sabato AI", desc=None),
+    "it/casi-duso/riepilogo-checkout-via-messaggio": dict(
+        title="Riepilogo checkout via SMS: Voice AI | Sabato AI", desc=None),
 }
 
 

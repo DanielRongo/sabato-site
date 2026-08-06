@@ -1,5 +1,6 @@
 ---
 title: "How to Reduce Bracketing Returns Without Losing the Sale"
+seo_title: "How to Reduce Bracketing Returns | Sabato AI"
 slug: reduce-bracketing-returns
 description: "How to reduce bracketing returns without losing the sale: the SQL to measure it, the true cost per order, and the break-even most brands never calculate."
 category: Returns

@@ -20,7 +20,7 @@ INDUSTRIES = {
 # ─────────────────────────────────────────────────────── HOME IMPROVEMENT
 "home-improvement": {
   "label": "Home Improvement / HVAC", "when": "before", "scene": "hvac",
-  "title": "Voice AI for HVAC &amp; Home Improvement E-Commerce | Sabato AI",
+  "title": "HVAC &amp; Home Improvement Voice AI | Sabato AI",
   "description": "A managed voice agent that sizes the unit, checks the climate zone and books the site visit - from your own kW tables and ERP. Live in two weeks.",
   "h1": "Heating and cooling buyers phone before they buy.",
   "sub": "Sabato's managed voice agent sizes the unit, checks the climate zone, says what the installation actually includes - and books the site visit while the caller is still interested.",
@@ -76,7 +76,7 @@ INDUSTRIES = {
 # ─────────────────────────────────────────────────────── AUTOMOTIVE
 "automotive-parts": {
   "label": "Automotive &amp; Parts", "when": "before", "scene": "auto",
-  "title": "Voice AI for Automotive Parts E-Commerce | Fitment Calls | Sabato AI",
+  "title": "Automotive Parts Voice AI | Fitment Calls | Sabato AI",
   "description": "Parts buyers phone to ask one question: does it fit my car? A managed voice agent that answers it from your fitment data, VIN lookup and supersession chains.",
   "h1": "Every parts call is the same question wearing a different car.",
   "sub": "Does it fit mine? Sabato's agent takes the registration or the VIN, checks it against your fitment table, and says yes, no, or &ldquo;that one was superseded - here&rsquo;s the current part&rdquo;.",
@@ -131,7 +131,7 @@ INDUSTRIES = {
 # ─────────────────────────────────────────────────────── ELECTRONICS
 "electronics-tech": {
   "label": "Electronics &amp; Tech", "when": "before", "scene": "electronics",
-  "title": "Voice AI for Electronics E-Commerce | Compatibility Calls | Sabato AI",
+  "title": "Electronics Voice AI | Compatibility Calls | Sabato AI",
   "description": "Electronics buyers call about compatibility and spec differences. A managed voice agent that answers from your attribute matrix, then handles the returns queue behind it.",
   "h1": "&ldquo;Will it work with what I already own?&rdquo;",
   "sub": "Electronics buyers are comparing two models and one of them is already in their house. Sabato's agent reads the attribute matrix out loud, states the actual difference, and stops the wrong-model order before it ships.",
@@ -184,7 +184,7 @@ INDUSTRIES = {
 # ─────────────────────────────────────────────────────── FURNITURE
 "furniture-home": {
   "label": "Furniture &amp; Home", "when": "before", "scene": "furniture",
-  "title": "Voice AI for Furniture E-Commerce | Delivery &amp; Dimensions | Sabato AI",
+  "title": "Furniture Voice AI | Delivery &amp; Dimensions | Sabato AI",
   "description": "Furniture buyers call about dimensions, access and delivery slots. A managed voice agent that answers from your product data and delivery calendar, 24/7.",
   "h1": "It fits the room. The question is whether it fits the stairs.",
   "sub": "Furniture buyers have measured the alcove. What they can&rsquo;t work out is the turn on the landing, the delivery window, and whether anyone takes the old sofa away. Sabato's agent answers all three.",
@@ -238,7 +238,7 @@ INDUSTRIES = {
 # ─────────────────────────────────────────────────────── INDUSTRIAL
 "industrial-b2b": {
   "label": "Industrial &amp; B2B", "when": "before", "scene": "industrial",
-  "title": "Voice AI for Industrial &amp; B2B E-Commerce | Quotes &amp; Spec | Sabato AI",
+  "title": "Industrial &amp; B2B Voice AI | Quotes &amp; Specs | Sabato AI",
   "description": "Industrial buyers call for spec confirmation, contract pricing and lead times. A managed voice agent that reads your ERP and captures quote enquiries properly.",
   "h1": "The order is small. The consequence of getting it wrong isn&rsquo;t.",
   "sub": "Industrial buyers ring to confirm a tolerance, a certification, a contract price or a lead time before they commit a line down. Sabato's agent answers from the ERP and captures the quote enquiry with the fields your team actually needs.",
@@ -293,7 +293,7 @@ INDUSTRIES = {
 # ─────────────────────────────────────────────────────── OUTDOOR
 "outdoor-garden": {
   "label": "Outdoor &amp; Garden", "when": "mixed", "scene": "outdoor",
-  "title": "Voice AI for Outdoor &amp; Garden E-Commerce | Seasonal Call Peaks | Sabato AI",
+  "title": "Outdoor &amp; Garden Voice AI | Seasonal Peaks | Sabato AI",
   "description": "Garden retail has the sharpest seasonal call peak in e-commerce. A managed voice agent that absorbs it - sizing, spares, restock dates and delivery.",
   "h1": "Your call volume is a weather forecast.",
   "sub": "Garden demand arrives in a handful of warm weekends and disappears again. Sabato's agent absorbs the peak without a seasonal hire, handles the spares and sizing calls, and rings back the customers who wanted the sold-out thing.",
@@ -347,7 +347,7 @@ INDUSTRIES = {
 # ─────────────────────────────────────────────────────── FASHION
 "fashion-apparel": {
   "label": "Fashion &amp; Apparel", "when": "after", "scene": "fashion",
-  "title": "Voice AI for Fashion &amp; Apparel E-Commerce | Sabato AI",
+  "title": "Fashion &amp; Apparel Voice AI | Sizing Calls | Sabato AI",
   "description": "Fashion buyers rarely phone before buying - they phone after. A managed voice agent that handles WISMO, exchanges and restock calls from live order data.",
   "h1": "Fashion buyers don&rsquo;t phone before they buy. They phone after.",
   "sub": "Nobody calls to ask about a t-shirt. They call because the parcel is late, the size was wrong, or the piece they wanted came back into stock. That queue is post-purchase, it is seasonal, and it is the one that breaks.",
@@ -401,7 +401,7 @@ INDUSTRIES = {
 # ─────────────────────────────────────────────────────── HEALTH
 "health-wellness": {
   "label": "Health &amp; Wellness", "when": "after", "scene": "health",
-  "title": "Voice AI for Health &amp; Wellness E-Commerce | Subscriptions &amp; WISMO | Sabato AI",
+  "title": "Health &amp; Wellness Voice AI | Subscription Calls | Sabato AI",
   "description": "Health and wellness calls are mostly subscriptions, deliveries and returns on opened goods. A managed voice agent that handles them - and refuses to give health advice.",
   "h1": "Most of these calls are about a subscription, not a product.",
   "sub": "Skip this month, change the address, where is it, can I send it back. Sabato's agent handles the repeat-order queue that wellness brands run on - and hands anything resembling health advice straight to a human.",
@@ -455,7 +455,7 @@ INDUSTRIES = {
 # ─────────────────────────────────────────────────────── SPORTS
 "sports-fitness": {
   "label": "Sports &amp; Fitness", "when": "after", "scene": "sports",
-  "title": "Voice AI for Sports &amp; Fitness E-Commerce | Sizing &amp; Delivery | Sabato AI",
+  "title": "Sports &amp; Fitness Voice AI | Sizing &amp; Delivery | Sabato AI",
   "description": "Sports retail splits in two: low-ticket kit that calls after buying, and heavy equipment that calls before. A managed voice agent that handles both queues.",
   "h1": "Two catalogues, one phone line.",
   "sub": "The running vest generates a returns call. The rowing machine generates a delivery-and-access call before anyone buys it. Sabato's agent handles both, and treats them as the different jobs they are.",

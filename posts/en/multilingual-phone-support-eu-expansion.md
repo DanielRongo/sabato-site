@@ -1,5 +1,6 @@
 ---
 title: "Answer the Phone in Five Languages Without Hiring in Five Countries"
+seo_title: "Multilingual Phone Support Without Hiring Abroad | Sabato AI"
 slug: multilingual-phone-support-eu-expansion
 description: A step-by-step playbook for answering the phone in five languages without hiring in five countries: market sequencing, real cost math, and thresholds.
 category: Operations

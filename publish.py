@@ -560,7 +560,18 @@ def build_post(fm, body, L, sibling_exists):
     minutes = read_minutes(fm, body)
     url = f"{BASE}{L['url_prefix']}/{fm['slug']}"
     content = add_chart_sharing(content, fm, url, L)
+    # {{TITLE}} is the editorial headline and stays on the <h1> exactly as
+    # written. {{SEO_TITLE}} is what goes in <title> and og:title.
+    #
+    # They were the same field until Aug 2026, which meant a headline like
+    # "Your Customers Aren't Calling Because Your Site Is Confusing. They're
+    # Calling Because It's Wrong." became a 109-character <title>. Google
+    # truncates from the end, so the tail was cut and the headline was doing a
+    # job it is not shaped for. Set `seo_title` in a post's frontmatter to give
+    # it a short search title; omit it and the old behaviour applies.
+    seo_title = fm.get("seo_title") or f'{fm["title"]} | Sabato AI'
     page = (tpl
+            .replace("{{SEO_TITLE}}", html.escape(seo_title, quote=False))
             .replace("{{TITLE}}", html.escape(fm["title"], quote=False))
             .replace("{{CATEGORY}}", html.escape(fm["category"], quote=False))
             .replace("{{DATE}}", fmt_date(fm["date"], L))

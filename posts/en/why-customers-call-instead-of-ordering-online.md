@@ -1,5 +1,6 @@
 ---
 title: "Your Customers Aren't Calling Because Your Site Is Confusing. They're Calling Because It's Wrong."
+seo_title: "Why Customers Call Instead of Ordering Online | Sabato AI"
 slug: why-customers-call-instead-of-ordering-online
 description: "Why customers call instead of ordering online: it's a data-accuracy problem, not a navigation one. How to measure your data-integrity tax from your own call log."
 category: Data
