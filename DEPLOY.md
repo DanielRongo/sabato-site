@@ -284,6 +284,54 @@ deleting is not. Do it in the same turn as the delivery, not later.
 Fallback if the bit is ever missing and Daniel is mid-deploy: `bash
 tools/ship.sh staging "msg"` works regardless of the mode.
 
+## One file, one owner - the rule that keeps being broken
+
+Two separate incidents on 6 Aug 2026, same shape: a value existed in two places,
+and the wrong one won silently.
+
+**1. Generated pages own their own metadata.** `tools/set_page_meta.py` patches
+built HTML. Three pages were listed in it that a generator rebuilds - `/it/blog`
+(publish.py) and both Italian case studies (customers.py). Every build reverted
+them, invisibly, back to the generator's value. Ownership:
+
+| Pages | Metadata lives in |
+|---|---|
+| `/blog`, `/it/blog` | `templates/blog-index-*.html` |
+| blog posts | post frontmatter (`title`, `seo_title`, `description`) |
+| `/industries/*`, `/it/settori/*` | `industry_data.py`, `industry_data_it.py` |
+| `/customers/*`, `/it/clienti/*` | `customer_data.py`, `customer_data_it.py` |
+| everything else (Framer exports, use-cases) | `tools/set_page_meta.py` |
+
+Test for it: run every generator *after* making a change, then re-check. If the
+value moved, it was in the wrong place.
+
+**2. Anything Claude changes directly on the Mac must also change in the clone.**
+`*.tar.gz` was added to `.gitignore` on the Mac only. The next transfer archive
+carried the clone's older `.gitignore`, overwrote it, removed the rule, and
+`ship.sh`'s `git add -A` then committed a 260KB archive into the repo. Change it
+in both places, or change it in the clone and let the transfer carry it.
+
+## Transferring many files at once
+
+`device_commit_files` caps at 50 files, and a large batch floods the chat with
+file cards. For a big change, tar the diff and send one archive:
+
+```bash
+git diff --name-only origin/staging > /tmp/changed.txt
+tar -czf /tmp/change.tar.gz -T /tmp/changed.txt .deploy-receipt.json
+```
+
+Extract it on the Mac with **`--overwrite`**:
+
+```bash
+tar xzf change.tar.gz --overwrite
+```
+
+Without that flag every existing file fails with `Cannot open: File exists` -
+extraction unlinks before writing, and the bridge forbids unlink. `--overwrite`
+truncates in place instead. Then `chmod +x tools/*.py tools/*.sh`, because the
+archive's modes do not survive the trip.
+
 ## Known sharp edges
 
 - **The repo is public.** No secrets, tokens or `.env` files, ever. Reverted ROI

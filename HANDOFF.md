@@ -1,4 +1,4 @@
-# Session handoff - 5 Aug 2026
+# Session handoff - 6 Aug 2026
 
 Read this **after** `SABATO-SITE-HANDBOOK.md` (permanent playbook) and
 `DEPLOY.md` (how to ship). This file is the volatile part: what just shipped,
@@ -40,6 +40,9 @@ Chrome. Claude never pushes and never holds a credential.
 | Corrected: cloud container cannot reach deployed URLs | `7ff5ad8` |
 | **63 redirects recovering the pre-pivot URL space** | `009062f` |
 | Browser-verification leg documented | `613925c` |
+| Distinct metadata on 11 pages; Italian titles localised; thank-you pages noindexed | `cc68f52` |
+| **All 42 over-length titles fixed; blog SEO titles decoupled from headlines** | `b555a35` |
+| Page titles owned at their generators, not post-build patches | `fbe8578` |
 
 Verified on production: 44/44 redirects land correctly, 18/18 live pages still
 serve themselves, `x-robots-tag` null on prod and `noindex, nofollow` on staging.
@@ -58,47 +61,33 @@ sitemap-submission automation; Google re-fetches on its own.
 
 ## NEXT: the backlog, in priority order
 
-### 1. Fix the six pages wearing the homepage's clothes  ← do this first
+### DONE 6 Aug: items 1, 2 and the titles half of item 3
 
-`/`, `/it`, `/privacy-policy`, `/terms`, `/thank-you-page` and `/it/grazie` all
-carry the **identical** title *"Voice AI Agent Platform for E-Commerce | Sabato
-AI"*. Four of them also share the homepage's meta description verbatim.
+- Six pages wearing the homepage's title and description: fixed. **Zero duplicate
+  titles and zero duplicate descriptions** across all 66 pages, from 14 and 12.
+- Italian pages carrying English titles: all localised, including the two blog
+  indexes (`blog-index-it.html` had a hardcoded English `<title>`).
+- Thank-you pages `noindex` + out of the sitemap, so they cannot fire phantom
+  GA4 conversions. `/thank-you-page` also gained the canonical it never had.
+- **42 titles over 60 characters -> 0.** The real fix was not length: 36 use-case
+  and industry pages all began "Voice AI for" / "Voice AI per", and Google
+  truncates from the end, cutting the only part that identified each page. All
+  now front-load the distinguisher.
+- Blog posts gained an optional `seo_title` frontmatter field, so the `<title>`
+  is short while the `<h1>` keeps the full editorial headline. Permanent for
+  every future post.
+- Verified on production: 66 pages, 0 over-length, 0 duplicates.
 
-This is not cosmetic. `/terms` is one of only **five** pages Google has indexed -
-so a legal page is currently competing with the homepage in search results
-wearing its title and description. Cheapest, highest-value fix on this list.
+### 3b. STILL OPEN: 33 meta descriptions over 160 characters
 
-### 2. The Italian site is wearing English titles
+Deliberately not done. Automated trimming produced 18 fragments ending
+mid-thought ("e 57% delle", "quasi nessun brand") and four collapsed under 63
+characters, because their first sentence was already over the limit.
 
-Every Framer-exported Italian page carries an English `<title>`:
-
-| Page | Current title |
-|---|---|
-| `/it` | Voice AI Agent Platform for E-Commerce \| Sabato AI |
-| `/it/prezzi` | Pricing for Managed Voice AI \| Sabato AI |
-| `/it/contatti` | Get in Touch with Sabato AI \| Book a Demo |
-| `/it/chi-siamo` | Meet the Team Behind Sabato \| AI Voice Agents… |
-| `/it/blog` | Blog \| Sabato AI |
-| `/it/grazie` | Voice AI Agent Platform for E-Commerce \| Sabato AI |
-| `/it/clienti/clima-convenienza` | ClimaConvenienza - Case Study Voice AI \| Sabato AI |
-| `/it/clienti/creative-cables` | Creative Cables - Case Study Voice AI \| Sabato AI |
-
-Italian searchers see English in Google.it. For an Italy-based company selling to
-Italian merchants that is a direct commercial cost. Note the **Italian blog posts
-already have Italian titles** - `publish.py` does this correctly. It is only the
-Framer-exported pages that were never localised.
-
-### 3. Rest of the SEO metadata pass
-
-Audited 5 Aug across 66 indexable pages. Nothing is missing - every page has a
-title and a description - but:
-
-- **43 titles exceed 60 characters** and get truncated in results
-- **29 descriptions exceed 160 characters** and get truncated
-- 4 descriptions are under 70 characters, wasting the space
-- 2 titles are under 25 characters
-
-Reproduce the audit before starting; the numbers will have moved.
+Worth knowing before spending time here: **meta descriptions are not a ranking
+factor** and Google rewrites most of them. The existing ones already front-load
+the strong material, which is exactly what shows when Google truncates. This
+needs hand-written copy or nothing - do not ship machine-trimmed fragments.
 
 ### 4. Build a `/use-cases` hub page
 
