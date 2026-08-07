@@ -46,6 +46,7 @@ SKIP_DIRS = {"fuc", "old-pages", "js", "css"}
 # the file by a byte - so --check would report drift forever and the "run it
 # twice and nothing changes" guarantee would be a lie.
 OURS = re.compile(
+    r'\s*'                                        # see the insert comment below
     r'(?:<section class="sb-cta".*?</section>)?\s*'
     r'<footer class="sb-footer".*?</footer>'
     r'(?:\s*<script>\(function\(\)\{try\{.*?\}\)\(\);</script>)?'
@@ -174,7 +175,11 @@ def apply_to(html, lang, rel):
     html, _ = hide_legacy_cta_css(html)
 
     if "</body>" in html:
-        html = html.replace("</body>", f"{block}\n</body>", 1)
+        # Leading \n matters. OURS starts with `\s*`, so stripping also eats the
+        # newline before the footer; inserting without one meant run N and run
+        # N+1 produced different bytes forever and --check reported drift on
+        # every generated page. With it, the output is a fixed point.
+        html = html.replace("</body>", f"\n{block}\n</body>", 1)
     else:
         return None, "no </body>"
     return html, None
