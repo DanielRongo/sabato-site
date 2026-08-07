@@ -32,6 +32,7 @@ import sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, ROOT)
 from footer import footer_html  # noqa: E402
+from cta import cta_html, PAGES as CTA_PAGES  # noqa: E402
 
 SITE = os.path.join(ROOT, "site")
 CSS_LINK = '<link rel="stylesheet" href="/css/footer.css">'
@@ -45,10 +46,96 @@ SKIP_DIRS = {"fuc", "old-pages", "js", "css"}
 # the file by a byte - so --check would report drift forever and the "run it
 # twice and nothing changes" guarantee would be a lie.
 OURS = re.compile(
+    r'(?:<section class="sb-cta".*?</section>)?\s*'
     r'<footer class="sb-footer".*?</footer>'
     r'(?:\s*<script>\(function\(\)\{try\{.*?\}\)\(\);</script>)?'
     r'\s*', re.S)
 THEIRS_OLD = re.compile(r'<footer class="site-footer".*?</footer>\s*', re.S)
+
+# Framer's closing CTA, identified by its headline because the section's class
+# hash differs on every page (framer-10d8oh2 on /it and nothing like it
+# elsewhere). Marked at build time so the stylesheet has one stable hook.
+CTA_HEADLINES = ("Your store is open 24/7", "Il tuo store")
+LEGACY_MARK = "data-sb-legacy-cta"
+
+
+VOID = {"area", "base", "br", "col", "embed", "hr", "img", "input", "link",
+        "meta", "param", "source", "track", "wbr"}
+TAG = re.compile(r"<(/?)([a-zA-Z][a-zA-Z0-9-]*)([^>]*)>")
+
+# The component root Framer wraps this CTA in. "CTA Section" on most pages;
+# /about has no <section> at all and roots it on a "Container" instead.
+ROOT_NAMES = ('data-framer-name="CTA Section"', 'data-framer-name="Container"')
+
+
+def _ancestors_at(html_text, offset):
+    """[(tag_start, tag_name, attrs)] of every element open at `offset`.
+
+    A real (small) tokenizer rather than rfind("<section"): on /about the CTA has
+    no enclosing <section>, and on other pages a naive backwards search lands on
+    a sibling that already closed. Getting this wrong hides the wrong half of
+    the page, so it is worth the 20 lines.
+    """
+    stack = []
+    for m in TAG.finditer(html_text):
+        if m.start() >= offset:
+            break
+        closing, name, attrs = m.group(1), m.group(2).lower(), m.group(3)
+        if closing:
+            for k in range(len(stack) - 1, -1, -1):
+                if stack[k][1] == name:
+                    del stack[k:]
+                    break
+        elif name not in VOID and not attrs.rstrip().endswith("/"):
+            stack.append((m.start(), name, attrs))
+    return stack
+
+
+CLASS_RE = re.compile(r'class="([^"]*)"')
+# Eats the indentation too. Leave it behind and each run re-inserts at a
+# slightly different offset, so --check reports drift forever.
+STYLE_TAG = re.compile(r'[ \t]*<style data-sb-legacy-cta>.*?</style>\n?', re.S)
+
+
+def legacy_cta_classes(html_text):
+    """Framer's OWN class on the root of each closing-CTA variant.
+
+    Keyed on Framer's class, not on an attribute we add. Stamping our own
+    attribute was the first attempt and it failed: React re-renders these nodes
+    at hydration and strips anything we put on them - three of eight pages lost
+    it. Framer's own class always comes back, because React is the thing putting
+    it there.
+    """
+    found = []
+    for needle in CTA_HEADLINES:
+        i = html_text.find(needle)
+        while i != -1:
+            for _start, _name, attrs in reversed(_ancestors_at(html_text, i)):
+                if any(r in attrs for r in ROOT_NAMES):
+                    m = CLASS_RE.search(attrs)
+                    if m:
+                        # framer-xxxxx is the generated one; the rest are shared
+                        # presets that other components use too.
+                        for cls in m.group(1).split():
+                            if cls.startswith("framer-") and cls not in found:
+                                found.append(cls)
+                                break
+                    break
+            i = html_text.find(needle, i + len(needle))
+    return found
+
+
+def hide_legacy_cta_css(html_text):
+    """Return the page with a <style> hiding Framer's CTA on THIS page."""
+    html_text = STYLE_TAG.sub("", html_text)          # idempotent
+    classes = legacy_cta_classes(html_text)
+    if not classes:
+        return html_text, 0
+    sel = ", ".join("." + c for c in sorted(classes))
+    tag = f'<style data-sb-legacy-cta>{sel}{{display:none !important}}</style>'
+    if "</head>" not in html_text:
+        return html_text, 0
+    return html_text.replace("</head>", f"  {tag}\n</head>", 1), len(classes)
 
 
 def lang_of(rel):
@@ -65,23 +152,29 @@ def pages():
                 yield full, os.path.relpath(full, SITE).replace(os.sep, "/")
 
 
-def apply_to(html, lang):
+def apply_to(html, lang, rel):
     """Return the page with exactly one sb-footer and the stylesheet linked."""
     new_footer = footer_html(lang)
+    # Only the pages Framer put a closing CTA on. Our generated pages already
+    # end with their own page-specific <section class="cta-band">.
+    block = (cta_html(lang) if rel in CTA_PAGES else "") + new_footer
 
-    # Idempotency: strip any footer we previously installed before adding one.
+    # Idempotency: strip any CTA+footer we previously installed before adding one.
     html = OURS.sub("", html)
     # And retire the old hand-pasted template footer if this page still has one.
     html = THEIRS_OLD.sub("", html)
-
     if CSS_LINK not in html:
         if "</head>" in html:
             html = html.replace("</head>", f"  {CSS_LINK}\n</head>", 1)
         else:
             return None, "no </head>"
+    # AFTER the stylesheet link, always. Doing it before meant run 1 produced
+    # <style><link> and run 2 produced <link><style> - byte-different output for
+    # identical input, so --check flagged drift on every page forever.
+    html, _ = hide_legacy_cta_css(html)
 
     if "</body>" in html:
-        html = html.replace("</body>", f"{new_footer}\n</body>", 1)
+        html = html.replace("</body>", f"{block}\n</body>", 1)
     else:
         return None, "no </body>"
     return html, None
@@ -93,7 +186,7 @@ def main():
 
     for full, rel in pages():
         src = open(full, encoding="utf-8").read()
-        out, err = apply_to(src, lang_of(rel))
+        out, err = apply_to(src, lang_of(rel), rel)
         if err:
             problems.append(f"{rel}: {err}")
             continue

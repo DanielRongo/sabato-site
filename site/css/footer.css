@@ -45,25 +45,10 @@ footer.framer-PFscP { display: none !important; }
   gap: 48px;
   padding-bottom: 88px;
 }
-/* .sb-footer prefix is required, not stylistic. The reset above is
-   `.sb-footer p { margin: 0 }` - specificity 0,1,1. A bare `.sb-tagline` is
-   0,1,0 and LOSES, so every margin in the brand block was silently dropped and
-   the logo, tagline and "Backed by" line stacked flush against each other. That
-   is what read as "not aligned properly". */
-.sb-footer .sb-logo { width: 132px; height: auto; }
-.sb-footer .sb-tagline {
-  color: var(--sb-muted);
-  font-size: 18px;
-  line-height: 1.65;
-  margin-top: 20px;
-}
-.sb-footer .sb-backed {
-  color: var(--sb-muted);
-  font-size: 18px;
-  margin-top: 56px;
-  margin-bottom: 14px;
-}
-.sb-footer .sb-backed-img { width: 191px; height: auto; }
+.sb-logo { width: 132px; height: auto; }
+.sb-tagline { color: var(--sb-fg); font-size: 18px; line-height: 1.65; margin-top: 22px; }
+.sb-backed { color: var(--sb-fg); font-size: 18px; margin-top: 64px; margin-bottom: 14px; }
+.sb-backed-img { width: 191px; height: auto; }
 
 .sb-h4 {
   color: var(--sb-fg);
@@ -135,8 +120,8 @@ footer.framer-PFscP { display: none !important; }
     padding-bottom: 0;
   }
   .sb-brand { margin-bottom: 40px; }
-  .sb-footer .sb-backed { margin-top: 36px; }
-  .sb-footer .sb-tagline { font-size: 17px; margin-top: 18px; }
+  .sb-backed { margin-top: 32px; }
+  .sb-tagline { font-size: 17px; }
 
   /* Static column keeps its heading spacing; collapsible ones become rows with
      a hairline, so the footer reads as a short list of sections rather than 24
@@ -184,4 +169,109 @@ footer.framer-PFscP { display: none !important; }
 
 @media (prefers-reduced-motion: reduce) {
   .sb-footer *, .sb-footer *::after { transition: none !important; }
+}
+
+/* ==========================================================================
+   THE closing CTA band. Markup from cta.py.
+
+   Framer's version is absolutely positioned with pixel coordinates baked in:
+   top:10366px on desktop, top:12216.8px on phone. On /about at 390px its
+   container computed to top:-4597px - it rendered ABOVE the top of the page.
+   On /it at 390px its content sat 939px above its own parent, on top of the
+   FAQ. On desktop it left a dead ~900px gap before the footer.
+
+   Framer's own copy is hidden by a per-page rule that tools/apply_footer.py
+   injects into each page's <head> (see hide_legacy_cta_css there). It has to be
+   CSS keyed on Framer's OWN class, not an attribute we add: React re-renders
+   those nodes at hydration and strips anything we stamped on them - measured,
+   three of eight pages lost the attribute. CSS it cannot revert.
+
+   This one is in normal flow. No position:absolute, no magic numbers.
+   ========================================================================== */
+
+.sb-cta {
+  --sb-cta-a: #F7FD47;          /* sampled from Framer's gradient JPG, left edge */
+  --sb-cta-b: #2BFE41;          /* ...and right edge */
+  display: block;
+  padding: 0 24px;
+  margin: 0 0 96px;
+  font-family: "Satoshi", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+.sb-cta *, .sb-cta *::before { box-sizing: border-box; }
+
+.sb-cta-card {
+  max-width: 1200px;
+  margin: 0 auto;
+  background: linear-gradient(100deg, var(--sb-cta-a) 0%, var(--sb-cta-b) 100%);
+  border-radius: 32px;
+  padding: 76px 40px 84px;
+  text-align: center;
+  position: relative;   /* only so the eyebrow chip can sit in the corner */
+}
+
+/* The white "Get Started" chip, tilted the way Framer had it. */
+.sb-cta .sb-cta-eyebrow {
+  display: inline-block;
+  background: #fff;
+  color: rgb(18, 10, 11);
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1;
+  padding: 11px 18px;
+  border-radius: 999px;
+  transform: rotate(-4deg);
+  position: absolute;
+  top: 40px;
+  left: 48px;
+}
+
+.sb-cta .sb-cta-h2 {
+  color: rgb(0, 0, 0);
+  font-size: 60px;
+  font-weight: 700;
+  letter-spacing: -1.8px;
+  line-height: 1.1;
+  margin: 24px auto 22px;
+  max-width: 980px;
+}
+.sb-cta .sb-cta-body {
+  color: rgba(0, 0, 0, .78);
+  font-size: 19px;
+  line-height: 1.65;
+  max-width: 640px;
+  margin: 0 auto 36px;
+}
+.sb-cta .sb-cta-btn {
+  display: inline-block;
+  background: rgb(0, 0, 0);
+  color: #fff;
+  font-size: 17px;
+  font-weight: 700;
+  text-decoration: none;
+  padding: 19px 34px;
+  border-radius: 999px;
+  transition: transform .2s ease, opacity .2s ease;
+}
+.sb-cta .sb-cta-btn:hover,
+.sb-cta .sb-cta-btn:focus-visible { transform: translateY(-2px); opacity: .9; }
+
+@media (max-width: 1099px) {
+  .sb-cta .sb-cta-h2 { font-size: 44px; letter-spacing: -1.2px; }
+}
+
+@media (max-width: 809px) {
+  .sb-cta { padding: 0 20px; margin-bottom: 64px; }
+  .sb-cta-card { border-radius: 24px; padding: 40px 22px 44px; }
+  /* Static, not absolute: at this width the chip would overlap the headline. */
+  .sb-cta .sb-cta-eyebrow { position: static; margin-bottom: 22px; }
+  .sb-cta .sb-cta-h2 { font-size: 32px; letter-spacing: -.8px; margin: 0 auto 18px; }
+  /* The <br> is a desktop line break; on a phone it lands mid-sentence, so let
+     the headline wrap on its own. */
+  .sb-cta .sb-cta-h2 br { display: none; }
+  .sb-cta .sb-cta-body { font-size: 17px; margin-bottom: 28px; }
+  .sb-cta .sb-cta-btn { font-size: 16px; padding: 17px 28px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sb-cta .sb-cta-btn { transition: none; }
 }
