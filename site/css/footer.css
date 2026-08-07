@@ -45,10 +45,25 @@ footer.framer-PFscP { display: none !important; }
   gap: 48px;
   padding-bottom: 88px;
 }
-.sb-logo { width: 132px; height: auto; }
-.sb-tagline { color: var(--sb-fg); font-size: 18px; line-height: 1.65; margin-top: 22px; }
-.sb-backed { color: var(--sb-fg); font-size: 18px; margin-top: 64px; margin-bottom: 14px; }
-.sb-backed-img { width: 191px; height: auto; }
+/* .sb-footer prefix is required, not stylistic. The reset above is
+   `.sb-footer p { margin: 0 }` - specificity 0,1,1. A bare `.sb-tagline` is
+   0,1,0 and LOSES, so every margin in the brand block was silently dropped and
+   the logo, tagline and "Backed by" line stacked flush against each other. That
+   is what read as "not aligned properly". */
+.sb-footer .sb-logo { width: 132px; height: auto; }
+.sb-footer .sb-tagline {
+  color: var(--sb-muted);
+  font-size: 18px;
+  line-height: 1.65;
+  margin-top: 20px;
+}
+.sb-footer .sb-backed {
+  color: var(--sb-muted);
+  font-size: 18px;
+  margin-top: 56px;
+  margin-bottom: 14px;
+}
+.sb-footer .sb-backed-img { width: 191px; height: auto; }
 
 .sb-h4 {
   color: var(--sb-fg);
@@ -120,8 +135,8 @@ footer.framer-PFscP { display: none !important; }
     padding-bottom: 0;
   }
   .sb-brand { margin-bottom: 40px; }
-  .sb-backed { margin-top: 32px; }
-  .sb-tagline { font-size: 17px; }
+  .sb-footer .sb-backed { margin-top: 36px; }
+  .sb-footer .sb-tagline { font-size: 17px; margin-top: 18px; }
 
   /* Static column keeps its heading spacing; collapsible ones become rows with
      a hairline, so the footer reads as a short list of sections rather than 24

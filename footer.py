@@ -48,6 +48,16 @@ LINKEDIN = "https://www.linkedin.com/company/sabato-ai"
 LOGO = "/fuc/images/KY1UqOX7zKeKJdbxTotIopeeZIU-f2557e25.png"
 BACKED = "/fuc/images/V9nq776DtkEODcun83ayNz0liCU-28058054.webp"
 LI_ICON = "/fuc/images/3vdzRTYV1XV6UUX6QKcsDIfU-e464e3f1.svg"
+# width/height on the two brand images are the assets' TRUE intrinsic pixel
+# sizes (logo 2080x278, backed 1496x132), not the display size. CSS sets the
+# display width and leaves height:auto.
+#
+# They were 132x61 and 191x16, inherited from the old template, and neither
+# matched its file. Because the images are loading="lazy" and the footer is
+# below the fold, the browser reserves a box from the ATTRIBUTE ratio - so the
+# logo held a 61px-tall slot, then collapsed to its real ~18px the instant it
+# loaded. Scrolling into the footer made the whole brand block jump. Correct
+# ratios mean the reserved box is right before the image arrives: no shift.
 COPY = ("&copy; 2026 Sabato LTD - 71-75, Shelton Street, Covent Garden, "
         "London (UK) - All rights reserved.")
 
@@ -138,11 +148,11 @@ def footer_html(lang="en"):
             f'<div class="sb-brand">'
               f'<a href="{c["home"]}" aria-label="{c["logo_alt"]}">'
                 f'<img class="sb-logo" src="{LOGO}" alt="Sabato AI logo" '
-                f'width="132" height="61" loading="lazy"></a>'
+                f'width="2080" height="278" loading="lazy"></a>'
               f'<p class="sb-tagline">{c["tagline"]}</p>'
               f'<p class="sb-backed">{c["backed"]}</p>'
               f'<img class="sb-backed-img" src="{BACKED}" alt="ElevenLabs Grants" '
-              f'width="191" height="16" loading="lazy">'
+              f'width="1496" height="132" loading="lazy">'
             f'</div>'
             f'<div class="sb-col sb-col-static">'
               f'<span class="sb-h4">{c["company"]}</span><ul>{company}</ul>'
