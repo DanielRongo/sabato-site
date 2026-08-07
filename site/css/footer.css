@@ -1,0 +1,172 @@
+/* ==========================================================================
+   THE footer. Markup comes from footer.py; this is the only stylesheet for it.
+   Loaded by every page, Framer-exported or generated.
+
+   Two jobs:
+     1. hide Framer's own footer, which we cannot delete (see below)
+     2. style ours
+
+   WHY FRAMER'S FOOTER IS HIDDEN AND NOT REMOVED
+   ---------------------------------------------
+   Framer ships the footer twice: in the exported HTML and inside its JS bundle.
+   Delete it from the HTML and React re-inserts it at hydration - and, worse,
+   the mismatch makes React re-render the surrounding tree, which is the exact
+   fault that broke every footer link on this site (see the boot comment in
+   enhance.js). So it stays in the DOM, untouched, and display:none keeps it off
+   the page. React hydrates happily against markup it recognises; CSS is not
+   something React can revert.
+   ========================================================================== */
+
+footer.framer-PFscP { display: none !important; }
+
+/* ============ tokens - self-contained, Framer pages do not define ours ===== */
+.sb-footer {
+  --sb-bg: rgb(0, 0, 0);
+  --sb-fg: #fff;
+  --sb-muted: rgba(248, 244, 241, .62);
+  --sb-hair: rgba(248, 244, 241, .16);
+  --sb-off: rgb(248, 244, 241);
+  background: var(--sb-bg);
+  font-family: "Satoshi", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  padding: 110px 0 0;
+  margin: 0;
+}
+.sb-shell { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+.sb-footer *, .sb-footer *::before, .sb-footer *::after { box-sizing: border-box; }
+.sb-footer p, .sb-footer ul, .sb-footer li { margin: 0; padding: 0; }
+.sb-footer ul { list-style: none; }
+.sb-footer img { display: block; max-width: 100%; }
+.sb-nb { white-space: nowrap; }
+
+/* ============ desktop grid ============ */
+.sb-grid {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr 1.25fr 1fr;
+  gap: 48px;
+  padding-bottom: 88px;
+}
+.sb-logo { width: 132px; height: auto; }
+.sb-tagline { color: var(--sb-fg); font-size: 18px; line-height: 1.65; margin-top: 22px; }
+.sb-backed { color: var(--sb-fg); font-size: 18px; margin-top: 64px; margin-bottom: 14px; }
+.sb-backed-img { width: 191px; height: auto; }
+
+.sb-h4 {
+  color: var(--sb-fg);
+  font-size: 18px;
+  font-weight: 500;
+  display: block;
+  margin-bottom: 22px;
+}
+.sb-col li { margin-bottom: 14px; }
+.sb-col a {
+  color: var(--sb-muted);
+  font-size: 18px;
+  line-height: 1.5;
+  text-decoration: none;
+  transition: color .2s;
+}
+.sb-col a:hover, .sb-col a:focus-visible { color: var(--sb-fg); }
+
+/* On desktop the <details> columns are plain columns: no marker, no pointer,
+   and summary must not look clickable. They stay open - the markup ships with
+   the open attribute and nothing here removes it above 810px. */
+.sb-acc > summary {
+  list-style: none;
+  cursor: default;
+  display: block;
+}
+.sb-acc > summary::-webkit-details-marker { display: none; }
+.sb-acc > summary::marker { content: ""; }
+
+/* ============ bottom row ============ */
+.sb-bottom {
+  border-top: 1px solid var(--sb-hair);
+  padding: 26px 0 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.sb-copy { color: var(--sb-off); font-size: 16px; opacity: .85; }
+.sb-legal { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
+.sb-legal a {
+  color: var(--sb-off);
+  font-size: 16px;
+  opacity: .85;
+  text-decoration: none;
+  transition: opacity .2s;
+}
+.sb-legal a:hover, .sb-legal a:focus-visible { opacity: 1; }
+.sb-legal img { width: 20px; height: 20px; }
+/* The language switcher earns a border so it reads as a control, not legalese. */
+.sb-legal a[data-lang-switch] {
+  border: 1px solid var(--sb-hair);
+  border-radius: 999px;
+  padding: 5px 14px;
+}
+.sb-legal a[data-lang-switch]:hover { border-color: var(--sb-off); }
+
+/* ============ phone ============ */
+@media (max-width: 809px) {
+  .sb-footer { padding-top: 64px; }
+  .sb-shell { padding: 0 20px; }
+  /* No padding here and no border on .sb-bottom below: the last accordion's
+     border-bottom IS the divider. Having both drew two hairlines with an empty
+     32px band between them, which read as a broken empty row. */
+  .sb-grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+    padding-bottom: 0;
+  }
+  .sb-brand { margin-bottom: 40px; }
+  .sb-backed { margin-top: 32px; }
+  .sb-tagline { font-size: 17px; }
+
+  /* Static column keeps its heading spacing; collapsible ones become rows with
+     a hairline, so the footer reads as a short list of sections rather than 24
+     links in a stack. */
+  .sb-col-static { margin-bottom: 28px; }
+  .sb-col-static .sb-h4 { margin-bottom: 16px; }
+  .sb-col li { margin-bottom: 12px; }
+  .sb-col a { font-size: 17px; }
+
+  .sb-acc { border-top: 1px solid var(--sb-hair); }
+  .sb-acc:last-of-type { border-bottom: 1px solid var(--sb-hair); }
+  .sb-acc > summary {
+    cursor: pointer;
+    padding: 18px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .sb-acc > summary .sb-h4 { margin-bottom: 0; }
+  /* Chevron, drawn in CSS so there is no icon file to lose. */
+  .sb-acc > summary::after {
+    content: "";
+    width: 9px; height: 9px;
+    border-right: 2px solid var(--sb-muted);
+    border-bottom: 2px solid var(--sb-muted);
+    transform: rotate(45deg) translate(-2px, -2px);
+    transition: transform .2s ease;
+    flex: none;
+  }
+  .sb-acc[open] > summary::after { transform: rotate(-135deg) translate(-2px, -2px); }
+  .sb-acc > ul { padding: 0 0 20px; }
+
+  .sb-bottom {
+    border-top: none;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+    padding: 26px 0 40px;
+  }
+  .sb-copy { font-size: 14px; line-height: 1.5; }
+  .sb-legal { gap: 18px; }
+  .sb-legal a { font-size: 15px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sb-footer *, .sb-footer *::after { transition: none !important; }
+}

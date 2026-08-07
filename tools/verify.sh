@@ -36,6 +36,15 @@ else
 fi
 
 echo
+echo "==> 1b/5  footer is current with footer.py"
+# Cheap, and catches the case where someone edited a page or a template by hand
+# and left a footer behind, or ran a generator without build.py afterwards.
+if ! python3 tools/apply_footer.py --check; then
+  echo "GATE FAILED - run python3 build.py first." >&2
+  exit 1
+fi
+
+echo
 echo "==> 2/5  inject GA4 (must be the last thing that touches HTML)"
 python3 tools/inject_ga.py
 

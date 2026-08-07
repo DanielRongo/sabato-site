@@ -106,9 +106,11 @@ def italian_template():
     en = open("templates/customer.html", encoding="utf-8").read()
     it_ind = open("templates/industry-it.html", encoding="utf-8").read()
     HDR = ('<header class="site-header">', '</header>')
-    FTR = ('<footer class="site-footer">', '</footer>')
     out = en.replace(_block(en, *HDR), _block(it_ind, *HDR))
-    out = out.replace(_block(en, *FTR), _block(it_ind, *FTR))
+    # The footer used to be swapped here too. It is no longer in any template -
+    # tools/apply_footer.py renders it last, and picks the language from the
+    # page's own path, so an Italian customer page gets the Italian footer
+    # without this file knowing anything about footers.
     out = out.replace('<html lang="en">', '<html lang="it">')
     out = out.replace("https://www.sabato.ai/customers/{{SLUG}}",
                       "https://www.sabato.ai/it/clienti/{{SLUG}}")

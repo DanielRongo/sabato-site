@@ -67,7 +67,10 @@ COLLECT = """
     if (/^(https?:|mailto:|tel:|#)/.test(raw) && a.href.indexOf(location.origin) !== 0) return;
     // A flag emoji is the language switcher. Pointing at the other language is
     // its whole job, so it must never count as a leak.
-    const isFlag = /[\uD83C][\uDDE6-\uDDFF]/.test(a.textContent || '');
+    // data-lang-switch is the footer's explicit "read this in English/Italiano"
+    // link. Crossing languages is its purpose, so it is not a leak.
+    const isFlag = /[\uD83C][\uDDE6-\uDDFF]/.test(a.textContent || '')
+                   || a.hasAttribute('data-lang-switch');
     out.push({label: label, raw: raw, res: a.href.replace(location.origin, '').split('#')[0],
               logo: isLogo, flag: isFlag});
   });

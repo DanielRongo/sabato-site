@@ -135,10 +135,37 @@
      Generic on purpose: any http(s) URL whose host contains no dot cannot be a
      real domain, so it is a mistyped path. Rewriting it root-relative fixes this
      class of Framer authoring error, not just the three we found. */
+  /* ---------- OUR FOOTER IS OFF LIMITS ----------
+     site/css/footer.css hides Framer's footer and footer.py renders ours, with
+     real absolute hrefs, correct per language, generated at build time from the
+     same arrays this file uses. Nothing in here needs to repair it, and every
+     function that tried would do damage:
+
+       * enforceItalianLinks would rewrite the language switcher (an anchor
+         pointing at the other language ON PURPOSE) straight back to this one.
+       * injectFooterLinks would clone the lowest "Book a Demo" - which is now
+         inside our footer - and inject a duplicate Blog link next to the real
+         one already in the Company column.
+       * wireUseCaseTargets / wireIndustryTargets look for "/#usecases" hooks and
+         inert <span>s. Ours has neither.
+
+     So every rewriting pass skips it. This is the whole point of the rebuild:
+     the footer stops being something that gets patched at runtime. */
+  function ours(el) {
+    return !!(el && el.closest && el.closest(".sb-footer"));
+  }
+
+  /* True once apply_footer.py's footer is on the page. Guard, not assumption:
+     if a page somehow ships without it, the old repair passes still run. */
+  function haveOurFooter() {
+    return !!document.querySelector(".sb-footer");
+  }
+
   function repairMistypedHrefs() {
     var as = document.querySelectorAll('a[href^="http://"], a[href^="https://"]');
     for (var i = 0; i < as.length; i++) {
       var a = as[i], h = a.getAttribute("href") || "";
+      if (ours(a)) continue;
       var m = h.match(/^https?:\/\/([^\/?#]+)(\/[^?#]*)?/);
       if (!m) continue;
       var host = m[1];
@@ -167,6 +194,7 @@
     var seen = 0;
     for (var j = 0; j < as.length; j++) {
       var a = as[j];
+      if (ours(a)) continue;              /* footer.py already says Chi Siamo */
       if (a.getBoundingClientRect().top + window.scrollY < cut) continue; /* header */
       if (normLabel(a.textContent) !== "Prezzi") continue;
       seen++;
@@ -221,6 +249,8 @@
     var as = document.querySelectorAll("a[href]");
     for (var i = 0; i < as.length; i++) {
       var a = as[i];
+      if (ours(a)) continue;                                  /* footer.py owns it */
+      if (a.hasAttribute("data-lang-switch")) continue;       /* deliberate */
       if (FLAG.test(a.textContent || "")) continue;           /* language switcher */
       var raw = a.getAttribute("href") || "";
       if (raw.indexOf("http") === 0) continue;
@@ -246,6 +276,7 @@
   }
 
   function injectFooterLinks() {
+    if (haveOurFooter()) return;   /* Blog already sits in the Company column */
     /* "Book a Demo" appears several times (mid-page CTAs + footer). The footer
        one is always the lowest on the page - pick that, never a hero CTA. */
     var links = document.querySelectorAll("a");
