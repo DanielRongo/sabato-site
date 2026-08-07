@@ -36,6 +36,12 @@ CASES = [
 # exactly the state a cold visitor sees.
 # Same three checks, but reached by clicking the header logo back to the home
 # page first - the path Daniel reported the failure on.
+# Clicked with their anchor removed entirely - see STRIP_ANCHORS.
+NO_ANCHOR = [
+    ("/",   "Managing Returns", "/use-cases/managing-returns"),
+    ("/it", "Gestione Resi",    "/it/casi-duso/gestione-resi"),
+]
+
 VIA_LOGO = [
     ("/pricing", "Managing Returns",  "/use-cases/managing-returns"),
     ("/about",   "Open a Complaint",  "/use-cases/open-a-complaint"),
@@ -52,6 +58,29 @@ LOGO_CLICK = """
   if (!a) return false;
   a.click();
   return true;
+})()
+"""
+
+# Framer renders the homepage use-case tiles with NO anchor at all - the label
+# sits in a bare element and only the click interceptor can resolve it. That is
+# the case the timing-proof fallback was written for, and for weeks it was the
+# one case that never worked: an unguarded a.hasAttribute() threw a TypeError on
+# a null anchor and killed the handler first. Caught by clicking "Gestione Resi"
+# on live /it on 7 Aug 2026.
+#
+# This strips the anchor off a wired link entirely, then clicks the bare label.
+STRIP_ANCHORS = """
+(() => {
+  let n = 0;
+  document.querySelectorAll('a').forEach(a => {
+    const h = a.getAttribute('href') || '';
+    if (!h.startsWith('/use-cases/') && !h.startsWith('/it/casi-duso/')) return;
+    const span = document.createElement('span');
+    span.innerHTML = a.innerHTML;
+    a.replaceWith(span);
+    n++;
+  });
+  return n;
 })()
 """
 
@@ -142,6 +171,41 @@ def main():
                 print(f"ok   {path:9} '{label}' -> {got}   (after unwiring {unwired} link(s))")
             else:
                 print(f"FAIL {path:9} '{label}' -> {got}   expected {expect}")
+                bad += 1
+            ctx.close()
+
+        # ---- no-anchor phase ----
+        for path, label, expect in NO_ANCHOR:
+            ctx = browser.new_context(viewport={"width": 1440, "height": 900})
+            page = ctx.new_page()
+            page.goto(base + path, wait_until="networkidle")
+            stripped = page.evaluate(STRIP_ANCHORS)
+            if not stripped:
+                print(f"SKIP {path:9} '{label}' - no anchors to strip")
+                ctx.close()
+                continue
+            hits = page.get_by_text(label, exact=True)
+            vis = [hits.nth(i) for i in range(hits.count()) if hits.nth(i).is_visible()]
+            if not vis:
+                print(f"FAIL {path:9} '{label}' - label vanished after stripping")
+                bad += 1
+                ctx.close()
+                continue
+            try:
+                vis[-1].scroll_into_view_if_needed(timeout=3000)
+                vis[-1].click(timeout=3000)
+                page.wait_for_load_state("domcontentloaded")
+                page.wait_for_timeout(400)
+            except Exception as e:
+                print(f"FAIL {path:9} '{label}' no-anchor - {type(e).__name__}")
+                bad += 1
+                ctx.close()
+                continue
+            got = page.url[len(base):].split("?")[0].rstrip("/") or "/"
+            if got == expect.rstrip("/"):
+                print(f"ok   {path:9} '{label}' -> {got}   (anchor REMOVED, {stripped} stripped)")
+            else:
+                print(f"FAIL {path:9} '{label}' -> {got}   expected {expect}  (anchor removed)")
                 bad += 1
             ctx.close()
         browser.close()

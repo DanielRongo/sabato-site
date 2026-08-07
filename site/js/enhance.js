@@ -341,8 +341,14 @@
       var ours = href.indexOf("/use-cases/") === 0 || href.indexOf("/it/casi-duso/") === 0 ||
                  href.indexOf("/industries/") === 0 || href === "/industries" ||
                  href.indexOf("/it/settori/") === 0 || href === "/it/settori" ||
-                 a.hasAttribute("data-blog-link") || href === "/blog" || href === "/it/blog" ||
-                 a.hasAttribute("data-roi-link") || href === "/roi-calculator" ||
+                 /* `a &&` is load-bearing. Framer renders the homepage tiles with
+                    NO anchor at all, so `a` is null there - and an unguarded
+                    a.hasAttribute() threw a TypeError that killed this handler
+                    before the label fallback below could run. The one case the
+                    fallback exists for was the one case it never reached.
+                    Found 7 Aug 2026 by clicking "Gestione Resi" on live /it. */
+                 (a && a.hasAttribute("data-blog-link")) || href === "/blog" || href === "/it/blog" ||
+                 (a && a.hasAttribute("data-roi-link")) || href === "/roi-calculator" ||
                  href.indexOf("/customers/") === 0 ||
                  href.indexOf("/it/clienti/") === 0;
       /* TIMING-PROOF FALLBACK.
