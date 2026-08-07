@@ -152,13 +152,24 @@
      So every rewriting pass skips it. This is the whole point of the rebuild:
      the footer stops being something that gets patched at runtime. */
   function ours(el) {
-    return !!(el && el.closest && el.closest(".sb-footer"));
+    return !!(el && el.closest && el.closest(".sb-footer, .sb-header"));
   }
 
   /* True once apply_footer.py's footer is on the page. Guard, not assumption:
      if a page somehow ships without it, the old repair passes still run. */
   function haveOurFooter() {
     return !!document.querySelector(".sb-footer");
+  }
+
+  /* Same for the header: header.py renders the nav, the language switcher and
+     the CTA button with real hrefs, per language, at build time. The passes that
+     used to graft links onto Framer's nav have nothing left to do - and doing it
+     anyway is not harmless. restoreChiSiamo rewrote the SECOND anchor pointing
+     at /it/prezzi into "Chi Siamo", which in our header is the Prezzi link: the
+     Italian mobile menu shipped with "Chi Siamo" twice and no Prezzi at all,
+     caught by the menu test. */
+  function haveOurHeader() {
+    return !!document.querySelector(".sb-header");
   }
 
   function repairMistypedHrefs() {
@@ -183,6 +194,7 @@
      logo so the header's own Prezzi link is never touched. */
   function restoreChiSiamo() {
     if (!IT) return;
+    if (haveOurHeader() && haveOurFooter()) return;  /* nothing left to repair */
     var logo = null, imgs = document.querySelectorAll("img");
     for (var i = 0; i < imgs.length; i++) {
       var src = imgs[i].currentSrc || imgs[i].src || "";
@@ -399,6 +411,7 @@
   }
 
   function injectDropdown() {
+    if (haveOurHeader()) return;   /* header.py owns the nav */
     makeDropdown({ items: USECASES, trigger: USECASES_LABEL, allLabel: ALL_LABEL,
                    allHref: ALL_HREF, attr: "data-uc-dropdown" });
     makeDropdown({ items: INDUSTRIES, trigger: IND_LABEL, allLabel: IND_ALL_LABEL,
@@ -467,6 +480,7 @@
      cloning a wrapper once duplicated the whole shared <nav> on every use-case
      page. Guard on the label so the MutationObserver can't add a second. */
   function injectIndustriesNav() {
+    if (haveOurHeader()) return;   /* header.py owns the nav */
     if (!INDUSTRIES.length) return;
     var links = document.querySelectorAll("a");
     var src = null, already = false;

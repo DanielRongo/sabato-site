@@ -33,6 +33,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, ROOT)
 from footer import footer_html  # noqa: E402
 from cta import cta_html, PAGES as CTA_PAGES  # noqa: E402
+from header import header_html  # noqa: E402
 
 SITE = os.path.join(ROOT, "site")
 CSS_LINK = '<link rel="stylesheet" href="/css/footer.css">'
@@ -52,6 +53,12 @@ OURS = re.compile(
     r'(?:\s*<script>\(function\(\)\{try\{.*?\}\)\(\);</script>)?'
     r'\s*', re.S)
 THEIRS_OLD = re.compile(r'<footer class="site-footer".*?</footer>\s*', re.S)
+# Our header + its inline menu script, and the templates' old hand-pasted one.
+OURS_HDR = re.compile(
+    r'\s*<header class="sb-header".*?</header>'
+    r'(?:\s*<script>\(function\(\)\{var h=document\.querySelector.*?</script>)?'
+    r'\s*', re.S)
+THEIRS_HDR = re.compile(r'\s*<header class="site-header".*?</header>\s*', re.S)
 
 # Framer's closing CTA, identified by its headline because the section's class
 # hash differs on every page (framer-10d8oh2 on /it and nothing like it
@@ -67,6 +74,8 @@ TAG = re.compile(r"<(/?)([a-zA-Z][a-zA-Z0-9-]*)([^>]*)>")
 # The component root Framer wraps this CTA in. "CTA Section" on most pages;
 # /about has no <section> at all and roots it on a "Container" instead.
 ROOT_NAMES = ('data-framer-name="CTA Section"', 'data-framer-name="Container"')
+# Framer's header root. Stable across every page, unlike the CTA's.
+FRAMER_HEADER = 'header.framer-wv5hx'
 
 
 def _ancestors_at(html_text, offset):
@@ -173,6 +182,15 @@ def apply_to(html, lang, rel):
     # <style><link> and run 2 produced <link><style> - byte-different output for
     # identical input, so --check flagged drift on every page forever.
     html, _ = hide_legacy_cta_css(html)
+
+    html = OURS_HDR.sub("\n", html)
+    html = THEIRS_HDR.sub("\n", html)
+    m = re.search(r"<body[^>]*>", html)
+    if not m:
+        return None, "no <body>"
+    # First thing in <body>, BEFORE Framer's React root - same reason the footer
+    # goes after it. Anything inside that root gets re-rendered at hydration.
+    html = html[:m.end()] + "\n" + header_html(lang) + html[m.end():]
 
     if "</body>" in html:
         # Leading \n matters. OURS starts with `\s*`, so stripping also eats the

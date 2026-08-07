@@ -19,6 +19,13 @@
 
 footer.framer-PFscP { display: none !important; }
 
+/* Framer's header. Its root class is DIFFERENT on every page - framer-wv5hx on
+   /, framer-1p6vm38 on /it, framer-pp04bk on /it/prezzi - so there is nothing
+   stable to name. But every one of them is a <header> whose class begins with
+   "framer-", and ours is <header class="sb-header">, so one structural rule
+   separates them cleanly and no per-page <style> is needed. */
+header[class^="framer-"] { display: none !important; }
+
 /* Hiding the <footer> alone was not enough. Framer wraps it in a container that
    keeps its own reserved height, so the page still carried 1,223px of empty
    space between the FAQ and our CTA on desktop. :has() collapses the wrapper
@@ -349,4 +356,218 @@ footer.framer-PFscP { display: none !important; }
 
 @media (prefers-reduced-motion: reduce) {
   .sb-cta .sb-cta-btn { transition: none; }
+}
+
+/* ==========================================================================
+   THE header. Markup from header.py.
+
+   Framer's header is hidden by the same per-page mechanism as its CTA - a
+   <style> injected by tools/apply_footer.py keyed on Framer's OWN class.
+
+   Geometry read off Framer with getComputedStyle:
+     wrapper  max-width 1200, padding 16px 30px, sticky at top 0
+     shell    1140x88, radius 24px, #fff, padding 16px 70px
+     logo     132px wide;  nav 16px/500 Satoshi, 48px gaps
+     button   170x51, #CCFF00, radius 100px, padding 12px 30px, 16px/700
+     phone    shell 330x60, radius 24px, logo 117px, burger 21x21
+   ========================================================================== */
+
+.sb-header {
+  --sb-h-ink: rgb(0, 0, 0);
+  --sb-h-lime: rgb(204, 255, 0);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px 30px;
+  font-family: "Satoshi", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+.sb-header *, .sb-header *::before { box-sizing: border-box; }
+
+.sb-hdr-shell {
+  background: #fff;
+  border-radius: 24px;
+  height: 88px;
+  padding: 16px 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.sb-hdr-logo { display: block; flex: none; line-height: 0; }
+.sb-hdr-logo img { width: 132px; height: auto; display: block; }
+
+.sb-hdr-nav { display: flex; align-items: center; gap: 48px; }
+.sb-hdr-nav a {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 27.2px;
+  color: var(--sb-h-ink);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: opacity .2s;
+}
+.sb-hdr-nav a:hover, .sb-hdr-nav a:focus-visible { opacity: .6; }
+.sb-hdr-flag { font-size: 16px; line-height: 1; text-decoration: none; }
+
+.sb-hdr-btn {
+  flex: none;
+  display: inline-block;
+  background: var(--sb-h-lime);
+  color: var(--sb-h-ink);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 27.2px;
+  text-decoration: none;
+  padding: 12px 30px;
+  border-radius: 100px;
+  white-space: nowrap;
+  transition: transform .2s ease;
+}
+.sb-hdr-btn:hover, .sb-hdr-btn:focus-visible { transform: scale(1.04); }
+
+/* Hidden until the hamburger breakpoint. A <button>, not a div, so it is
+   focusable and announces its expanded state without extra ARIA plumbing. */
+.sb-burger {
+  display: none;
+  flex: none;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  position: relative;
+}
+.sb-burger span {
+  position: absolute;
+  left: 5px;
+  width: 22px;
+  height: 2px;
+  background: var(--sb-h-ink);
+  border-radius: 2px;
+  transition: transform .2s ease, opacity .2s ease;
+}
+.sb-burger span:first-child { top: 12px; }
+.sb-burger span:last-child { top: 19px; }
+.sb-open .sb-burger span:first-child { transform: translateY(3.5px) rotate(45deg); }
+.sb-open .sb-burger span:last-child { transform: translateY(-3.5px) rotate(-45deg); }
+
+.sb-panel { display: none; }
+
+/* ---- 1024-1199: the nav stays but tightens ----
+   This band is exactly where Framer's Italian header broke. At 48px gaps and
+   70px shell padding the Italian labels (315px) plus the 132px logo plus the
+   201px "Inizia il Pilota Gratuito" button overflow the shell and the button
+   lands on top of "Contatti". At 24px gaps and 32px padding it clears. */
+@media (max-width: 1199px) {
+  .sb-hdr-shell { padding: 16px 32px; }
+  .sb-hdr-nav { gap: 24px; }
+}
+
+/* ---- below 1024: hamburger ----
+   Framer only switched at 768, but the Italian nav cannot fit above that: at
+   768 the shell offers 644px of content and Italian needs 132 + 315 + 201.
+   There is no arrangement that works, so the menu takes over earlier. */
+@media (max-width: 1023px) {
+  .sb-header { padding: 25px 30px; }
+  .sb-hdr-shell { height: 60px; padding: 11px 29px; }
+  .sb-hdr-logo img { width: 117px; }
+  .sb-hdr-nav, .sb-hdr-btn { display: none; }
+  .sb-burger { display: block; margin-right: -5px; }
+
+  .sb-panel {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: #fff;
+    z-index: 99;
+    padding: 110px 55px 40px;
+    overflow-y: auto;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .18s ease;
+  }
+  .sb-open .sb-panel { opacity: 1; visibility: visible; }
+  .sb-panel-inner { display: flex; flex-direction: column; gap: 35px; }
+  .sb-panel-inner a {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.35;
+    color: var(--sb-h-ink);
+    text-decoration: none;
+  }
+  .sb-panel-inner a:active { opacity: .6; }
+  .sb-panel-inner .sb-hdr-flag { font-size: 22px; }
+  /* The bar has to sit above its own panel, or the burger is unreachable. */
+  .sb-hdr-shell { position: relative; z-index: 100; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sb-header *, .sb-panel { transition: none !important; }
+}
+
+/* ---- nav dropdowns ----
+   CSS-driven, opened by :hover and :focus-within, so keyboard users get the
+   same menu without a line of JavaScript. The invisible bridge on ::after
+   covers the gap between the label and the panel - without it the menu closes
+   the instant the pointer leaves the text on its way down. */
+.sb-nav-item { position: relative; display: inline-flex; align-items: center; }
+.sb-nav-item::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; top: 100%;
+  height: 18px;
+}
+.sb-dd {
+  position: absolute;
+  top: calc(100% + 18px);
+  left: 50%;
+  transform: translateX(-50%) translateY(-6px);
+  min-width: 260px;
+  background: #fff;
+  border-radius: 20px;
+  padding: 14px;
+  box-shadow: 0 18px 44px rgba(0, 0, 0, .14);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .16s ease, transform .16s ease;
+  z-index: 10;
+}
+.sb-nav-item:hover .sb-dd,
+.sb-nav-item:focus-within .sb-dd {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+.sb-hdr-nav .sb-dd a {
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.4;
+  padding: 9px 12px;
+  border-radius: 10px;
+  white-space: nowrap;
+  transition: background .15s ease;
+}
+.sb-hdr-nav .sb-dd a:hover, .sb-hdr-nav .sb-dd a:focus-visible {
+  background: rgba(0, 0, 0, .05);
+  opacity: 1;
+}
+.sb-hdr-nav .sb-dd .sb-dd-all {
+  margin-top: 6px;
+  border-top: 1px solid rgba(0, 0, 0, .1);
+  border-radius: 0 0 10px 10px;
+  padding-top: 13px;
+  font-weight: 700;
+}
+
+/* The panel is absolutely positioned, so it must not be clipped or shifted by
+   the shell. Below 1024 the whole nav is gone and the menu takes over. */
+@media (max-width: 1023px) {
+  .sb-dd { display: none; }
 }
