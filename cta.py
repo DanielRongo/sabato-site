@@ -39,6 +39,10 @@ import sys
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 CAL = "https://cal.com/sabatoai/intro"
+# Framer's line-art flourish inside the card. Natural size 1040x1410; the card
+# renders it 440x467 with object-fit:cover, so the attributes carry the real
+# intrinsic size and CSS does the sizing (same rule as the footer logo).
+DECOR = "/fuc/images/gwJojp6ALd65GvULe61l4AVkc-d2211afa.png"
 
 # Exactly the pages Framer shipped this band on, verified by grepping for the
 # headline. Kept explicit rather than "every Framer page" so adding a page does
@@ -57,17 +61,19 @@ COPY = {
         # collide into "24/7.Your phone line". On desktop a space before a line
         # break collapses to nothing, so the wide layout is unaffected.
         h2="Your store is open 24/7. <br>Your phone line should be too.",
+        # <br> after "catalog." is Framer's break - it balances the two lines.
+        # Hidden on phones (see the CSS), where the copy wraps over five lines.
         body=("Pre-configured AI voice workflows for e-commerce. Connected to your "
-              "catalog. Fully managed. Live in two weeks. Book a call or talk to our "
-              "AI right now."),
+              "catalog. <br>Fully managed. Live in two weeks. Book a call or talk to "
+              "our AI right now."),
         btn="Start Free Pilot",
     ),
     "it": dict(
         eyebrow="Inizia ora",
         h2="Il tuo store &egrave; aperto 24/7. <br>Anche il tuo telefono dovrebbe esserlo.",
         body=("Workflow vocali AI preconfigurati per l&rsquo;e-commerce. Collegati al tuo "
-              "catalogo. Completamente gestiti. Operativi in due settimane. Prenota una "
-              "call o parla con la nostra AI adesso."),
+              "catalogo. Completamente gestiti. <br>Operativi in due settimane. Prenota "
+              "una call o parla con la nostra AI adesso."),
         btn="Inizia il Pilota Gratuito",
     ),
 }
@@ -84,11 +90,15 @@ def cta_html(lang="en"):
     return (
       f'<section class="sb-cta" data-lang="{lang}">'
         f'<div class="sb-cta-card">'
+          f'<div class="sb-cta-eyebrow-row">'
           f'<span class="sb-cta-eyebrow">{html.escape(c["eyebrow"], quote=False)}</span>'
+          f'</div>'
           f'<h2 class="sb-cta-h2">{c["h2"]}</h2>'
           f'<p class="sb-cta-body">{c["body"]}</p>'
           f'<a class="sb-cta-btn" href="{CAL}" target="_blank" rel="noopener">'
           f'{html.escape(c["btn"], quote=False)}</a>'
+          f'<img class="sb-cta-decor" src="{DECOR}" alt="" aria-hidden="true" '
+          f'width="1040" height="1410" loading="lazy">'
         f'</div>'
       f'</section>'
     )
