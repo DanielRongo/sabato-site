@@ -49,6 +49,29 @@
     { label: "Feedback Post-Consegna", href: "/it/casi-duso/feedback-post-consegna" },
     { label: "Notifica Ritorno in Stock", href: "/it/casi-duso/notifica-ritorno-in-stock" }
   ];
+  /* /it/chi-siamo renders an entire ENGLISH footer above the Italian one (the
+     page was duplicated from /about in Framer and the footer component was never
+     swapped). At phone width the two stack, so an Italian visitor scrolls into a
+     use-case column labelled in English whose links are all still the unwired
+     "../#usecases" hook - nine dead links, exactly as reported.
+
+     Rather than special-case that page, teach the Italian entries their English
+     names. Everything downstream - wireUseCaseTargets, resolveByLabel, the click
+     interceptor - already matches on aliases, so this one loop fixes the labels
+     wherever they appear, including any page duplicated the same way later.
+
+     Guarded on equal length because this pairs BY INDEX: the two arrays are
+     written in the same order on purpose. If someone adds a use case to one and
+     not the other, do nothing rather than link Italian visitors to the wrong
+     page. (The INDUSTRIES arrays are deliberately NOT paired this way - their
+     order does differ, which is why those entries carry hand-written aliases.) */
+  if (USECASES_EN.length === USECASES_IT.length) {
+    for (var uci = 0; uci < USECASES_IT.length; uci++) {
+      USECASES_IT[uci].aliases =
+        (USECASES_IT[uci].aliases || []).concat([USECASES_EN[uci].label]);
+    }
+  }
+
   var USECASES = IT ? USECASES_IT : USECASES_EN;
   var ALL_LABEL = IT ? "Tutti i casi d'uso" : "All use cases";
   var ALL_HREF = IT ? "/it/casi-duso" : "/use-cases";
@@ -151,6 +174,74 @@
       a.setAttribute("href", "/it/chi-siamo");
       var tw = a.querySelector("p, span, h1, h2, h3, h4, h5, h6") || a;
       tw.textContent = "Chi Siamo";
+    }
+  }
+
+  /* ---------- 0b. Keep Italian pages inside the Italian site ----------
+     Audited 6 Aug 2026 at 390px and 1440px: /it/chi-siamo renders TWO footers
+     stacked - an English one (logo and Home -> "/", Pricing -> "/pricing",
+     About -> "/about", Contact -> "/contact") sitting directly above the
+     Italian one. The Italian page was built by duplicating the English one in
+     Framer and that footer component was never swapped, so an Italian visitor
+     who scrolls down is one tap from the English site, with English labels.
+     Reported as "the Italian footer is all over the place", worst on mobile
+     because the two footers stack instead of sitting side by side.
+
+     Fixed here rather than in the HTML because Framer re-hydrates these anchors
+     from its own bundle and puts the English hrefs back - the same reason
+     repairMistypedHrefs() lives here.
+
+     Deliberately NOT rewritten:
+       * the language switcher (the flag anchors) - pointing at the English site
+         is its entire job. Detected by the regional-indicator characters that
+         make up a flag emoji.
+       * /terms and /privacy-policy - those pages exist in English only, so the
+         link is correct even on an Italian page. Their LABELS are still English
+         in the Italian footer; that is a copy decision, not a bug, and is left
+         alone on purpose. */
+  var IT_PATH = {
+    "/": "/it",
+    "/pricing": "/it/prezzi",
+    "/about": "/it/chi-siamo",
+    "/contact": "/it/contatti",
+    "/blog": "/it/blog",
+    "/use-cases": "/it/casi-duso",
+    "/industries": "/it/settori"
+  };
+  var IT_LABEL = {
+    "Home": "Home", "Pricing": "Prezzi", "About": "Chi Siamo",
+    "Contact": "Contatti", "Contact us": "Contattaci", "Blog": "Blog",
+    "Book a Demo": "Prenota una Demo"
+  };
+  /* U+1F1E6-U+1F1FF are the regional indicators a flag emoji is built from. */
+  var FLAG = /[\uD83C][\uDDE6-\uDDFF]/;
+
+  function enforceItalianLinks() {
+    if (!IT) return;
+    var as = document.querySelectorAll("a[href]");
+    for (var i = 0; i < as.length; i++) {
+      var a = as[i];
+      if (FLAG.test(a.textContent || "")) continue;           /* language switcher */
+      var raw = a.getAttribute("href") || "";
+      if (raw.indexOf("http") === 0) continue;
+      /* ANY fragment, not just a leading "#". The nav's use-case and industry
+         hooks are written "/#usecases" and "/#casiduso" - their pathname is "/",
+         so an earlier version of this mapped them to "/it" and destroyed the
+         hook wireUseCaseTargets() retargets. Caught by the footer click test:
+         "Gestione Resi" started landing on /it. Those anchors have an owner
+         already; this function is not it. */
+      if (raw.indexOf("#") !== -1) continue;
+      /* Resolve ./ and ../ the browser's own way before deciding. */
+      var path;
+      try { path = new URL(a.href).pathname; } catch (e) { continue; }
+      if (path.length > 1) path = path.replace(/\/$/, "");
+      var want = IT_PATH[path];
+      if (!want) continue;
+      if (raw !== want) a.setAttribute("href", want);
+      var holder = a.querySelector("p, span, h1, h2, h3, h4, h5, h6") || a;
+      if (holder.children.length) continue;                   /* not a plain label */
+      var it = IT_LABEL[normLabel(holder.textContent)];
+      if (it && normLabel(holder.textContent) !== it) holder.textContent = it;
     }
   }
 
@@ -607,6 +698,7 @@
 
   function run() {
     repairMistypedHrefs();
+    enforceItalianLinks();
     restoreChiSiamo();
     injectFooterLinks(); injectIndustriesNav(); injectDropdown();
     wireUseCaseTargets(); wireIndustryTargets(); installClickInterceptor();
@@ -629,15 +721,17 @@
      observer while that pass runs so our own edits cannot feed back into it. */
   var __mo = null, __pending = false, __busy = false;
 
+  /* NOTE: an earlier version of this also disconnected the observer for the
+     duration of the pass. That lost every mutation Framer made while we were
+     running - and Framer hydrates exactly then. Caught by tools/audit_links.py:
+     the footer logo on /it/prezzi and /it/contatti at 390px stayed pointed at
+     the English home because the pass that would have fixed it never fired.
+     Coalescing alone is enough: run() is idempotent, so a pass triggered by our
+     own writes finds nothing to change and the loop dies after one frame. */
   function runGuarded() {
     if (__busy) return;
     __busy = true;
-    if (__mo) __mo.disconnect();
-    try { run(); }
-    finally {
-      __busy = false;
-      if (__mo) __mo.observe(document.documentElement, { childList: true, subtree: true });
-    }
+    try { run(); } finally { __busy = false; }
   }
 
   function schedule() {
@@ -648,11 +742,68 @@
     else setTimeout(fire, 16);
   }
 
-  if (document.readyState !== "loading") runGuarded();
-  else document.addEventListener("DOMContentLoaded", runGuarded);
-  __mo = new MutationObserver(schedule);
-  __mo.observe(document.documentElement, { childList: true, subtree: true });
-  /* Belt and braces: hydration can land after our last pass, and disconnecting
-     during a pass means we can miss what React did in that window. */
-  window.addEventListener("load", function () { setTimeout(runGuarded, 800); });
+  /* ---------- BOOT ORDER: THIS IS THE IMPORTANT PART ----------
+
+     Measured 6 Aug 2026 on /it/prezzi at 390px, by loading the page twice and
+     counting React's "Caught a recoverable error" warnings:
+
+         enhance.js BLOCKED :  2 recoverable errors
+         enhance.js LOADED  : 16 recoverable errors
+
+     Those 14 extra errors are ours. We used to start rewriting hrefs at
+     DOMContentLoaded - i.e. while React was still hydrating. React compares the
+     server HTML against what it expects, finds our edits, treats the tree as
+     corrupt, and re-renders the whole subtree from its own bundle. Our edits are
+     wiped, and the links revert to whatever Framer authored: the /#usecases
+     hook, the English footer on Italian pages, the lot.
+
+     That single mechanism explains every symptom reported: links that do nothing
+     on a first visit but work after a reload (cache changes the timing), Italian
+     pages linking into the English site, and why it was always worse on mobile
+     (slower hydration = a wider window for us to collide with it).
+
+     So the file is split in two by whether a thing WRITES to the DOM:
+
+       * installClickInterceptor() only listens. It cannot trigger a hydration
+         mismatch, so it goes on immediately and every link is clickable from the
+         first paint, wired or not - that is what resolveByLabel() is for.
+
+       * everything else writes, so it waits for `load`, by which point React has
+         hydrated and our edits stick instead of being reverted.
+
+     Do not move DOM writes back to DOMContentLoaded to make them "apply sooner".
+     They will apply sooner and then be thrown away. */
+  installClickInterceptor();
+
+  /* `load` is necessary but not always sufficient: on the heavier pages at phone
+     width React is still reconciling when it fires. Measured on /it at 390px -
+     booting exactly at load still produced 16 recoverable errors against a
+     baseline of 2. One frame plus a short pause puts our first write after the
+     reconciliation instead of inside it. */
+  function boot() {
+    if (window.requestAnimationFrame) {
+      window.requestAnimationFrame(function () { setTimeout(bootNow, 400); });
+    } else {
+      setTimeout(bootNow, 400);
+    }
+  }
+
+  function bootNow() {
+    runGuarded();
+    __mo = new MutationObserver(schedule);
+    /* attributeFilter:["href"] matters. The observer used to watch childList
+       only, so when Framer rewrote an EXISTING anchor's href in place - no node
+       added or removed - we never heard about it and never corrected it. That is
+       why the footer logo on /it/prezzi and /it/contatti at 390px sat on "../"
+       (the English home): at our last pass it still read "../it", and Framer
+       changed it afterwards. Safe to watch, because run() is idempotent and
+       schedule() coalesces to one pass per frame. */
+    __mo.observe(document.documentElement, {
+      childList: true, subtree: true, attributes: true, attributeFilter: ["href"]
+    });
+    /* Framer finishes some work after load; one late pass catches it. */
+    setTimeout(runGuarded, 800);
+  }
+  if (document.readyState === "complete") boot();
+  else window.addEventListener("load", boot);
 })();

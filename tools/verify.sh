@@ -65,6 +65,16 @@ if ! python3 tools/test_footer_clicks.py "http://127.0.0.1:$PORT"; then
   exit 1
 fi
 
+echo
+echo "==> 4c/5  link audit at phone AND desktop width"
+# Everything else in this gate runs at 1440px only, which is how an English
+# footer on the Italian pages and a pile of dead mobile links survived for weeks.
+if ! python3 tools/audit_links.py "http://127.0.0.1:$PORT"; then
+  echo
+  echo "GATE FAILED - no receipt written. Nothing is safe to push." >&2
+  exit 1
+fi
+
 if [ -n "$REMOTE_URL" ]; then
   echo
   echo "==> 4b/5  Playwright sweep against $REMOTE_URL"
