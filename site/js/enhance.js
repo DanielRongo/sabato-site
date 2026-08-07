@@ -1,11 +1,28 @@
-/* Sabato site enhancements: blog nav link, Use Cases + Industries dropdowns,
-   use-case and industry page wiring.
-   Config-driven: add new use-case pages to USECASES and everything updates. */
+/* What is LEFT of the Sabato enhancements layer.
+
+   This file used to build the footer's extra links, the nav dropdowns and the
+   industries nav, and repair the Italian header. It no longer does any of that:
+   header.py and footer.py render those at build time, from these same arrays.
+   The four passes that became redundant were removed on 7 Aug 2026 after
+   measuring - each was wrapped in a MutationObserver and 21 pages were loaded at
+   1440 and 390; all four made zero DOM changes everywhere. 44KB -> 32KB.
+
+   What remains exists because Framer's BODY content still needs it:
+     * repairMistypedHrefs   the `https://it/prezzi` hrefs Framer stored
+     * enforceItalianLinks   Italian body links pointing into the English site
+     * wireUseCaseTargets    body tiles still ship the "/#usecases" hook
+     * wireIndustryTargets   ...and inert <span>s where links belong
+     * installClickInterceptor  resolves a destination from the label AT CLICK
+       TIME, so a link works whether or not the wiring above has run or survived
+       hydration. This is the one that must never be removed.
+     * injectCustomerBand    staging-only draft, gated behind BAND_ENABLED
+
+   Everything here writes to the DOM, which is why boot order matters - see the
+   comment at the bottom of the file before changing when this runs.
+   Config-driven: add a use-case page to USECASES and nav, footer and hub all
+   pick it up. */
 (function () {
   var IT = location.pathname === "/it" || location.pathname.indexOf("/it/") === 0;
-  var BLOG_HREF = IT ? "/it/blog" : "/blog";
-  var NAV_ANCHORS = IT ? ["Contatti", "Prezzi"] : ["Contact", "Pricing"];
-  var USECASES_LABEL = IT ? "Casi d'uso" : "Use Cases";
 
   /* Typographic vs straight apostrophes differ between Framer pages and ours,
      so all label comparisons go through this. */
@@ -73,8 +90,6 @@
   }
 
   var USECASES = IT ? USECASES_IT : USECASES_EN;
-  var ALL_LABEL = IT ? "Tutti i casi d'uso" : "All use cases";
-  var ALL_HREF = IT ? "/it/casi-duso" : "/use-cases";
 
   /* Industry pages, both languages. The Italian footer names some categories
      differently between the Framer build and our own templates (and left
@@ -102,24 +117,7 @@
     { label: "Sport e Fitness", href: "/it/settori/sport-fitness", aliases: ["Sports & Fitness"] }
   ];
   var INDUSTRIES = IT ? INDUSTRIES_IT : INDUSTRIES_EN;
-  var IND_LABEL = IT ? "Settori" : "Industries";
-  var IND_ALL_LABEL = IT ? "Tutti i settori" : "All industries";
-  var IND_ALL_HREF = IT ? "/it/settori" : "/industries";
 
-  /* ---------- 1. Extra links in the FOOTER, right after "Book a Demo" ----------
-     (Deliberately not in the top nav - the header stays as designed.)
-     Each is a clone of the demo button, so it inherits the footer's styling
-     whatever Framer decides that is this week. Order here is the order on the
-     page.
-
-     /roi-calculator is deliberately NOT in this list. It is hosted but
-     unlisted - reachable only by someone given the URL directly. Adding it
-     here puts it in the footer of all 74 pages, which is the opposite of
-     unlisted. */
-  var DEMO_LABEL = IT ? "Prenota una Demo" : "Book a Demo";
-  var FOOTER_LINKS = [
-    { label: "Blog", href: BLOG_HREF, attr: "data-blog-link" }
-  ];
 
   /* ---------- 0. Repair malformed hrefs authored in Framer ----------
      Four Italian pages ship footer links written as `it/prezzi` in Framer's URL
@@ -151,26 +149,15 @@
 
      So every rewriting pass skips it. This is the whole point of the rebuild:
      the footer stops being something that gets patched at runtime. */
+  /* ours() survives on its own: repairMistypedHrefs and enforceItalianLinks
+     still run, and both must keep their hands off the header and footer that
+     header.py and footer.py now own. The haveOurFooter/haveOurHeader guards are
+     gone with the passes that used them. */
   function ours(el) {
     return !!(el && el.closest && el.closest(".sb-footer, .sb-header"));
   }
 
-  /* True once apply_footer.py's footer is on the page. Guard, not assumption:
-     if a page somehow ships without it, the old repair passes still run. */
-  function haveOurFooter() {
-    return !!document.querySelector(".sb-footer");
-  }
 
-  /* Same for the header: header.py renders the nav, the language switcher and
-     the CTA button with real hrefs, per language, at build time. The passes that
-     used to graft links onto Framer's nav have nothing left to do - and doing it
-     anyway is not harmless. restoreChiSiamo rewrote the SECOND anchor pointing
-     at /it/prezzi into "Chi Siamo", which in our header is the Prezzi link: the
-     Italian mobile menu shipped with "Chi Siamo" twice and no Prezzi at all,
-     caught by the menu test. */
-  function haveOurHeader() {
-    return !!document.querySelector(".sb-header");
-  }
 
   function repairMistypedHrefs() {
     var as = document.querySelectorAll('a[href^="http://"], a[href^="https://"]');
@@ -184,36 +171,6 @@
       a.setAttribute("href", "/" + host + (m[2] || ""));
       a.removeAttribute("target");
       a.removeAttribute("rel");
-    }
-  }
-
-  /* The same four Italian pages lost "Chi Siamo" from the MOBILE footer copy:
-     Framer renders it as a second "Prezzi" pointing at /it/prezzi. The desktop
-     copy in the same file is correct (Home / Prezzi / Chi Siamo / Contattaci),
-     so this restores the mobile one to match. Scoped to anchors below the footer
-     logo so the header's own Prezzi link is never touched. */
-  function restoreChiSiamo() {
-    if (!IT) return;
-    if (haveOurHeader() && haveOurFooter()) return;  /* nothing left to repair */
-    var logo = null, imgs = document.querySelectorAll("img");
-    for (var i = 0; i < imgs.length; i++) {
-      var src = imgs[i].currentSrc || imgs[i].src || "";
-      if (src.indexOf("KY1UqOX7") !== -1) { logo = imgs[i]; break; }
-    }
-    if (!logo) return;
-    var cut = logo.getBoundingClientRect().top + window.scrollY;
-    var as = document.querySelectorAll('a[href="/it/prezzi"], a[href="./it/prezzi"]');
-    var seen = 0;
-    for (var j = 0; j < as.length; j++) {
-      var a = as[j];
-      if (ours(a)) continue;              /* footer.py already says Chi Siamo */
-      if (a.getBoundingClientRect().top + window.scrollY < cut) continue; /* header */
-      if (normLabel(a.textContent) !== "Prezzi") continue;
-      seen++;
-      if (seen < 2) continue;                    /* the first one is correct */
-      a.setAttribute("href", "/it/chi-siamo");
-      var tw = a.querySelector("p, span, h1, h2, h3, h4, h5, h6") || a;
-      tw.textContent = "Chi Siamo";
     }
   }
 
@@ -287,137 +244,6 @@
     }
   }
 
-  function injectFooterLinks() {
-    if (haveOurFooter()) return;   /* Blog already sits in the Company column */
-    /* "Book a Demo" appears several times (mid-page CTAs + footer). The footer
-       one is always the lowest on the page - pick that, never a hero CTA. */
-    var links = document.querySelectorAll("a");
-    var target = null, targetY = -1;
-    for (var i = 0; i < links.length; i++) {
-      var a = links[i];
-      if (normLabel(a.textContent) !== normLabel(DEMO_LABEL)) continue;
-      var r = a.getBoundingClientRect();
-      if (r.height === 0) continue;
-      var y = r.top + window.scrollY;
-      if (y > targetY) { targetY = y; target = a; }
-    }
-    if (!target) return;
-    var box = target.parentElement;
-    if (!box || !box.parentElement) return;
-    var wrapper = box.querySelectorAll("a").length === 1 ? box : target;
-
-    /* Insert in reverse: each clone goes immediately after the demo button, so
-       pushing them in back-to-front leaves FOOTER_LINKS order on screen. */
-    for (var j = FOOTER_LINKS.length - 1; j >= 0; j--) {
-      var spec = FOOTER_LINKS[j];
-      if (document.querySelector("a[" + spec.attr + "]")) continue;
-      var clone = wrapper.cloneNode(true);
-      var ca = clone.tagName === "A" ? clone : clone.querySelector("a");
-      if (!ca) continue;
-      var tw = (clone.querySelector && clone.querySelector("p, span, h1, h2, h3, h4, h5, h6")) || ca;
-      tw.textContent = spec.label;
-      ca.href = spec.href;
-      ca.setAttribute(spec.attr, "1");
-      ca.removeAttribute("data-uc-wired");
-      /* the demo button opens cal.com in a new tab - these are internal */
-      ca.removeAttribute("target");
-      ca.removeAttribute("rel");
-      wrapper.parentElement.insertBefore(clone, wrapper.nextSibling);
-    }
-  }
-
-  /* ---------- 2. Use Cases dropdown ----------
-     Two structural problems this solves:
-     (a) nav markup differs between Framer pages (one wrapper per link) and our
-         own templates (one shared <nav>), so parent-relative centring drifts -
-         we position fixed against the LINK's own bounding box instead;
-     (b) Framer re-renders the nav after hydration, orphaning listeners bound to
-         a specific element - so we delegate off document and resolve the link
-         fresh on every hover. */
-  /* A nav link in the top 200px whose label matches - the trigger for a menu. */
-  function currentNavLink(node, label) {
-    var a = node && node.closest ? node.closest("a") : null;
-    if (!a) return null;
-    if (normLabel(a.textContent) !== normLabel(label)) return null;
-    var r = a.getBoundingClientRect();
-    if (r.top < 0 || r.top > 200 || r.height === 0) return null;
-    return a;
-  }
-
-  /* One dropdown implementation, two menus. Keeping them identical matters more
-     than it looks: a second menu built separately drifts in padding, radius and
-     hover colour within a release or two. */
-  function makeDropdown(opts) {
-    var USECASES = opts.items, USECASES_LABEL = opts.trigger;
-    var ALL_LABEL = opts.allLabel, ALL_HREF = opts.allHref;
-    function currentNavUseCasesLink(n) { return currentNavLink(n, USECASES_LABEL); }
-
-    if (!USECASES.length) return;
-    if (document.querySelector("[" + opts.attr + "]")) return;
-
-    var dd = document.createElement("div");
-    dd.setAttribute(opts.attr, "1");
-    dd.style.cssText = "position:fixed;display:none;z-index:2147483000;padding-top:14px;";
-    var card = document.createElement("div");
-    card.style.cssText =
-      "background:#fff;border:1px solid rgb(227,226,226);border-radius:16px;padding:8px;min-width:250px;box-shadow:0 12px 32px rgba(0,0,0,.10);";
-    function item(label, href, bold) {
-      var el = document.createElement("a");
-      el.href = href;
-      el.textContent = label;
-      el.style.cssText =
-        "display:block;padding:10px 14px;border-radius:10px;font-family:'Satoshi','Inter',sans-serif;font-size:15px;font-weight:" +
-        (bold ? "700" : "500") +
-        ";color:rgb(18,10,11);text-decoration:none;white-space:nowrap;";
-      el.onmouseenter = function () { el.style.background = "rgb(204,255,0)"; };
-      el.onmouseleave = function () { el.style.background = "transparent"; };
-      return el;
-    }
-    for (var j = 0; j < USECASES.length; j++) card.appendChild(item(USECASES[j].label, USECASES[j].href, false));
-    var sep = document.createElement("div");
-    sep.style.cssText = "height:1px;background:rgb(227,226,226);margin:6px 8px;";
-    card.appendChild(sep);
-    card.appendChild(item(ALL_LABEL, ALL_HREF, true));
-    dd.appendChild(card);
-    document.body.appendChild(dd);
-
-    var anchorEl = null, hideTimer = null;
-
-    function place() {
-      if (!anchorEl || !anchorEl.isConnected) return;
-      var r = anchorEl.getBoundingClientRect();
-      dd.style.top = r.bottom + "px";
-      dd.style.left = "0px";
-      var w = dd.offsetWidth || 250;
-      var margin = 12;
-      var left = r.left + r.width / 2 - w / 2;
-      left = Math.max(margin, Math.min(left, window.innerWidth - w - margin));
-      dd.style.left = Math.round(left) + "px";
-    }
-    function show(el) { anchorEl = el; clearTimeout(hideTimer); dd.style.display = "block"; place(); }
-    function hide() { hideTimer = setTimeout(function () { dd.style.display = "none"; }, 200); }
-
-    document.addEventListener("mouseover", function (e) {
-      var link = currentNavUseCasesLink(e.target);
-      if (link) { show(link); return; }
-      if (dd.contains(e.target)) { clearTimeout(hideTimer); return; }
-      if (dd.style.display === "block") hide();
-    }, true);
-
-    dd.addEventListener("mouseenter", function () { clearTimeout(hideTimer); });
-    dd.addEventListener("mouseleave", hide);
-    window.addEventListener("scroll", function () { if (dd.style.display === "block") place(); }, { passive: true });
-    window.addEventListener("resize", function () { if (dd.style.display === "block") place(); });
-  }
-
-  function injectDropdown() {
-    if (haveOurHeader()) return;   /* header.py owns the nav */
-    makeDropdown({ items: USECASES, trigger: USECASES_LABEL, allLabel: ALL_LABEL,
-                   allHref: ALL_HREF, attr: "data-uc-dropdown" });
-    makeDropdown({ items: INDUSTRIES, trigger: IND_LABEL, allLabel: IND_ALL_LABEL,
-                   allHref: IND_ALL_HREF, attr: "data-ind-dropdown" });
-  }
-
   /* ---------- 3. Retarget footer links + make matching tiles clickable ----------
      Two DOM shapes exist: Framer pages nest the label in a <p>/<span> inside the
      <a>; our own templates put the text directly in the <a>. Handle both. */
@@ -464,71 +290,6 @@
           }
         }
       })(USECASES[i]);
-    }
-  }
-
-  /* ---------- 4. Beat Framer's client-side router to the click ----------
-     Framer hydrates its own router, which intercepts link clicks, calls
-     preventDefault() and navigates via an internal route table - so rewriting
-     an anchor's href is not enough on Framer-rendered pages: the click still
-     goes to the original destination. We listen on `window` in the CAPTURE
-     phase (the earliest point in the event path, before any document-level
-     handler Framer registers) and perform the navigation ourselves. */
-  /* ---------- Industries nav item ----------
-     The header has no Industries link, so clone the Use Cases one to inherit its
-     exact styling and insert it alongside. Clone the ANCHOR, never a wrapper:
-     cloning a wrapper once duplicated the whole shared <nav> on every use-case
-     page. Guard on the label so the MutationObserver can't add a second. */
-  function injectIndustriesNav() {
-    if (haveOurHeader()) return;   /* header.py owns the nav */
-    if (!INDUSTRIES.length) return;
-    var links = document.querySelectorAll("a");
-    var src = null, already = false;
-    for (var i = 0; i < links.length; i++) {
-      var a = links[i], r = a.getBoundingClientRect();
-      if (r.top < 0 || r.top > 200 || r.height === 0) continue;
-      var n = normLabel(a.textContent);
-      if (n === normLabel(IND_LABEL)) { already = true; break; }
-      if (n === normLabel(USECASES_LABEL) && !src) src = a;
-    }
-    if (already || !src) return;
-
-    /* Framer wraps each nav link in its own container div; our templates put the
-       anchors straight into <nav>. Cloning the anchor on a Framer page drops a
-       second link INSIDE that 75px wrapper, which stacks it onto a second row.
-       So clone the wrapper when it holds exactly one anchor - and only then,
-       because cloning a wrapper that holds the whole nav duplicates the header. */
-    var wrap = src.parentElement;
-    var cloneWrapper = wrap && wrap !== document.body &&
-                       wrap.querySelectorAll("a").length === 1 &&
-                       wrap.children.length === 1;
-    var node = cloneWrapper ? wrap : src;
-
-    var el = node.cloneNode(true);
-    var anchor = cloneWrapper ? el.querySelector("a") : el;
-    if (!anchor) return;
-    anchor.setAttribute("data-ind-link", "1");
-    anchor.removeAttribute("target");
-    anchor.removeAttribute("rel");
-    anchor.setAttribute("href", IND_ALL_HREF);
-    anchor.style.whiteSpace = "nowrap";
-    /* Framer nests the label in a <p>; our templates put it in the <a>. */
-    var leaf = anchor.querySelector("p, span");
-    if (leaf && !leaf.children.length) leaf.textContent = IND_LABEL;
-    else anchor.textContent = IND_LABEL;
-
-    node.parentNode.insertBefore(el, node.nextSibling);
-
-    /* A sixth item can push a fixed-gap nav onto two rows. Only shrink the gap
-       if that actually happened - measured, not assumed. */
-    var row = el.parentElement;
-    if (row && getComputedStyle(row).display.indexOf("flex") === 0) {
-      var tops = {}, kids = row.children, count = 0;
-      for (var k = 0; k < kids.length; k++) {
-        var top = Math.round(kids[k].getBoundingClientRect().top);
-        if (!tops[top]) { tops[top] = 1; count++; }
-      }
-      if (count > 1) row.style.gap = "28px";
     }
   }
 
@@ -741,11 +502,23 @@
     anchor.parentElement.insertBefore(wrap, anchor.nextSibling);
   }
 
+  /* Measured 7 Aug 2026 by wrapping every pass in a MutationObserver and
+     loading 21 pages at 1440 and 390: restoreChiSiamo, injectFooterLinks,
+     injectIndustriesNav and injectDropdown made ZERO DOM changes on every page
+     at both widths, because header.py and footer.py now render what they used
+     to graft on. They are gone.
+
+     What survives, and why - same measurement:
+       wireUseCaseTargets   360 writes  Framer's BODY tiles still ship the
+       wireIndustryTargets  162 writes  "/#usecases" hook and inert <span>s
+       enforceItalianLinks   19 writes  Italian body links into the English site
+       repairMistypedHrefs   10 writes  the https://it/prezzi hrefs, phone only
+     installClickInterceptor shows 0 because it only adds a listener - it is the
+     timing-proof click path and must stay. injectCustomerBand is a staging-only
+     draft behind BAND_ENABLED. */
   function run() {
     repairMistypedHrefs();
     enforceItalianLinks();
-    restoreChiSiamo();
-    injectFooterLinks(); injectIndustriesNav(); injectDropdown();
     wireUseCaseTargets(); wireIndustryTargets(); installClickInterceptor();
     injectCustomerBand();
   }
