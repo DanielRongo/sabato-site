@@ -30,6 +30,7 @@ STEPS = [
     ("customers.py", "case studies, from customer_data*.py - MUST precede industries.py"),
     ("use_cases.py", "use-case hubs, reads the built use-case pages"),
     ("industries.py", "industry pages + indexes, THEN relinks footers site-wide - runs last"),
+    ("legal.py",     "terms + privacy, EN and IT, from legal/*.md"),
     ("tools/set_page_meta.py", "metadata for static pages that no generator owns"),
     ("tools/apply_footer.py", "THE footer, from footer.py - must be last, owns every footer"),
 ]

@@ -68,14 +68,18 @@ COPY_EN = dict(
            ("Contact us", "/contact"), ("Blog", "/blog")],
     demo="Book a Demo", terms="Terms and Conditions", privacy="Privacy and Cookies",
     other_label="Italiano", other_href="/it", logo_alt="Sabato AI - Home",
+    terms_href="/terms", privacy_href="/privacy-policy",
 )
 COPY_IT = dict(
     home="/it", tagline="La prima voice AI dedicata <br>esclusivamente all&rsquo;E-Commerce.",
     backed="Supportato da", company="Azienda", usecases="Casi d&rsquo;uso", industries="Settori",
     links=[("Home", "/it"), ("Prezzi", "/it/prezzi"), ("Chi Siamo", "/it/chi-siamo"),
            ("Contattaci", "/it/contatti"), ("Blog", "/it/blog")],
-    demo="Prenota una Demo", terms="Terms and Conditions", privacy="Privacy and Cookies",
+    demo="Prenota una Demo", terms="Termini e Condizioni", privacy="Privacy e Cookie",
     other_label="English", other_href="/", logo_alt="Sabato AI - Home",
+    # Real Italian pages since 7 Aug 2026 - these used to point at the English
+    # originals, which is why the audit needed a cross-language exemption.
+    terms_href="/it/termini-e-condizioni", privacy_href="/it/privacy-e-cookie",
 )
 LANGS = {"en": COPY_EN, "it": COPY_IT}
 
@@ -163,8 +167,8 @@ def footer_html(lang="en"):
           f'<div class="sb-bottom">'
             f'<p class="sb-copy">{COPY}</p>'
             f'<div class="sb-legal">'
-              f'<a href="/terms">{c["terms"]}</a>'
-              f'<a href="/privacy-policy">{c["privacy"]}</a>'
+              f'<a href="{c["terms_href"]}">{c["terms"]}</a>'
+              f'<a href="{c["privacy_href"]}">{c["privacy"]}</a>'
               # data-lang-switch marks this as a deliberate cross-language link.
               # tools/audit_links.py and enhance.js both skip it - without the
               # marker the audit would report the switcher as a language leak,

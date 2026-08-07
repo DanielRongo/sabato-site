@@ -44,12 +44,14 @@ PAGES = [
     "/privacy-policy", "/use-cases", "/it/casi-duso", "/industries",
     "/it/settori", "/use-cases/managing-returns", "/it/casi-duso/gestione-resi",
     "/customers/creative-cables", "/it/clienti/creative-cables",
+    "/it/termini-e-condizioni", "/it/privacy-e-cookie",
 ]
 
-# Targets that legitimately appear on either language's pages: the legal pages
-# exist in English only. "/" and "/it" are NOT here - a bare "/" on an Italian
-# page is the exact bug this audit was written to catch.
-CROSS_LANG_OK = {"/terms", "/privacy-policy"}
+# Nothing is exempt any more. /terms and /privacy-policy used to be here because
+# they existed in English only; since 7 Aug 2026 the Italian site has its own
+# /it/termini-e-condizioni and /it/privacy-e-cookie, so an Italian page linking
+# to the English legal text is once again a real leak and should fail.
+CROSS_LANG_OK = set()
 
 COLLECT = """
 () => {
