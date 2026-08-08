@@ -28,7 +28,12 @@
       --black: rgb(0, 0, 0);           /* dark bands */
       --ink: rgb(18, 10, 11);          /* primary text */
       --gray: rgb(69, 65, 64);         /* body/secondary text */
-      --off: rgb(248, 244, 241);       /* light card background */
+      /* Grey, not cream. This was rgb(248, 244, 241) - a warm off-white that
+         read as yellow against the black bands and the white page. Now the
+         same value as --mist on the case-study pages, so the two families
+         match. Every use of --off in this file is a background; there is no
+         text or border keyed on it. */
+      --off: rgb(249, 250, 253);       /* light grey card background */
       --line: rgb(227, 226, 226);      /* hairlines */
       --blue: rgb(0, 102, 204);        /* text links - 5.6:1 on white, AA at any size */
       --font: "Satoshi", "Inter", -apple-system, "Helvetica Neue", sans-serif;
