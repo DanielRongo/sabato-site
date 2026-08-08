@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>How to Measure Voice Agent Latency on Your Own Line | Sabato AI</title>
+  <meta name="description" content="The human turn-taking gap is +208 ms across 10 languages. No independently verified latency benchmark exists for commercial voice agents - so here is the protocol to measure p50 and p90 on your own line in an afternoon.">
+  <link rel="alternate" hreflang="en" href="https://www.sabato.ai/blog/measure-your-voice-agent-latency">
+  <link rel="alternate" hreflang="it" href="https://www.sabato.ai/it/blog/measure-your-voice-agent-latency">
+  <link rel="alternate" hreflang="x-default" href="https://www.sabato.ai/blog/measure-your-voice-agent-latency">
+  <link rel="canonical" href="https://www.sabato.ai/blog/measure-your-voice-agent-latency">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="How to Measure Voice Agent Latency on Your Own Line | Sabato AI">
+  <meta property="og:description" content="The human turn-taking gap is +208 ms across 10 languages. No independently verified latency benchmark exists for commercial voice agents - so here is the protocol to measure p50 and p90 on your own line in an afternoon.">
+  <meta property="og:url" content="https://www.sabato.ai/blog/measure-your-voice-agent-latency">
+  <meta property="og:image" content="https://www.sabato.ai/fuc/assets/8Q4ofjOgRTqsr8FpanTJF9nzLwU.png">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary_large_image">
+  <link href="/fuc/images/hWFOqN6Okd1QgfKhizqgIF1s.png" rel="icon" media="(prefers-color-scheme: light)">
+  <link href="/fuc/images/dEcuqc3xAQ3JJoX4xQDYrMQefA.png" rel="icon" media="(prefers-color-scheme: dark)">
+  <link rel="apple-touch-icon" href="/fuc/images/dEcuqc3xAQ3JJoX4xQDYrMQefA.png">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Human Conversation Runs on a 208-Millisecond Clock. Your Voice Agent Doesn't.", "description": "The human turn-taking gap is +208 ms across 10 languages. No independently verified latency benchmark exists for commercial voice agents - so here is the protocol to measure p50 and p90 on your own line in an afternoon.", "datePublished": "2026-08-08", "dateModified": "2026-08-08", "inLanguage": "en", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://www.sabato.ai/blog/measure-your-voice-agent-latency"}, "author": {"@type": "Organization", "name": "Sabato AI", "url": "https://www.sabato.ai"}, "publisher": {"@type": "Organization", "name": "Sabato AI", "url": "https://www.sabato.ai"}}</script>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is a good latency for an AI voice agent?", "acceptedAnswer": {"@type": "Answer", "text": "There is no independently verified benchmark for commercial phone calls. The two defensible anchors are the human conversational norm - a +208 ms mean gap across 10 languages (Stivers et al., PNAS, 2009) - and ITU-T G.114's 400 ms ceiling on one-way mouth-to-ear delay, which covers delivering the audio only. Measure your own p50 and p90 and improve against that baseline."}}, {"@type": "Question", "name": "How do you measure voice agent response latency?", "acceptedAnswer": {"@type": "Answer", "text": "Record calls in stereo, open them in a waveform editor, and per turn measure from the last audio sample of the caller's final word to the first sample of the agent's reply. Log 60 turns minimum, split into acknowledgement, retrieval, post-long-utterance and post-interruption, then report p50 and p90 for each type separately."}}, {"@type": "Question", "name": "Is 400 ms the standard for voice AI latency?", "acceptedAnswer": {"@type": "Answer", "text": "No. The 400 ms figure comes from ITU-T Recommendation G.114 (2003) and describes one-way mouth-to-ear delay for network planning - transmission plus the codec and buffering the network adds. It excludes endpointing, speech recognition, model inference, database lookups and speech synthesis. For a voice agent it is a floor beneath the total response time, not a performance target."}}, {"@type": "Question", "name": "Why does my voice agent feel slow when the vendor quoted a low number?", "acceptedAnswer": {"@type": "Answer", "text": "Most likely the measurement windows differ. Many quoted figures start after endpointing - the moment the system decides the caller has stopped talking. The caller's experience starts at their last word. The silence threshold between those two points is often the largest single block of delay in the chain."}}, {"@type": "Question", "name": "Is a faster voice agent always better?", "acceptedAnswer": {"@type": "Answer", "text": "No. Reducing the endpointing threshold to shorten the gap increases false interruptions, where the agent talks over a caller mid-thought and forces them to repeat themselves. Human conversation overlaps constantly - 40.0-41.7% of transitions across three European corpora were overlaps (Heldner & Edlund, 2010, single-source). Both failures cost calls."}}, {"@type": "Question", "name": "Does the +208 ms figure apply to phone calls?", "acceptedAnswer": {"@type": "Answer", "text": "Not directly. Stivers et al. measured naturalistic face-to-face and recorded conversation between people who know each other, and counted nods and audible inbreaths as a response beginning. Nobody has published equivalent timing for commercial inbound calls. Treat it as the baseline your caller's ear was trained on, not as a specification for your line."}}]}</script>
+  <style>
+    /* ============ Fonts (local mirrors, same files the site loads) ============ */
+    @font-face { font-family: "Satoshi"; src: url("/fuc/third-party-assets/fontshare/wf/TTX2Z3BF3P6Y5BQT3IV2VNOK6FL22KUT/7QYRJOI3JIMYHGY6CH7SOIFRQLZOLNJ6/KFIAZD4RUMEZIYV6FQ3T3GP5PDBDB6JY.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 400; }
+    @font-face { font-family: "Satoshi"; src: url("/fuc/third-party-assets/fontshare/wf/P2LQKHE6KA6ZP4AAGN72KDWMHH6ZH3TA/ZC32TK2P7FPS5GFTL46EU6KQJA24ZYDB/7AHDUZ4A7LFLVFUIFSARGIWCRQJHISQP.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 500; }
+    @font-face { font-family: "Satoshi"; src: url("/fuc/third-party-assets/fontshare/wf/LAFFD4SDUCDVQEXFPDC7C53EQ4ZELWQI/PXCT3G6LO6ICM5I3NTYENYPWJAECAWDD/GHM6WVH6MILNYOOCXHXB5GTSGNTMGXZR.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 700; }
+    @font-face { font-family: "Satoshi"; src: url("/fuc/third-party-assets/fontshare/wf/NHPGVFYUXYXE33DZ75OIT4JFGHITX5PE/PSUTMASCDJTVPERDYJZPN23BVUFUCQIF/J64QX5IPOHK56I2KYUNBQ5M2XWZEYKYX.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 900; }
+    @font-face { font-family: "Kalam"; src: url("/fuc/third-party-assets/fontshare/wf/L5Z4DJRD7OROEK74MORC4URSE7ILAXYH/6QNQQQT3NGMLLBQ3J7CCWACN46YUMIJB/GNJHSO7TKXAQJXNY3V3S4VE64D4XKQCP.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 700; }
+    @font-face { font-family: "Inter"; src: url("/fuc/assets/GrgcKwrN6d3Uz8EwcLHZxwEfC4.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 400; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+2000-206F, U+20AC, U+2122; }
+    @font-face { font-family: "Inter"; src: url("/fuc/assets/UjlFhCnUjxhNfep4oYBPqnEssyo.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 500; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+2000-206F, U+20AC, U+2122; }
+    @font-face { font-family: "Inter"; src: url("/fuc/assets/syRNPWzAMIrcJ3wIlPIP43KjQs.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 700; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+2000-206F, U+20AC, U+2122; }
+
+    /* ============ Tokens ============ */
+    :root {
+      --lime: rgb(204, 255, 0);        /* CTA / accent */
+      --black: rgb(0, 0, 0);           /* hero + footer bands */
+      --ink: rgb(18, 10, 11);          /* primary text */
+      --gray: rgb(69, 65, 64);         /* body/secondary text */
+      --off: rgb(248, 244, 241);       /* light card background */
+      --line: rgb(227, 226, 226);      /* hairlines */
+      --blue: rgb(0, 102, 204);        /* text links - 5.6:1 on white, AA at any size */
+      --font: "Satoshi", "Inter", -apple-system, "Helvetica Neue", sans-serif;
+      --hand: "Kalam", cursive;
+      --radius: 24px;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font); background: #fff; color: var(--ink); }
+    img { display: block; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ============ Header / Nav ============ */
+    .site-header { position: sticky; top: 0; z-index: 100; max-width: 1200px; margin: 0 auto; padding: 16px 30px; }
+    .nav-shell { background: #fff; border-radius: var(--radius); height: 88px; padding: 16px 70px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .nav-logo img { width: 132px; height: auto; }
+    .nav-links { display: flex; align-items: center; gap: 48px; }
+    .nav-links a { font-size: 16px; font-weight: 500; line-height: 1.7; color: var(--ink); transition: opacity .2s; }
+    .nav-links a:hover { opacity: .6; }
+    .nav-links a.active { font-weight: 700; }
+    .nav-flag { font-size: 16px; line-height: 1; }
+    .btn-pill { display: inline-block; background: var(--lime); color: #000; border-radius: 100px; padding: 12px 30px; font-family: var(--font); font-size: 16px; font-weight: 700; line-height: 1.7; transition: transform .2s ease; white-space: nowrap; }
+    .btn-pill:hover { transform: scale(1.04); }
+
+    /* ============ Dark hero band ============ */
+    .hero { background: var(--black); border-radius: var(--radius); margin: 0 auto; padding: 96px 40px 104px; text-align: center; max-width: 1200px; width: calc(100% - 80px); margin-left: auto; margin-right: auto;}
+    .hero .hand { font-family: var(--hand); font-weight: 700; font-size: 19px; color: #fff; margin-bottom: 18px; }
+    .hero h1 { color: #fff; font-size: 64px; font-weight: 700; letter-spacing: -2px; line-height: 1.15; max-width: 900px; margin: 0 auto; }
+    .hero .sub { color: #fff; font-size: 20px; font-weight: 400; line-height: 1.7; opacity: .85; max-width: 640px; margin: 20px auto 0; }
+
+    /* ============ Main shell ============ */
+    .shell { max-width: 1200px; margin: 0 auto; padding: 0 30px; }
+
+    /* ============ Blog index grid ============ */
+    .post-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; padding: 64px 0 96px; }
+    .post-card { background: var(--off); border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column; transition: transform .25s ease; }
+    .post-card:hover { transform: translateY(-4px); }
+    .post-card .card-img { aspect-ratio: 16 / 9; width: 100%; object-fit: cover; }
+    .post-card .card-body { padding: 28px 28px 26px; display: flex; flex-direction: column; gap: 14px; flex: 1; }
+    .tag { display: inline-block; align-self: flex-start; background: var(--lime); color: #000; border-radius: 100px; padding: 4px 14px; font-size: 13px; font-weight: 700; line-height: 1.6; letter-spacing: .2px; }
+    .post-card h2 { font-size: 24px; font-weight: 700; letter-spacing: -0.5px; line-height: 1.25; color: var(--ink); }
+    .post-card p.excerpt { font-size: 16px; line-height: 1.6; color: var(--gray); flex: 1; }
+    .post-card .meta { font-size: 14px; font-weight: 500; color: var(--gray); opacity: .75; }
+
+    /* ============ Article ============ */
+    .post-hero { padding: 72px 40px 80px; max-width: 1200px; width: calc(100% - 80px); margin-left: auto; margin-right: auto;}
+    .post-hero .backlink { display: inline-block; color: #fff; opacity: .6; font-size: 15px; font-weight: 500; margin-bottom: 28px; transition: opacity .2s; }
+    .post-hero .backlink:hover { opacity: 1; }
+    .post-hero h1 { font-size: 52px; letter-spacing: -1.5px; }
+    .post-hero .tag { align-self: center; margin-bottom: 22px; }
+    .post-hero .meta { color: #fff; opacity: .65; font-size: 16px; font-weight: 500; margin-top: 22px; }
+    .post-hero .meta span + span::before { content: "·"; margin: 0 10px; }
+
+    article.prose { max-width: 760px; margin: 0 auto; padding: 72px 30px 40px; }
+    .prose h2 { font-size: 36px; font-weight: 700; letter-spacing: -1px; line-height: 1.2; color: var(--ink); margin: 56px 0 20px; }
+    .prose h3 { font-size: 25px; font-weight: 700; letter-spacing: -0.5px; line-height: 1.3; color: var(--ink); margin: 40px 0 14px; }
+    .prose p { font-size: 18px; line-height: 1.75; color: var(--gray); margin: 0 0 22px; }
+    .prose strong { color: var(--ink); font-weight: 700; }
+    .prose a { color: var(--blue); text-decoration: underline; }
+    .prose ul, .prose ol { margin: 0 0 24px; padding-left: 26px; }
+    .prose li { font-size: 18px; line-height: 1.7; color: var(--gray); margin-bottom: 10px; }
+    .prose li::marker { color: var(--ink); }
+    .prose blockquote { border-left: 4px solid var(--lime); background: var(--off); border-radius: 0 16px 16px 0; padding: 24px 28px; margin: 32px 0; }
+    .prose blockquote p { font-size: 19px; font-weight: 500; font-style: italic; color: var(--ink); margin: 0; }
+    .prose blockquote p + p { margin-top: 12px; font-size: 15px; font-style: normal; font-weight: 500; color: var(--gray); }
+    .prose figure { margin: 32px 0; }
+    .prose figure img { border-radius: 16px; }
+    .prose figcaption { font-size: 14px; color: var(--gray); opacity: .75; margin-top: 10px; text-align: center; }
+    .prose hr { border: 0; border-top: 1px solid var(--line); margin: 48px 0; }
+
+    /* tables */
+    .prose .table-wrap { overflow-x: auto; margin: 32px 0; border: 1px solid var(--line); border-radius: 16px; }
+    .prose table { width: 100%; border-collapse: collapse; font-size: 16px; }
+    .prose th { background: var(--off); color: var(--ink); font-weight: 700; text-align: left; padding: 14px 18px; border-bottom: 1px solid var(--line); }
+    .prose td { color: var(--gray); padding: 13px 18px; border-bottom: 1px solid var(--line); line-height: 1.55; }
+    .prose tr:last-child td { border-bottom: 0; }
+
+    /* key-stat callout */
+    .stat-callout { background: var(--black); border-radius: var(--radius); padding: 40px 44px; margin: 36px 0; }
+    .stat-callout .stat-number { font-size: 56px; font-weight: 900; letter-spacing: -1.5px; line-height: 1.1; color: var(--lime); }
+    .stat-callout .stat-label { font-size: 18px; line-height: 1.6; color: #fff; opacity: .85; margin-top: 10px; }
+    .stat-callout .stat-source { font-size: 13px; color: #fff; opacity: .45; margin-top: 14px; }
+
+    /* FAQ */
+    .faq { margin: 56px 0 0; }
+    .faq .faq-item { background: var(--off); border-radius: 16px; padding: 24px 28px; margin-bottom: 14px; }
+    .faq .faq-q { font-size: 20px; font-weight: 700; letter-spacing: -0.3px; color: var(--ink); margin: 0 0 8px; }
+    .faq .faq-a { font-size: 17px; line-height: 1.65; color: var(--gray); margin: 0; }
+    .faq .faq-a a { color: var(--blue); text-decoration: underline; }
+
+    /* chart attribution + sharing */
+    .prose .chart-brand { display: flex; align-items: center; gap: 8px; margin-top: 18px;
+      padding-top: 14px; border-top: 1px solid var(--line); }
+    .prose .chart-brand img { border-radius: 4px; display: block; }
+    .prose .chart-brand span { font-size: 12px; color: var(--gray); opacity: .8; letter-spacing: .2px; }
+    .prose .chart-share { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 12px 0 0; }
+    .prose .chart-share .cs-label { font-size: 12px; color: var(--gray); margin-right: 2px; }
+    .prose .chart-share .cs-btn { display: inline-flex; align-items: center; justify-content: center;
+      min-width: 30px; height: 30px; padding: 0 10px; border-radius: 8px; border: 1px solid var(--line);
+      background: #fff; color: var(--ink); font-size: 12px; font-weight: 700; text-decoration: none;
+      line-height: 1; transition: background .15s ease, border-color .15s ease; }
+    .prose .chart-share .cs-btn:hover { background: var(--lime); border-color: var(--lime); }
+    .prose .chart-share .cs-dl { font-weight: 600; }
+    .prose .chart-share button.cs-btn { font-family: inherit; cursor: pointer; }
+    /* .cs-btn sets display, which outranks the UA [hidden] rule - restore it */
+    .prose .chart-share .cs-btn[hidden] { display: none; }
+    .prose .chart-share .cs-btn.is-done { background: var(--lime); border-color: var(--lime); }
+    .nb { white-space: nowrap; }
+    @media (max-width: 640px) {
+      .prose .chart-share { gap: 6px; }
+      .prose .chart-share .cs-label { width: 100%; margin-bottom: 2px; }
+    }
+    /* Sources */
+    .sources { border-top: 1px solid var(--line); margin-top: 56px; padding-top: 28px; }
+    .sources h2 { font-size: 20px; letter-spacing: -0.3px; margin: 0 0 14px; }
+    .sources ol { padding-left: 22px; margin: 0; }
+    .sources li { font-size: 14px; line-height: 1.7; color: var(--gray); margin-bottom: 6px; }
+    .sources a { color: var(--blue); text-decoration: underline; word-break: break-all; }
+
+    /* Bottom CTA band */
+    .cta-band { background: var(--black); border-radius: var(--radius); margin: 72px auto 40px; padding: 88px 40px; text-align: center; max-width: 1200px; width: calc(100% - 80px); margin-left: auto; margin-right: auto;}
+    .cta-band .hand { font-family: var(--hand); font-weight: 700; font-size: 19px; color: #fff; margin-bottom: 14px; }
+    .cta-band h2 { color: #fff; font-size: 48px; font-weight: 700; letter-spacing: -1.5px; line-height: 1.15; max-width: 720px; margin: 0 auto 16px; }
+    .cta-band p { color: #fff; opacity: .8; font-size: 19px; line-height: 1.7; max-width: 560px; margin: 0 auto 34px; }
+
+    /* ============ Footer ============ */
+
+    /* ============ Mobile (Framer breakpoint) ============ */
+    @media (max-width: 809px) {
+      .site-header { padding: 12px 16px; }
+      .nav-shell { height: 72px; padding: 12px 22px; border-radius: 20px; }
+      .nav-links { display: none; }
+      .nav-logo img { width: 108px; }
+      .btn-pill { padding: 10px 22px; font-size: 15px; }
+      .hero { margin: 0 auto; padding: 64px 24px 72px; max-width: 1200px; width: calc(100% - 32px); margin-left: auto; margin-right: auto;}
+      .hero h1 { font-size: 40px; letter-spacing: -1.2px; }
+      .hero .sub { font-size: 18px; }
+      .shell { padding: 0 20px; }
+      .post-grid { grid-template-columns: 1fr; gap: 20px; padding: 40px 0 64px; }
+      .post-hero { padding: 56px 24px 60px; max-width: 1200px; width: calc(100% - 32px); margin-left: auto; margin-right: auto;}
+      .post-hero h1 { font-size: 34px; letter-spacing: -1px; }
+      .post-hero .meta { font-size: 14px; }
+      article.prose { padding: 48px 20px 24px; }
+      .prose h2 { font-size: 28px; margin: 44px 0 16px; }
+      .prose h3 { font-size: 22px; }
+      .prose p, .prose li { font-size: 17px; }
+      .stat-callout { padding: 30px 26px; }
+      .stat-callout .stat-number { font-size: 42px; }
+      .cta-band { margin: 56px auto 24px; padding: 64px 24px; max-width: 1200px; width: calc(100% - 32px); margin-left: auto; margin-right: auto;}
+      .cta-band h2 { font-size: 32px; letter-spacing: -1px; }
+    }
+    @media (min-width: 810px) and (max-width: 1099px) {
+      .nav-shell { padding: 16px 36px; }
+      .nav-links { gap: 28px; }
+      .post-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+        /* ============ Authored content blocks ============ */
+    svg text { font-family: var(--font); }
+
+    /* code (fenced blocks + inline) */
+    .prose pre { background: var(--black); border-radius: 20px; padding: 26px 30px; margin: 32px 0; overflow-x: auto; }
+    .prose pre code { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 13.5px; line-height: 1.8; color: rgb(248,244,241); white-space: pre; }
+    .prose p code, .prose li code, .prose td code { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: .9em; background: var(--off); border: 1px solid var(--line); border-radius: 6px; padding: 1px 6px; color: var(--ink); }
+
+    /* 1. :::keystat - big lime number on a black card */
+    .stat-callout { margin: 40px 0; }
+    .stat-callout .stat-number { margin: 0; }
+    .stat-callout .stat-label { margin: 10px 0 0; }
+    .stat-callout .stat-source { border-top: 1px solid rgba(248,244,241,.16); padding-top: 13px; margin: 18px 0 0; }
+    .stat-callout .stat-source .src-lbl { font-weight: 700; opacity: .85; }
+    .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 40px 0; }
+    .stat-grid .stat-callout { margin: 0; padding: 34px 32px; display: flex; flex-direction: column; }
+    .stat-grid .stat-callout .stat-source { margin-top: auto; padding-top: 18px; }
+    .stat-grid .stat-callout .stat-number { font-size: 46px; }
+    .stat-grid .stat-callout .stat-label { font-size: 16.5px; }
+
+    /* 2. :::takeaway - the save-worthy summary */
+    .takeaway { background: var(--off); border-left: 6px solid var(--lime); border-radius: 0 var(--radius) var(--radius) 0; padding: 34px 40px 32px; margin: 44px 0; }
+    .takeaway .tk-head { display: inline-block; background: var(--lime); color: #000; border-radius: 100px; padding: 5px 15px; font-size: 12.5px; font-weight: 700; letter-spacing: 1.7px; text-transform: uppercase; margin: 0 0 20px; }
+    .takeaway ul.tk-list { list-style: none; margin: 0; padding: 0; }
+    .takeaway ul.tk-list li { position: relative; padding-left: 28px; font-size: 17.5px; font-weight: 500; line-height: 1.6; color: var(--ink); margin: 0 0 14px; }
+    .takeaway ul.tk-list li:last-child { margin-bottom: 0; }
+    .takeaway ul.tk-list li::before { content: ""; position: absolute; left: 0; top: 8px; width: 12px; height: 12px; border-radius: 4px; background: var(--lime); box-shadow: inset 0 0 0 1px rgba(18,10,11,.16); }
+    .takeaway a { color: var(--blue); text-decoration: underline; }
+
+    /* 3. :::action - numbered "do this" checklist */
+    .action-block { border: 1px solid var(--line); border-radius: var(--radius); padding: 36px 40px 32px; margin: 44px 0; }
+    .action-block .ab-head { font-size: 24px; font-weight: 700; letter-spacing: -0.6px; line-height: 1.25; color: var(--ink); margin: 0 0 20px; }
+    .action-block ol.ab-list { list-style: none; margin: 0; padding: 0; }
+    .action-block ol.ab-list li { display: flex; align-items: flex-start; gap: 18px; padding: 17px 0; border-top: 1px solid var(--line); margin: 0; }
+    .action-block ol.ab-list li:first-child { border-top: 0; padding-top: 4px; }
+    .action-block ol.ab-list li:last-child { padding-bottom: 2px; }
+    .action-block .ab-num { flex: none; width: 34px; height: 34px; border-radius: 50%; background: var(--lime); color: #000; font-size: 15px; font-weight: 900; display: flex; align-items: center; justify-content: center; }
+    .action-block .ab-text { font-size: 17.5px; line-height: 1.62; color: var(--gray); padding-top: 5px; }
+    .action-block .ab-text strong { color: var(--ink); font-weight: 700; }
+    .action-block a { color: var(--blue); text-decoration: underline; }
+
+    /* 4. :::compare - two-column comparison card */
+    .compare-wrap { margin: 44px 0; }
+    .compare-wrap .cmp-title { font-size: 12.5px; font-weight: 700; letter-spacing: 2.2px; text-transform: uppercase; color: var(--gray); margin: 0 0 14px; }
+    .compare { border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; margin: 0; }
+    .compare .cmp-head, .compare .cmp-row { display: grid; grid-template-columns: 1.02fr 1fr 1fr; }
+    .compare .cmp-head > div, .compare .cmp-row > div { padding: 15px 22px; }
+    .compare .cmp-head { border-bottom: 1px solid var(--line); background: var(--off); }
+    .compare .cmp-head .cmp-col { font-size: 15px; font-weight: 700; line-height: 1.35; color: var(--ink); }
+    .compare .cmp-head .cmp-col.accent { background: var(--lime); color: #000; }
+    .compare .cmp-row + .cmp-row { border-top: 1px solid var(--line); }
+    .compare .cmp-row .cmp-lbl { font-size: 14px; font-weight: 700; line-height: 1.45; color: var(--ink); }
+    .compare .cmp-row .cmp-cell { font-size: 16px; line-height: 1.5; color: var(--gray); }
+    .compare .cmp-row .cmp-cell.accent { background: rgba(204,255,0,.15); color: var(--ink); font-weight: 500; }
+    .compare .cmp-cap { display: none; }
+    .compare a { color: var(--blue); text-decoration: underline; }
+
+    /* 5. :::quote - pull quote */
+    .prose .pullquote { border-left: 5px solid var(--lime); padding: 4px 0 4px 30px; margin: 48px 0; }
+    .prose .pullquote blockquote { background: none; border: 0; border-radius: 0; padding: 0; margin: 0; }
+    .prose .pullquote blockquote p { font-size: 27px; font-weight: 500; font-style: italic; letter-spacing: -0.7px; line-height: 1.36; color: var(--ink); margin: 0; }
+    .prose .pullquote figcaption { font-size: 15px; font-weight: 700; font-style: normal; color: var(--gray); opacity: 1; text-align: left; margin-top: 18px; }
+
+    /* 6. markdown tables */
+    .prose .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 40px 0; border: 1px solid var(--line); border-radius: 20px; }
+    .prose table { width: 100%; min-width: 520px; border-collapse: collapse; font-size: 16px; }
+    .prose thead th { background: var(--off); color: var(--ink); font-size: 13px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; text-align: left; padding: 15px 20px; border-bottom: 2px solid var(--lime); white-space: nowrap; }
+    .prose tbody td { color: var(--gray); padding: 14px 20px; border-bottom: 1px solid var(--line); line-height: 1.55; }
+    .prose tbody tr:nth-child(even) { background: rgba(248,244,241,.7); }
+    .prose tbody tr:last-child td { border-bottom: 0; }
+    .prose tbody td:first-child { color: var(--ink); font-weight: 700; }
+    .prose th:first-child, .prose td:first-child { padding-left: 24px; }
+    .prose th:last-child, .prose td:last-child { padding-right: 24px; }
+    .prose .dense thead th { white-space: normal; font-size: 12px; letter-spacing: 1px; padding: 12px 12px; }
+    .prose .dense td { font-size: 14px; padding: 11px 12px; }
+    .prose .dense th:first-child, .prose .dense td:first-child { padding-left: 18px; }
+    .prose .dense th:last-child, .prose .dense td:last-child { padding-right: 18px; }
+
+    /* 7. :::chart bar - inline SVG bar chart, no library */
+    .chart-card { background: var(--off); border-radius: var(--radius); padding: 32px 36px 28px; margin: 44px 0; }
+    .chart-card .chart-title { font-size: 12.5px; font-weight: 700; letter-spacing: 2.2px; text-transform: uppercase; color: var(--ink); margin: 0 0 24px; }
+    .chart-card svg { display: block; width: 100%; height: auto; overflow: visible; }
+    .chart-card svg.chart-mobile { display: none; }
+    .chart-card .chart-source { font-size: 12.5px; line-height: 1.6; color: var(--gray); opacity: .85; margin: 24px 0 0; border-top: 1px solid var(--line); padding-top: 14px; }
+    .chart-card .chart-source .src-lbl { font-weight: 700; }
+
+    @media (max-width: 809px) {
+      .stat-grid { grid-template-columns: 1fr; gap: 16px; margin: 32px 0; }
+      .stat-grid .stat-callout { padding: 28px 24px; }
+      .stat-grid .stat-callout .stat-number { font-size: 38px; }
+      .stat-callout { margin: 32px 0; }
+
+      .takeaway { padding: 26px 22px 24px; margin: 36px 0; border-left-width: 5px; border-radius: 0 20px 20px 0; }
+      .takeaway ul.tk-list li { font-size: 16.5px; padding-left: 25px; }
+      .takeaway ul.tk-list li::before { width: 11px; height: 11px; top: 7px; }
+
+      .action-block { padding: 28px 22px 24px; margin: 36px 0; border-radius: 20px; }
+      .action-block .ab-head { font-size: 21px; margin-bottom: 14px; }
+      .action-block ol.ab-list li { gap: 14px; padding: 15px 0; }
+      .action-block .ab-num { width: 30px; height: 30px; font-size: 14px; }
+      .action-block .ab-text { font-size: 16.5px; padding-top: 3px; }
+
+      .compare-wrap { margin: 36px 0; }
+      .compare { border-radius: 20px; }
+      .compare .cmp-head { display: none; }
+      .compare .cmp-row { display: block; padding: 16px 18px 8px; }
+      .compare .cmp-row > div { padding: 0; }
+      .compare .cmp-row .cmp-lbl { font-size: 12px; font-weight: 700; letter-spacing: 1.7px; text-transform: uppercase; color: var(--gray); margin-bottom: 10px; }
+      .compare .cmp-row .cmp-cell { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px; margin-bottom: 8px; font-size: 16px; }
+      .compare .cmp-row .cmp-cell.accent { background: rgba(204,255,0,.22); border-color: rgba(204,255,0,.5); }
+      .compare .cmp-cap { display: block; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gray); margin-bottom: 5px; }
+
+      .prose .pullquote { margin: 38px 0; padding-left: 22px; border-left-width: 4px; }
+      .prose .pullquote blockquote p { font-size: 22px; letter-spacing: -0.5px; }
+      .prose .pullquote figcaption { font-size: 14px; margin-top: 14px; }
+
+      .prose .table-wrap { margin: 32px 0; border-radius: 16px; }
+      .prose table { font-size: 15px; }
+      .prose thead th { font-size: 12px; padding: 13px 16px; }
+      .prose tbody td { padding: 12px 16px; }
+      .prose th:first-child, .prose td:first-child { padding-left: 18px; }
+      .prose th:last-child, .prose td:last-child { padding-right: 18px; }
+
+      .chart-card { padding: 24px 20px 20px; margin: 36px 0; border-radius: 20px; }
+      .chart-card .chart-title { margin-bottom: 18px; }
+
+      .prose pre { padding: 20px 18px; border-radius: 16px; }
+      .prose pre code { font-size: 12.5px; }
+    }
+    @media (max-width: 559px) {
+      .chart-card svg.chart-desktop { display: none; }
+      .chart-card svg.chart-mobile { display: block; max-width: 330px; margin: 0 auto; }
+    }
+  </style>
+  <link rel="stylesheet" href="/css/footer.css">
+<!-- GA4 (Sabato) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BSK4KH9JJF"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-BSK4KH9JJF');
+</script>
+<!-- /GA4 -->
+</head>
+<body>
+<header class="sb-header" data-lang="en"><div class="sb-hdr-shell"><a class="sb-hdr-logo" href="/" aria-label="Sabato AI - Home"><img src="/fuc/images/UTATYXc6NipXQRoxyaGHHfHSyA4-f2557e25.png" alt="Sabato AI" width="2080" height="278"></a><nav class="sb-hdr-nav" aria-label="Main"><span class="sb-nav-item"><a href="/use-cases" aria-haspopup="true">Use Cases</a><span class="sb-dd" data-uc-dropdown="uc"><a href="/use-cases/pre-sales-consultation">Pre-Sales Consultation</a><a href="/use-cases/cart-abandonment-recovery">Cart Abandonment Recovery</a><a href="/use-cases/where-is-my-order">Where Is My Order</a><a href="/use-cases/qualify-and-collect-for-quote">Qualify &amp; Collect for Quote</a><a href="/use-cases/open-a-complaint">Open a Complaint</a><a href="/use-cases/checkout-summary-via-text">Checkout Summary via Text</a><a href="/use-cases/managing-returns">Managing Returns</a><a href="/use-cases/post-delivery-feedback">Post-Delivery Feedback</a><a href="/use-cases/back-in-stock-notification">Back-in-Stock Notification</a><a class="sb-dd-all" href="/use-cases">All use cases</a></span></span><span class="sb-nav-item"><a href="/industries" aria-haspopup="true">Industries</a><span class="sb-dd" data-uc-dropdown="ind"><a href="/industries/home-improvement">Home Improvement</a><a href="/industries/automotive-parts">Automotive &amp; Parts</a><a href="/industries/electronics-tech">Electronics &amp; Tech</a><a href="/industries/furniture-home">Furniture &amp; Home</a><a href="/industries/outdoor-garden">Outdoor &amp; Garden</a><a href="/industries/fashion-apparel">Fashion &amp; Apparel</a><a href="/industries/health-wellness">Health &amp; Wellness</a><a href="/industries/sports-fitness">Sports &amp; Fitness</a><a href="/industries/industrial-b2b">Industrial &amp; B2B</a><a class="sb-dd-all" href="/industries">All industries</a></span></span><a href="/pricing">Pricing</a><a href="/about">About</a><a href="/contact">Contact</a><a class="sb-hdr-flag" href="/it" data-lang-switch aria-label="Italiano">🇮🇹</a></nav><a class="sb-hdr-btn" href="https://cal.com/sabatoai/intro" target="_blank" rel="noopener">Start Free Pilot</a><button class="sb-burger" type="button" aria-expanded="false" aria-controls="sb-menu" aria-label="Open menu"><span></span><span></span></button></div><div class="sb-panel" id="sb-menu"><div class="sb-panel-inner"><a href="/use-cases">Use Cases</a><a href="/industries">Industries</a><a href="/pricing">Pricing</a><a href="/about">About</a><a href="/contact">Contact</a><a href="https://cal.com/sabatoai/intro" target="_blank" rel="noopener">Book a Demo</a><a class="sb-hdr-flag" href="/it" data-lang-switch>🇮🇹</a></div></div></header><script>(function(){var h=document.querySelector(".sb-header");if(!h)return;var b=h.querySelector(".sb-burger"),p=h.querySelector(".sb-panel");if(!b||!p)return;function set(o){h.classList.toggle("sb-open",o);b.setAttribute("aria-expanded",o?"true":"false");document.documentElement.style.overflow=o?"hidden":"";}b.addEventListener("click",function(e){e.preventDefault();set(!h.classList.contains("sb-open"));});p.addEventListener("click",function(e){if(e.target.closest("a"))set(false);});document.addEventListener("keydown",function(e){if(e.key==="Escape")set(false);});addEventListener("resize",function(){if(innerWidth>=1024)set(false);});})();</script>
+<section class="hero post-hero">
+    <a class="backlink" href="/blog">← Back to the blog</a>
+    <div style="display:flex;flex-direction:column;align-items:center;">
+      <span class="tag">Operations</span>
+      <h1>Human Conversation Runs on a 208-Millisecond Clock. Your Voice Agent Doesn't.</h1>
+      <p class="meta"><span>Aug 8, 2026</span><span>18 min read</span><span>By Sabato AI</span><span><a href="/it/blog/measure-your-voice-agent-latency" style="color:#fff;text-decoration:underline;text-underline-offset:3px;">Leggi in italiano 🇮🇹</a></span></p>
+    </div>
+  </section>
+  <main>
+    <article class="prose">
+<p>Across 10 languages and 101 natural conversations, the mean gap between one speaker finishing and the next starting is +208 milliseconds, and the single most common gap is zero (<a href="https://www.pnas.org/doi/full/10.1073/pnas.0903616106">Stivers et al., PNAS, 2009</a>). Almost nobody evaluating a voice agent has put a stopwatch on that gap on their own line.</p>
+<p>Operators test two things. Does it understand my part numbers, my accents, my customers. Does it sound like a person. Both fair, both answered inside a five-minute demo.</p>
+<p>The gap doesn't get answered, and the gap is what your caller reacts to.</p>
+<p>The protocol is at the bottom of this post: p50 and p90, measured from the end of the caller's speech to the start of the agent's speech, on your own network path, with your own customers on the other end. An afternoon.</p>
+<div class="stat-grid"><div class="stat-callout"><p class="stat-number">+208 ms</p><p class="stat-label">mean gap between speakers across 10 languages</p><p class="stat-source"><span class="src-lbl">Source:</span> Stivers et al., PNAS, 2009</p></div><div class="stat-callout"><p class="stat-number">0 ms</p><p class="stat-label">the single most common gap</p><p class="stat-source"><span class="src-lbl">Source:</span> Stivers et al., PNAS, 2009</p></div></div>
+<h2>What is the normal gap between speakers in human conversation?</h2>
+<p>Across 10 languages, sampling 350 consecutive questions per language from 101 natural conversations, the mean gap between one speaker finishing and the next beginning is +208 ms, with an overall median of +100 ms and an overall modal gap of zero (Stivers et al., PNAS, 2009). Language means ran from +7 ms in Japanese up to roughly +468 ms at the slow end. This is naturalistic conversation, not commercial phone calls.</p>
+<p>The number is old. 2009, and I'll flag it before anyone else does.</p>
+<p>Here is why it still holds, and the distinction matters more than the date. Stivers et al. is foundational descriptive linguistics, extensively replicated. It is not a market statistic. Market statistics decay because markets move - a 2009 figure on channel preference or contact volumes is worthless today. A measurement of how humans time their turns doesn't decay that way, because the thing measured is the mechanics of human speech, not the behaviour of a market. That's the test I'd apply to any old number before republishing it, and this one passes.</p>
+<p>The spread is what makes the finding hard to argue with. Language means ran from +7 ms in Japanese to roughly +468 ms at the other end. Even the slowest language in the study sits under half a second. All ten fall within roughly 250 ms either side of the cross-language mean - a difference the paper describes as approximately the length of time it takes to produce a single English syllable.</p>
+<p>So the window isn't a cultural preference you can design around by market. It's close to a constant.</p>
+<p>Two limits, stated plainly.</p>
+<p>This is naturalistic conversation, recorded between people who know each other, not inbound calls to a supplier about a delivery date. Nobody has measured turn timing on commercial phone calls. Treat +208 ms as the human baseline your caller's ear was trained on, not as a spec for your line.</p>
+<p>And the human baseline is measured more generously than the yardstick this post hands you. Stivers et al. coded response onset from video, counting early visual responses - a nod - and audible pre-utterance inbreaths as the response beginning. The protocol below measures speech to speech, because a phone line carries nothing else. So the human number is, if anything, slightly flattered relative to your measurement. Don't read a gap between your p50 and +208 ms as entirely yours.</p>
+<p>If a supplier tells you their agent hits the human number, they are quoting a linguistics paper about informal face-to-face conversation, and they should say so.</p>
+<h2>Is 400 ms a good target for a voice agent?</h2>
+<p>ITU-T Recommendation G.114 (2003) sets 150 ms of one-way mouth-to-ear delay as the point below which interactivity is essentially transparent, and states that delays above 400 ms "are unacceptable for general network planning purposes". That budget covers getting audio from one mouth to one ear - network transmission plus the codec and buffering the network itself adds. It carries no speech recognition, no model inference, no database lookup, no synthesis. For a voice agent it is a floor, not a target.</p>
+<p>This is the number the industry half-remembers, and it gets quoted at buyers with the word "benchmark" attached to it.</p>
+<p>ITU-T Recommendation G.114 (05/2003, still in force) is a network-planning recommendation. It measures one-way mouth-to-ear delay: getting audio from one mouth to one ear, including the codec, packetisation and de-jitter buffering the network itself adds. It carries none of the work a voice agent does. No endpointing wait. No speech recognition. No model inference. No catalogue or ERP lookup. No speech synthesis.</p>
+<p>So 400 ms is not a target your agent should aim at - it's the telecoms industry's own threshold for delivering audio and nothing else, a floor sitting underneath your budget. The network has already spent part of your response time before your agent has begun to think.</p>
+<p>Our reasoning, not a finding from either source: if delivering the audio alone is unacceptable past 400 ms, then a total mouth-to-ear response that includes endpointing, recognition, inference, a stock lookup and synthesis lands well above the human 208 ms. Not sometimes. Always. Which means the useful question stops being "can we hit the human number" and becomes "where exactly is our time going, and which stage do we attack".</p>
+<p>Everyone on page one of Google asserts a threshold - 300 ms, 200-500 ms, pick one. I went looking for the study behind the 300 ms figure. I could not find one: every trail I followed ended at another article asserting the same number, or at nothing at all. That is not proof no such study exists. It is a statement that nobody quoting the number is citing one. Both numbers in this post trace to a primary source, and neither of them is a voice-AI benchmark.</p>
+<h2>Why a demo can't show you this</h2>
+<p>Comprehension and naturalness are the right things to test. They are also the only two things a demo can test, and that's structural, not a conspiracy.</p>
+<p>Demos are short and single-turn. Latency compounds across a real fifteen-turn call, and the turn that kills you is turn eleven, not turn one.</p>
+<p>Demos run on the supplier's network path, usually from the supplier's country, usually mid-morning on a weekday. Your callers are on a different carrier, in a different country, at 16:50 on a Friday. And demo questions almost never trigger a live stock, price or delivery-date lookup - the exact turns where the number blows out, and the turns that decide whether the call converts.</p>
+<p>On a demo call, you fill the silence yourself. You will say "mm" or "right" into a two-second gap without noticing you did it, because you are a polite person on a sales call. A customer who has already been on hold once today does not do that. They say "hello?" and then they talk over the agent.</p>
+<p>Naturalness gets assessed in seconds. Latency lives in milliseconds. The format is blind to it.</p>
+<h2>Why the latency number you were quoted is not the one your caller hears</h2>
+<p>Measure latency from the caller's last word, not from the moment your system decides the caller has stopped. Between those two points sits the endpointing wait - the silence threshold a voice agent uses to detect end of turn - and it is often the largest single block of delay. Vendor figures that begin after endpointing can understate the caller's experience by hundreds of milliseconds.</p>
+<p>A voice agent does not know the caller has finished talking. It waits for silence to persist long enough to conclude the turn is over. That is endpointing, driven by voice activity detection, and only once it fires does anything else start: recognition, inference, lookup, synthesis.</p>
+<p>The caller's clock starts at their last word. Many quoted latency figures start after endpointing fires. The difference between the two is the silence threshold, and it is frequently the biggest single block in the chain. Two systems both quoting "500 ms" can be a second apart from the caller's seat.</p>
+<figure class="pullquote"><blockquote><p>Does your latency figure start at the caller's last word, or after your endpointing fires?</p></blockquote></figure>
+<p>Not a gotcha, and it shouldn't be delivered as one, because there is a real trade-off underneath it. Shorten the silence threshold to feel faster and you raise false interruptions: the agent talking over a caller who was mid-thought. That failure is worse than the wait, because it forces the caller to repeat themselves and makes the agent sound like it isn't listening.</p>
+<p>The evidence that this trade-off is unavoidable comes from turn-taking research, and it needs its flags attached. Across three European corpora, 40.0-41.7% of between-speaker transitions were overlaps rather than clean gaps, and only 0.4-0.7% were clean no-gap-no-overlap handoffs (<a href="https://staff.fnwi.uva.nl/r.fernandezrovira/teaching/cosp/cosp2016/docs/HeldnerEdlund2010.pdf">Heldner &amp; Edlund, Journal of Phonetics, 2010</a>). Single-source: that percentage rests on this paper alone. It is 2010. Two of the three corpora are task-oriented map dialogues rather than commercial calls, so the load-bearing corpus is the Spoken Dutch Corpus (321 speakers, 234 pairs); the Swedish sub-corpus is only 8 speakers. Stivers et al. corroborates the general picture - modal gap of zero, systematic avoidance of long gaps - but not that percentage.</p>
+<p>Read it for what it is. Human speakers overlap each other roughly four times in ten transitions. A system tuned to wait for confident silence is fighting the way people actually talk, and one tuned to jump in early is going to cut people off. There is no threshold setting that wins both. The job is to know which way yours is tuned, and to have chosen it deliberately.</p>
+<h2>How to measure your voice agent's latency on your own line</h2>
+<p>To measure a voice agent's latency: record real calls in stereo, open them in a waveform editor, and for each turn take T1 as the last audio sample of the caller's final word and T2 as the first sample of the agent's reply. Latency is T2 - T1. Log at least 60 turns, split by turn type, and report p50 and p90 separately.</p>
+<p>An afternoon. A phone, a free waveform editor, a spreadsheet. No engineer.</p>
+<h3>What you need (about 20 minutes to set up)</h3>
+<p>Call recordings with the audio intact. Your telephony provider's recordings are usually fine - check they are not mixed down to a single mono channel in a way that smears the boundary between caller and agent. Stereo or dual-channel recording makes this far easier: the caller lands on one track, the agent on the other, and you can see the handoff.</p>
+<p>A free waveform editor that displays millisecond timestamps. Audacity is the obvious one - set the selection toolbar to hh:mm:ss + milliseconds before you start, or you will be reading seconds to two decimal places and arguing about rounding. And a spreadsheet.</p>
+<p>If you can't get clean recordings out of your provider, put a second phone on speaker next to the first and record that. Accurate enough. You are looking for differences of hundreds of milliseconds, not tens.</p>
+<h3>Define the two timestamps once, then stop arguing about it</h3>
+<p><strong>T1</strong> = the last audio sample of the caller's final word. Not the end of the silence window. Not where the transcript claims the turn ended. The waveform.</p>
+<p><strong>T2</strong> = the first audio sample of the agent's reply. Including filler. If the agent says "let me check that", that is the reply starting - mark it, and note in the log that the turn opened with a holding phrase, because that matters later.</p>
+<p><strong>Latency = T2 - T1.</strong> One turn, one number.</p>
+<p>Paste those three lines into your own doc. Every argument about latency you will ever have with a supplier comes down to which definition each side is using.</p>
+<h3>How many turns you need before p50 and p90 mean anything</h3>
+<p>Measure turns, not calls. Ten real calls of six turns each gives you 60 turns.</p>
+<p>Be honest about what 60 buys you, because nobody else writing about this is: p50 is reasonably stable at around 30 turns. A p90 on 60 turns is the sixth-slowest turn you happened to record. That is indicative, not a metric. For a p90 you would put in front of a supplier and defend, aim for 100+ turns.</p>
+<p>Use the mean for nothing. The whole point of this exercise is the tail.</p>
+<h3>Split the turns into four types before you average anything</h3>
+<p>A single blended number hides the failure. Log every turn as one of:</p>
+<ul>
+<li><strong>acknowledgement</strong> - confirmations, yes/no, "got it"</li>
+<li><strong>retrieval</strong> - anything needing a live lookup: stock, price, order status, delivery date, fitment or compatibility (<a href="/blog/reduce-bracketing-returns">order-status and returns lookups</a> are the same turn type)</li>
+<li><strong>post-long-utterance</strong> - the caller talked for 15+ seconds before stopping</li>
+<li><strong>post-interruption</strong> - the caller cut the agent off</li>
+</ul>
+<p>Retrieval turns are where the number blows out, and they are disproportionately the ones that decide whether the call converts. Report p50 and p90 per type.</p>
+<h3>Measure on the path your customers actually use</h3>
+<p>Not the supplier's demo line. Not office wifi at 08:30 on a Tuesday.</p>
+<p>From a phone on the network your customers are on, in the country they call from, at the hour they call. Run one batch at your genuine peak - the hour your call volume is highest - and one off-peak, and compare.</p>
+<p>If you serve more than one country, run the batch separately per market and per language - <a href="/blog/multilingual-phone-support-eu-expansion">run it per language</a>. The carrier is different, the path is different, and the model handling the language is different. One blended European number tells you nothing about the Danish line.</p>
+<h3>The output: one small table</h3>
+<div class="table-wrap dense"><table>
+<thead>
+<tr>
+<th>Turn type</th>
+<th>n</th>
+<th>p50</th>
+<th>p90</th>
+<th>Slowest turn</th>
+<th>What happened on the slowest turn</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>acknowledgement</td>
+<td>22</td>
+<td>610 ms</td>
+<td>940 ms</td>
+<td>1.1 s</td>
+<td>caller trailed off mid-word, endpointer held</td>
+</tr>
+<tr>
+<td>retrieval</td>
+<td>19</td>
+<td>1,450 ms</td>
+<td>3,900 ms</td>
+<td>5.2 s</td>
+<td>stock check on a part number, two lookups chained</td>
+</tr>
+<tr>
+<td>post-long-utterance</td>
+<td>11</td>
+<td>780 ms</td>
+<td>1,600 ms</td>
+<td>1.9 s</td>
+<td>40-second fault description</td>
+</tr>
+<tr>
+<td>post-interruption</td>
+<td>8</td>
+<td>1,900 ms</td>
+<td>3,100 ms</td>
+<td>3.4 s</td>
+<td>caller cut in, agent restarted its sentence</td>
+</tr>
+<tr>
+<td>all turns</td>
+<td>60</td>
+<td>900 ms</td>
+<td>3,200 ms</td>
+<td>5.2 s</td>
+<td>-</td>
+</tr>
+</tbody>
+</table></div>
+<p>Illustrative format only. The numbers above are invented to show the shape of the table, not measured results.</p>
+<p>The last column is where the diagnosis lives. Everything else is bookkeeping.</p>
+<h2>What your p50 and p90 are telling you</h2>
+<p>Read the table as if/then, not as a score.</p>
+<p><strong>p50 acceptable, p90 several times higher, and the slow turns are all retrieval</strong> - not a speech problem. A data-access problem. The fix sits in your catalogue or ERP path, and changing supplier does not touch it. People switch platforms over this and get the same p90 back.</p>
+<p><strong>Every turn type uniformly slow</strong> - architecture or network path. Ask where the components are hosted relative to your callers, and whether the answer is "a US region".</p>
+<p><strong>p90 only degrades at peak hour</strong> - capacity. It is degrading exactly when the calls are worth the most.</p>
+<p><strong>Post-interruption turns are the worst by a distance</strong> - endpointing and barge-in handling. See the section above, and ask the verbatim question.</p>
+<p>Then the part that gives you a second lever.</p>
+<p>Humans don't hit +208 ms on hard questions either. They hold the floor. "Let me check that for you." "One second." An audible keyboard. The gap stays short even when the answer is slow, because what breaks a conversation is the silence, not the wait. This is our reasoning built on the Stivers finding, not a finding in itself - the paper measures gaps between turns, it does not test floor-holding on commercial calls.</p>
+<p>But it changes what you do with a retrieval turn you cannot make fast. The fix is often not more speed. It is getting the agent to say something inside the human window and then take the four seconds it needs. That is a prompt change and a day of work, against a re-architecture of your stock integration.</p>
+<p>Two levers. One of them is cheap.</p>
+<div class="takeaway"><p class="tk-head">The takeaway</p><ul class="tk-list"><li>The human baseline is +208 ms and your agent will not hit it. Stop shopping for a benchmark that doesn't exist and measure your own p50 and p90, split by turn type.</li><li>Ask every supplier one question: does your latency figure start at the caller's last word, or after endpointing fires?</li><li>Where a retrieval turn can't be made fast, make the agent speak inside the human window and then take its time. A prompt change beats re-architecting your stock integration.</li></ul></div>
+<h2>What this protocol won't tell you</h2>
+<p>Nothing about whether the answer was correct. A fast wrong answer about stock or fitment costs you more than a slow right one, and latency and accuracy trade against each other at several points in the chain - shorter endpointing windows clip words, smaller models answer sooner and worse. Measure both or you will optimise yourself into a confident, rapid liar.</p>
+<p>It does not give you a conversion threshold, and I want to be exact about why. No dataset was found linking measured voice-agent latency to call abandonment or conversion on European commercial calls. Not a European one, not an American one. If you have one, send it and I'll publish it.</p>
+<p>So the number to beat is your own baseline, re-measured after every change.</p>
+<p>We run this protocol on our own lines at Sabato. The reason it's written down at all is that we had to build it for ourselves before we could argue with anyone about latency, including with ourselves.</p>
+<div class="action-block"><p class="ab-head">What to do this week</p><ol class="ab-list"><li><span class="ab-num">1</span><span class="ab-text">Record ten real calls on the network and at the hour your customers actually use. Not the demo line, not office wifi on a Tuesday morning.</span></li><li><span class="ab-num">2</span><span class="ab-text">Mark T1 and T2 in a waveform editor for 60 turns, tagging each as acknowledgement, retrieval, post-long-utterance or post-interruption.</span></li><li><span class="ab-num">3</span><span class="ab-text">Report p50 and p90 per turn type, and write down what happened on the single slowest turn. That sentence is the diagnosis.</span></li><li><span class="ab-num">4</span><span class="ab-text">Ask your supplier whether their quoted figure starts at the caller's last word or after endpointing fires, and write the answer down.</span></li><li><span class="ab-num">5</span><span class="ab-text">Re-run it after every model, prompt, telephony or catalogue change, and at minimum once a quarter.</span></li></ol></div>
+<p>What you now own, including the part nobody budgets for: this is not a one-off. An hour of waveform-scrubbing per quarter, forever. That is the actual cost, and it is still cheaper than finding out from a customer.</p>
+<section class="faq"><h2>FAQ</h2>
+<div class="faq-item"><p class="faq-q">What is a good latency for an AI voice agent?</p><p class="faq-a">There is no independently verified benchmark for commercial phone calls. The two defensible anchors are the human conversational norm - a +208 ms mean gap across 10 languages (Stivers et al., PNAS, 2009) - and ITU-T G.114's 400 ms ceiling on one-way mouth-to-ear delay, which covers delivering the audio only. Measure your own p50 and p90 and improve against that baseline.</p></div>
+<div class="faq-item"><p class="faq-q">How do you measure voice agent response latency?</p><p class="faq-a">Record calls in stereo, open them in a waveform editor, and per turn measure from the last audio sample of the caller's final word to the first sample of the agent's reply. Log 60 turns minimum, split into acknowledgement, retrieval, post-long-utterance and post-interruption, then report p50 and p90 for each type separately.</p></div>
+<div class="faq-item"><p class="faq-q">Is 400 ms the standard for voice AI latency?</p><p class="faq-a">No. The 400 ms figure comes from ITU-T Recommendation G.114 (2003) and describes one-way mouth-to-ear delay for network planning - transmission plus the codec and buffering the network adds. It excludes endpointing, speech recognition, model inference, database lookups and speech synthesis. For a voice agent it is a floor beneath the total response time, not a performance target.</p></div>
+<div class="faq-item"><p class="faq-q">Why does my voice agent feel slow when the vendor quoted a low number?</p><p class="faq-a">Most likely the measurement windows differ. Many quoted figures start after endpointing - the moment the system decides the caller has stopped talking. The caller's experience starts at their last word. The silence threshold between those two points is often the largest single block of delay in the chain.</p></div>
+<div class="faq-item"><p class="faq-q">Is a faster voice agent always better?</p><p class="faq-a">No. Reducing the endpointing threshold to shorten the gap increases false interruptions, where the agent talks over a caller mid-thought and forces them to repeat themselves. Human conversation overlaps constantly - 40.0-41.7% of transitions across three European corpora were overlaps (Heldner &amp; Edlund, 2010, single-source). Both failures cost calls.</p></div>
+<div class="faq-item"><p class="faq-q">Does the +208 ms figure apply to phone calls?</p><p class="faq-a">Not directly. Stivers et al. measured naturalistic face-to-face and recorded conversation between people who know each other, and counted nods and audible inbreaths as a response beginning. Nobody has published equivalent timing for commercial inbound calls. Treat it as the baseline your caller's ear was trained on, not as a specification for your line.</p></div>
+</section><section class="sources"><h2>Sources</h2>
+<ul>
+<li>Stivers, T. et al., <em>Universals and cultural variation in turn-taking in conversation</em>, Proceedings of the National Academy of Sciences, 2009 - <a href="https://www.pnas.org/doi/full/10.1073/pnas.0903616106">pnas.org</a></li>
+<li>ITU-T Recommendation G.114 (05/2003), <em>One-way transmission time</em> - <a href="https://www.itu.int/rec/T-REC-G.114-200305-I/en">itu.int</a></li>
+<li>Heldner, M. &amp; Edlund, J., <em>Pauses, gaps and overlaps in conversations</em>, Journal of Phonetics, 2010 - <a href="https://staff.fnwi.uva.nl/r.fernandezrovira/teaching/cosp/cosp2016/docs/HeldnerEdlund2010.pdf">staff.fnwi.uva.nl</a></li>
+</ul>
+</section>
+    </article>
+    <section class="cta-band">
+      <p class="hand">hear it for yourself</p>
+      <h2>Put a voice layer on your <span class="nb">e-commerce</span>.</h2>
+      <p>We build it, we run it, you see the numbers. Live in two weeks.</p>
+      <a class="btn-pill" href="https://cal.com/sabatoai/intro" target="_blank" rel="noopener">Start Free Pilot</a>
+    </section>
+  </main>
+  <!-- footer: rendered by tools/apply_footer.py from footer.py - do not paste one here -->
+<script src="/js/enhance.js?v=a6a1e75602" defer></script>
+  <script>
+  /* Chart sharing moves the PNG itself, never the post URL.
+     LinkedIn and X share-intents can only unfurl a URL, so the paths that
+     actually put the image somewhere are: the native share sheet with the file
+     attached (mobile), the clipboard (desktop -> paste into the composer), and
+     a download. */
+  (function () {
+    document.querySelectorAll("figure.chart-card[data-chart-img]").forEach(function (fig) {
+      var row = fig.querySelector(".chart-share");
+      if (!row) return;
+      var src = fig.getAttribute("data-chart-img");
+      var name = src.split("/").pop();
+      function getBlob() { return fetch(src).then(function (r) { return r.blob(); }); }
+
+      var nativeBtn = row.querySelector("[data-share-native]");
+      if (nativeBtn && navigator.share && navigator.canShare) {
+        try {
+          var probe = new File([new Blob([""], { type: "image/png" })], name, { type: "image/png" });
+          if (navigator.canShare({ files: [probe] })) nativeBtn.hidden = false;
+        } catch (e) { /* File ctor unsupported: leave hidden */ }
+        nativeBtn.addEventListener("click", function () {
+          getBlob().then(function (b) {
+            var f = new File([b], name, { type: "image/png" });
+            return navigator.share({ files: [f] });
+          }).catch(function () { window.location.href = src; });
+        });
+      }
+
+      var copyBtn = row.querySelector("[data-share-copy]");
+      if (copyBtn) {
+        copyBtn.addEventListener("click", function () {
+          var label = copyBtn.textContent;
+          // ClipboardItem must be constructed synchronously with a promise for Safari
+          if (!(window.ClipboardItem && navigator.clipboard && navigator.clipboard.write)) {
+            window.location.href = src;
+            return;
+          }
+          navigator.clipboard.write([new ClipboardItem({ "image/png": getBlob() })])
+            .then(function () {
+              copyBtn.textContent = copyBtn.getAttribute("data-done");
+              copyBtn.classList.add("is-done");
+              setTimeout(function () {
+                copyBtn.textContent = label;
+                copyBtn.classList.remove("is-done");
+              }, 1800);
+            })
+            .catch(function () { window.location.href = src; });
+        });
+      }
+    });
+  })();
+  </script>
+<footer class="sb-footer" data-lang="en"><div class="sb-shell"><div class="sb-grid"><div class="sb-brand"><a href="/" aria-label="Sabato AI - Home"><img class="sb-logo" src="/fuc/images/KY1UqOX7zKeKJdbxTotIopeeZIU-f2557e25.png" alt="Sabato AI logo" width="2080" height="278" loading="lazy"></a><p class="sb-tagline">The #1 managed Voice AI <br>for <span class="sb-nb">E-Commerce</span>.</p><p class="sb-backed">Backed by</p><img class="sb-backed-img" src="/fuc/images/V9nq776DtkEODcun83ayNz0liCU-28058054.webp" alt="ElevenLabs Grants" width="1496" height="132" loading="lazy"></div><div class="sb-col sb-col-static"><span class="sb-h4">Company</span><ul><li><a href="/">Home</a></li><li><a href="/pricing">Pricing</a></li><li><a href="/about">About</a></li><li><a href="/contact">Contact us</a></li><li><a href="/blog">Blog</a></li><li><a href="https://cal.com/sabatoai/intro" target="_blank" rel="noopener">Book a Demo</a></li></ul></div><details class="sb-col sb-acc" open><summary><span class="sb-h4">Use Cases</span></summary><ul><li><a href="/use-cases/pre-sales-consultation">Pre-Sales Consultation</a></li><li><a href="/use-cases/cart-abandonment-recovery">Cart Abandonment Recovery</a></li><li><a href="/use-cases/where-is-my-order">Where Is My Order</a></li><li><a href="/use-cases/qualify-and-collect-for-quote">Qualify &amp; Collect for Quote</a></li><li><a href="/use-cases/open-a-complaint">Open a Complaint</a></li><li><a href="/use-cases/checkout-summary-via-text">Checkout Summary via Text</a></li><li><a href="/use-cases/managing-returns">Managing Returns</a></li><li><a href="/use-cases/post-delivery-feedback">Post-Delivery Feedback</a></li><li><a href="/use-cases/back-in-stock-notification">Back-in-Stock Notification</a></li></ul></details><details class="sb-col sb-acc" open><summary><span class="sb-h4">Industries</span></summary><ul><li><a href="/industries/home-improvement">Home Improvement</a></li><li><a href="/industries/automotive-parts">Automotive &amp; Parts</a></li><li><a href="/industries/electronics-tech">Electronics &amp; Tech</a></li><li><a href="/industries/furniture-home">Furniture &amp; Home</a></li><li><a href="/industries/outdoor-garden">Outdoor &amp; Garden</a></li><li><a href="/industries/fashion-apparel">Fashion &amp; Apparel</a></li><li><a href="/industries/health-wellness">Health &amp; Wellness</a></li><li><a href="/industries/sports-fitness">Sports &amp; Fitness</a></li><li><a href="/industries/industrial-b2b">Industrial &amp; B2B</a></li></ul></details></div><div class="sb-bottom"><p class="sb-copy">&copy; 2026 Sabato LTD - 71-75, Shelton Street, Covent Garden, London (UK) - All rights reserved.</p><div class="sb-legal"><a href="/terms">Terms and Conditions</a><a href="/privacy-policy">Privacy and Cookies</a><a href="/it" data-lang-switch>Italiano</a><a href="https://www.linkedin.com/company/sabato-ai" target="_blank" rel="noopener" aria-label="Sabato AI on LinkedIn"><img src="/fuc/images/3vdzRTYV1XV6UUX6QKcsDIfU-e464e3f1.svg" alt="LinkedIn" width="20" height="20" loading="lazy"></a></div></div></div></footer><script>(function(){try{if(!window.matchMedia||!window.matchMedia("(max-width: 809px)").matches)return;var d=document.querySelectorAll(".sb-footer details.sb-acc");for(var i=0;i<d.length;i++)d[i].removeAttribute("open");}catch(e){}})();</script>
+</body>
+</html>

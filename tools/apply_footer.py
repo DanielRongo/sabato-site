@@ -192,14 +192,19 @@ def apply_to(html, lang, rel):
     # goes after it. Anything inside that root gets re-rendered at hydration.
     html = html[:m.end()] + "\n" + header_html(lang) + html[m.end():]
 
-    if "</body>" in html:
-        # Leading \n matters. OURS starts with `\s*`, so stripping also eats the
-        # newline before the footer; inserting without one meant run N and run
-        # N+1 produced different bytes forever and --check reported drift on
-        # every generated page. With it, the output is a fixed point.
-        html = html.replace("</body>", f"\n{block}\n</body>", 1)
-    else:
+    i = html.find("</body>")
+    if i == -1:
         return None, "no </body>"
+    # Normalise the whitespace in front of </body> before inserting, rather than
+    # trusting whatever the page arrived with. OURS starts with `\s*`, so a strip
+    # leaves nothing there, but a page that has never been through this script
+    # still carries its template's own newline - so pass 1 produced
+    # "</script>\n\n<footer>" and pass 2 produced "</script>\n<footer>". Two
+    # different outputs for the same input: --check reported drift on 40
+    # generated pages after every single-pass build, and the only reason the
+    # gate ever went green was that build.py had been run twice by hand.
+    # rstrip() makes the two cases identical, so one pass is a fixed point.
+    html = html[:i].rstrip() + f"\n{block}\n" + html[i:]
     return html, None
 
 
