@@ -100,6 +100,19 @@ UNWIRE = """
 """
 
 
+def block_media(ctx):
+    """Drop video requests for the duration of this test.
+
+    This file tests footer links, not the hero. The homepage's wave is a 4.2MB
+    mp4, and serve_like_netlify.py is a threaded SimpleHTTPServer: while it is
+    pushing that file, one of the ten click assertions intermittently timed out
+    and the whole gate went red on a page that was fine. Aborting media makes
+    the test measure what it is for. If the wave itself ever needs testing it
+    gets its own check, not a flake in this one.
+    """
+    ctx.route("**/*.{mp4,webm,mov,mp3,m4a}", lambda route: route.abort())
+
+
 def main():
     base = (sys.argv[1] if len(sys.argv) > 1 else "http://127.0.0.1:8912").rstrip("/")
     bad = 0
@@ -111,6 +124,7 @@ def main():
         for path, label, expect in CASES + VIA_LOGO:
             via_logo = (path, label, expect) in VIA_LOGO
             ctx = browser.new_context(viewport={"width": 1440, "height": 900})
+            block_media(ctx)
             page = ctx.new_page()
             page.goto(base + path, wait_until="networkidle")
 
@@ -177,6 +191,7 @@ def main():
         # ---- no-anchor phase ----
         for path, label, expect in NO_ANCHOR:
             ctx = browser.new_context(viewport={"width": 1440, "height": 900})
+            block_media(ctx)
             page = ctx.new_page()
             page.goto(base + path, wait_until="networkidle")
             stripped = page.evaluate(STRIP_ANCHORS)

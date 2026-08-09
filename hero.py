@@ -19,11 +19,17 @@ closing CTA and the footer already live. So the hero joins them: Framer's is
 hidden by CSS keyed on its OWN attribute, ours is emitted right after the
 header by tools/apply_footer.py.
 
-The bug: Framer's hero card carries `padding: 50px 40px 591px` on desktop and
-`32px 40px 302px` on phones. That bottom padding is 591 pixels of empty black
-below the CTA - on a 900px laptop screen the visitor scrolls a full screen of
-nothing before reaching the logo band. Presumably a product screenshot lived
-there once. Measured, not guessed.
+The wave: Framer's hero card carries `padding: 50px 40px 591px` on desktop and
+`32px 40px 302px` on phones, and an absolutely-positioned <video> sits IN that
+reserved space - the looping wave. It is `preload="none"` with no poster, and
+this container's Chromium has no H.264 decoder, so in a headless screenshot it
+renders as a black rectangle on a black card. The first version of this file
+read that as dead padding and deleted the whole thing. It was not dead. Never
+conclude "empty" from a render that cannot decode the asset - check the markup.
+
+So the video is rebuilt here too, in normal flow instead of absolute
+coordinates, at the sizes Framer gives it: 1360x552 on desktop, 350x260 on a
+phone, object-fit: fill (it stretches - that is Framer's choice, kept).
 
 WHAT IS COPIED VERBATIM: the eyebrow, the headline and both subhead paragraphs,
 in both languages. This is a layout rebuild, not a rewrite - same policy as
@@ -33,6 +39,8 @@ GEOMETRY, measured off Framer at 1440px and 390px before anything was replaced:
 
     Hero Section wrapper  padding 16px 40px 0   radius 24px 24px 0 0  (phone: 0 20px)
     black card            eyebrow sits 88px below the card top        (phone: 70px)
+    wave video            full card width, 552px tall, 44px above the card bottom
+                                                       (phone: 260px tall, 13px)
     content column        max-width 1280, centred
     h1                    Satoshi 700, 72px/82.8px, tracking -2px     (phone: 36px/41.4px)
     subhead               Satoshi 400, 20px/34px                      (phone: 18px/30.6px)
@@ -59,6 +67,14 @@ PAGES = {"index.html", "it.html"}
 # languages - it is an English call, which is worth fixing eventually; the
 # Italian hero never had a player at all.
 SAMPLE_CALL = "/fuc/assets/FEuwqrQUga0mEuonuv8aRlsCG8.mp3"
+
+# The looping wave that closes the hero. Desktop only, and deliberately shipped
+# with NO src attribute: the inline script sets it from data-src when the
+# (min-width: 810px) query matches. display:none does not reliably stop a
+# browser fetching a video, and this file is 4.2MB - the single heaviest thing
+# on the homepage. A phone should never pay for it.
+# muted + playsinline stay because they are what make autoplay legal at all.
+WAVE = "/fuc/assets/zjPqfnxlo8A7anHbrHHt6WNQQ.mp4"
 
 # ---------------------------------------------------------------------------
 # The four numbers.
@@ -123,12 +139,33 @@ COPY = {
 # because this markup lives outside React's root and a separate file would be a
 # third request for ten lines.
 REVEAL_SCRIPT = (
-    "<script>(function(){var s=document.querySelector('section.sb-hero');"
-    "if(!s)return;s.classList.add('sb-js');"
+    "<script>(function(){"
+    "var s=document.querySelector('section.sb-hero');if(!s)return;"
+    "s.classList.add('sb-js');"
     "s.addEventListener('click',function(e){"
-    "var a=e.target&&e.target.closest?e.target.closest('.sb-hero-num'):null;"
-    "if(!a||a.classList.contains('is-open'))return;"
-    "e.preventDefault();a.classList.add('is-open');});})();</script>")
+    "var t=e.target;if(!t||!t.closest)return;"
+    "var a=t.closest('.sb-hero-num');if(!a)return;"
+    # Only the lime CALL NOW line dials. Everything else on the card toggles.
+    "if(t.closest('.sb-hero-call'))return;"
+    # e.detail is 0 for a click synthesised by Enter or Space. A keyboard user
+    # cannot aim at CALL NOW - it is a <span> inside the anchor, and nesting a
+    # second focusable there would be invalid markup - so on an already-open
+    # card the keyboard path dials instead of toggling: Enter reveals, Enter
+    # again calls.
+    "if(a.classList.contains('is-open')&&e.detail===0)return;"
+    "e.preventDefault();a.classList.toggle('is-open');});"
+    # The wave is desktop-only. It carries no src until the media query says it
+    # is wanted, so a phone never spends 4.2MB on a video it will not show -
+    # display:none alone does not reliably stop the fetch.
+    "var v=s.querySelector('.sb-hero-wave');if(!v)return;"
+    "var mq=window.matchMedia('(min-width: 810px)');"
+    "var arm=function(){if(!mq.matches||v.getAttribute('src'))return;"
+    "v.setAttribute('src',v.getAttribute('data-src'));"
+    "var q=v.play&&v.play();if(q&&q.catch)q.catch(function(){});};"
+    "arm();"
+    "if(mq.addEventListener)mq.addEventListener('change',arm);"
+    "else if(mq.addListener)mq.addListener(arm);"
+    "})();</script>")
 
 
 PHONE_GLYPH = (
@@ -201,6 +238,8 @@ def hero_html(lang="en", allow_placeholder=False):
             f'<a class="sb-hero-listen" href="{SAMPLE_CALL}" target="_blank" rel="noopener">'
               f'<span class="sb-hero-tri"></span>{c["listen"]}</a>'
           f'</div>'
+          f'<video class="sb-hero-wave" data-src="{WAVE}" loop muted '
+          f'playsinline preload="none" aria-hidden="true" tabindex="-1"></video>'
         f'</div>'
       f'</section>'
       f'{REVEAL_SCRIPT}'

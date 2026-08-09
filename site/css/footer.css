@@ -615,19 +615,43 @@ header[class^="framer-"] { display: none !important; }
 .sb-hero-card {
   background: #000;
   border-radius: 24px 24px 0 0;
-  /* Framer had padding: 50px 40px 591px here, plus a 38px offset on the first
-     child, so the eyebrow sat 88px below the card top. Folded into one number.
-     The 591px was 591 pixels of empty black - a whole laptop screen of nothing
-     between the CTA and the logo band, left by a product shot that is gone. */
-  padding: 88px 40px 72px;
+  /* Framer had padding: 50px 40px 591px, plus a 38px offset on the first child,
+     so the eyebrow sat 88px below the card top. The 591px was NOT dead space -
+     it reserved room for the absolutely-positioned wave video, which renders as
+     a black rectangle in any browser that cannot decode H.264. Here the wave is
+     a normal-flow child instead, so the reservation is just the 44px that sat
+     below it. No horizontal padding: the wave spans the card edge to edge, so
+     the side gutter belongs to .sb-hero-inner, not to the card. */
+  padding: 88px 0 44px;
 }
 .sb-hero-inner {
   max-width: 1280px;
   margin: 0 auto;
+  padding: 0 40px;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
+}
+
+/* Measured off Framer: 1360x552 on desktop, 350x260 on a phone, and object-fit
+   is `fill`, i.e. it stretches to whatever box it is given rather than keeping
+   its aspect ratio. That is Framer's choice and changing it would change how
+   the wave looks, so it is kept. */
+.sb-hero-wave {
+  display: block;
+  width: 100%;
+  height: 552px;
+  object-fit: fill;
+  background: #000;
+  border: 0;
+  pointer-events: none;
+}
+/* Belt and braces with the media query in hero.py's script: that one decides
+   whether the file is ever fetched, this one decides whether the box exists.
+   Both keyed on the same 810px so there is one boundary, not two. */
+@media (max-width: 809px) {
+  .sb-hero-wave { display: none; }
 }
 
 .sb-hero-tag {
@@ -711,6 +735,10 @@ header[class^="framer-"] { display: none !important; }
 /* Replaces the country label the moment the number is revealed, in the same
    grid cell so the line does not move. A revealed number with no affordance
    does not tell anyone that the next tap dials. */
+/* This is the ONLY thing on the card that dials - clicking anywhere else
+   toggles the number back off - so it has to read as a button, not a caption.
+   The padding grows the tap target; the negative margin keeps the grid cell
+   the same size it was, so the card does not change height when it opens. */
 .sb-hero-call {
   display: inline-flex;
   align-items: center;
@@ -722,7 +750,17 @@ header[class^="framer-"] { display: none !important; }
   text-transform: uppercase;
   color: #CCFF00;
   white-space: nowrap;
+  background: rgba(204, 255, 0, .16);
+  border-radius: 100px;
+  /* Padding grows the tap target, the matching negative margin cancels its
+     effect on layout, so the grid cell - and therefore the card - is exactly
+     the same height open or closed. On an iPhone 13 this is the difference
+     between a 23px and a 31px tall target; it cannot go much further without
+     overlapping the number on the row below. */
+  padding: 9px 13px;
+  margin: -9px -13px;
 }
+.sb-hero-num.is-open:hover .sb-hero-call { background: rgba(204, 255, 0, .3); }
 /* The number and the "Show number" prompt are stacked in the same cell, so the
    card is exactly as tall before the reveal as after it. Swapping one for the
    other with display:none would make the whole hero jump on every click. */
@@ -784,7 +822,11 @@ header[class^="framer-"] { display: none !important; }
      offset (70px to the eyebrow). Sides go to 22px rather than Framer's 40px:
      at 40px the content column is 270px and "+44 20 4525 8830" at 15px does not
      fit two-up. The headline still breaks to the same three lines. */
-  .sb-hero-card { padding: 70px 18px 52px; }
+  /* No wave below 810px, so the card closes on the content instead of on the
+     video: the 13px that used to sit under the wave becomes a normal bottom
+     pad. */
+  .sb-hero-card { padding: 70px 0 56px; }
+  .sb-hero-inner { padding: 0 18px; }
   .sb-hero-h1 { font-size: 36px; line-height: 41.4px; margin-top: 18px; }
   .sb-hero-sub { font-size: 18px; line-height: 30.6px; }
   .sb-hero-hand { font-size: 17px; margin-top: 34px; }
