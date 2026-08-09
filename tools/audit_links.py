@@ -30,6 +30,7 @@ ADVISORY - printed, never fails the build:
             advisory - but every one is a landmine, and they are how the Italian
             language leak happened in the first place.
 """
+import os
 import sys
 from playwright.sync_api import sync_playwright
 
@@ -52,6 +53,12 @@ PAGES = [
 # /it/termini-e-condizioni and /it/privacy-e-cookie, so an Italian page linking
 # to the English legal text is once again a real leak and should fail.
 CROSS_LANG_OK = set()
+
+# Extensions that mean "this href is a file, not a page". Language rules apply
+# to pages only; /fuc/assets/ is language-neutral by construction.
+ASSET_EXTS = {".mp3", ".wav", ".m4a", ".mp4", ".webm", ".pdf",
+              ".png", ".jpg", ".jpeg", ".webp", ".svg", ".gif",
+              ".zip", ".csv", ".xml", ".txt", ".ics"}
 
 COLLECT = """
 () => {
@@ -132,6 +139,14 @@ def main():
                         gone.append((where, l["label"] or "[logo]", res, status[res]))
 
                     if res in CROSS_LANG_OK or l.get("flag"):
+                        continue
+                    # A file is not a page and has no language. The hero's
+                    # "ascolta una chiamata di esempio" points at an .mp3 under
+                    # /fuc/assets/, which lives outside /it/ because assets do -
+                    # flagging that as an Italian page linking to English was a
+                    # false positive, and the only fix available would have been
+                    # to delete a working link.
+                    if os.path.splitext(res)[1].lower() in ASSET_EXTS:
                         continue
                     if lang_of(res) != want:
                         lang.append((where, l["label"] or "[logo]", l["raw"], res))

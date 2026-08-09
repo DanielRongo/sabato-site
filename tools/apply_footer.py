@@ -34,6 +34,7 @@ sys.path.insert(0, ROOT)
 from footer import footer_html  # noqa: E402
 from cta import cta_html, PAGES as CTA_PAGES  # noqa: E402
 from header import header_html  # noqa: E402
+from hero import hero_html, PAGES as HERO_PAGES  # noqa: E402
 
 SITE = os.path.join(ROOT, "site")
 CSS_LINK = '<link rel="stylesheet" href="/css/footer.css">'
@@ -59,6 +60,12 @@ OURS_HDR = re.compile(
     r'(?:\s*<script>\(function\(\)\{var h=document\.querySelector.*?</script>)?'
     r'\s*', re.S)
 THEIRS_HDR = re.compile(r'\s*<header class="site-header".*?</header>\s*', re.S)
+# Our homepage hero and its inline reveal script. Stripped before re-inserting
+# so the script stays a fixed point; it sits between the header and React's root.
+OURS_HERO = re.compile(
+    r'\s*<section class="sb-hero".*?</section>'
+    r'(?:\s*<script>\(function\(\)\{var s=document\.querySelector.*?</script>)?'
+    r'\s*', re.S)
 
 # Framer's closing CTA, identified by its headline because the section's class
 # hash differs on every page (framer-10d8oh2 on /it and nothing like it
@@ -183,6 +190,7 @@ def apply_to(html, lang, rel):
     # identical input, so --check flagged drift on every page forever.
     html, _ = hide_legacy_cta_css(html)
 
+    html = OURS_HERO.sub("\n", html)
     html = OURS_HDR.sub("\n", html)
     html = THEIRS_HDR.sub("\n", html)
     m = re.search(r"<body[^>]*>", html)
@@ -190,7 +198,10 @@ def apply_to(html, lang, rel):
         return None, "no <body>"
     # First thing in <body>, BEFORE Framer's React root - same reason the footer
     # goes after it. Anything inside that root gets re-rendered at hydration.
-    html = html[:m.end()] + "\n" + header_html(lang) + html[m.end():]
+    # The hero follows the header so the source reads in visual order; both are
+    # outside the root, which is the only property that matters.
+    top = header_html(lang) + (hero_html(lang) if rel in HERO_PAGES else "")
+    html = html[:m.end()] + "\n" + top + html[m.end():]
 
     i = html.find("</body>")
     if i == -1:
@@ -208,7 +219,27 @@ def apply_to(html, lang, rel):
     return html, None
 
 
+def preflight_failed():
+    """True if anything this script needs would raise. Prints why.
+
+    build.py calls this as its FIRST step, before any generator runs. The hero's
+    placeholder guard raises, and the generators rewrite pages from templates
+    that carry no header and no footer - so a refusal discovered halfway through
+    the page walk left 43 pages half-applied. Asking up front costs nothing and
+    makes a refusal a no-op.
+    """
+    for lang in ("en", "it"):
+        try:
+            hero_html(lang)
+        except SystemExit as e:
+            print(f"  {e}", file=sys.stderr)
+            return True
+    return False
+
+
 def main():
+    if "--preflight" in sys.argv:
+        return 1 if preflight_failed() else 0
     check = "--check" in sys.argv
     written, problems, skipped = 0, [], 0
 

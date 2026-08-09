@@ -571,3 +571,241 @@ header[class^="framer-"] { display: none !important; }
 @media (max-width: 1023px) {
   .sb-dd { display: none; }
 }
+
+/* ==========================================================================
+   THE homepage hero. Markup from hero.py, installed by tools/apply_footer.py.
+   Only /index.html and /it.html carry it.
+
+   Framer's hero is hidden rather than deleted, same reason as the footer: it
+   ships in the JS bundle too, so removing the node makes React re-insert it
+   and re-render the tree around it.
+
+   The selector is Framer's OWN data-framer-name, not a class and not anything
+   we stamp on. Class hashes differ per page (framer-15xj78c on /, framer-109wxoy
+   on /it) and attributes WE add get stripped at hydration - that cost three of
+   eight pages once already. data-framer-name survives because React is the
+   thing writing it. Checked: "Title & Image Wrapper" exists on exactly these
+   two pages, so the rule needs no per-page scoping.
+   ========================================================================== */
+
+[data-framer-name^="Title & Image" i] { display: none !important; }
+
+/* The wrapper around it keeps its own padding and rounded top, so hiding the
+   card alone leaves a white rounded stub above the logo band. Scoped with
+   :has() because "Hero Section" also names the heroes on /about, /contact and
+   their Italian twins - a bare rule would blank those pages. */
+[data-framer-name^="Hero Section" i]:has([data-framer-name^="Title & Image" i]) {
+  display: none !important;
+}
+
+.sb-hero {
+  background: #fff;
+  /* 40px, not the 30px Framer declares on its own wrapper: something inside it
+     eats another 10px a side, so the card lands at x=40 w=1360. The Brand Logos
+     band directly below is inset to exactly that, and a 10px mismatch shows as
+     a step at the seam. Phone: 20px, which does match Framer's declaration. */
+  padding: 16px 40px 0;
+  /* Framer sets fonts per text node, never on a container, so anything we
+     insert inherits nothing and lands on the UA default - the headline came out
+     visibly wider and wrapped in the wrong place. The header carries the same
+     stack for the same reason. */
+  font-family: Satoshi, Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+.sb-hero-card {
+  background: #000;
+  border-radius: 24px 24px 0 0;
+  /* Framer had padding: 50px 40px 591px here, plus a 38px offset on the first
+     child, so the eyebrow sat 88px below the card top. Folded into one number.
+     The 591px was 591 pixels of empty black - a whole laptop screen of nothing
+     between the CTA and the logo band, left by a product shot that is gone. */
+  padding: 88px 40px 72px;
+}
+.sb-hero-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.sb-hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff;
+  border-radius: 322px;
+  padding: 4px 20px 4px 8px;
+}
+.sb-hero-badge {
+  background: rgb(255, 43, 43);
+  color: #fff;
+  border-radius: 76px;
+  padding: 3px 16px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.sb-hero-tagtext { color: #000; font-size: 14px; }
+
+.sb-hero-h1 {
+  font-size: 72px;
+  line-height: 82.8px;
+  letter-spacing: -2px;
+  font-weight: 700;
+  color: #fff;
+  margin: 16px 0 0;        /* measured off Framer: tag bottom to h1 top */
+  max-width: 920px;
+}
+.sb-hero-sub {
+  font-size: 20px;
+  line-height: 34px;
+  font-weight: 400;
+  color: #fff;
+  margin: 0;
+  max-width: 660px;
+}
+.sb-hero-sub:first-of-type { margin-top: 16px; }
+/* Framer sizes this holder per language - 644px on / and 800px on /it - so the
+   Italian subhead keeps its three lines instead of spilling to four. */
+.sb-hero[data-lang="it"] .sb-hero-sub { max-width: 800px; }
+
+.sb-hero-hand {
+  font-family: "Kalam", cursive;
+  font-size: 19px;
+  line-height: 1.1;
+  color: #CCFF00;
+  margin: 46px 0 0;
+}
+
+.sb-hero-nums {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  width: min(880px, 100%);
+  margin: 18px 0 0;
+}
+.sb-hero-num {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  background: rgba(255, 255, 255, .05);
+  border: 1px solid rgba(255, 255, 255, .11);
+  border-radius: 16px;
+  padding: 18px 12px 16px;
+  transition: background .16s ease, border-color .16s ease;
+}
+.sb-hero-num:hover, .sb-hero-num:focus-visible {
+  background: rgba(204, 255, 0, .1);
+  border-color: rgba(204, 255, 0, .45);
+}
+.sb-hero-cc {
+  font-size: 11px;
+  letter-spacing: 1.6px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, .45);
+}
+/* Replaces the country label the moment the number is revealed, in the same
+   grid cell so the line does not move. A revealed number with no affordance
+   does not tell anyone that the next tap dials. */
+.sb-hero-call {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  font-size: 11px;
+  letter-spacing: 1.6px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #CCFF00;
+  white-space: nowrap;
+}
+/* The number and the "Show number" prompt are stacked in the same cell, so the
+   card is exactly as tall before the reveal as after it. Swapping one for the
+   other with display:none would make the whole hero jump on every click. */
+.sb-hero-slot { display: grid; justify-items: center; }
+.sb-hero-slot > * { grid-area: 1 / 1; }
+.sb-hero-no {
+  font-size: 17px;
+  font-weight: 700;
+  color: #fff;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -.3px;
+  white-space: nowrap;
+}
+.sb-hero-reveal {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: rgba(204, 255, 0, .85);
+  white-space: nowrap;
+  align-self: center;
+}
+
+/* Without JS the numbers are simply visible, the prompt is not, and every card
+   is already a live tel: link on its first tap - see the comment on
+   REVEAL_SCRIPT in hero.py. .sb-js inverts that. */
+.sb-hero-reveal, .sb-hero-call { visibility: hidden; }
+.sb-hero.sb-js .sb-hero-no { visibility: hidden; }
+.sb-hero.sb-js .sb-hero-reveal { visibility: visible; }
+.sb-hero.sb-js .sb-hero-num.is-open .sb-hero-no { visibility: visible; }
+.sb-hero.sb-js .sb-hero-num.is-open .sb-hero-reveal { visibility: hidden; }
+.sb-hero.sb-js .sb-hero-num.is-open .sb-hero-cc { visibility: hidden; }
+.sb-hero.sb-js .sb-hero-num.is-open .sb-hero-call { visibility: visible; }
+.sb-hero.sb-js .sb-hero-num.is-open {
+  background: rgba(204, 255, 0, .12);
+  border-color: rgba(204, 255, 0, .5);
+}
+
+.sb-hero-listen {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin: 26px 0 0;
+  color: rgba(255, 255, 255, .55);
+  font-size: 14px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(255, 255, 255, .3);
+}
+.sb-hero-listen:hover { color: #CCFF00; text-decoration-color: rgba(204, 255, 0, .6); }
+.sb-hero-tri {
+  width: 0; height: 0;
+  border-left: 8px solid currentColor;
+  border-top: 5.5px solid transparent;
+  border-bottom: 5.5px solid transparent;
+}
+
+@media (max-width: 809px) {
+  .sb-hero { padding: 0 20px; }
+  /* Framer's phone padding was 32px 40px 302px, again with the 38px child
+     offset (70px to the eyebrow). Sides go to 22px rather than Framer's 40px:
+     at 40px the content column is 270px and "+44 20 4525 8830" at 15px does not
+     fit two-up. The headline still breaks to the same three lines. */
+  .sb-hero-card { padding: 70px 18px 52px; }
+  .sb-hero-h1 { font-size: 36px; line-height: 41.4px; margin-top: 18px; }
+  .sb-hero-sub { font-size: 18px; line-height: 30.6px; }
+  .sb-hero-hand { font-size: 17px; margin-top: 34px; }
+  /* Two up at 390px leaves 141px of usable width per card. The longest number
+     is the Naples one, +39 081 1818 1316, which needs 131px at 13.5px. The
+     first pass used 15px in a 130px cell and clipped both it and the London
+     number - real numbers are longer than the placeholders were, so this is
+     measured against the real four, not guessed. */
+  .sb-hero-nums { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .sb-hero-num { padding: 15px 6px 13px; }
+  .sb-hero-cc, .sb-hero-call { font-size: 10px; letter-spacing: 1.2px; }
+  .sb-hero-no { font-size: 13.5px; }
+  .sb-hero-reveal { font-size: 13px; }
+  .sb-hero-listen { font-size: 13px; margin-top: 22px; }
+}
+
+/* Narrower than 390 (iPhone 12/13/14, the common floor) two up cannot hold a
+   13-digit Italian number: at 360px each cell has 126px of usable width and
+   +39 081 1818 1316 needs 131. One column, four rows - taller, nothing clipped.
+   Measured at 320, 360, 375, 390, 414 and 430. */
+@media (max-width: 389px) {
+  .sb-hero-nums { grid-template-columns: 1fr; }
+  .sb-hero-no { font-size: 15px; }
+}

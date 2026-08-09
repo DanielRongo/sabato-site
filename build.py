@@ -26,6 +26,10 @@ import sys
 
 # (script, why it sits here)
 STEPS = [
+    # FIRST, and it writes nothing: it only asks whether the last step would
+    # refuse. The generators rewrite pages from templates that have no header
+    # and no footer, so an abort further down leaves the site half-applied.
+    ("tools/apply_footer.py --preflight", "can the footer step run at all?"),
     ("publish.py",   "blog posts + indexes, from posts/*.md"),
     ("customers.py", "case studies, from customer_data*.py - MUST precede industries.py"),
     ("use_cases.py", "use-case hubs, reads the built use-case pages"),
@@ -40,7 +44,8 @@ def main():
     failed = []
     for script, why in STEPS:
         print(f"\n==> {script}   ({why})")
-        r = subprocess.run([sys.executable, script], capture_output=True, text=True)
+        # split(): a step may carry a flag, e.g. "... --preflight".
+        r = subprocess.run([sys.executable] + script.split(), capture_output=True, text=True)
         out = (r.stdout or "").strip().splitlines()
         for line in out[-4:]:
             print(f"    {line}")
@@ -48,7 +53,16 @@ def main():
             failed.append(script)
             print(f"    FAILED (exit {r.returncode})")
             if r.stderr.strip():
-                print(f"    {r.stderr.strip().splitlines()[-1]}")
+                for line in r.stderr.strip().splitlines()[-4:]:
+                    print(f"    {line}")
+            # A failed preflight means the LAST step would refuse. Stop here and
+            # write nothing: every generator after this point rewrites pages from
+            # templates that carry no header and no footer, so carrying on turns
+            # a clean refusal into 43 broken pages. Learned the hard way.
+            if "--preflight" in script:
+                print("\nPreflight failed - nothing was built, nothing was changed.",
+                      file=sys.stderr)
+                return 1
 
     print("\n==> tools/version_enhance.py   (cache-bust enhance.js everywhere)")
     r = subprocess.run([sys.executable, "tools/version_enhance.py"], capture_output=True, text=True)
