@@ -11,3 +11,7 @@ _to_delete/
 .visual-baseline/
 .visual-current/
 .visual-report/
+
+# transient delivery tarballs from the Cowork bridge
+proof-widget.tgz
+_to_delete/

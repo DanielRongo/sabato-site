@@ -20,6 +20,21 @@ Two rules that matter more than they look:
 2. A number without a definition is not a number. `53.1% autonomy rate` means
    nothing to a buyer until the page says what was counted and over what period.
    Every metric therefore carries a `sub` explaining what it measures.
+
+TWO FLAGS, NOT ONE
+------------------
+`approved`   - the figures and the quote on THIS customer's own case study page
+               are signed off, so the page drops its TBC chips and DRAFT ribbon.
+`promotable` - we may name this customer, and show their numbers, on pages that
+               are NOT their own: the homepage, /pricing, /about. This is a
+               strictly stronger permission and it is a separate question. A
+               customer can be perfectly happy with a page that nothing links to
+               and much less happy about being the face of the homepage.
+
+Overloading one flag for both is how a pending customer ends up on the homepage.
+Creative Cables gave the green light on 10 Aug 2026; ClimaConvenienza has not,
+so it is approved but not promotable. tools/postdeploy_check.py reads this field
+and fails the gate if a non-promotable name appears off its own page.
 """
 
 CUSTOMERS = {
@@ -48,6 +63,7 @@ CUSTOMERS = {
         "industry_href": "/industries/home-improvement",
         "chip": "Customer story",
         "approved": True,
+        "promotable": False,
         "title": "ClimaConvenienza - Voice AI Case Study | Sabato AI",
         "description": "How ClimaConvenienza scaled phone support across Italy, France and Germany without hiring: 53.1% of calls handled autonomously in month one.",
         "h1": "Growing across three markets faster than a phone team [nb]can be hired.[/nb]",
@@ -185,6 +201,7 @@ CUSTOMERS = {
         "industry_href": "/industries/furniture-home",
         "chip": "Customer story",
         "approved": True,
+        "promotable": True,
         "title": "Creative Cables - Voice AI Case Study | Sabato AI",
         "description": "How Creative Cables put voice AI on its Italian customer line: 39% of calls resolved end to end in month one, 57% of order-status calls automated.",
         "h1": "Elena answers the calls that repeat, in [nb]55 seconds.[/nb]",

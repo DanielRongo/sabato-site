@@ -965,3 +965,125 @@ body:has(.sb-logos) [data-framer-name^="Brand Logos" i] { display: none !importa
      the strip ran 7% slow. Set is 1002px, so 20.06s is the same 50px/s. */
   .sb-logos-track { gap: 20px; animation-duration: 20.06s; }
 }
+
+/* ==========================================================================
+   THE proof widget - Creative Cables. Markup from proof.py.
+
+   Emitted at the end of <body> and moved in front of the FAQ section after
+   load; see the docstring in proof.py for why it cannot simply be written
+   there at build time. It ships `hidden` so it never flashes at the bottom of
+   the page before the move.
+   ========================================================================== */
+
+.sb-proof { background: #fff; padding: 0 30px; }
+.sb-proof[hidden] { display: none; }
+.sb-proof-card {
+  max-width: 1360px;
+  margin: 0 auto;
+  background: #000;
+  border-radius: 24px;
+  padding: 56px 56px 52px;
+  color: #fff;
+  font-family: Satoshi, Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+.sb-proof-eyebrow {
+  margin: 0;
+  font-size: 12px;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: rgba(248, 244, 241, .5);
+}
+
+/* Results first - that is the order Daniel asked for, and it is the right one:
+   the numbers earn the quote a reading. */
+.sb-proof-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+  margin: 26px 0 0;
+  padding: 0 0 34px;
+  border-bottom: 1px solid rgba(248, 244, 241, .16);
+}
+.sb-proof-num {
+  display: block;
+  font-size: 54px;
+  line-height: 1.02;
+  font-weight: 900;
+  letter-spacing: -1.5px;
+  color: #CCFF00;
+  font-variant-numeric: tabular-nums;
+}
+.sb-proof-lab {
+  display: block;
+  margin-top: 8px;
+  font-size: 14.5px;
+  line-height: 1.45;
+  color: rgba(248, 244, 241, .72);
+  max-width: 26ch;
+}
+
+.sb-proof-quote {
+  display: flex;
+  align-items: flex-start;
+  gap: 28px;
+  margin: 34px 0 0;
+}
+.sb-proof-face {
+  flex: 0 0 96px;
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  background: rgba(248, 244, 241, .1);
+}
+.sb-proof-said { min-width: 0; }
+.sb-proof-said blockquote {
+  margin: 0;
+  font-size: 22px;
+  line-height: 1.5;
+  font-weight: 500;
+  letter-spacing: -.2px;
+  max-width: 62ch;
+}
+.sb-proof-said figcaption {
+  margin-top: 16px;
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: rgba(248, 244, 241, .6);
+}
+.sb-proof-said figcaption b { display: block; color: #fff; font-weight: 700; }
+
+.sb-proof-cta {
+  display: inline-flex;
+  align-items: center;
+  margin: 34px 0 0;
+  background: #CCFF00;
+  color: #0A0A0A;
+  border-radius: 100px;
+  padding: 14px 28px;
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform .15s ease;
+}
+.sb-proof-cta:hover { transform: translateY(-1px); }
+/* The arrow lives in its own span so the gap survives: a leading space inside
+   an inline-flex child is collapsed away, which is why it read as "study→". */
+.sb-proof-cta span { margin-left: 8px; }
+
+@media (max-width: 767.98px) {
+  .sb-proof { padding: 0 20px; }
+  .sb-proof-card { padding: 34px 22px 32px; border-radius: 20px; }
+  /* Three 54px numbers do not fit a 350px card. One column keeps each figure
+     next to the label that explains it, which is the point of the figure. */
+  .sb-proof-stats { grid-template-columns: 1fr; gap: 20px; padding-bottom: 26px; }
+  .sb-proof-num { font-size: 40px; }
+  .sb-proof-lab { font-size: 14px; max-width: none; }
+  .sb-proof-quote { flex-direction: column; gap: 18px; margin-top: 26px; }
+  .sb-proof-face { flex: 0 0 72px; width: 72px; height: 72px; }
+  .sb-proof-said blockquote { font-size: 18px; line-height: 1.55; }
+  .sb-proof-cta { margin-top: 26px; font-size: 15px; padding: 13px 24px; }
+}

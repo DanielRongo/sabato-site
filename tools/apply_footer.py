@@ -36,6 +36,7 @@ from cta import cta_html, PAGES as CTA_PAGES  # noqa: E402
 from header import header_html  # noqa: E402
 from hero import hero_html, PAGES as HERO_PAGES  # noqa: E402
 from logos import logos_html, PAGES as LOGO_PAGES  # noqa: E402
+from proof import proof_html, PAGES as PROOF_PAGES  # noqa: E402
 
 SITE = os.path.join(ROOT, "site")
 CSS_LINK = '<link rel="stylesheet" href="/css/footer.css">'
@@ -63,6 +64,11 @@ OURS_HDR = re.compile(
 THEIRS_HDR = re.compile(r'\s*<header class="site-header".*?</header>\s*', re.S)
 # Our homepage hero and its inline reveal script. Stripped before re-inserting
 # so the script stays a fixed point; it sits between the header and React's root.
+# The proof widget and the script that moves it in front of the FAQ.
+OURS_PROOF = re.compile(
+    r'\s*<section class="sb-proof".*?</section>'
+    r'(?:\s*<script>\(function\(\)\{function go\(\).*?</script>)?'
+    r'\s*', re.S)
 OURS_LOGOS = re.compile(r'\s*<section class="sb-logos".*?</section>\s*', re.S)
 OURS_HERO = re.compile(
     r'\s*<section class="sb-hero".*?</section>'
@@ -176,7 +182,8 @@ def apply_to(html, lang, rel):
     new_footer = footer_html(lang)
     # Only the pages Framer put a closing CTA on. Our generated pages already
     # end with their own page-specific <section class="cta-band">.
-    block = (cta_html(lang) if rel in CTA_PAGES else "") + new_footer
+    block = ((proof_html(lang) if rel in PROOF_PAGES else "")
+             + (cta_html(lang) if rel in CTA_PAGES else "") + new_footer)
 
     # Idempotency: strip any CTA+footer we previously installed before adding one.
     html = OURS.sub("", html)
@@ -192,6 +199,7 @@ def apply_to(html, lang, rel):
     # identical input, so --check flagged drift on every page forever.
     html, _ = hide_legacy_cta_css(html)
 
+    html = OURS_PROOF.sub("\n", html)
     html = OURS_LOGOS.sub("\n", html)
     html = OURS_HERO.sub("\n", html)
     html = OURS_HDR.sub("\n", html)

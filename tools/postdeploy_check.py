@@ -4,11 +4,24 @@
 Checks every page type for: duplicated nav items, missing logo, local 4xx,
 console errors, and (where applicable) blog link / dropdown / footer wiring.
 """
-import sys, json
+import os, sys, json
 from playwright.sync_api import sync_playwright
+
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from customer_data import CUSTOMERS  # noqa: E402
+
+# Names that must NOT appear on any page other than their own case study.
+# Read from the data, not typed here - see the check that uses it.
+UNAPPROVED = sorted(d["name"] for d in CUSTOMERS.values() if not d.get("promotable"))
+# The pages the proof widget lives on, plus the two homepages. Anywhere a
+# customer could plausibly be named by us rather than by their own page.
+PROOF_PATHS = ("/", "/it", "/pricing", "/about", "/it/prezzi", "/it/chi-siamo")
 
 BASE = sys.argv[1].rstrip("/") if len(sys.argv) > 1 else "http://127.0.0.1:8909"
 PAGES = ["/", "/it", "/pricing", "/about", "/contact", "/blog", "/it/blog",
+         # The Italian pricing and about pages were never swept until the proof
+         # widget landed on them. Two more page loads, one more blind spot gone.
+         "/it/prezzi", "/it/chi-siamo",
          "/use-cases", "/it/casi-duso",
          "/blog/reduce-bracketing-returns", "/it/blog/reduce-bracketing-returns",
          "/blog/multilingual-phone-support-eu-expansion",
@@ -144,13 +157,19 @@ with sync_playwright() as p:
             }
             if not it and path in ("/", "/pricing", "/about", "/contact"):
                 checks["dropdown_present"] = pg.evaluate("!!document.querySelector('[data-uc-dropdown]')")
-            # No customer names or their metrics on the homepage until the
-            # customers have approved that use and Daniel has designed the
-            # section. enhance.js can inject a band; this asserts it doesn't.
-            if path in ("/", "/it"):
-                checks["no_customer_band"] = pg.evaluate(
-                    """!document.querySelector('[data-sb-cust]')
-                       && !/ClimaConvenienza|Creative Cables/.test(document.body.innerText)""")
+            # A customer's name and metrics may appear off their own case study
+            # ONLY once they have signed off on that specific use. The list is
+            # not hand-maintained here: it is derived from `promotable` in
+            # customer_data.py, so the day a flag flips the gate follows without
+            # anyone remembering to edit this file. Creative Cables gave the
+            # green light on 10 Aug 2026; ClimaConvenienza has not, and this is
+            # the thing that keeps it off the homepage.
+            # Also asserts enhance.js's old auto-injected band stays dead.
+            if path in PROOF_PATHS:
+                checks["no_unapproved_customer"] = pg.evaluate(
+                    """(names) => !document.querySelector('[data-sb-cust]')
+                       && !names.some(n => document.body.innerText.includes(n))""",
+                    UNAPPROVED)
             # A blog post that has a sibling in the other language must declare
             # it both ways. The visible language-switch link is for humans and
             # proves nothing to a crawler; blog posts shipped without these tags
