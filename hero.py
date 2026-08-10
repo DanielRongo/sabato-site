@@ -186,11 +186,15 @@ def _cards(lang):
     card is open it stays open: collapsing it again when another is opened
     loses state for no reason.
 
-    Once open, the country label is replaced in place by "Call now" - same line,
-    same height, so nothing shifts - because a revealed number with no affordance
-    does not tell anyone that the next tap dials. On a phone that second tap is a
-    plain click on a plain tel: link, untouched by the handler, so the OS dialler
-    opens the way it would from any other link.
+    Three rows: country, then the number (masked), then the CALL NOW button
+    under it. The third row is always in the layout and only its visibility
+    changes, so the card is the same height open or closed and nothing jumps
+    when you tap. The country label stays put now rather than being swapped out,
+    which matters once two cards are open at once.
+
+    CALL NOW is the only thing that dials. On a phone that is a plain click on a
+    plain tel: link, untouched by the handler, so the OS dialler opens the way it
+    would from any other link.
     """
     idx = 1 if lang == "en" else 2
     reveal = COPY[lang]["reveal"]
@@ -202,14 +206,13 @@ def _cards(lang):
         out.append(
             f'<a class="sb-hero-num" href="tel:{tel}" data-cc="{code}" '
             f'aria-label="{html.escape(row[idx])} {html.escape(disp)}">'
-            f'<span class="sb-hero-slot">'
             f'<span class="sb-hero-cc">{FLAG[code]} {label}</span>'
-            f'<span class="sb-hero-call" aria-hidden="true">{PHONE_GLYPH}{call}</span>'
-            f'</span>'
             f'<span class="sb-hero-slot">'
             f'<span class="sb-hero-no">{html.escape(disp, quote=False)}</span>'
             f'<span class="sb-hero-reveal" aria-hidden="true">{reveal}</span>'
-            f'</span></a>')
+            f'</span>'
+            f'<span class="sb-hero-call" aria-hidden="true">{PHONE_GLYPH}{call}</span>'
+            f'</a>')
     return "".join(out)
 
 

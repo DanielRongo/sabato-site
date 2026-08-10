@@ -732,7 +732,7 @@ header[class^="framer-"] { display: none !important; }
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
   text-decoration: none;
   background: rgba(255, 255, 255, .05);
   border: 1px solid rgba(255, 255, 255, .11);
@@ -769,8 +769,8 @@ header[class^="framer-"] { display: none !important; }
   text-transform: uppercase;
   color: #CCFF00;
   white-space: nowrap;
-  font-size: 10.5px;
-  letter-spacing: 1.4px;
+  font-size: 10px;
+  letter-spacing: 1.3px;
   background: rgba(204, 255, 0, .16);
   border-radius: 100px;
   /* Padding grows the tap target, the matching negative margin cancels its
@@ -778,13 +778,13 @@ header[class^="framer-"] { display: none !important; }
      the same height open or closed. Kept tight here: with a mouse there is
      nothing to aim at, and the fat version read as a second button competing
      with the number underneath it. */
-  padding: 4px 10px;
-  margin: -4px -10px;
+  padding: 3px 9px;
 }
-/* Touch has no hover and a fingertip is ~9mm, so the same pill goes back to a
-   31px-tall target on phones and tablets. Layout is unchanged either way. */
+/* Touch has no hover and a fingertip is ~9mm, so the pill grows on phones and
+   tablets. The matching negative margin keeps the row the same height, so the
+   card does not change size between input types. */
 @media (pointer: coarse) {
-  .sb-hero-call { padding: 9px 13px; margin: -9px -13px; }
+  .sb-hero-call { padding: 8px 12px; margin: -5px 0; }
 }
 .sb-hero-num.is-open:hover .sb-hero-call { background: rgba(204, 255, 0, .3); }
 /* The number and the "Show number" prompt are stacked in the same cell, so the
@@ -808,15 +808,18 @@ header[class^="framer-"] { display: none !important; }
   align-self: center;
 }
 
-/* Without JS the numbers are simply visible, the prompt is not, and every card
-   is already a live tel: link on its first tap - see the comment on
-   REVEAL_SCRIPT in hero.py. .sb-js inverts that. */
+/* The CALL NOW row is always in the layout - only its visibility changes - so
+   opening a card cannot resize it. That is why it is `visibility`, never
+   `display`, throughout this block.
+
+   Without JS the number is simply visible, neither prompt is, and every card is
+   already a live tel: link on its first tap - see the comment on REVEAL_SCRIPT
+   in hero.py. .sb-js inverts that. */
 .sb-hero-reveal, .sb-hero-call { visibility: hidden; }
 .sb-hero.sb-js .sb-hero-no { visibility: hidden; }
 .sb-hero.sb-js .sb-hero-reveal { visibility: visible; }
 .sb-hero.sb-js .sb-hero-num.is-open .sb-hero-no { visibility: visible; }
 .sb-hero.sb-js .sb-hero-num.is-open .sb-hero-reveal { visibility: hidden; }
-.sb-hero.sb-js .sb-hero-num.is-open .sb-hero-cc { visibility: hidden; }
 .sb-hero.sb-js .sb-hero-num.is-open .sb-hero-call { visibility: visible; }
 .sb-hero.sb-js .sb-hero-num.is-open {
   background: rgba(204, 255, 0, .12);
