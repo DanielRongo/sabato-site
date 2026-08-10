@@ -35,6 +35,7 @@ from footer import footer_html  # noqa: E402
 from cta import cta_html, PAGES as CTA_PAGES  # noqa: E402
 from header import header_html  # noqa: E402
 from hero import hero_html, PAGES as HERO_PAGES  # noqa: E402
+from logos import logos_html, PAGES as LOGO_PAGES  # noqa: E402
 
 SITE = os.path.join(ROOT, "site")
 CSS_LINK = '<link rel="stylesheet" href="/css/footer.css">'
@@ -62,6 +63,7 @@ OURS_HDR = re.compile(
 THEIRS_HDR = re.compile(r'\s*<header class="site-header".*?</header>\s*', re.S)
 # Our homepage hero and its inline reveal script. Stripped before re-inserting
 # so the script stays a fixed point; it sits between the header and React's root.
+OURS_LOGOS = re.compile(r'\s*<section class="sb-logos".*?</section>\s*', re.S)
 OURS_HERO = re.compile(
     r'\s*<section class="sb-hero".*?</section>'
     r'(?:\s*<script>\(function\(\)\{var s=document\.querySelector.*?</script>)?'
@@ -190,6 +192,7 @@ def apply_to(html, lang, rel):
     # identical input, so --check flagged drift on every page forever.
     html, _ = hide_legacy_cta_css(html)
 
+    html = OURS_LOGOS.sub("\n", html)
     html = OURS_HERO.sub("\n", html)
     html = OURS_HDR.sub("\n", html)
     html = THEIRS_HDR.sub("\n", html)
@@ -200,7 +203,9 @@ def apply_to(html, lang, rel):
     # goes after it. Anything inside that root gets re-rendered at hydration.
     # The hero follows the header so the source reads in visual order; both are
     # outside the root, which is the only property that matters.
-    top = header_html(lang) + (hero_html(lang) if rel in HERO_PAGES else "")
+    top = (header_html(lang)
+           + (hero_html(lang) if rel in HERO_PAGES else "")
+           + (logos_html(lang) if rel in LOGO_PAGES else ""))
     html = html[:m.end()] + "\n" + top + html[m.end():]
 
     i = html.find("</body>")

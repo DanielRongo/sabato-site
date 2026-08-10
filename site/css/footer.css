@@ -598,19 +598,31 @@ header[class^="framer-"] { display: none !important; }
   display: none !important;
 }
 
-.sb-hero {
+/* ONE rule for both halves of the black slab. The hero card and the logo band
+   below it are visually a single shape, and when they were owned by different
+   things - ours and Framer's - they drifted apart above 1440px and the join
+   showed a step. Sharing the selector makes that impossible rather than
+   merely fixed. */
+.sb-hero, .sb-logos {
   background: #fff;
-  /* 40px, not the 30px Framer declares on its own wrapper: something inside it
-     eats another 10px a side, so the card lands at x=40 w=1360. The Brand Logos
-     band directly below is inset to exactly that, and a 10px mismatch shows as
-     a step at the seam. Phone: 20px, which does match Framer's declaration. */
-  padding: 16px 40px 0;
+  /* 30px + a max-width on the card, which together reproduce Framer exactly:
+     x=30 at 1200, x=40 at 1440 (capped), x=280 at 1920 (capped and centred).
+     The first version hard-coded 40px of padding with no cap, which matched at
+     1440 and nowhere else - above that the card kept stretching while the Brand
+     Logos band below it stayed at 1360, and the seam showed a step that got
+     wider with the window. Measured against the band at 1200/1440/1600/1920/
+     2200/2560. */
+  padding: 16px 30px 0;
   /* Framer sets fonts per text node, never on a container, so anything we
      insert inherits nothing and lands on the UA default - the headline came out
      visibly wider and wrapped in the wrong place. The header carries the same
      stack for the same reason. */
   font-family: Satoshi, Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   -webkit-font-smoothing: antialiased;
+}
+.sb-hero-card, .sb-logos-card {
+  max-width: 1360px;
+  margin: 0 auto;
 }
 .sb-hero-card {
   background: #000;
@@ -652,6 +664,13 @@ header[class^="framer-"] { display: none !important; }
    Both keyed on the same 810px so there is one boundary, not two. */
 @media (max-width: 809px) {
   .sb-hero-wave { display: none; }
+}
+/* Framer runs a third variant between 768 and 1199.98: the wave is 466px tall
+   there, not 552, with 26px under it instead of 44. Measured at 768/810/1000/
+   1199/1200 - the step is exactly on Framer's 1200 breakpoint. */
+@media (min-width: 810px) and (max-width: 1199.98px) {
+  .sb-hero-wave { height: 466px; }
+  .sb-hero-card { padding-bottom: 26px; }
 }
 
 .sb-hero-tag {
@@ -750,15 +769,22 @@ header[class^="framer-"] { display: none !important; }
   text-transform: uppercase;
   color: #CCFF00;
   white-space: nowrap;
+  font-size: 10.5px;
+  letter-spacing: 1.4px;
   background: rgba(204, 255, 0, .16);
   border-radius: 100px;
   /* Padding grows the tap target, the matching negative margin cancels its
      effect on layout, so the grid cell - and therefore the card - is exactly
-     the same height open or closed. On an iPhone 13 this is the difference
-     between a 23px and a 31px tall target; it cannot go much further without
-     overlapping the number on the row below. */
-  padding: 9px 13px;
-  margin: -9px -13px;
+     the same height open or closed. Kept tight here: with a mouse there is
+     nothing to aim at, and the fat version read as a second button competing
+     with the number underneath it. */
+  padding: 4px 10px;
+  margin: -4px -10px;
+}
+/* Touch has no hover and a fingertip is ~9mm, so the same pill goes back to a
+   31px-tall target on phones and tablets. Layout is unchanged either way. */
+@media (pointer: coarse) {
+  .sb-hero-call { padding: 9px 13px; margin: -9px -13px; }
 }
 .sb-hero-num.is-open:hover .sb-hero-call { background: rgba(204, 255, 0, .3); }
 /* The number and the "Show number" prompt are stacked in the same cell, so the
@@ -816,8 +842,18 @@ header[class^="framer-"] { display: none !important; }
   border-bottom: 5.5px solid transparent;
 }
 
+/* Framer's OWN phone boundary (767.98px), and the only thing keyed to it: the
+   Brand Logos band below switches here too, so the card has to switch with it
+   or the seam steps. Everything else about the hero switches at 809px, which is
+   our own choice about type and the number grid - two boundaries because they
+   answer two different questions. Below this the card is capped at 390px and
+   centred, exactly as Framer does it. */
+@media (max-width: 767.98px) {
+  .sb-hero, .sb-logos { padding: 0 20px; }
+  .sb-hero-card, .sb-logos-card { max-width: 390px; }
+}
+
 @media (max-width: 809px) {
-  .sb-hero { padding: 0 20px; }
   /* Framer's phone padding was 32px 40px 302px, again with the 38px child
      offset (70px to the eyebrow). Sides go to 22px rather than Framer's 40px:
      at 40px the content column is 270px and "+44 20 4525 8830" at 15px does not
@@ -850,4 +886,79 @@ header[class^="framer-"] { display: none !important; }
 @media (max-width: 389px) {
   .sb-hero-nums { grid-template-columns: 1fr; }
   .sb-hero-no { font-size: 15px; }
+}
+
+
+/* ==========================================================================
+   THE brand-logo band. Markup from logos.py. Framer's is hidden by its own
+   data-framer-name, same technique as the hero.
+
+   Width comes from the shared .sb-hero/.sb-logos rules above - that is the
+   whole point of rebuilding this strip, so read those first.
+   ========================================================================== */
+
+/* Conditional on ours being present. An unscoped rule also blanked the small
+   39px logo strip on /pricing and /it/prezzi, which Framer gives the same name
+   but which is a different component in a different place. :has() ties the
+   hiding to the replacement, so a page we have not rebuilt keeps what it had. */
+body:has(.sb-logos) [data-framer-name^="Brand Logos" i] { display: none !important; }
+
+/* The shared .sb-hero/.sb-logos rule carries `padding: 16px 30px 0` - the 16px
+   is the white margin ABOVE the hero, and the band must not repeat it or a
+   white line appears across the middle of the slab. Framer's gap between the
+   two is exactly 0 at every width; measured. */
+.sb-logos { padding-top: 0; }
+.sb-logos-card {
+  background: #000;
+  border-radius: 0 0 24px 24px;
+  padding: 74px 40px;
+}
+/* Locked, not derived from content: 74 + 32 + 74 = the 180px Framer reserves,
+   so the band cannot grow if a logo file is ever swapped for a taller one. */
+.sb-logos-viewport {
+  height: 32px;
+  overflow: hidden;
+}
+.sb-logos-track {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  width: max-content;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  /* Exactly two copies of the six, so -50% lands on the identical frame it
+     started from. 1075px of content at Framer's measured 50px/s. */
+  animation: sb-marquee 21.5s linear infinite;
+}
+.sb-logos-item {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+.sb-logos-item img { display: block; }
+.sb-logos-line {
+  flex: 0 0 1px;
+  width: 1px;
+  height: 20px;
+  background: rgb(248, 244, 241);
+}
+
+@keyframes sb-marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+/* Framer's ticker ignores this. A logo strip is decoration; nobody should get
+   motion sickness from it. */
+@media (prefers-reduced-motion: reduce) {
+  .sb-logos-track { animation: none; }
+}
+
+@media (max-width: 767.98px) {
+  .sb-logos-card { padding: 32px 20px; }
+  /* Only the gap BETWEEN items drops to 20px on a phone. The gap inside each
+     item - logo to its separator line - stays 32px, which is what Framer does
+     and is easy to get wrong: setting both to 20 shortened the set to 930px and
+     the strip ran 7% slow. Set is 1002px, so 20.06s is the same 50px/s. */
+  .sb-logos-track { gap: 20px; animation-duration: 20.06s; }
 }
