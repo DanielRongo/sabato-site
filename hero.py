@@ -68,12 +68,21 @@ PAGES = {"index.html", "it.html"}
 # Italian hero never had a player at all.
 SAMPLE_CALL = "/fuc/assets/FEuwqrQUga0mEuonuv8aRlsCG8.mp3"
 
-# The looping wave that closes the hero. Desktop only, and deliberately shipped
-# with NO src attribute: the inline script sets it from data-src when the
-# (min-width: 810px) query matches. display:none does not reliably stop a
-# browser fetching a video, and this file is 4.2MB - the single heaviest thing
-# on the homepage. A phone should never pay for it.
-# muted + playsinline stay because they are what make autoplay legal at all.
+# The looping wave that closes the hero. Desktop only, by CSS alone.
+#
+# It was briefly JS-armed - no src in the markup, set from data-src when
+# (min-width: 810px) matched - to stop phones fetching 4.2MB. That version
+# never played. On staging, in a real Chrome, the element sat at
+# networkState=LOADING with readyState=0 and zero bytes fetched, and an
+# explicit load() did nothing; awaiting play() hung the renderer for 45
+# seconds. Reproduced twice on cold loads.
+#
+# So: a plain src and a plain autoplay, which is the path browsers are actually
+# built for, and display:none below 810px. Chrome will not autoplay a
+# display:none element, so with preload="metadata" a phone pays for a few KB of
+# headers rather than the whole file - most of the saving, none of the risk.
+# muted + playsinline are what make autoplay legal at all; drop either and the
+# wave is a black box on every iPhone.
 WAVE = "/fuc/assets/zjPqfnxlo8A7anHbrHHt6WNQQ.mp4"
 
 # ---------------------------------------------------------------------------
@@ -154,24 +163,6 @@ REVEAL_SCRIPT = (
     # again calls.
     "if(a.classList.contains('is-open')&&e.detail===0)return;"
     "e.preventDefault();a.classList.toggle('is-open');});"
-    # The wave is desktop-only. It carries no src until the media query says it
-    # is wanted, so a phone never spends 4.2MB on a video it will not show -
-    # display:none alone does not reliably stop the fetch.
-    "var v=s.querySelector('.sb-hero-wave');if(!v)return;"
-    "var mq=window.matchMedia('(min-width: 810px)');"
-    "var arm=function(){if(!mq.matches||v.getAttribute('src'))return;"
-    "v.setAttribute('src',v.getAttribute('data-src'));"
-    # preload='auto' + load() are BOTH required. Setting src on an element that
-    # still says preload="none" does not start a fetch, and play() does not
-    # override it either: on staging the element reported paused=false and
-    # networkState=LOADING for 16 seconds with ZERO bytes requested - the wave
-    # was a black box. Verified in Daniel's own Chrome: adding these two lines
-    # took it from readyState 0 to readyState 4, 4.2MB fetched, playing.
-    "v.preload='auto';v.load();"
-    "var q=v.play&&v.play();if(q&&q.catch)q.catch(function(){});};"
-    "arm();"
-    "if(mq.addEventListener)mq.addEventListener('change',arm);"
-    "else if(mq.addListener)mq.addListener(arm);"
     "})();</script>")
 
 
@@ -248,8 +239,8 @@ def hero_html(lang="en", allow_placeholder=False):
             f'<a class="sb-hero-listen" href="{SAMPLE_CALL}" target="_blank" rel="noopener">'
               f'<span class="sb-hero-tri"></span>{c["listen"]}</a>'
           f'</div>'
-          f'<video class="sb-hero-wave" data-src="{WAVE}" loop muted '
-          f'playsinline preload="none" aria-hidden="true" tabindex="-1"></video>'
+          f'<video class="sb-hero-wave" src="{WAVE}" autoplay loop muted '
+          f'playsinline preload="metadata" aria-hidden="true" tabindex="-1"></video>'
         f'</div>'
       f'</section>'
       f'{REVEAL_SCRIPT}'
