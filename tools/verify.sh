@@ -75,6 +75,17 @@ if ! python3 tools/test_footer_clicks.py "http://127.0.0.1:$PORT"; then
 fi
 
 echo
+echo "==> 4b/5  industry scenes: text readable in EN and IT"
+# Geometry inside the SVGs, which nothing else looks at. The bike shipped with
+# a label drawn across the frame and six Italian notes clipped by the answer
+# card, and every other check passed.
+if ! python3 tools/scene_audit.py; then
+  echo
+  echo "GATE FAILED - no receipt written. Nothing is safe to push." >&2
+  exit 1
+fi
+
+echo
 echo "==> 4c/5  link audit at phone AND desktop width"
 # Everything else in this gate runs at 1440px only, which is how an English
 # footer on the Italian pages and a pile of dead mobile links survived for weeks.

@@ -62,137 +62,336 @@ FOOTER_INDUSTRIES = [
 # SVG category scenes - flat, geometric, palette only. Written as code so they
 # scale, restyle from tokens and weigh a few KB. No raster, no photography.
 # --------------------------------------------------------------------------
+# One layout law across all nine: the situation on the left, the resolved answer
+# in a dark card on the right, so the family reads as one system. Each scene is
+# a format string plus a per-language string table - the Italian pages used to
+# render "single floor" and "climate zone E" in English because scene() had no
+# idea what language it was drawing for.
+BG   = "rgb(249,250,253)"     # matches --off on these pages; was cream
+INK  = "rgb(18,10,11)"
+LIME = "rgb(204,255,0)"
+LINE = "rgb(227,226,226)"
+
 SCENES = {
-"hvac": ("A wall-mounted unit sized against a floor plan and a climate zone",
-  '''<rect x="44" y="60" width="200" height="180" rx="8" fill="none" stroke="rgb(18,10,11)" stroke-width="3"/>
-  <line x1="44" y1="150" x2="150" y2="150" stroke="rgb(18,10,11)" stroke-width="3"/>
-  <line x1="150" y1="150" x2="150" y2="240" stroke="rgb(18,10,11)" stroke-width="3"/>
-  <text x="60" y="98" class="s-b">120 m&#178;</text><text x="60" y="120" class="s-s">single floor</text>
-  <rect x="300" y="76" width="150" height="46" rx="10" fill="rgb(18,10,11)"/>
-  <rect x="316" y="92" width="118" height="4" rx="2" fill="rgb(204,255,0)"/>
-  <path d="M310 140 q40 26 80 0" fill="none" stroke="rgb(204,255,0)" stroke-width="4" stroke-linecap="round"/>
-  <path d="M330 170 q40 26 80 0" fill="none" stroke="rgb(204,255,0)" stroke-width="4" stroke-linecap="round" opacity=".6"/>
-  <path d="M350 200 q40 26 80 0" fill="none" stroke="rgb(204,255,0)" stroke-width="4" stroke-linecap="round" opacity=".3"/>''',
-  "SIZED AT", "12 kW", ["climate zone E", "ceiling 2.7 m"]),
 
-"auto": ("A vehicle registration decoded to the correct brake disc",
-  '''<rect x="44" y="86" width="196" height="58" rx="10" fill="none" stroke="rgb(18,10,11)" stroke-width="3"/>
-  <rect x="44" y="86" width="34" height="58" rx="10" fill="rgb(0,153,255)"/>
-  <text x="96" y="126" class="s-b" font-size="24">BD16 ZKP</text>
-  <text x="44" y="176" class="s-s">2016 Golf 2.0 TDI &#183; built 03/2016</text>
-  <text x="44" y="200" class="s-s">post-facelift</text>
-  <circle cx="368" cy="150" r="62" fill="none" stroke="rgb(18,10,11)" stroke-width="4"/>
-  <circle cx="368" cy="150" r="22" fill="rgb(18,10,11)"/>
-  <circle cx="368" cy="106" r="5" fill="rgb(204,255,0)"/><circle cx="368" cy="194" r="5" fill="rgb(204,255,0)"/>
-  <circle cx="324" cy="150" r="5" fill="rgb(204,255,0)"/><circle cx="412" cy="150" r="5" fill="rgb(204,255,0)"/>''',
-  "FITS", "312 mm", ["vented front disc", "not the 288"]),
+# A real floorplan, not a rectangle: walls drawn with thickness, a window
+# opening, a door with its swing, dimensions with ticks. Sizing is in BTU
+# because that is how split units are sold - a "9 kW split" is not a thing on a
+# price list, a 9,000 BTU one is.
+"hvac": {
+  "alt": {"en": "A room measured and matched to a split unit in BTU",
+          "it": "Una stanza misurata e abbinata a uno split in BTU"},
+  "label": {"en": "SIZED AT", "it": "DIMENSIONATO"},
+  "big": "12 000 BTU",
+  "notes": {"en": ["climate zone E", "one exterior wall"],
+            "it": ["zona climatica E", "una parete esterna"]},
+  "t": {"en": {"area": "35 m&#178;", "ceil": "ceiling 2.7 m", "w": "7.0 m", "h": "5.0 m"},
+        "it": {"area": "35 m&#178;", "ceil": "altezza 2,7 m", "w": "7,0 m", "h": "5,0 m"}},
+  "svg": '''
+  <path d="M56 78 h190 v148 h-190 z" fill="none" stroke="{ink}" stroke-width="9"/>
+  <path d="M56 78 h190 v148 h-190 z" fill="none" stroke="{bg}" stroke-width="3"/>
+  <line x1="132" y1="78" x2="182" y2="78" stroke="{bg}" stroke-width="11"/>
+  <line x1="132" y1="78" x2="182" y2="78" stroke="{ink}" stroke-width="2"/>
+  <line x1="56" y1="186" x2="56" y2="226" stroke="{bg}" stroke-width="11"/>
+  <path d="M60 186 a40 40 0 0 1 40 40" fill="none" stroke="{ink}" stroke-width="2" opacity=".5"/>
+  <line x1="60" y1="186" x2="60" y2="226" stroke="{ink}" stroke-width="3"/>
+  <text x="104" y="140" class="s-b">{area}</text>
+  <text x="104" y="160" class="s-s">{ceil}</text>
+  <line x1="56" y1="248" x2="246" y2="248" stroke="{ink}" stroke-width="1.5"/>
+  <line x1="56" y1="243" x2="56" y2="253" stroke="{ink}" stroke-width="1.5"/>
+  <line x1="246" y1="243" x2="246" y2="253" stroke="{ink}" stroke-width="1.5"/>
+  <text x="151" y="268" class="s-s" text-anchor="middle">{w}</text>
+  <rect x="300" y="88" width="150" height="42" rx="10" fill="{ink}"/>
+  <rect x="316" y="102" width="118" height="4" rx="2" fill="{lime}"/>
+  <rect x="316" y="114" width="70" height="3" rx="1.5" fill="rgba(248,244,241,.35)"/>
+  <path d="M310 150 q40 26 80 0" fill="none" stroke="{lime}" stroke-width="4" stroke-linecap="round"/>
+  <path d="M330 180 q40 26 80 0" fill="none" stroke="{lime}" stroke-width="4" stroke-linecap="round" opacity=".6"/>
+  <path d="M350 210 q40 26 80 0" fill="none" stroke="{lime}" stroke-width="4" stroke-linecap="round" opacity=".3"/>''',
+},
 
-"electronics": ("Two display outputs compared against a laptop port specification",
-  '''<rect x="44" y="72" width="210" height="130" rx="10" fill="rgb(18,10,11)"/>
-  <rect x="44" y="202" width="210" height="12" rx="4" fill="rgb(18,10,11)" opacity=".55"/>
-  <rect x="62" y="90" width="120" height="6" rx="3" fill="rgb(204,255,0)"/>
-  <rect x="62" y="106" width="80" height="6" rx="3" fill="rgba(248,244,241,.3)"/>
-  <line x1="266" y1="138" x2="336" y2="138" stroke="rgb(204,255,0)" stroke-width="4"/>
-  <line x1="266" y1="170" x2="336" y2="170" stroke="rgb(227,226,226)" stroke-width="4"/>
-  <rect x="344" y="96" width="112" height="70" rx="8" fill="none" stroke="rgb(18,10,11)" stroke-width="3"/>
-  <text x="352" y="138" class="s-b" font-size="17">4K 60Hz</text>
-  <rect x="344" y="182" width="112" height="70" rx="8" fill="none" stroke="rgb(227,226,226)" stroke-width="3"/>
-  <text x="352" y="224" class="s-s" font-size="17">4K 30Hz</text>''',
-  "REQUIRES", "TB4", ["two 4K at 60 Hz", "96 W passthrough"]),
+# A plate that reads as a plate: UK rear proportions, black on yellow, the blue
+# band, real character spacing. The old one was a rounded rectangle with a tab.
+"auto": {
+  "alt": {"en": "A registration plate decoded to the correct brake disc",
+          "it": "Una targa decodificata nel disco freno corretto"},
+  "label": {"en": "FITS", "it": "CORRISPONDE"},
+  "big": "312 mm",
+  "notes": {"en": ["vented front disc", "not the 288"],
+            "it": ["anteriore ventilato", "non il 288"]},
+  "t": {"en": {"veh": "2016 Golf 2.0 TDI &#183; built 03/2016", "note": "post-facelift"},
+        "it": {"veh": "Golf 2.0 TDI 2016 &#183; imm. 03/2016", "note": "post-restyling"}},
+  "svg": '''
+  <rect x="46" y="92" width="252" height="58" rx="7" fill="rgb(252,209,22)" stroke="{ink}" stroke-width="2.5"/>
+  <path d="M53 92 h23 v58 h-23 a7 7 0 0 1 -7 -7 v-44 a7 7 0 0 1 7 -7z" fill="rgb(0,51,153)"/>
+  <text x="61" y="128" text-anchor="middle" font-family="Satoshi,sans-serif" font-size="12" font-weight="700" fill="#fff">UK</text>
+  <text x="92" y="136" font-family="Satoshi,sans-serif" font-size="30" font-weight="900" letter-spacing="2.5" fill="rgb(12,12,12)">BD16 ZKP</text>
+  <text x="46" y="178" class="s-s">{veh}</text>
+  <text x="46" y="200" class="s-s">{note}</text>
+  <circle cx="372" cy="150" r="64" fill="none" stroke="{ink}" stroke-width="4"/>
+  <circle cx="372" cy="150" r="47" fill="none" stroke="{ink}" stroke-width="1.5" opacity=".4"/>
+  <circle cx="372" cy="150" r="22" fill="{ink}"/>
+  <circle cx="372" cy="104" r="5" fill="{lime}"/><circle cx="372" cy="196" r="5" fill="{lime}"/>
+  <circle cx="326" cy="150" r="5" fill="{lime}"/><circle cx="418" cy="150" r="5" fill="{lime}"/>
+  <line x1="372" y1="88" x2="372" y2="100" stroke="{ink}" stroke-width="1.5" opacity=".45"/>
+  <line x1="406" y1="116" x2="414" y2="108" stroke="{ink}" stroke-width="1.5" opacity=".45"/>
+  <line x1="338" y1="116" x2="330" y2="108" stroke="{ink}" stroke-width="1.5" opacity=".45"/>''',
+},
 
-"furniture": ("A packed sofa measured against a doorway and a turning staircase",
-  '''<path d="M60 236 V96 h70 v40 h-40 v100" fill="none" stroke="rgb(18,10,11)" stroke-width="3"/>
-  <path d="M130 136 h64 v100" fill="none" stroke="rgb(227,226,226)" stroke-width="3"/>
-  <text x="60" y="76" class="s-s">landing turn</text>
-  <rect x="250" y="126" width="196" height="76" rx="8" fill="rgb(18,10,11)"/>
-  <line x1="348" y1="126" x2="348" y2="202" stroke="rgb(204,255,0)" stroke-width="4"/>
-  <text x="250" y="228" class="s-s">packed &#183; 2 boxes &#183; legs separate</text>
-  <line x1="250" y1="112" x2="446" y2="112" stroke="rgb(204,255,0)" stroke-width="3"/>
-  <text x="250" y="102" class="s-b" font-size="14">205 cm</text>''',
-  "FITS", "205 cm", ["two boxes", "legs detach"]),
+# The old version answered a question nobody had asked. The question is now
+# written into the drawing.
+"electronics": {
+  "alt": {"en": "A monitor checked against a laptop port, with the answer",
+          "it": "Un monitor verificato con la porta del portatile, con la risposta"},
+  "label": {"en": "WORKS AT", "it": "FUNZIONA A"},
+  "big": "4K 60Hz",
+  "notes": {"en": ["Thunderbolt cable", "charges at 96 W"],
+            "it": ["cavo Thunderbolt", "ricarica a 96 W"]},
+  "t": {"en": {"q": "&ldquo;will this monitor work with my laptop?&rdquo;",
+               "port": "USB-C / TB4", "mon": "32&#8243; 4K"},
+        "it": {"q": "&ldquo;questo monitor funziona col mio portatile?&rdquo;",
+               "port": "USB-C / TB4", "mon": "32&#8243; 4K"}},
+  "svg": '''
+  <text x="44" y="66" class="s-q">{q}</text>
+  <rect x="56" y="108" width="150" height="86" rx="6" fill="{ink}"/>
+  <rect x="44" y="194" width="174" height="10" rx="5" fill="{ink}" opacity=".55"/>
+  <rect x="72" y="126" width="90" height="5" rx="2.5" fill="{lime}"/>
+  <rect x="72" y="140" width="58" height="5" rx="2.5" fill="rgba(248,244,241,.3)"/>
+  <circle cx="206" cy="151" r="7" fill="{lime}"/>
+  <text x="131" y="228" class="s-s" text-anchor="middle">{port}</text>
+  <path d="M213 151 q42 0 42 -26 0 -26 42 -26" fill="none" stroke="{lime}" stroke-width="4"/>
+  <rect x="300" y="76" width="152" height="98" rx="8" fill="none" stroke="{ink}" stroke-width="4"/>
+  <rect x="314" y="90" width="124" height="70" rx="4" fill="{ink}" opacity=".08"/>
+  <path d="M362 174 v20 h28 v-20" fill="none" stroke="{ink}" stroke-width="4"/>
+  <line x1="336" y1="196" x2="416" y2="196" stroke="{ink}" stroke-width="4" stroke-linecap="round"/>
+  <text x="376" y="228" class="s-s" text-anchor="middle">{mon}</text>''',
+},
 
-"industrial": ("A trade account recognised, with contract pricing at a quantity break",
-  '''<path d="M116 62 176 96 v68 l-60 34 -60 -34 V96z" fill="none" stroke="rgb(18,10,11)" stroke-width="4"/>
-  <circle cx="116" cy="130" r="24" fill="rgb(18,10,11)"/>
-  <text x="44" y="234" class="s-s">M10 &#215; 40 &#183; A4-316</text>
-  <rect x="230" y="76" width="216" height="52" rx="8" fill="none" stroke="rgb(227,226,226)" stroke-width="2"/>
-  <text x="248" y="108" class="s-s" font-size="15">1-99 &#183; &#163;1.18</text>
-  <rect x="230" y="140" width="216" height="52" rx="8" fill="rgb(204,255,0)"/>
-  <text x="248" y="172" class="s-b" font-size="15">200+ &#183; &#163;0.94</text>
-  <text x="230" y="222" class="s-s">Harlow Engineering &#183; contract price</text>''',
-  "CERTIFIED", "3.1", ["EN 10204", "batch document"]),
+# Not the staircase. The question people actually ask is whether it fits the
+# room they are standing in.
+"furniture": {
+  "alt": {"en": "A sofa footprint placed in a living room plan",
+          "it": "L&rsquo;ingombro di un divano in una pianta di soggiorno"},
+  "label": {"en": "FITS", "it": "CI STA"},
+  "big": "38 cm",
+  "notes": {"en": ["walkway left", "delivered in two boxes"],
+            "it": ["di passaggio", "consegnato in due colli"]},
+  "t": {"en": {"room": "4.20 &#215; 3.60 m", "sofa": "sofa 205 &#215; 95",
+               "gap": "38 cm", "tbl": "table"},
+        "it": {"room": "4,20 &#215; 3,60 m", "sofa": "divano 205 &#215; 95",
+               "gap": "38 cm", "tbl": "tavolino"}},
+  "svg": '''
+  <path d="M52 84 h230 v150 h-230 z" fill="none" stroke="{ink}" stroke-width="9"/>
+  <path d="M52 84 h230 v150 h-230 z" fill="none" stroke="{bg}" stroke-width="3"/>
+  <rect x="66" y="98" width="150" height="40" rx="6" fill="{ink}"/>
+  <rect x="72" y="104" width="26" height="28" rx="4" fill="rgba(248,244,241,.22)"/>
+  <rect x="184" y="104" width="26" height="28" rx="4" fill="rgba(248,244,241,.22)"/>
+  <rect x="104" y="178" width="74" height="32" rx="5" fill="none" stroke="{ink}" stroke-width="2.5" opacity=".45"/>
+  <text x="141" y="199" class="s-s" text-anchor="middle" font-size="11">{tbl}</text>
+  <line x1="66" y1="148" x2="216" y2="148" stroke="{lime}" stroke-width="3"/>
+  <text x="141" y="168" class="s-b" text-anchor="middle" font-size="12.5">{sofa}</text>
+  <line x1="216" y1="130" x2="268" y2="130" stroke="{lime}" stroke-width="3"/>
+  <line x1="216" y1="124" x2="216" y2="136" stroke="{lime}" stroke-width="3"/>
+  <line x1="268" y1="124" x2="268" y2="136" stroke="{lime}" stroke-width="3"/>
+  <text x="242" y="118" class="s-b" text-anchor="middle" font-size="12">{gap}</text>
+  <text x="52" y="262" class="s-s">{room}</text>
+  <rect x="330" y="104" width="122" height="72" rx="8" fill="{ink}"/>
+  <line x1="391" y1="104" x2="391" y2="176" stroke="{lime}" stroke-width="4"/>
+  <text x="330" y="198" class="s-s" font-size="11.5">2 &#215; box</text>''',
+},
 
-"outdoor": ("A plot area matched to a cutting width, with a restock date pending",
-  '''<path d="M52 210 h180 v-56 h-60 v-44 h-120z" fill="none" stroke="rgb(18,10,11)" stroke-width="3"/>
-  <text x="70" y="184" class="s-b">800 m&#178;</text>
-  <text x="70" y="206" class="s-s">slope at rear</text>
-  <rect x="278" y="128" width="150" height="54" rx="10" fill="rgb(18,10,11)"/>
-  <circle cx="308" cy="192" r="16" fill="none" stroke="rgb(18,10,11)" stroke-width="4"/>
-  <circle cx="398" cy="192" r="16" fill="none" stroke="rgb(18,10,11)" stroke-width="4"/>
-  <line x1="278" y1="112" x2="428" y2="112" stroke="rgb(204,255,0)" stroke-width="3"/>
-  <text x="278" y="102" class="s-b" font-size="14">46 cm</text>''',
-  "RESTOCK", "18th", ["sit-on mower", "callback booked"]),
+# Was a restock date, which answers nothing. Now the plot picks the machine.
+"outdoor": {
+  "alt": {"en": "A lawn measured and matched to a robot mower model",
+          "it": "Un prato misurato e abbinato al modello di robot rasaerba"},
+  "label": {"en": "MODEL", "it": "MODELLO"},
+  "big": "1000 m&#178;",
+  "notes": {"en": ["handles a 22% slope", "fits a 60 cm gate"],
+            "it": ["pendenza fino al 22%", "cancello da 60 cm"]},
+  "t": {"en": {"area": "800 m&#178;", "slope": "slope at rear 22%", "gate": "gate 60 cm"},
+        "it": {"area": "800 m&#178;", "slope": "pendenza sul retro 22%", "gate": "cancello 60 cm"}},
+  "svg": '''
+  <path d="M52 96 h132 v54 h68 v84 h-200z" fill="{lime}" opacity=".14"/>
+  <path d="M52 96 h132 v54 h68 v84 h-200z" fill="none" stroke="{ink}" stroke-width="3"/>
+  <line x1="190" y1="112" x2="248" y2="112" stroke="{ink}" stroke-width="1.5" opacity=".4"/>
+  <line x1="198" y1="126" x2="248" y2="126" stroke="{ink}" stroke-width="1.5" opacity=".4"/>
+  <line x1="206" y1="140" x2="248" y2="140" stroke="{ink}" stroke-width="1.5" opacity=".4"/>
+  <text x="66" y="178" class="s-b">{area}</text>
+  <text x="66" y="198" class="s-s" font-size="11.5">{slope}</text>
+  <line x1="112" y1="234" x2="152" y2="234" stroke="{bg}" stroke-width="7"/>
+  <text x="132" y="256" class="s-s" text-anchor="middle" font-size="11.5">{gate}</text>
+  <rect x="296" y="132" width="136" height="46" rx="14" fill="{ink}"/>
+  <rect x="316" y="148" width="60" height="5" rx="2.5" fill="{lime}"/>
+  <circle cx="322" cy="188" r="15" fill="none" stroke="{ink}" stroke-width="4"/>
+  <circle cx="406" cy="188" r="15" fill="none" stroke="{ink}" stroke-width="4"/>
+  <line x1="296" y1="118" x2="432" y2="118" stroke="{lime}" stroke-width="3"/>
+  <line x1="296" y1="112" x2="296" y2="124" stroke="{lime}" stroke-width="3"/>
+  <line x1="432" y1="112" x2="432" y2="124" stroke="{lime}" stroke-width="3"/>
+  <text x="364" y="106" class="s-b" text-anchor="middle" font-size="12.5">22 cm</text>''',
+},
 
-"health": ("A subscription schedule with one delivery skipped",
-  '''<rect x="44" y="76" width="196" height="164" rx="12" fill="none" stroke="rgb(18,10,11)" stroke-width="3"/>
-  <line x1="44" y1="116" x2="240" y2="116" stroke="rgb(18,10,11)" stroke-width="3"/>
-  <circle cx="88" cy="152" r="14" fill="rgb(227,226,226)"/>
-  <circle cx="142" cy="152" r="14" fill="none" stroke="rgb(18,10,11)" stroke-width="3" stroke-dasharray="4 4"/>
-  <circle cx="196" cy="152" r="14" fill="rgb(204,255,0)"/>
-  <text x="74" y="196" class="s-s" font-size="12">sent</text>
-  <text x="122" y="196" class="s-s" font-size="12">skipped</text>
-  <text x="176" y="196" class="s-s" font-size="12">next</text>
-  <rect x="286" y="96" width="160" height="124" rx="12" fill="rgb(18,10,11)"/>
-  <rect x="308" y="126" width="116" height="6" rx="3" fill="rgb(204,255,0)"/>
+# Composition, not parcel tracking - the thing that decides whether it comes
+# back.
+"fashion": {
+  "alt": {"en": "Two fabric compositions compared on the properties that drive returns",
+          "it": "Due composizioni a confronto sulle proprieta&#768; che generano i resi"},
+  "label": {"en": "PICK", "it": "SCEGLI"},
+  "big": "100% CO",
+  "notes": {"en": ["pre-shrunk, true to size", "the blend runs small"],
+            "it": ["pre-ristretto", "il misto veste stretto"]},
+  "t": {"en": {"a": "100% cotton", "b": "65% PES / 35% CO",
+               "r1": "shrinkage", "r2": "stretch", "r3": "breathable"},
+        "it": {"a": "100% cotone", "b": "65% PES / 35% CO",
+               "r1": "ritiro", "r2": "elasticita&#768;", "r3": "traspirante"}},
+  "svg": '''
+  <rect x="48" y="84" width="150" height="94" rx="10" fill="{ink}"/>
+  <line x1="48" y1="108" x2="198" y2="108" stroke="rgba(248,244,241,.13)" stroke-width="1"/>
+  <line x1="48" y1="131" x2="198" y2="131" stroke="rgba(248,244,241,.13)" stroke-width="1"/>
+  <line x1="48" y1="154" x2="198" y2="154" stroke="rgba(248,244,241,.13)" stroke-width="1"/>
+  <line x1="86" y1="84" x2="86" y2="178" stroke="rgba(248,244,241,.13)" stroke-width="1"/>
+  <line x1="124" y1="84" x2="124" y2="178" stroke="rgba(248,244,241,.13)" stroke-width="1"/>
+  <line x1="162" y1="84" x2="162" y2="178" stroke="rgba(248,244,241,.13)" stroke-width="1"/>
+  <rect x="48" y="84" width="150" height="94" rx="10" fill="none" stroke="{lime}" stroke-width="3"/>
+  <text x="48" y="200" class="s-b" font-size="12.5">{a}</text>
+  <rect x="230" y="84" width="150" height="94" rx="10" fill="none" stroke="{line}" stroke-width="3"/>
+  <line x1="230" y1="113" x2="380" y2="113" stroke="{line}" stroke-width="1"/>
+  <line x1="230" y1="142" x2="380" y2="142" stroke="{line}" stroke-width="1"/>
+  <line x1="280" y1="84" x2="280" y2="178" stroke="{line}" stroke-width="1"/>
+  <line x1="330" y1="84" x2="330" y2="178" stroke="{line}" stroke-width="1"/>
+  <text x="230" y="200" class="s-s" font-size="12.5">{b}</text>
+  <circle cx="54" cy="228" r="5" fill="{lime}"/><text x="68" y="233" class="s-s" font-size="11.5">{r1}</text>
+  <circle cx="170" cy="228" r="5" fill="{line}"/><text x="184" y="233" class="s-s" font-size="11.5">{r2}</text>
+  <circle cx="286" cy="228" r="5" fill="{lime}"/><text x="300" y="233" class="s-s" font-size="11.5">{r3}</text>''',
+},
+
+# Choosing the wrong size is the expensive mistake here, not the delivery.
+"sports": {
+  "alt": {"en": "A rider height and inseam matched to a frame size",
+          "it": "Altezza e cavallo del ciclista abbinati alla taglia del telaio"},
+  "label": {"en": "FRAME", "it": "TAGLIA"},
+  "big": "M &#183; 54",
+  "notes": {"en": ["rider 178 cm", "inseam 81 cm"],
+            "it": ["ciclista 178 cm", "cavallo 81 cm"]},
+  "t": {"en": {"h": "178 cm", "ins": "inseam 81 cm", "reach": "reach 389"},
+        "it": {"h": "178 cm", "ins": "cavallo 81 cm", "reach": "reach 389"}},
+  "svg": '''
+  <line x1="72" y1="76" x2="72" y2="242" stroke="{ink}" stroke-width="3"/>
+  <line x1="64" y1="76" x2="80" y2="76" stroke="{ink}" stroke-width="3"/>
+  <line x1="64" y1="242" x2="80" y2="242" stroke="{ink}" stroke-width="3"/>
+  <line x1="66" y1="118" x2="78" y2="118" stroke="{ink}" stroke-width="1.5" opacity=".45"/>
+  <line x1="66" y1="160" x2="78" y2="160" stroke="{ink}" stroke-width="1.5" opacity=".45"/>
+  <line x1="66" y1="202" x2="78" y2="202" stroke="{ink}" stroke-width="1.5" opacity=".45"/>
+  <text x="92" y="118" class="s-b">{h}</text>
+  <line x1="94" y1="176" x2="94" y2="242" stroke="{lime}" stroke-width="4"/>
+  <text x="108" y="214" class="s-s" font-size="11.5">{ins}</text>
+  <circle cx="262" cy="204" r="34" fill="none" stroke="{ink}" stroke-width="3"/>
+  <circle cx="398" cy="204" r="34" fill="none" stroke="{ink}" stroke-width="3"/>
+  <path d="M262 204 L316 204 L344 138 L296 138 Z" fill="none" stroke="{ink}" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M316 204 L398 204" stroke="{ink}" stroke-width="4"/>
+  <path d="M344 138 L398 204" stroke="{ink}" stroke-width="4"/>
+  <path d="M296 138 L262 204" stroke="{ink}" stroke-width="4"/>
+  <path d="M344 138 L352 122" stroke="{ink}" stroke-width="4" stroke-linecap="round"/>
+  <path d="M338 120 h26" stroke="{ink}" stroke-width="4" stroke-linecap="round"/>
+  <path d="M296 138 L288 118" stroke="{ink}" stroke-width="4" stroke-linecap="round"/>
+  <path d="M276 114 h26" stroke="{ink}" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="316" cy="204" r="6" fill="{lime}"/>
+  <circle cx="344" cy="138" r="5" fill="{lime}"/>''',
+},
+
+# A quote request, start to finish.
+"industrial": {
+  "alt": {"en": "A quote request read back with contract pricing applied",
+          "it": "Una richiesta di preventivo con prezzo contrattuale applicato"},
+  "label": {"en": "QUOTE IN", "it": "PREVENTIVO IN"},
+  "big": "2 h",
+  "notes": {"en": ["contract price applied", "PDF to purchasing"],
+            "it": ["prezzo contrattuale", "PDF all&rsquo;ufficio acquisti"]},
+  "t": {"en": {"head": "RFQ &#183; Harlow Engineering", "l1": "M10 &#215; 40 A4-316",
+               "q1": "2 000", "l2": "Washer A4 M10", "q2": "4 000",
+               "foot": "delivery to site &#183; week 34"},
+        "it": {"head": "RdO &#183; Harlow Engineering", "l1": "M10 &#215; 40 A4-316",
+               "q1": "2 000", "l2": "Rondella A4 M10", "q2": "4 000",
+               "foot": "consegna in cantiere &#183; settimana 34"}},
+  "svg": '''
+  <rect x="48" y="70" width="230" height="168" rx="10" fill="#fff" stroke="{ink}" stroke-width="3"/>
+  <path d="M58 70 h210 a10 10 0 0 1 10 10 v24 h-230 v-24 a10 10 0 0 1 10 -10z" fill="{ink}"/>
+  <text x="64" y="94" font-family="Satoshi,sans-serif" font-size="12" font-weight="700" fill="rgba(248,244,241,.9)">{head}</text>
+  <text x="64" y="136" class="s-s" font-size="12">{l1}</text>
+  <text x="262" y="136" class="s-b" font-size="12" text-anchor="end">{q1}</text>
+  <line x1="64" y1="148" x2="262" y2="148" stroke="{line}" stroke-width="1"/>
+  <text x="64" y="172" class="s-s" font-size="12">{l2}</text>
+  <text x="262" y="172" class="s-b" font-size="12" text-anchor="end">{q2}</text>
+  <line x1="64" y1="184" x2="262" y2="184" stroke="{line}" stroke-width="1"/>
+  <text x="64" y="208" class="s-s" font-size="11">{foot}</text>
+  <rect x="64" y="216" width="88" height="8" rx="4" fill="{lime}"/>
+  <path d="M300 154 h50" stroke="{ink}" stroke-width="3"/>
+  <path d="M342 144 l12 10 -12 10" fill="none" stroke="{ink}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="372" y="104" width="96" height="100" rx="8" fill="{ink}"/>
+  <rect x="388" y="126" width="64" height="5" rx="2.5" fill="{lime}"/>
+  <rect x="388" y="142" width="44" height="4" rx="2" fill="rgba(248,244,241,.32)"/>
+  <rect x="388" y="156" width="54" height="4" rx="2" fill="rgba(248,244,241,.32)"/>
+  <rect x="388" y="174" width="30" height="8" rx="4" fill="{lime}"/>''',
+},
+
+# Unchanged drawing - not flagged - but now bilingual and on grey.
+"health": {
+  "alt": {"en": "A subscription schedule with one delivery skipped",
+          "it": "Un abbonamento con una consegna saltata"},
+  "label": {"en": "NEXT CHARGE", "it": "PROSSIMO"},
+  "big": "3rd",
+  "notes": {"en": ["one skipped", "new address saved"],
+            "it": ["una saltata", "nuovo indirizzo salvato"]},
+  "t": {"en": {"a": "sent", "b": "skipped", "c": "next"},
+        "it": {"a": "inviata", "b": "saltata", "c": "prossima"}},
+  "svg": '''
+  <rect x="44" y="76" width="196" height="164" rx="12" fill="none" stroke="{ink}" stroke-width="3"/>
+  <line x1="44" y1="116" x2="240" y2="116" stroke="{ink}" stroke-width="3"/>
+  <circle cx="88" cy="152" r="14" fill="{line}"/>
+  <circle cx="142" cy="152" r="14" fill="none" stroke="{ink}" stroke-width="3" stroke-dasharray="4 4"/>
+  <circle cx="196" cy="152" r="14" fill="{lime}"/>
+  <text x="88" y="196" class="s-s" font-size="12" text-anchor="middle">{a}</text>
+  <text x="142" y="196" class="s-s" font-size="12" text-anchor="middle">{b}</text>
+  <text x="196" y="196" class="s-s" font-size="12" text-anchor="middle">{c}</text>
+  <rect x="286" y="96" width="160" height="124" rx="12" fill="{ink}"/>
+  <rect x="308" y="126" width="116" height="6" rx="3" fill="{lime}"/>
   <rect x="308" y="146" width="86" height="6" rx="3" fill="rgba(248,244,241,.32)"/>
   <rect x="308" y="166" width="100" height="6" rx="3" fill="rgba(248,244,241,.32)"/>''',
-  "NEXT CHARGE", "3rd", ["one skipped", "new address saved"]),
-
-"sports": ("A packed rower measured for a doorway and a two-person carry",
-  '''<rect x="44" y="132" width="216" height="46" rx="8" fill="rgb(18,10,11)"/>
-  <line x1="44" y1="116" x2="260" y2="116" stroke="rgb(204,255,0)" stroke-width="3"/>
-  <text x="44" y="106" class="s-b" font-size="14">218 cm packed</text>
-  <text x="44" y="206" class="s-s">44 kg &#183; one box</text>
-  <path d="M320 96 v140" stroke="rgb(18,10,11)" stroke-width="3"/>
-  <path d="M420 96 v140" stroke="rgb(18,10,11)" stroke-width="3"/>
-  <text x="330" y="86" class="s-s" font-size="12">standard doorway</text>
-  <circle cx="352" cy="166" r="13" fill="rgb(204,255,0)"/><circle cx="390" cy="166" r="13" fill="rgb(204,255,0)"/>''',
-  "DELIVERY", "2-person", ["room of choice", "assembly added"]),
-
-"fashion": ("A parcel tracked through carrier events to a pickup point",
-  '''<rect x="48" y="96" width="120" height="100" rx="10" fill="rgb(18,10,11)"/>
-  <line x1="108" y1="96" x2="108" y2="196" stroke="rgb(204,255,0)" stroke-width="5"/>
-  <line x1="188" y1="146" x2="470" y2="146" stroke="rgb(227,226,226)" stroke-width="4"/>
-  <line x1="188" y1="146" x2="386" y2="146" stroke="rgb(204,255,0)" stroke-width="4"/>
-  <circle cx="188" cy="146" r="11" fill="rgb(204,255,0)"/>
-  <circle cx="287" cy="146" r="11" fill="rgb(204,255,0)"/>
-  <circle cx="386" cy="146" r="11" fill="rgb(204,255,0)"/>
-  <circle cx="470" cy="146" r="11" fill="none" stroke="rgb(18,10,11)" stroke-width="3" stroke-dasharray="4 4"/>
-  <text x="176" y="186" class="s-s" font-size="11">picked</text>
-  <text x="262" y="186" class="s-s" font-size="11">in transit</text>
-  <text x="348" y="186" class="s-b" font-size="11">held at depot</text>
-  <text x="446" y="186" class="s-s" font-size="11">pickup</text>''',
-  "REROUTED", "400 m", ["pickup point", "code sent by text"]),
+},
 }
 
 
-def scene(kind):
-    """Flat geometric SVG per category. One layout law across all nine: the
-    situation on the left, the resolved answer in a dark card on the right -
-    so the family reads as one system rather than nine separate drawings."""
-    alt, body, lbl, big, notes = SCENES[kind]
-    ns = "".join(
-        f'<text x="524" y="{192 + i*22}" class="s-n">{n}</text>'
-        for i, n in enumerate(notes))
-    return (f'<svg class="scene" viewBox="0 0 720 300" role="img" aria-label="{alt}">'
-            '<style>.s-b{font-family:Satoshi,sans-serif;font-size:15px;font-weight:700;fill:rgb(18,10,11)}'
+def scene(kind, lang="en"):
+    """Flat geometric SVG per category, in the language of the page.
+
+    scene() used to take no language at all, so every Italian industry page
+    rendered "single floor", "SIZED AT" and "climate zone E" in English inside
+    the graphic. The string table lives with the drawing rather than in
+    industry_data*.py because the two have to line up pixel by pixel - a longer
+    Italian word is a layout problem, not a content one.
+    """
+    s = SCENES[kind]
+    t = dict(s["t"][lang], ink=INK, lime=LIME, line=LINE, bg=BG)
+    body = s["svg"].format(**t)
+    ns = "".join(f'<text x="524" y="{192 + i*22}" class="s-n">{n}</text>'
+                 for i, n in enumerate(s["notes"][lang]))
+    # The answer card is 176px wide with a 24px gutter, so 152px of room. At a
+    # fixed 34px, "12 000 BTU" and "100% CO" ran straight off the edge. Sized
+    # from the visible glyph count - an entity is one character, not six.
+    plain = re.sub(r"&[#a-zA-Z0-9]+;", "x", s["big"])
+    big_size = 34 if len(plain) <= 6 else 28 if len(plain) <= 8 else 23 if len(plain) <= 11 else 19
+    return (f'<svg class="scene" viewBox="0 0 720 300" role="img" '
+            f'aria-label="{s["alt"][lang]}">'
+            '<style>.s-b{font-family:Satoshi,sans-serif;font-size:15px;font-weight:700;fill:'
+            + INK + '}'
             '.s-s{font-family:Satoshi,sans-serif;font-size:12px;fill:rgb(69,65,64)}'
+            '.s-q{font-family:Satoshi,sans-serif;font-size:13.5px;font-style:italic;fill:rgb(69,65,64)}'
             '.s-n{font-family:Satoshi,sans-serif;font-size:13px;fill:rgba(248,244,241,.8)}</style>'
-            '<rect x="0" y="0" width="720" height="300" rx="24" fill="rgb(248,244,241)"/>'
+            f'<rect x="0" y="0" width="720" height="300" rx="24" fill="{BG}"/>'
             f'{body}'
-            '<rect x="500" y="60" width="176" height="180" rx="16" fill="rgb(18,10,11)"/>'
-            f'<text x="524" y="100" font-family="Satoshi,sans-serif" font-size="12" letter-spacing="1.6" fill="rgba(248,244,241,.55)">{lbl}</text>'
-            f'<text x="524" y="146" font-family="Satoshi,sans-serif" font-size="38" font-weight="900" fill="rgb(204,255,0)">{big}</text>'
+            f'<rect x="500" y="60" width="176" height="180" rx="16" fill="{INK}"/>'
+            f'<text x="524" y="100" font-family="Satoshi,sans-serif" font-size="12" '
+            f'letter-spacing="1.6" fill="rgba(248,244,241,.55)">{s["label"][lang]}</text>'
+            f'<text x="524" y="146" font-family="Satoshi,sans-serif" font-size="{big_size}" '
+            f'font-weight="900" fill="{LIME}">{s["big"]}</text>'
             '<line x1="524" y1="166" x2="652" y2="166" stroke="rgba(248,244,241,.18)" stroke-width="1"/>'
             f'{ns}</svg>')
 
@@ -296,7 +495,7 @@ def build(slug, d, lang="en"):
             .replace("{{QUESTIONS}}", q_rows)
             .replace("{{WORKFLOWS}}", wf)
             .replace("{{WF_COUNT}}", str(len(d["workflows"])))
-            .replace("{{SCENE}}", scene(d["scene"]))
+            .replace("{{SCENE}}", scene(d["scene"], lang))
             .replace("{{ICON}}", ICONS[icon_key])
             .replace("{{ALT}}", alt)
             .replace("{{TRANSCRIPT_META}}", d["transcript_meta"])
