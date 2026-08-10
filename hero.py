@@ -161,6 +161,13 @@ REVEAL_SCRIPT = (
     "var mq=window.matchMedia('(min-width: 810px)');"
     "var arm=function(){if(!mq.matches||v.getAttribute('src'))return;"
     "v.setAttribute('src',v.getAttribute('data-src'));"
+    # preload='auto' + load() are BOTH required. Setting src on an element that
+    # still says preload="none" does not start a fetch, and play() does not
+    # override it either: on staging the element reported paused=false and
+    # networkState=LOADING for 16 seconds with ZERO bytes requested - the wave
+    # was a black box. Verified in Daniel's own Chrome: adding these two lines
+    # took it from readyState 0 to readyState 4, 4.2MB fetched, playing.
+    "v.preload='auto';v.load();"
     "var q=v.play&&v.play();if(q&&q.catch)q.catch(function(){});};"
     "arm();"
     "if(mq.addEventListener)mq.addEventListener('change',arm);"
