@@ -1,26 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Voice Agent Acceptance Test: The 20 Calls | Sabato AI</title>
-  <meta name="description" content="Twenty phone calls that turn a feeling into a number. Most of them test failing well rather than working - which is the half a demo never shows you.">
+  <title>Test di accettazione voice agent: le 20 chiamate | Sabato AI</title>
+  <meta name="description" content="Venti telefonate che trasformano una sensazione in un numero. Quasi tutte testano come fallisce, non come funziona: la metà che nessuna demo ti fa vedere.">
   <link rel="alternate" hreflang="en" href="https://www.sabato.ai/blog/voice-agent-acceptance-test">
   <link rel="alternate" hreflang="it" href="https://www.sabato.ai/it/blog/voice-agent-acceptance-test">
   <link rel="alternate" hreflang="x-default" href="https://www.sabato.ai/blog/voice-agent-acceptance-test">
-  <link rel="canonical" href="https://www.sabato.ai/blog/voice-agent-acceptance-test">
+  <link rel="canonical" href="https://www.sabato.ai/it/blog/voice-agent-acceptance-test">
 
   <meta property="og:type" content="article">
-  <meta property="og:title" content="Voice Agent Acceptance Test: The 20 Calls | Sabato AI">
-  <meta property="og:description" content="Twenty phone calls that turn a feeling into a number. Most of them test failing well rather than working - which is the half a demo never shows you.">
-  <meta property="og:url" content="https://www.sabato.ai/blog/voice-agent-acceptance-test">
+  <meta property="og:title" content="Test di accettazione voice agent: le 20 chiamate | Sabato AI">
+  <meta property="og:description" content="Venti telefonate che trasformano una sensazione in un numero. Quasi tutte testano come fallisce, non come funziona: la metà che nessuna demo ti fa vedere.">
+  <meta property="og:url" content="https://www.sabato.ai/it/blog/voice-agent-acceptance-test">
   <meta property="og:image" content="https://www.sabato.ai/fuc/assets/8Q4ofjOgRTqsr8FpanTJF9nzLwU.png">
-  <meta property="og:locale" content="en_US">
+  <meta property="og:locale" content="it_IT">
   <meta name="twitter:card" content="summary_large_image">
   <link href="/fuc/images/hWFOqN6Okd1QgfKhizqgIF1s.png" rel="icon" media="(prefers-color-scheme: light)">
   <link href="/fuc/images/dEcuqc3xAQ3JJoX4xQDYrMQefA.png" rel="icon" media="(prefers-color-scheme: dark)">
   <link rel="apple-touch-icon" href="/fuc/images/dEcuqc3xAQ3JJoX4xQDYrMQefA.png">
-  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "The twenty calls: what to test before a voice agent answers a real customer", "description": "Twenty phone calls that turn a feeling into a number. Most of them test failing well rather than working - which is the half a demo never shows you.", "datePublished": "2026-08-11", "dateModified": "2026-08-11", "inLanguage": "en", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://www.sabato.ai/blog/voice-agent-acceptance-test"}, "author": {"@type": "Organization", "name": "Sabato AI", "url": "https://www.sabato.ai"}, "publisher": {"@type": "Organization", "name": "Sabato AI", "url": "https://www.sabato.ai"}}</script>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Le venti chiamate: cosa testare prima che un voice agent risponda a un cliente vero", "description": "Venti telefonate che trasformano una sensazione in un numero. Quasi tutte testano come fallisce, non come funziona: la metà che nessuna demo ti fa vedere.", "datePublished": "2026-08-11", "dateModified": "2026-08-11", "inLanguage": "it", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://www.sabato.ai/it/blog/voice-agent-acceptance-test"}, "author": {"@type": "Organization", "name": "Sabato AI", "url": "https://www.sabato.ai"}, "publisher": {"@type": "Organization", "name": "Sabato AI", "url": "https://www.sabato.ai"}}</script>
   <style>
     /* ============ Fonts (local mirrors, same files the site loads) ============ */
     @font-face { font-family: "Satoshi"; src: url("/fuc/third-party-assets/fontshare/wf/TTX2Z3BF3P6Y5BQT3IV2VNOK6FL22KUT/7QYRJOI3JIMYHGY6CH7SOIFRQLZOLNJ6/KFIAZD4RUMEZIYV6FQ3T3GP5PDBDB6JY.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 400; }
@@ -341,188 +341,195 @@
 <!-- /GA4 -->
 </head>
 <body>
-<header class="sb-header" data-lang="en"><div class="sb-hdr-shell"><a class="sb-hdr-logo" href="/" aria-label="Sabato AI - Home"><img src="/fuc/images/UTATYXc6NipXQRoxyaGHHfHSyA4-f2557e25.png" alt="Sabato AI" width="2080" height="278"></a><nav class="sb-hdr-nav" aria-label="Main"><span class="sb-nav-item"><a href="/use-cases" aria-haspopup="true">Use Cases</a><span class="sb-dd" data-uc-dropdown="uc"><a href="/use-cases/pre-sales-consultation">Pre-Sales Consultation</a><a href="/use-cases/cart-abandonment-recovery">Cart Abandonment Recovery</a><a href="/use-cases/where-is-my-order">Where Is My Order</a><a href="/use-cases/qualify-and-collect-for-quote">Qualify &amp; Collect for Quote</a><a href="/use-cases/open-a-complaint">Open a Complaint</a><a href="/use-cases/checkout-summary-via-text">Checkout Summary via Text</a><a href="/use-cases/managing-returns">Managing Returns</a><a href="/use-cases/post-delivery-feedback">Post-Delivery Feedback</a><a href="/use-cases/back-in-stock-notification">Back-in-Stock Notification</a><a class="sb-dd-all" href="/use-cases">All use cases</a></span></span><span class="sb-nav-item"><a href="/industries" aria-haspopup="true">Industries</a><span class="sb-dd" data-uc-dropdown="ind"><a href="/industries/home-improvement">Home Improvement</a><a href="/industries/automotive-parts">Automotive &amp; Parts</a><a href="/industries/electronics-tech">Electronics &amp; Tech</a><a href="/industries/furniture-home">Furniture &amp; Home</a><a href="/industries/outdoor-garden">Outdoor &amp; Garden</a><a href="/industries/fashion-apparel">Fashion &amp; Apparel</a><a href="/industries/health-wellness">Health &amp; Wellness</a><a href="/industries/sports-fitness">Sports &amp; Fitness</a><a href="/industries/industrial-b2b">Industrial &amp; B2B</a><a class="sb-dd-all" href="/industries">All industries</a></span></span><a href="/pricing">Pricing</a><a href="/about">About</a><a href="/contact">Contact</a><a class="sb-hdr-flag" href="/it" data-lang-switch aria-label="Italiano">🇮🇹</a></nav><a class="sb-hdr-btn" href="https://cal.com/sabatoai/intro" target="_blank" rel="noopener">Start Free Pilot</a><button class="sb-burger" type="button" aria-expanded="false" aria-controls="sb-menu" aria-label="Open menu"><span></span><span></span></button></div><div class="sb-panel" id="sb-menu"><div class="sb-panel-inner"><a href="/use-cases">Use Cases</a><a href="/industries">Industries</a><a href="/pricing">Pricing</a><a href="/about">About</a><a href="/contact">Contact</a><a href="https://cal.com/sabatoai/intro" target="_blank" rel="noopener">Book a Demo</a><a class="sb-hdr-flag" href="/it" data-lang-switch>🇮🇹</a></div></div></header><script>(function(){var h=document.querySelector(".sb-header");if(!h)return;var b=h.querySelector(".sb-burger"),p=h.querySelector(".sb-panel");if(!b||!p)return;function set(o){h.classList.toggle("sb-open",o);b.setAttribute("aria-expanded",o?"true":"false");document.documentElement.style.overflow=o?"hidden":"";}b.addEventListener("click",function(e){e.preventDefault();set(!h.classList.contains("sb-open"));});p.addEventListener("click",function(e){if(e.target.closest("a"))set(false);});document.addEventListener("keydown",function(e){if(e.key==="Escape")set(false);});addEventListener("resize",function(){if(innerWidth>=1024)set(false);});})();</script>
+<header class="sb-header" data-lang="it"><div class="sb-hdr-shell"><a class="sb-hdr-logo" href="/it" aria-label="Sabato AI - Home"><img src="/fuc/images/UTATYXc6NipXQRoxyaGHHfHSyA4-f2557e25.png" alt="Sabato AI" width="2080" height="278"></a><nav class="sb-hdr-nav" aria-label="Main"><span class="sb-nav-item"><a href="/it/casi-duso" aria-haspopup="true">Casi d'uso</a><span class="sb-dd" data-uc-dropdown="uc"><a href="/it/casi-duso/consulenza-pre-vendita">Consulenza Pre-Vendita</a><a href="/it/casi-duso/recupero-carrelli-abbandonati">Recupero Carrelli Abbandonati</a><a href="/it/casi-duso/dove-e-il-mio-ordine">Dov'è il Mio Ordine</a><a href="/it/casi-duso/preventivi-automatici">Preventivi Automatici</a><a href="/it/casi-duso/apertura-reclamo">Apertura Reclamo</a><a href="/it/casi-duso/riepilogo-checkout-via-messaggio">Riepilogo Checkout via Messaggio</a><a href="/it/casi-duso/gestione-resi">Gestione Resi</a><a href="/it/casi-duso/feedback-post-consegna">Feedback Post-Consegna</a><a href="/it/casi-duso/notifica-ritorno-in-stock">Notifica Ritorno in Stock</a><a class="sb-dd-all" href="/it/casi-duso">Tutti i casi d'uso</a></span></span><span class="sb-nav-item"><a href="/it/settori" aria-haspopup="true">Settori</a><span class="sb-dd" data-uc-dropdown="ind"><a href="/it/settori/clima-e-riscaldamento">Clima e Riscaldamento</a><a href="/it/settori/ricambi-auto">Automotive e Ricambi</a><a href="/it/settori/elettronica">Elettronica e Tech</a><a href="/it/settori/arredamento">Arredamento e Casa</a><a href="/it/settori/industria-b2b">Industria e B2B</a><a href="/it/settori/giardino-outdoor">Outdoor e Giardino</a><a href="/it/settori/moda-abbigliamento">Fashion e Abbigliamento</a><a href="/it/settori/salute-benessere">Salute e Benessere</a><a href="/it/settori/sport-fitness">Sport e Fitness</a><a class="sb-dd-all" href="/it/settori">Tutti i settori</a></span></span><a href="/it/prezzi">Prezzi</a><a href="/it/chi-siamo">Chi Siamo</a><a href="/it/contatti">Contatti</a><a class="sb-hdr-flag" href="/" data-lang-switch aria-label="English">🇬🇧</a></nav><a class="sb-hdr-btn" href="https://cal.com/sabatoai/intro" target="_blank" rel="noopener">Inizia il Pilota Gratuito</a><button class="sb-burger" type="button" aria-expanded="false" aria-controls="sb-menu" aria-label="Apri il menu"><span></span><span></span></button></div><div class="sb-panel" id="sb-menu"><div class="sb-panel-inner"><a href="/it/casi-duso">Casi d'uso</a><a href="/it/settori">Settori</a><a href="/it/prezzi">Prezzi</a><a href="/it/chi-siamo">Chi Siamo</a><a href="/it/contatti">Contatti</a><a href="https://cal.com/sabatoai/intro" target="_blank" rel="noopener">Prenota una Demo</a><a class="sb-hdr-flag" href="/" data-lang-switch>🇬🇧</a></div></div></header><script>(function(){var h=document.querySelector(".sb-header");if(!h)return;var b=h.querySelector(".sb-burger"),p=h.querySelector(".sb-panel");if(!b||!p)return;function set(o){h.classList.toggle("sb-open",o);b.setAttribute("aria-expanded",o?"true":"false");document.documentElement.style.overflow=o?"hidden":"";}b.addEventListener("click",function(e){e.preventDefault();set(!h.classList.contains("sb-open"));});p.addEventListener("click",function(e){if(e.target.closest("a"))set(false);});document.addEventListener("keydown",function(e){if(e.key==="Escape")set(false);});addEventListener("resize",function(){if(innerWidth>=1024)set(false);});})();</script>
 <section class="hero post-hero">
-    <a class="backlink" href="/blog">← Back to the blog</a>
+    <a class="backlink" href="/it/blog">← Torna al blog</a>
     <div style="display:flex;flex-direction:column;align-items:center;">
-      <span class="tag">Voice AI DIY</span>
-      <h1>The twenty calls: what to test before a voice agent answers a real customer</h1>
-      <p class="meta"><span>Aug 11, 2026</span><span>8 min read</span><span>By Sabato AI</span><span><a href="/it/blog/voice-agent-acceptance-test" style="color:#fff;text-decoration:underline;text-underline-offset:3px;">Leggi in italiano 🇮🇹</a></span></p>
+      <span class="tag">Voice AI fai-da-te</span>
+      <h1>Le venti chiamate: cosa testare prima che un voice agent risponda a un cliente vero</h1>
+      <p class="meta"><span>11 ago 2026</span><span>9 min di lettura</span><span>Di Sabato AI</span><span><a href="/blog/voice-agent-acceptance-test" style="color:#fff;text-decoration:underline;text-underline-offset:3px;">Read in English 🇬🇧</a></span></p>
     </div>
   </section>
   <main>
     <article class="prose">
-<p><em>The Build File, issue 00. A season on running a voice build without being an engineer.</em></p>
-<p>There is a moment near the end of every voice project where somebody asks whether it's ready,
-and nobody in the room has an answer that isn't a feeling.</p>
-<p>The demos went well. The team is tired and would like to ship. The person who has to decide has
-no way to check, because everything he's been shown was chosen by the people showing it.</p>
-<p>So here is the checklist I'd want in that room. Twenty calls. Make them, score them, and the
-feeling turns into a number.</p>
-<p>One thing to notice before you start: almost every one of these is a test of failing well, not of
-working. Teams test whether the agent can do the job. Nobody tests what happens when the caller
-mumbles, changes his mind, gets angry, or asks something the agent has no business answering.
-That's where the whole risk lives, and it's the half that never makes it into a demo.</p>
+<p><em>The Build File, numero 00. Una stagione su come gestire un progetto voice senza essere un tecnico.</em></p>
+<p>C'è un momento, verso la fine di ogni progetto voice, in cui qualcuno chiede se è pronto e
+nessuno nella stanza ha una risposta che non sia una sensazione.</p>
+<p>Le demo sono andate bene. Il team è stanco e vorrebbe andare in produzione. Chi deve decidere non
+ha modo di verificare, perché tutto quello che gli è stato mostrato l'hanno scelto le persone che
+glielo stavano mostrando.</p>
+<p>Questa è la checklist che vorrei avere in quella stanza. Venti chiamate. Falle, assegna un
+punteggio, e la sensazione diventa un numero.</p>
+<p>Una cosa da notare prima di iniziare: quasi tutte queste prove testano come l'agente fallisce, non
+come funziona. I team verificano se sa fare il suo lavoro. Nessuno verifica cosa succede quando il
+cliente farfuglia, cambia idea, si arrabbia, o chiede qualcosa a cui l'agente non deve rispondere.
+È lì che sta tutto il rischio, ed è la metà che non entra mai in una demo.</p>
 <hr />
-<h2>How to run it</h2>
-<p><strong>Actually phone the number.</strong> Not a test harness, not a web widget. The phone line is the
-product. Half of these failures only appear over a real carrier.</p>
-<p><strong>Use people who aren't on the project.</strong> Anyone who built it will unconsciously speak clearly,
-wait politely, and ask the questions it can answer. Borrow people from the warehouse and from
-sales. Ideally one person who is genuinely impatient.</p>
-<p><strong>Score binary.</strong> Pass or fail, no partial credit, no "well, it nearly did." An agent that nearly
-handles an interruption doesn't.</p>
-<p><strong>Record everything and listen back.</strong> The person on the call is concentrating on talking and
-will miss half of it.</p>
-<p>Two hours, two people, one afternoon. That's the whole cost.</p>
+<h2>Come si fa</h2>
+<p><strong>Telefona davvero al numero.</strong> Non un ambiente di test, non un widget sul sito. La linea
+telefonica è il prodotto. Metà di questi problemi si vedono solo passando da un operatore vero.</p>
+<p><strong>Usa persone che non lavorano al progetto.</strong> Chi l'ha costruito parlerà scandendo, aspetterà con
+pazienza e farà le domande a cui sa rispondere, senza nemmeno accorgersene. Prendi qualcuno dal
+magazzino e qualcuno dalle vendite. Meglio ancora se c'è una persona genuinamente impaziente.</p>
+<p><strong>Punteggio binario.</strong> Passa o non passa, senza mezze misure, senza "però ci è andato vicino". Un
+agente che gestisce quasi un'interruzione non la gestisce.</p>
+<p><strong>Registra tutto e riascolta.</strong> Chi è al telefono sta concentrato a parlare e metà delle cose se
+le perde.</p>
+<p>Due ore, due persone, un pomeriggio. Il costo è tutto qui.</p>
 <hr />
-<h2>Group one: does it behave like a conversation</h2>
-<p><strong>1. The interrupter.</strong> Start talking over it, mid-sentence, halfway through its longest answer.
-<em>Pass: it stops within about a beat and listens. Fail: it finishes its sentence while you're
-speaking.</em></p>
-<p><strong>2. The silence.</strong> Say nothing for six seconds after it asks you something.
-<em>Pass: one calm prompt, then it waits again. Fail: nervous filler, repeating itself, or hanging
-up on a customer who was reading his order number off a box.</em></p>
-<p><strong>3. The correction.</strong> Give it a number, let it confirm, then say "no, sorry, it's actually…".
-<em>Pass: the correction wins everywhere, including in whatever record gets written at the end.
-Fail: the first value survives somewhere downstream and nobody notices for a week.</em></p>
-<p><strong>4. The multi-intent.</strong> "I want to check my order, ask about the warranty, and change my
-delivery address." All in one breath.
-<em>Pass: all three handled, or two of them explicitly parked and returned to. Fail: it answers the
-last one and the other two evaporate.</em></p>
-<p><strong>5. The mid-transaction hang-up.</strong> Give it half the details, then drop the call.
-<em>Pass: clean state, nothing half-written, and a follow-up someone can pick up. Fail: a ghost
-order, or a record that exists but is missing the parts that matter.</em></p>
+<h2>Gruppo uno: si comporta come una conversazione?</h2>
+<p><strong>1. L'interruzione.</strong> Parlagli sopra, a metà frase, mentre sta dando la risposta più lunga che ha.
+<em>Passa: si ferma nel giro di un battito e ascolta. Fallisce: finisce la frase mentre tu stai
+parlando.</em></p>
+<p><strong>2. Il silenzio.</strong> Non dire niente per sei secondi dopo una sua domanda.
+<em>Passa: un solo sollecito, con calma, poi aspetta di nuovo. Fallisce: riempitivi nervosi, si
+ripete, o chiude in faccia a un cliente che stava leggendo il numero d'ordine sulla scatola.</em></p>
+<p><strong>3. La correzione.</strong> Dagli un numero, fatteglielo confermare, poi digli "no, scusa, in realtà
+è…".
+<em>Passa: la correzione vince ovunque, anche nel record che viene scritto alla fine. Fallisce: il
+primo valore sopravvive da qualche parte a valle e nessuno se ne accorge per una settimana.</em></p>
+<p><strong>4. Le tre richieste in una.</strong> "Devo controllare il mio ordine, chiedere della garanzia e
+cambiare l'indirizzo di consegna." Tutto in un fiato.
+<em>Passa: le gestisce tutte e tre, oppure ne mette due esplicitamente in attesa e ci torna.
+Fallisce: risponde all'ultima e le altre due svaniscono.</em></p>
+<p><strong>5. Il riaggancio a metà.</strong> Dagli metà dei dati, poi chiudi la chiamata.
+<em>Passa: stato pulito, niente scritto a metà, e un follow-up che qualcuno può riprendere in mano.
+Fallisce: un ordine fantasma, o un record che esiste ma senza i pezzi che contano.</em></p>
 <hr />
-<h2>Group two: does it cope with real people on real lines</h2>
-<p><strong>6. The bad line.</strong> Call from a moving car, a lift, or a basement. Somewhere with genuinely poor
-signal.
-<em>Pass: it asks you to repeat rather than guessing. Fail: it invents a plausible sentence out of
-half-heard words and proceeds confidently.</em></p>
-<p><strong>7. The background.</strong> Call from the warehouse. Or a showroom with music. Or a street.
-<em>Pass: still gets the essentials. Fail: everything after the noise starts is wrong.</em></p>
-<p><strong>8. The accent.</strong> Not a colleague reading a script. Somebody from Napoli, from Bari, from
-Bergamo. Glasgow, Marseille, Andalusia — whichever markets you actually sell into.
-<em>Pass: comparable to how it handles a neutral speaker. Fail: it works for the people who built it
-and not for the people who buy from you.</em></p>
-<p><strong>9. The code-switch.</strong> Speak your local language and drop English product names into the middle
-of sentences, the way every customer in this industry actually talks.
-<em>Pass: the product name survives. Fail: the model name comes out as something that doesn't exist
-in your catalogue.</em></p>
-<p><strong>10. The alphanumeric.</strong> Read an order reference, a VAT number and a postcode aloud, once, at
-normal speed.
-<em>Pass: right the first time, or a confirmation that doesn't feel like being interrogated. Fail:
-three attempts and the caller reaching for the keypad.</em></p>
-<p><strong>11. The spelling.</strong> Spell a surname letter by letter. Use one with near neighbours — Rossi,
-Rosso, Russo.
-<em>Pass: it gets it, and it knows when to ask. Fail: silent substitution, which is worse than
-asking.</em></p>
+<h2>Gruppo due: regge persone vere su linee vere?</h2>
+<p><strong>6. La linea disturbata.</strong> Chiama da un'auto in movimento, da un ascensore, da un piano interrato.
+Da un posto dove il segnale è davvero scarso.
+<em>Passa: ti chiede di ripetere invece di tirare a indovinare. Fallisce: si inventa una frase
+plausibile con le parole che ha sentito a metà e va avanti sicuro di sé.</em></p>
+<p><strong>7. Il rumore di fondo.</strong> Chiama dal magazzino. O da uno showroom con la musica. O dalla strada.
+<em>Passa: prende comunque l'essenziale. Fallisce: tutto quello che viene dopo l'inizio del rumore è
+sbagliato.</em></p>
+<p><strong>8. L'accento.</strong> Non un collega che legge un copione. Qualcuno di Napoli, di Bari, di Bergamo.
+Glasgow, Marsiglia, l'Andalusia — i mercati in cui vendi davvero.
+<em>Passa: se la cava come con una persona dall'accento neutro. Fallisce: funziona per chi l'ha
+costruito e non per chi ti compra.</em></p>
+<p><strong>9. Il mix di lingue.</strong> Parla in italiano e infila nomi di prodotto in inglese in mezzo alle
+frasi, come fa davvero ogni cliente di questo settore.
+<em>Passa: il nome del prodotto sopravvive. Fallisce: il modello esce con un nome che nel tuo
+catalogo non esiste.</em></p>
+<p><strong>10. Il codice alfanumerico.</strong> Detta un riferimento d'ordine, una partita IVA e un CAP ad alta
+voce, una volta sola, a velocità normale.
+<em>Passa: giusto al primo colpo, oppure una conferma che non sembra un interrogatorio. Fallisce: tre
+tentativi e il cliente che cerca la tastiera del telefono.</em></p>
+<p><strong>11. Lo spelling.</strong> Detta un cognome lettera per lettera. Usane uno con dei vicini di casa —
+Rossi, Rosso, Russo.
+<em>Passa: lo prende, e sa quando chiedere. Fallisce: sostituzione silenziosa, che è peggio che
+chiedere.</em></p>
 <hr />
-<h2>Group three: does it tell the truth</h2>
-<p>This group matters more than the other three put together. A slow agent annoys people. A
-confident, fluent, wrong agent costs you money and reputation, and it does it in a voice that
-sounds like your company.</p>
-<p><strong>12. The wrong premise.</strong> Ask about a product you don't sell, or a policy that doesn't exist.
-"What's your price match on this?" when you don't do price matching.
-<em>Pass: says so plainly. Fail: invents a policy, which it will do beautifully.</em></p>
-<p><strong>13. The stale record.</strong> Set it up so the system says in stock and it isn't, or the tracking is
-out of date.
-<em>Pass: the agent commits to nothing it can't verify, and says where the information comes from.
-Fail: a statement you now have to walk back.</em></p>
-<p><strong>14. The commitment trap.</strong> Push it. "So you guarantee it arrives Friday?" Then push again.
-<em>Pass: bounded language that survives being repeated back to you. Fail: a sentence your lawyer
-would have liked to see first.</em></p>
-<p><strong>15. The price probe.</strong> "Can you do better on that price?" Then: "the other place does it
-cheaper."
-<em>Pass: a defined boundary, held under pressure. Fail: improvisation, in either direction —
-inventing a discount, or being rude about it.</em></p>
+<h2>Gruppo tre: dice la verità?</h2>
+<p>Questo gruppo pesa più degli altri tre messi insieme. Un agente lento infastidisce le persone. Un
+agente sicuro, fluente e sbagliato ti costa soldi e reputazione, e lo fa con la voce della tua
+azienda.</p>
+<p><strong>12. La premessa sbagliata.</strong> Chiedi di un prodotto che non vendi, o di una policy che non
+esiste. "Che sconto mi fate se lo trovo a meno da un'altra parte?" quando non fai price matching.
+<em>Passa: lo dice chiaramente. Fallisce: si inventa una policy, e lo farà benissimo.</em></p>
+<p><strong>13. Il dato vecchio.</strong> Preparati il caso in cui il sistema dice disponibile e non lo è, o il
+tracking è fermo a ieri.
+<em>Passa: l'agente non si impegna su niente che non possa verificare, e dice da dove viene
+l'informazione. Fallisce: una frase che adesso devi rimangiarti.</em></p>
+<p><strong>14. La trappola dell'impegno.</strong> Insisti. "Quindi mi garantisce che arriva venerdì?" Poi insisti
+di nuovo.
+<em>Passa: un linguaggio con dei paletti, che regge anche se te lo rileggono davanti. Fallisce: una
+frase che al tuo legale sarebbe piaciuto vedere prima.</em></p>
+<p><strong>15. La leva sul prezzo.</strong> "Riuscite a farmi un prezzo migliore?" Poi: "da un'altra parte costa
+meno."
+<em>Passa: un limite definito, tenuto anche sotto pressione. Fallisce: improvvisazione, in un senso o
+nell'altro — inventarsi uno sconto, o rispondere male.</em></p>
 <hr />
-<h2>Group four: does it know its limits</h2>
-<p><strong>16. The fitment question.</strong> Ask something that needs reasoning across the catalogue, not a
-lookup. "Will this fit my model X?" "Is this compatible with what I bought last year?"
-<em>Pass: a correct answer, or a clean admission it can't be sure and a route to someone who can.
-Fail: a confident guess.</em> This is where the commercial value of pre-sales voice sits, and it's
-where most builds stop without anyone deciding to stop.</p>
-<p><strong>17. The angry caller.</strong> Be genuinely annoyed. Interrupt. Raise your voice. Say this is the
-third time you've called.
-<em>Pass: it escalates. Fail: it stays cheerful and keeps trying to help, which is the most
-infuriating possible response and the default behaviour of almost every agent I've heard.</em></p>
-<p><strong>18. The handoff.</strong> Get transferred to a person, and listen to what the person says first.
-<em>Pass: they open already knowing what the call is about. Fail: "so, tell me what this is
-regarding" — the most expensive sentence in customer service, because it undoes everything the
-agent just achieved and tells the customer the last four minutes were wasted.</em></p>
-<p><strong>19. The out-of-hours case.</strong> Run the same escalation at 9pm on a Saturday, when there is nobody
-to transfer to.
-<em>Pass: a fallback the caller actually accepts, with a commitment the business can keep. Fail: a
-loop, or a promise of a callback that nothing in your system will generate.</em></p>
-<p><strong>20. The repeat caller.</strong> Call twice in an hour about the same thing.
-<em>Pass: it knows, and doesn't make you start again. Fail: a stranger, every time.</em></p>
+<h2>Gruppo quattro: conosce i suoi limiti?</h2>
+<p><strong>16. La domanda di compatibilità.</strong> Chiedi qualcosa che richiede di ragionare sul catalogo, non
+di fare una ricerca. "Va bene per il mio modello X?" "È compatibile con quello che ho comprato
+l'anno scorso?"
+<em>Passa: una risposta corretta, oppure un'ammissione pulita di non poterne essere certo e una
+strada verso qualcuno che lo sa. Fallisce: un'ipotesi detta con sicurezza.</em> È qui che sta il
+valore commerciale del voice in pre-vendita, ed è qui che la maggior parte dei progetti si ferma
+senza che nessuno abbia deciso di fermarsi.</p>
+<p><strong>17. Il cliente arrabbiato.</strong> Arrabbiati davvero. Interrompi. Alza la voce. Digli che è la terza
+volta che chiami.
+<em>Passa: escala. Fallisce: resta allegro e continua a provare ad aiutarti, che è la risposta più
+esasperante possibile ed è il comportamento predefinito di quasi tutti gli agenti che ho sentito.</em></p>
+<p><strong>18. Il passaggio all'operatore.</strong> Fatti passare a una persona, e ascolta cosa dice per prima
+cosa.
+<em>Passa: apre già sapendo di cosa si tratta. Fallisce: "mi dica, in cosa posso aiutarla?" — la
+frase più costosa del customer service, perché annulla tutto quello che l'agente ha appena fatto e
+dice al cliente che gli ultimi quattro minuti sono stati buttati.</em></p>
+<p><strong>19. Fuori orario.</strong> Rifai la stessa escalation alle nove di sera di sabato, quando non c'è
+nessuno a cui passare la chiamata.
+<em>Passa: un'alternativa che il cliente accetta davvero, con un impegno che l'azienda può mantenere.
+Fallisce: un loop, o la promessa di una richiamata che nessun sistema genererà mai.</em></p>
+<p><strong>20. Chi richiama.</strong> Chiama due volte in un'ora per la stessa cosa.
+<em>Passa: lo sa, e non ti fa ricominciare da capo. Fallisce: uno sconosciuto, ogni volta.</em></p>
 <hr />
-<h2>Reading the results</h2>
-<p>The score is the least interesting output. What matters is the shape of the failures, because
-each group points at a different part of the system.</p>
+<h2>Come leggere i risultati</h2>
+<p>Il punteggio è la cosa meno interessante. Quello che conta è la forma dei fallimenti, perché ogni
+gruppo punta a una parte diversa del sistema.</p>
 <div class="table-wrap dense"><table>
 <thead>
 <tr>
-<th>Failures cluster in</th>
-<th>The weak part is</th>
-<th>Which means</th>
+<th>Se i fallimenti si concentrano in</th>
+<th>La parte debole è</th>
+<th>Il che significa</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Group one (1–5)</td>
-<td>Timing and turn-taking</td>
-<td>Nobody owns the pause. Usually nobody has been asked to.</td>
+<td>Gruppo uno (1–5)</td>
+<td>Tempi e gestione del turno</td>
+<td>Nessuno è responsabile della pausa. Di solito perché nessuno gliel'ha chiesto.</td>
 </tr>
 <tr>
-<td>Group two (6–11)</td>
-<td>Speech recognition, and what it was tuned on</td>
-<td>It was tested on the team, not on your customers</td>
+<td>Gruppo due (6–11)</td>
+<td>Il riconoscimento vocale, e su cosa è stato tarato</td>
+<td>È stato testato sul team, non sui tuoi clienti</td>
 </tr>
 <tr>
-<td>Group three (12–15)</td>
-<td>The data underneath, and what the agent may promise</td>
-<td>The most expensive category, and the least visible</td>
+<td>Gruppo tre (12–15)</td>
+<td>I dati sotto, e cosa l'agente può promettere</td>
+<td>La categoria più costosa, e la meno visibile</td>
 </tr>
 <tr>
-<td>Group four (16–20)</td>
-<td>Escalation design and what the agent knows about itself</td>
-<td>Someone treated the human handoff as an afterthought</td>
+<td>Gruppo quattro (16–20)</td>
+<td>Il disegno dell'escalation e cosa l'agente sa di sé</td>
+<td>Qualcuno ha trattato il passaggio all'umano come un dettaglio</td>
 </tr>
 </tbody>
 </table></div>
-<p>That mapping is the five parts of a voice agent from the other end. If the pattern here doesn't
-mean much yet, what a voice agent is actually made of
-walks through the same five layers in plain language.</p>
-<p>A first run at twelve or thirteen out of twenty is normal and not a disaster. A first run where
-group three is clean and group one is a mess is a project with a fixable problem. A first run
-where group three is a mess is a project that should not be taking customer calls yet, whatever
-the timeline says.</p>
+<p>Questa mappa sono le cinque parti di un voice agent viste dall'altro lato. Se lo schema per ora ti
+dice poco, di cosa è fatto davvero un voice agent
+ripercorre gli stessi cinque livelli in parole semplici.</p>
+<p>Dodici o tredici su venti alla prima prova è normale e non è un disastro. Una prima prova con il
+gruppo tre pulito e il gruppo uno disastrato è un progetto con un problema risolvibile. Una prima
+prova con il gruppo tre disastrato è un progetto che non dovrebbe ancora rispondere ai clienti,
+qualunque cosa dica il piano.</p>
 <hr />
-<h2>The part everyone skips</h2>
-<p>Run it again every month.</p>
-<p>Models change underneath you. Someone edits the instructions. A supplier's data format shifts. A
-new product category arrives that nobody thought to test. None of these announce themselves, and
-all of them are invisible until a customer finds them for you.</p>
-<p>An agent that passed in March and was never re-tested isn't a system. It's a memory.</p>
-<p>Twenty calls, once a month, by someone who isn't attached to the outcome. It's the cheapest line
-in the whole operation and it's the first one to quietly disappear from the calendar.</p>
-<p>This is also the only honest way to read the numbers on your dashboard, because a monthly score
-against a fixed test is the one measurement that can't drift while looking healthy — which is
-more than can be said for the metrics most voice agents report.</p>
+<h2>La parte che tutti saltano</h2>
+<p>Rifallo ogni mese.</p>
+<p>I modelli cambiano sotto di te. Qualcuno modifica le istruzioni. Un fornitore cambia formato dei
+dati. Arriva una categoria di prodotto nuova che nessuno aveva pensato di testare. Nessuna di
+queste cose si annuncia, e sono tutte invisibili finché non è un cliente a trovartele.</p>
+<p>Un agente che a marzo passava e non è mai più stato ritestato non è un sistema. È un ricordo.</p>
+<p>Venti chiamate, una volta al mese, fatte da qualcuno che non è affezionato al risultato. È la voce
+più economica di tutta l'operazione ed è la prima che sparisce silenziosamente dal calendario.</p>
+<p>È anche l'unico modo onesto di leggere i numeri sulla tua dashboard, perché un punteggio mensile
+contro un test fisso è l'unica misura che non può scivolare continuando a sembrare in salute — il
+che è più di quanto si possa dire delle metriche che la maggior parte dei voice agent riporta.</p>
 <hr />
-<p>Take this and use it. Run it against a build your own team is doing, or against something a
-supplier is showing you, or against the agent you already have in production and have never
-tested this way. It works the same in all three cases, which is rather the point.</p>
-<p><em>Next: what a voice agent is actually made of — the five parts, and the one that isn't a part at
-all.</em></p>
+<p>Prendila e usala. Falla su un progetto che sta facendo il tuo team, o su qualcosa che ti sta
+mostrando un fornitore, o sull'agente che hai già in produzione e che non hai mai testato così.
+Funziona uguale in tutti e tre i casi, che poi è il punto.</p>
+<p><em>Prossimo numero: di cosa è fatto davvero un voice agent — le cinque parti, e quella che non è
+una parte.</em></p>
     </article>
     <section class="cta-band">
-      <p class="hand">hear it for yourself</p>
-      <h2>Put a voice layer on your <span class="nb">e-commerce</span>.</h2>
-      <p>We build it, we run it, you see the numbers. Live in two weeks.</p>
-      <a class="btn-pill" href="https://cal.com/sabatoai/intro" target="_blank" rel="noopener">Start Free Pilot</a>
+      <p class="hand">ascoltala dal vivo</p>
+      <h2>Dai una voce al tuo <span class="nb">e-commerce</span>.</h2>
+      <p>Lo costruiamo noi, lo gestiamo noi, tu vedi i numeri. Live in due settimane.</p>
+      <a class="btn-pill" href="https://cal.com/sabatoai/intro" target="_blank" rel="noopener">Inizia Pilot Gratuito</a>
     </section>
   </main>
   <!-- footer: rendered by tools/apply_footer.py from footer.py - do not paste one here -->
@@ -579,6 +586,6 @@ all.</em></p>
     });
   })();
   </script>
-<footer class="sb-footer" data-lang="en"><div class="sb-shell"><div class="sb-grid"><div class="sb-brand"><a href="/" aria-label="Sabato AI - Home"><img class="sb-logo" src="/fuc/images/KY1UqOX7zKeKJdbxTotIopeeZIU-f2557e25.png" alt="Sabato AI logo" width="2080" height="278" loading="lazy"></a><p class="sb-tagline">The #1 managed Voice AI <br>for <span class="sb-nb">E-Commerce</span>.</p><p class="sb-backed">Backed by</p><img class="sb-backed-img" src="/fuc/images/V9nq776DtkEODcun83ayNz0liCU-28058054.webp" alt="ElevenLabs Grants" width="1496" height="132" loading="lazy"></div><div class="sb-col sb-col-static"><span class="sb-h4">Company</span><ul><li><a href="/">Home</a></li><li><a href="/pricing">Pricing</a></li><li><a href="/about">About</a></li><li><a href="/contact">Contact us</a></li><li><a href="/blog">Blog</a></li><li><a href="https://cal.com/sabatoai/intro" target="_blank" rel="noopener">Book a Demo</a></li></ul></div><details class="sb-col sb-acc" open><summary><span class="sb-h4">Use Cases</span></summary><ul><li><a href="/use-cases/pre-sales-consultation">Pre-Sales Consultation</a></li><li><a href="/use-cases/cart-abandonment-recovery">Cart Abandonment Recovery</a></li><li><a href="/use-cases/where-is-my-order">Where Is My Order</a></li><li><a href="/use-cases/qualify-and-collect-for-quote">Qualify &amp; Collect for Quote</a></li><li><a href="/use-cases/open-a-complaint">Open a Complaint</a></li><li><a href="/use-cases/checkout-summary-via-text">Checkout Summary via Text</a></li><li><a href="/use-cases/managing-returns">Managing Returns</a></li><li><a href="/use-cases/post-delivery-feedback">Post-Delivery Feedback</a></li><li><a href="/use-cases/back-in-stock-notification">Back-in-Stock Notification</a></li></ul></details><details class="sb-col sb-acc" open><summary><span class="sb-h4">Industries</span></summary><ul><li><a href="/industries/home-improvement">Home Improvement</a></li><li><a href="/industries/automotive-parts">Automotive &amp; Parts</a></li><li><a href="/industries/electronics-tech">Electronics &amp; Tech</a></li><li><a href="/industries/furniture-home">Furniture &amp; Home</a></li><li><a href="/industries/outdoor-garden">Outdoor &amp; Garden</a></li><li><a href="/industries/fashion-apparel">Fashion &amp; Apparel</a></li><li><a href="/industries/health-wellness">Health &amp; Wellness</a></li><li><a href="/industries/sports-fitness">Sports &amp; Fitness</a></li><li><a href="/industries/industrial-b2b">Industrial &amp; B2B</a></li></ul></details></div><div class="sb-bottom"><p class="sb-copy">&copy; 2026 Sabato LTD - 71-75, Shelton Street, Covent Garden, London (UK) - All rights reserved.</p><div class="sb-legal"><a href="/terms">Terms and Conditions</a><a href="/privacy-policy">Privacy and Cookies</a><a href="/it" data-lang-switch>Italiano</a><a href="https://www.linkedin.com/company/sabato-ai" target="_blank" rel="noopener" aria-label="Sabato AI on LinkedIn"><img src="/fuc/images/3vdzRTYV1XV6UUX6QKcsDIfU-e464e3f1.svg" alt="LinkedIn" width="20" height="20" loading="lazy"></a></div></div></div></footer><script>(function(){try{if(!window.matchMedia||!window.matchMedia("(max-width: 809px)").matches)return;var d=document.querySelectorAll(".sb-footer details.sb-acc");for(var i=0;i<d.length;i++)d[i].removeAttribute("open");}catch(e){}})();</script>
+<footer class="sb-footer" data-lang="it"><div class="sb-shell"><div class="sb-grid"><div class="sb-brand"><a href="/it" aria-label="Sabato AI - Home"><img class="sb-logo" src="/fuc/images/KY1UqOX7zKeKJdbxTotIopeeZIU-f2557e25.png" alt="Sabato AI logo" width="2080" height="278" loading="lazy"></a><p class="sb-tagline">La prima voice AI dedicata <br>esclusivamente all&rsquo;E-Commerce.</p><p class="sb-backed">Supportato da</p><img class="sb-backed-img" src="/fuc/images/V9nq776DtkEODcun83ayNz0liCU-28058054.webp" alt="ElevenLabs Grants" width="1496" height="132" loading="lazy"></div><div class="sb-col sb-col-static"><span class="sb-h4">Azienda</span><ul><li><a href="/it">Home</a></li><li><a href="/it/prezzi">Prezzi</a></li><li><a href="/it/chi-siamo">Chi Siamo</a></li><li><a href="/it/contatti">Contattaci</a></li><li><a href="/it/blog">Blog</a></li><li><a href="https://cal.com/sabatoai/intro" target="_blank" rel="noopener">Prenota una Demo</a></li></ul></div><details class="sb-col sb-acc" open><summary><span class="sb-h4">Casi d&rsquo;uso</span></summary><ul><li><a href="/it/casi-duso/consulenza-pre-vendita">Consulenza Pre-Vendita</a></li><li><a href="/it/casi-duso/recupero-carrelli-abbandonati">Recupero Carrelli Abbandonati</a></li><li><a href="/it/casi-duso/dove-e-il-mio-ordine">Dov'è il Mio Ordine</a></li><li><a href="/it/casi-duso/preventivi-automatici">Preventivi Automatici</a></li><li><a href="/it/casi-duso/apertura-reclamo">Apertura Reclamo</a></li><li><a href="/it/casi-duso/riepilogo-checkout-via-messaggio">Riepilogo Checkout via Messaggio</a></li><li><a href="/it/casi-duso/gestione-resi">Gestione Resi</a></li><li><a href="/it/casi-duso/feedback-post-consegna">Feedback Post-Consegna</a></li><li><a href="/it/casi-duso/notifica-ritorno-in-stock">Notifica Ritorno in Stock</a></li></ul></details><details class="sb-col sb-acc" open><summary><span class="sb-h4">Settori</span></summary><ul><li><a href="/it/settori/clima-e-riscaldamento">Clima e Riscaldamento</a></li><li><a href="/it/settori/ricambi-auto">Automotive e Ricambi</a></li><li><a href="/it/settori/elettronica">Elettronica e Tech</a></li><li><a href="/it/settori/arredamento">Arredamento e Casa</a></li><li><a href="/it/settori/industria-b2b">Industria e B2B</a></li><li><a href="/it/settori/giardino-outdoor">Outdoor e Giardino</a></li><li><a href="/it/settori/moda-abbigliamento">Fashion e Abbigliamento</a></li><li><a href="/it/settori/salute-benessere">Salute e Benessere</a></li><li><a href="/it/settori/sport-fitness">Sport e Fitness</a></li></ul></details></div><div class="sb-bottom"><p class="sb-copy">&copy; 2026 Sabato LTD - 71-75, Shelton Street, Covent Garden, London (UK) - All rights reserved.</p><div class="sb-legal"><a href="/it/termini-e-condizioni">Termini e Condizioni</a><a href="/it/privacy-e-cookie">Privacy e Cookie</a><a href="/" data-lang-switch>English</a><a href="https://www.linkedin.com/company/sabato-ai" target="_blank" rel="noopener" aria-label="Sabato AI on LinkedIn"><img src="/fuc/images/3vdzRTYV1XV6UUX6QKcsDIfU-e464e3f1.svg" alt="LinkedIn" width="20" height="20" loading="lazy"></a></div></div></div></footer><script>(function(){try{if(!window.matchMedia||!window.matchMedia("(max-width: 809px)").matches)return;var d=document.querySelectorAll(".sb-footer details.sb-acc");for(var i=0;i<d.length;i++)d[i].removeAttribute("open");}catch(e){}})();</script>
 </body>
 </html>

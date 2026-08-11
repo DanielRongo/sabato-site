@@ -160,9 +160,37 @@ Keep this file as the record. It is the only place the map lives.
 
 ---
 
-## `[BUILD]` Open decisions, to settle before or with issue 00
+## `[BUILD]` Standing rules
 
-1. **Italian.** All six existing posts have an `it` sibling and the two link to
+**EVERY ISSUE SHIPS IN BOTH LANGUAGES. Daniel, 11 Aug: "blogs always must be
+published in both languages."** Not a per-issue decision, not a nice-to-have. An
+English-only issue is an unfinished issue.
+
+What that means mechanically:
+
+- `posts/en/<slug>.md` AND `posts/it/<slug>.md`, the SAME slug in both. The
+  slug is the pairing key: `publish.py` matches siblings on it, and only then
+  emits the reciprocal hreflang tags and the "Leggi in italiano" / "Read in
+  English" switch. Different slugs means two orphans.
+- The forward-link comments must be mirrored in the Italian file too, or the
+  day issue 01 ships someone switches on the English links and quietly leaves
+  the Italian post pointing nowhere. Grep `FORWARD LINK` across BOTH files.
+- Category is translated like every other category on the site (Dati, Economia,
+  Resi, Strategia). `Voice AI DIY` in English, `Voice AI fai-da-te` in Italian.
+- Both URLs go in `tools/postdeploy_check.py` PAGES, so the sweep covers the
+  pair rather than half of it.
+
+The Italian is a real translation, not a machine pass: same register as the
+English - direct, concrete, no corporate polish - with the examples localised
+where they should be (accents, VAT number, CAP) and left alone where they
+should not (Glasgow, Marseille, Andalusia stay).
+
+---
+
+## `[BUILD]` Decisions settled
+
+1. ~~**Italian.**~~ SETTLED - both languages, always. See the standing rule above.
+   Original note kept for the mechanics: All six existing posts have an `it` sibling and the two link to
    each other with reciprocal hreflang. Nothing in `publish.py` breaks on an
    EN-only post - `sibling_exists` is checked and the alternates are simply
    omitted - so this is a choice, not a constraint. But eleven EN-only posts
