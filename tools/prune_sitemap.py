@@ -26,9 +26,23 @@ EXCLUDE = [
     "/thank-you-page",
     "/it/grazie",
     "/roi-calculator",   # unlisted by design; noindex, nothing links to it
-    "/customers/",       # noindex until the customers approve public marketing use
-    "/it/clienti/",
 ]
+
+# Customer stories are excluded ONE BY ONE, from the data, not by prefix. The
+# prefix rule was right while every case study was noindex; the moment one
+# customer signs off it becomes wrong in the expensive direction - the page is
+# indexable and linked from six pages, and the sitemap silently keeps it out.
+# Derived from `promotable` so the flag is the single control: flip it and the
+# page enters the index, the sitemap and the internal link graph together.
+_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, _root)
+try:
+    from customer_data import CUSTOMERS as _C
+    EXCLUDE += [p + s for s, d in _C.items() if not d.get("promotable")
+                for p in ("/customers/", "/it/clienti/")]
+except Exception as e:                      # never let a data import break the gate
+    print("prune_sitemap: cannot read customer_data (%s) - excluding all stories" % e)
+    EXCLUDE += ["/customers/", "/it/clienti/"]
 
 
 def main():

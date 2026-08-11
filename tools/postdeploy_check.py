@@ -16,6 +16,8 @@ UNAPPROVED = sorted(d["name"] for d in CUSTOMERS.values() if not d.get("promotab
 # The pages the proof widget lives on, plus the two homepages. Anywhere a
 # customer could plausibly be named by us rather than by their own page.
 PROOF_PATHS = ("/", "/it", "/pricing", "/about", "/it/prezzi", "/it/chi-siamo")
+# Slugs whose case study is allowed in the index. Same flag, same source.
+PROMOTABLE_SLUGS = {s for s, d in CUSTOMERS.items() if d.get("promotable")}
 
 BASE = sys.argv[1].rstrip("/") if len(sys.argv) > 1 else "http://127.0.0.1:8909"
 PAGES = ["/", "/it", "/pricing", "/about", "/contact", "/blog", "/it/blog",
@@ -167,6 +169,27 @@ with sync_playwright() as p:
             # green light on 10 Aug 2026; ClimaConvenienza has not, and this is
             # the thing that keeps it off the homepage.
             # Also asserts enhance.js's old auto-injected band stays dead.
+            # A case study is indexable if and only if the customer is
+            # promotable. Both directions are asserted, because both directions
+            # are expensive: an unapproved customer indexed is a trust problem
+            # with a named company, and an approved one left noindex is the
+            # thing that just cost eight days of a live case study earning
+            # nothing. Read from the data, so flipping the flag moves the
+            # assertion with it.
+            if path.startswith("/customers/") or path.startswith("/it/clienti/"):
+                slug = path.rsplit("/", 1)[1]
+                want_index = slug in PROMOTABLE_SLUGS
+                has_noindex = pg.evaluate(
+                    """!!document.querySelector('meta[name="robots"][content*="noindex"]')""")
+                checks["index_matches_permission"] = (has_noindex != want_index)
+                if want_index:
+                    checks["canonical_self"] = pg.evaluate("""(p) => {
+                      const c = document.querySelector('link[rel=canonical]');
+                      return !!c && c.href.replace('https://www.sabato.ai','') === p;
+                    }""", path)
+                    checks["jsonld_present"] = pg.evaluate(
+                        """!!document.querySelector('script[type="application/ld+json"]')""")
+
             if path in PROOF_PATHS:
                 checks["no_unapproved_customer"] = pg.evaluate(
                     """(names) => !document.querySelector('[data-sb-cust]')

@@ -312,12 +312,33 @@ def jsonld(slug, d):
     if is_ph(d["quote"]) or d.get("quote_pending"):
         return "<!-- JSON-LD withheld: quote not approved -->"
     import json
-    return '<script type="application/ld+json">%s</script>' % json.dumps({
+    url = "https://www.sabato.ai%s" % (LANGS[d["_lang"]]["base"] % slug)
+    # Everything here is a fact already on the page. No datePublished and no
+    # aggregateRating: we do not hold a real publication date for these stories
+    # and we have never collected a rating, and inventing either to decorate a
+    # rich result is the specific thing that gets a site penalised.
+    data = {
         "@context": "https://schema.org", "@type": "Article",
         "headline": plain(d["h1"]), "description": plain(d["description"]),
-        "url": "https://www.sabato.ai%s" % (LANGS[d["_lang"]]["base"] % slug),
+        "url": url,
+        "mainEntityOfPage": {"@type": "WebPage", "@id": url},
+        "inLanguage": "it" if d["_lang"] == "it" else "en",
+        "image": "https://www.sabato.ai/fuc/assets/8Q4ofjOgRTqsr8FpanTJF9nzLwU.png",
+        "about": {"@type": "Organization", "name": d["name"]},
         "publisher": {"@type": "Organization", "name": "Sabato AI"},
-    }, ensure_ascii=False)
+    }
+    # The quote is a real, attributed statement from a named person, so it can
+    # be marked up as one. Only reached when the quote is not a placeholder -
+    # the guard above has already returned otherwise.
+    if d.get("person") and d.get("role"):
+        data["citation"] = {
+            "@type": "Quotation",
+            "text": plain(d["quote"]),
+            "spokenByCharacter": {"@type": "Person", "name": d["person"],
+                                  "jobTitle": d["role"],
+                                  "worksFor": {"@type": "Organization", "name": d["name"]}},
+        }
+    return '<script type="application/ld+json">%s</script>' % json.dumps(data, ensure_ascii=False)
 
 
 def build(lang, slug, d):
@@ -330,11 +351,24 @@ def build(lang, slug, d):
         section_results(d), section_quote(d), section_forward(d), section_cta(d),
     ])
 
-    # An approved story drops the draft ribbon. Everything else on the page is
-    # unchanged: the pages are still unlinked and still carry noindex until
-    # Daniel decides how they should be reached.
+    # An approved story drops the draft ribbon.
     if d.get("approved"):
         tpl = re.sub(r'\s*<div class="draft-ribbon">[^<]*</div>', "", tpl)
+
+    # A PROMOTABLE story becomes a real, indexable page.
+    #
+    # `promotable` is the customer's permission to be used in public marketing,
+    # and putting the page in Google's index is public marketing - so the same
+    # flag governs both, rather than a third one nobody would remember to set.
+    # ClimaConvenienza is approved but NOT promotable, so its page keeps the
+    # noindex and stays exactly as it was.
+    #
+    # Both halves have to go. `noindex` keeps the page out of the index;
+    # `nofollow` stops it passing any authority to the industry and use-case
+    # pages it links to - which is most of the value of having a case study
+    # sitting in your internal link graph at all.
+    if d.get("promotable"):
+        tpl = tpl.replace('  <meta name="robots" content="noindex, nofollow">\n', "")
 
     page = (tpl
             .replace("{{TITLE}}", html.escape(d["title"]))
@@ -371,13 +405,42 @@ def hreflang(lang, slug, d):
 _IT_FOR_EN = {v["en"]: k for k, v in CUSTOMERS_IT.items()}
 
 
+def sitemap_add(urls):
+    """Put promotable case studies in the sitemap.
+
+    Nothing else did. `publish.py` owns blog URLs and `tools/prune_sitemap.py`
+    only ever REMOVES, so a case study could be perfectly indexable, linked from
+    six pages, and still absent from the file we hand Google. Adding only -
+    removal stays with prune_sitemap, which reads the same `promotable` flag, so
+    un-promoting a customer takes the page back out on the next build.
+    """
+    path = os.path.join("site", "sitemap.xml")
+    if not os.path.exists(path):
+        return 0
+    xml = open(path, encoding="utf-8").read()
+    have = set(re.findall(r"<loc>(.*?)</loc>", xml))
+    add = [u for u in urls if u not in have]
+    if add:
+        xml = xml.replace("</urlset>",
+                          "".join("<url><loc>%s</loc></url>" % u for u in add) + "</urlset>")
+        open(path, "w", encoding="utf-8").write(xml)
+    return len(add)
+
+
 def main():
+    live = []
     for slug in ORDER:
         build("en", slug, CUSTOMERS[slug])
+        if CUSTOMERS[slug].get("promotable"):
+            live.append("https://www.sabato.ai/customers/%s" % slug)
     for slug in ORDER_IT:
         build("it", slug, CUSTOMERS_IT[slug])
-    print("\n%d page(s). Approved stories drop the ribbon; all stay noindex and\n"
-          "unlinked until Daniel decides how they should be reached."
+        if CUSTOMERS_IT[slug].get("promotable"):
+            live.append("https://www.sabato.ai/it/clienti/%s" % slug)
+    n = sitemap_add(live)
+    print("  sitemap: %d promotable story URL(s) added, %d live in total" % (n, len(live)))
+    print("\n%d page(s). Approved stories drop the ribbon; PROMOTABLE stories are\n"
+          "indexable and in the sitemap. The rest stay noindex."
           % (len(ORDER) + len(ORDER_IT)))
 
 
