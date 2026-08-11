@@ -32,6 +32,9 @@ PAGES = ["/", "/it", "/pricing", "/about", "/contact", "/blog", "/it/blog",
          "/it/blog/should-you-remove-the-phone-number",
          "/blog/what-a-conversation-actually-costs",
          "/it/blog/what-a-conversation-actually-costs",
+         # The Build File - English only for now, so these also exercise the
+         # "no sibling, therefore no hreflang" branch above.
+         "/blog/the-build-file", "/blog/voice-agent-acceptance-test",
          "/use-cases/where-is-my-order", "/it/casi-duso/dove-e-il-mio-ordine",
          "/industries", "/industries/home-improvement", "/industries/fashion-apparel",
          "/it/settori", "/it/settori/clima-e-riscaldamento", "/it/settori/moda-abbigliamento",
@@ -175,12 +178,21 @@ with sync_playwright() as p:
             # proves nothing to a crawler; blog posts shipped without these tags
             # for months while use-case pages had them.
             if "/blog/" in path:
+                # A post WITH a sibling must declare it both ways. A post
+                # WITHOUT one must declare nothing - a lone hreflang pointing at
+                # a page that does not exist is worse than silence, and the
+                # English-only Build File series made that case real rather than
+                # hypothetical. publish.py already gets this right; this asserts
+                # it stays right.
                 checks["hreflang_pair"] = pg.evaluate("""(slug) => {
                   const a = {};
                   document.querySelectorAll('link[rel=alternate]').forEach(l => {
                     a[l.getAttribute('hreflang')] = (l.getAttribute('href')||'')
                       .replace('https://www.sabato.ai', ''); });
                   const en = '/blog/' + slug, it = '/it/blog/' + slug;
+                  const solo = !document.querySelector('a[href="' + it + '"]')
+                            && !document.querySelector('a[href="' + en + '"][data-lang-switch]');
+                  if (Object.keys(a).length === 0) return solo;
                   return a.en === en && a.it === it && a['x-default'] === en;
                 }""", path.rsplit("/", 1)[1])
             if not it:

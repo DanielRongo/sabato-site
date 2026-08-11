@@ -97,6 +97,12 @@ Google has to be told about each one individually rather than discovering them a
 a group. A hub is the single biggest structural gap left, and it is a page real
 visitors want too.
 
+**Build this hub with the TRIGGER band already in mind** - Daniel approved the
+idea on 11 Aug and it is specified in full further down this file ("IDEA (11
+Aug): split the Use Cases menu into TASKS and TRIGGERS"). The cheapest first
+version of the triggers is a band on this hub, so doing the hub first and
+retrofitting the band later is wasted work. Read that section before starting.
+
 ### 5. Pricing page rewrite - approved 3 Aug, still not applied
 
 Findings in order of damage:
@@ -139,6 +145,60 @@ possible demo for a voice product: no form, no calendar, just call it.
 Open question for Daniel: is this a **marketing asset** (always-on, hardened,
 capped) or a **sales tool** (a number handed out on calls, unlisted)? The answer
 changes the whole build.
+
+---
+
+## IDEA (11 Aug, APPROVED - belongs with backlog item 4): TASKS vs TRIGGERS
+
+Daniel's observation: the use-case menu shows only what the agent DOES on a
+call. It says nothing about why an ecommerce operator starts looking in the
+first place. Two different readers at two different moments.
+
+  TASK  (what happens on the call)      TRIGGER (why they came looking)
+  -----------------------------------   -----------------------------------
+  Where is my order                     Peak season is coming
+  Cart abandonment recovery             We are opening a new market
+  Pre-sales consultation                Our team is stuck on repetitive work
+  Managing returns                      We are launching a new store
+  ...9 of these, all live                Care costs are out of control
+
+Daniel's five triggers, verbatim from customer conversations:
+  1. Peak season handling
+  2. Expand into foreign markets, in their languages
+  3. Upskill the CS team onto high-value activities
+  4. Start new pilot stores
+  5. Optimise customer care costs
+
+MISSING, in rough order of how much they are worth:
+
+  a. REVENUE LEAKING OFF THE PHONE. All five above are cost, capacity or
+     coverage. Not one of them says "you are losing orders today." In
+     high-consideration categories a missed call is a missed cart, and this is
+     the only framing that gets a yes without waiting for a budget cycle. It
+     also prices higher than any cost-saving story.
+  b. Out-of-hours coverage. Distinct from peak season: one is a spike, the
+     other is a permanent hole in the week.
+  c. Cannot hire / churn in the team. Distinct from cost: "we would happily
+     pay, we cannot staff it" is a different conversation.
+  d. Replacing an outsourced BPO. A renewal date is a real trigger with a real
+     incumbent to displace, and the buyer already has a number to compare to.
+  e. Nobody knows what is actually said on the phone. Call intelligence is the
+     part customers do not churn from once they have it.
+
+TWO CAUTIONS BEFORE BUILDING ANY OF IT:
+
+  * Consolidate first. 3 and 5 are one conversation to a buyer (team economics);
+     2 and 4 are one conversation (launching something new). Five near-duplicate
+     pages dilute; three sharp ones convert.
+  * These pages will get almost no organic search traffic. Nobody googles
+     "upskill my CS team". Task pages match search intent, trigger pages match
+     a state of mind. Build them as sales and positioning assets - and as
+     framing an LLM can quote - not as an SEO play, and do not judge them on
+     sessions or the conclusion will be that they failed.
+
+Nav risk: this would make three taxonomies - Use Cases (what), Industries
+(who), Triggers (why). That is a lot for one header. Cheapest first version is
+a band on the /use-cases hub, promoted into the nav only if it earns it.
 
 ---
 

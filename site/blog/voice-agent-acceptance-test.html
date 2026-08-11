@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Voice Agent Acceptance Test: The 20 Calls | Sabato AI</title>
+  <meta name="description" content="Twenty phone calls that turn a feeling into a number. Most of them test failing well rather than working - which is the half a demo never shows you.">
+  <link rel="canonical" href="https://www.sabato.ai/blog/voice-agent-acceptance-test">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Voice Agent Acceptance Test: The 20 Calls | Sabato AI">
+  <meta property="og:description" content="Twenty phone calls that turn a feeling into a number. Most of them test failing well rather than working - which is the half a demo never shows you.">
+  <meta property="og:url" content="https://www.sabato.ai/blog/voice-agent-acceptance-test">
+  <meta property="og:image" content="https://www.sabato.ai/fuc/assets/8Q4ofjOgRTqsr8FpanTJF9nzLwU.png">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary_large_image">
+  <link href="/fuc/images/hWFOqN6Okd1QgfKhizqgIF1s.png" rel="icon" media="(prefers-color-scheme: light)">
+  <link href="/fuc/images/dEcuqc3xAQ3JJoX4xQDYrMQefA.png" rel="icon" media="(prefers-color-scheme: dark)">
+  <link rel="apple-touch-icon" href="/fuc/images/dEcuqc3xAQ3JJoX4xQDYrMQefA.png">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "The twenty calls: what to test before a voice agent answers a real customer", "description": "Twenty phone calls that turn a feeling into a number. Most of them test failing well rather than working - which is the half a demo never shows you.", "datePublished": "2026-08-11", "dateModified": "2026-08-11", "inLanguage": "en", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://www.sabato.ai/blog/voice-agent-acceptance-test"}, "author": {"@type": "Organization", "name": "Sabato AI", "url": "https://www.sabato.ai"}, "publisher": {"@type": "Organization", "name": "Sabato AI", "url": "https://www.sabato.ai"}}</script>
+  <style>
+    /* ============ Fonts (local mirrors, same files the site loads) ============ */
+    @font-face { font-family: "Satoshi"; src: url("/fuc/third-party-assets/fontshare/wf/TTX2Z3BF3P6Y5BQT3IV2VNOK6FL22KUT/7QYRJOI3JIMYHGY6CH7SOIFRQLZOLNJ6/KFIAZD4RUMEZIYV6FQ3T3GP5PDBDB6JY.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 400; }
+    @font-face { font-family: "Satoshi"; src: url("/fuc/third-party-assets/fontshare/wf/P2LQKHE6KA6ZP4AAGN72KDWMHH6ZH3TA/ZC32TK2P7FPS5GFTL46EU6KQJA24ZYDB/7AHDUZ4A7LFLVFUIFSARGIWCRQJHISQP.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 500; }
+    @font-face { font-family: "Satoshi"; src: url("/fuc/third-party-assets/fontshare/wf/LAFFD4SDUCDVQEXFPDC7C53EQ4ZELWQI/PXCT3G6LO6ICM5I3NTYENYPWJAECAWDD/GHM6WVH6MILNYOOCXHXB5GTSGNTMGXZR.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 700; }
+    @font-face { font-family: "Satoshi"; src: url("/fuc/third-party-assets/fontshare/wf/NHPGVFYUXYXE33DZ75OIT4JFGHITX5PE/PSUTMASCDJTVPERDYJZPN23BVUFUCQIF/J64QX5IPOHK56I2KYUNBQ5M2XWZEYKYX.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 900; }
+    @font-face { font-family: "Kalam"; src: url("/fuc/third-party-assets/fontshare/wf/L5Z4DJRD7OROEK74MORC4URSE7ILAXYH/6QNQQQT3NGMLLBQ3J7CCWACN46YUMIJB/GNJHSO7TKXAQJXNY3V3S4VE64D4XKQCP.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 700; }
+    @font-face { font-family: "Inter"; src: url("/fuc/assets/GrgcKwrN6d3Uz8EwcLHZxwEfC4.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 400; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+2000-206F, U+20AC, U+2122; }
+    @font-face { font-family: "Inter"; src: url("/fuc/assets/UjlFhCnUjxhNfep4oYBPqnEssyo.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 500; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+2000-206F, U+20AC, U+2122; }
+    @font-face { font-family: "Inter"; src: url("/fuc/assets/syRNPWzAMIrcJ3wIlPIP43KjQs.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 700; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+2000-206F, U+20AC, U+2122; }
+
+    /* ============ Tokens ============ */
+    :root {
+      --lime: rgb(204, 255, 0);        /* CTA / accent */
+      --black: rgb(0, 0, 0);           /* hero + footer bands */
+      --ink: rgb(18, 10, 11);          /* primary text */
+      --gray: rgb(69, 65, 64);         /* body/secondary text */
+      --off: rgb(248, 244, 241);       /* light card background */
+      --line: rgb(227, 226, 226);      /* hairlines */
+      --blue: rgb(0, 102, 204);        /* text links - 5.6:1 on white, AA at any size */
+      --font: "Satoshi", "Inter", -apple-system, "Helvetica Neue", sans-serif;
+      --hand: "Kalam", cursive;
+      --radius: 24px;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font); background: #fff; color: var(--ink); }
+    img { display: block; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ============ Header / Nav ============ */
+    .site-header { position: sticky; top: 0; z-index: 100; max-width: 1200px; margin: 0 auto; padding: 16px 30px; }
+    .nav-shell { background: #fff; border-radius: var(--radius); height: 88px; padding: 16px 70px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .nav-logo img { width: 132px; height: auto; }
+    .nav-links { display: flex; align-items: center; gap: 48px; }
+    .nav-links a { font-size: 16px; font-weight: 500; line-height: 1.7; color: var(--ink); transition: opacity .2s; }
+    .nav-links a:hover { opacity: .6; }
+    .nav-links a.active { font-weight: 700; }
+    .nav-flag { font-size: 16px; line-height: 1; }
+    .btn-pill { display: inline-block; background: var(--lime); color: #000; border-radius: 100px; padding: 12px 30px; font-family: var(--font); font-size: 16px; font-weight: 700; line-height: 1.7; transition: transform .2s ease; white-space: nowrap; }
+    .btn-pill:hover { transform: scale(1.04); }
+
+    /* ============ Dark hero band ============ */
+    .hero { background: var(--black); border-radius: var(--radius); margin: 0 auto; padding: 96px 40px 104px; text-align: center; max-width: 1200px; width: calc(100% - 80px); margin-left: auto; margin-right: auto;}
+    .hero .hand { font-family: var(--hand); font-weight: 700; font-size: 19px; color: #fff; margin-bottom: 18px; }
+    .hero h1 { color: #fff; font-size: 64px; font-weight: 700; letter-spacing: -2px; line-height: 1.15; max-width: 900px; margin: 0 auto; }
+    .hero .sub { color: #fff; font-size: 20px; font-weight: 400; line-height: 1.7; opacity: .85; max-width: 640px; margin: 20px auto 0; }
+
+    /* ============ Main shell ============ */
+    .shell { max-width: 1200px; margin: 0 auto; padding: 0 30px; }
+
+    /* ============ Blog index grid ============ */
+    .post-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; padding: 64px 0 96px; }
+    .post-card { background: var(--off); border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column; transition: transform .25s ease; }
+    .post-card:hover { transform: translateY(-4px); }
+    .post-card .card-img { aspect-ratio: 16 / 9; width: 100%; object-fit: cover; }
+    .post-card .card-body { padding: 28px 28px 26px; display: flex; flex-direction: column; gap: 14px; flex: 1; }
+    .tag { display: inline-block; align-self: flex-start; background: var(--lime); color: #000; border-radius: 100px; padding: 4px 14px; font-size: 13px; font-weight: 700; line-height: 1.6; letter-spacing: .2px; }
+    .post-card h2 { font-size: 24px; font-weight: 700; letter-spacing: -0.5px; line-height: 1.25; color: var(--ink); }
+    .post-card p.excerpt { font-size: 16px; line-height: 1.6; color: var(--gray); flex: 1; }
+    .post-card .meta { font-size: 14px; font-weight: 500; color: var(--gray); opacity: .75; }
+
+    /* ============ Article ============ */
+    .post-hero { padding: 72px 40px 80px; max-width: 1200px; width: calc(100% - 80px); margin-left: auto; margin-right: auto;}
+    .post-hero .backlink { display: inline-block; color: #fff; opacity: .6; font-size: 15px; font-weight: 500; margin-bottom: 28px; transition: opacity .2s; }
+    .post-hero .backlink:hover { opacity: 1; }
+    .post-hero h1 { font-size: 52px; letter-spacing: -1.5px; }
+    .post-hero .tag { align-self: center; margin-bottom: 22px; }
+    .post-hero .meta { color: #fff; opacity: .65; font-size: 16px; font-weight: 500; margin-top: 22px; }
+    .post-hero .meta span + span::before { content: "·"; margin: 0 10px; }
+
+    article.prose { max-width: 760px; margin: 0 auto; padding: 72px 30px 40px; }
+    .prose h2 { font-size: 36px; font-weight: 700; letter-spacing: -1px; line-height: 1.2; color: var(--ink); margin: 56px 0 20px; }
+    .prose h3 { font-size: 25px; font-weight: 700; letter-spacing: -0.5px; line-height: 1.3; color: var(--ink); margin: 40px 0 14px; }
+    .prose p { font-size: 18px; line-height: 1.75; color: var(--gray); margin: 0 0 22px; }
+    .prose strong { color: var(--ink); font-weight: 700; }
+    .prose a { color: var(--blue); text-decoration: underline; }
+    .prose ul, .prose ol { margin: 0 0 24px; padding-left: 26px; }
+    .prose li { font-size: 18px; line-height: 1.7; color: var(--gray); margin-bottom: 10px; }
+    .prose li::marker { color: var(--ink); }
+    .prose blockquote { border-left: 4px solid var(--lime); background: var(--off); border-radius: 0 16px 16px 0; padding: 24px 28px; margin: 32px 0; }
+    .prose blockquote p { font-size: 19px; font-weight: 500; font-style: italic; color: var(--ink); margin: 0; }
+    .prose blockquote p + p { margin-top: 12px; font-size: 15px; font-style: normal; font-weight: 500; color: var(--gray); }
+    .prose figure { margin: 32px 0; }
+    .prose figure img { border-radius: 16px; }
+    .prose figcaption { font-size: 14px; color: var(--gray); opacity: .75; margin-top: 10px; text-align: center; }
+    .prose hr { border: 0; border-top: 1px solid var(--line); margin: 48px 0; }
+
+    /* tables */
+    .prose .table-wrap { overflow-x: auto; margin: 32px 0; border: 1px solid var(--line); border-radius: 16px; }
+    .prose table { width: 100%; border-collapse: collapse; font-size: 16px; }
+    .prose th { background: var(--off); color: var(--ink); font-weight: 700; text-align: left; padding: 14px 18px; border-bottom: 1px solid var(--line); }
+    .prose td { color: var(--gray); padding: 13px 18px; border-bottom: 1px solid var(--line); line-height: 1.55; }
+    .prose tr:last-child td { border-bottom: 0; }
+
+    /* key-stat callout */
+    .stat-callout { background: var(--black); border-radius: var(--radius); padding: 40px 44px; margin: 36px 0; }
+    .stat-callout .stat-number { font-size: 56px; font-weight: 900; letter-spacing: -1.5px; line-height: 1.1; color: var(--lime); }
+    .stat-callout .stat-label { font-size: 18px; line-height: 1.6; color: #fff; opacity: .85; margin-top: 10px; }
+    .stat-callout .stat-source { font-size: 13px; color: #fff; opacity: .45; margin-top: 14px; }
+
+    /* FAQ */
+    .faq { margin: 56px 0 0; }
+    .faq .faq-item { background: var(--off); border-radius: 16px; padding: 24px 28px; margin-bottom: 14px; }
+    .faq .faq-q { font-size: 20px; font-weight: 700; letter-spacing: -0.3px; color: var(--ink); margin: 0 0 8px; }
+    .faq .faq-a { font-size: 17px; line-height: 1.65; color: var(--gray); margin: 0; }
+    .faq .faq-a a { color: var(--blue); text-decoration: underline; }
+
+    /* chart attribution + sharing */
+    .prose .chart-brand { display: flex; align-items: center; gap: 8px; margin-top: 18px;
+      padding-top: 14px; border-top: 1px solid var(--line); }
+    .prose .chart-brand img { border-radius: 4px; display: block; }
+    .prose .chart-brand span { font-size: 12px; color: var(--gray); opacity: .8; letter-spacing: .2px; }
+    .prose .chart-share { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 12px 0 0; }
+    .prose .chart-share .cs-label { font-size: 12px; color: var(--gray); margin-right: 2px; }
+    .prose .chart-share .cs-btn { display: inline-flex; align-items: center; justify-content: center;
+      min-width: 30px; height: 30px; padding: 0 10px; border-radius: 8px; border: 1px solid var(--line);
+      background: #fff; color: var(--ink); font-size: 12px; font-weight: 700; text-decoration: none;
+      line-height: 1; transition: background .15s ease, border-color .15s ease; }
+    .prose .chart-share .cs-btn:hover { background: var(--lime); border-color: var(--lime); }
+    .prose .chart-share .cs-dl { font-weight: 600; }
+    .prose .chart-share button.cs-btn { font-family: inherit; cursor: pointer; }
+    /* .cs-btn sets display, which outranks the UA [hidden] rule - restore it */
+    .prose .chart-share .cs-btn[hidden] { display: none; }
+    .prose .chart-share .cs-btn.is-done { background: var(--lime); border-color: var(--lime); }
+    .nb { white-space: nowrap; }
+    @media (max-width: 640px) {
+      .prose .chart-share { gap: 6px; }
+      .prose .chart-share .cs-label { width: 100%; margin-bottom: 2px; }
+    }
+    /* Sources */
+    .sources { border-top: 1px solid var(--line); margin-top: 56px; padding-top: 28px; }
+    .sources h2 { font-size: 20px; letter-spacing: -0.3px; margin: 0 0 14px; }
+    .sources ol { padding-left: 22px; margin: 0; }
+    .sources li { font-size: 14px; line-height: 1.7; color: var(--gray); margin-bottom: 6px; }
+    .sources a { color: var(--blue); text-decoration: underline; word-break: break-all; }
+
+    /* Bottom CTA band */
+    .cta-band { background: var(--black); border-radius: var(--radius); margin: 72px auto 40px; padding: 88px 40px; text-align: center; max-width: 1200px; width: calc(100% - 80px); margin-left: auto; margin-right: auto;}
+    .cta-band .hand { font-family: var(--hand); font-weight: 700; font-size: 19px; color: #fff; margin-bottom: 14px; }
+    .cta-band h2 { color: #fff; font-size: 48px; font-weight: 700; letter-spacing: -1.5px; line-height: 1.15; max-width: 720px; margin: 0 auto 16px; }
+    .cta-band p { color: #fff; opacity: .8; font-size: 19px; line-height: 1.7; max-width: 560px; margin: 0 auto 34px; }
+
+    /* ============ Footer ============ */
+
+    /* ============ Mobile (Framer breakpoint) ============ */
+    @media (max-width: 809px) {
+      .site-header { padding: 12px 16px; }
+      .nav-shell { height: 72px; padding: 12px 22px; border-radius: 20px; }
+      .nav-links { display: none; }
+      .nav-logo img { width: 108px; }
+      .btn-pill { padding: 10px 22px; font-size: 15px; }
+      .hero { margin: 0 auto; padding: 64px 24px 72px; max-width: 1200px; width: calc(100% - 32px); margin-left: auto; margin-right: auto;}
+      .hero h1 { font-size: 40px; letter-spacing: -1.2px; }
+      .hero .sub { font-size: 18px; }
+      .shell { padding: 0 20px; }
+      .post-grid { grid-template-columns: 1fr; gap: 20px; padding: 40px 0 64px; }
+      .post-hero { padding: 56px 24px 60px; max-width: 1200px; width: calc(100% - 32px); margin-left: auto; margin-right: auto;}
+      .post-hero h1 { font-size: 34px; letter-spacing: -1px; }
+      .post-hero .meta { font-size: 14px; }
+      article.prose { padding: 48px 20px 24px; }
+      .prose h2 { font-size: 28px; margin: 44px 0 16px; }
+      .prose h3 { font-size: 22px; }
+      .prose p, .prose li { font-size: 17px; }
+      .stat-callout { padding: 30px 26px; }
+      .stat-callout .stat-number { font-size: 42px; }
+      .cta-band { margin: 56px auto 24px; padding: 64px 24px; max-width: 1200px; width: calc(100% - 32px); margin-left: auto; margin-right: auto;}
+      .cta-band h2 { font-size: 32px; letter-spacing: -1px; }
+    }
+    @media (min-width: 810px) and (max-width: 1099px) {
+      .nav-shell { padding: 16px 36px; }
+      .nav-links { gap: 28px; }
+      .post-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+        /* ============ Authored content blocks ============ */
+    svg text { font-family: var(--font); }
+
+    /* code (fenced blocks + inline) */
+    .prose pre { background: var(--black); border-radius: 20px; padding: 26px 30px; margin: 32px 0; overflow-x: auto; }
+    .prose pre code { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 13.5px; line-height: 1.8; color: rgb(248,244,241); white-space: pre; }
+    .prose p code, .prose li code, .prose td code { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: .9em; background: var(--off); border: 1px solid var(--line); border-radius: 6px; padding: 1px 6px; color: var(--ink); }
+
+    /* 1. :::keystat - big lime number on a black card */
+    .stat-callout { margin: 40px 0; }
+    .stat-callout .stat-number { margin: 0; }
+    .stat-callout .stat-label { margin: 10px 0 0; }
+    .stat-callout .stat-source { border-top: 1px solid rgba(248,244,241,.16); padding-top: 13px; margin: 18px 0 0; }
+    .stat-callout .stat-source .src-lbl { font-weight: 700; opacity: .85; }
+    .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 40px 0; }
+    .stat-grid .stat-callout { margin: 0; padding: 34px 32px; display: flex; flex-direction: column; }
+    .stat-grid .stat-callout .stat-source { margin-top: auto; padding-top: 18px; }
+    .stat-grid .stat-callout .stat-number { font-size: 46px; }
+    .stat-grid .stat-callout .stat-label { font-size: 16.5px; }
+
+    /* 2. :::takeaway - the save-worthy summary */
+    .takeaway { background: var(--off); border-left: 6px solid var(--lime); border-radius: 0 var(--radius) var(--radius) 0; padding: 34px 40px 32px; margin: 44px 0; }
+    .takeaway .tk-head { display: inline-block; background: var(--lime); color: #000; border-radius: 100px; padding: 5px 15px; font-size: 12.5px; font-weight: 700; letter-spacing: 1.7px; text-transform: uppercase; margin: 0 0 20px; }
+    .takeaway ul.tk-list { list-style: none; margin: 0; padding: 0; }
+    .takeaway ul.tk-list li { position: relative; padding-left: 28px; font-size: 17.5px; font-weight: 500; line-height: 1.6; color: var(--ink); margin: 0 0 14px; }
+    .takeaway ul.tk-list li:last-child { margin-bottom: 0; }
+    .takeaway ul.tk-list li::before { content: ""; position: absolute; left: 0; top: 8px; width: 12px; height: 12px; border-radius: 4px; background: var(--lime); box-shadow: inset 0 0 0 1px rgba(18,10,11,.16); }
+    .takeaway a { color: var(--blue); text-decoration: underline; }
+
+    /* 3. :::action - numbered "do this" checklist */
+    .action-block { border: 1px solid var(--line); border-radius: var(--radius); padding: 36px 40px 32px; margin: 44px 0; }
+    .action-block .ab-head { font-size: 24px; font-weight: 700; letter-spacing: -0.6px; line-height: 1.25; color: var(--ink); margin: 0 0 20px; }
+    .action-block ol.ab-list { list-style: none; margin: 0; padding: 0; }
+    .action-block ol.ab-list li { display: flex; align-items: flex-start; gap: 18px; padding: 17px 0; border-top: 1px solid var(--line); margin: 0; }
+    .action-block ol.ab-list li:first-child { border-top: 0; padding-top: 4px; }
+    .action-block ol.ab-list li:last-child { padding-bottom: 2px; }
+    .action-block .ab-num { flex: none; width: 34px; height: 34px; border-radius: 50%; background: var(--lime); color: #000; font-size: 15px; font-weight: 900; display: flex; align-items: center; justify-content: center; }
+    .action-block .ab-text { font-size: 17.5px; line-height: 1.62; color: var(--gray); padding-top: 5px; }
+    .action-block .ab-text strong { color: var(--ink); font-weight: 700; }
+    .action-block a { color: var(--blue); text-decoration: underline; }
+
+    /* 4. :::compare - two-column comparison card */
+    .compare-wrap { margin: 44px 0; }
+    .compare-wrap .cmp-title { font-size: 12.5px; font-weight: 700; letter-spacing: 2.2px; text-transform: uppercase; color: var(--gray); margin: 0 0 14px; }
+    .compare { border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; margin: 0; }
+    .compare .cmp-head, .compare .cmp-row { display: grid; grid-template-columns: 1.02fr 1fr 1fr; }
+    .compare .cmp-head > div, .compare .cmp-row > div { padding: 15px 22px; }
+    .compare .cmp-head { border-bottom: 1px solid var(--line); background: var(--off); }
+    .compare .cmp-head .cmp-col { font-size: 15px; font-weight: 700; line-height: 1.35; color: var(--ink); }
+    .compare .cmp-head .cmp-col.accent { background: var(--lime); color: #000; }
+    .compare .cmp-row + .cmp-row { border-top: 1px solid var(--line); }
+    .compare .cmp-row .cmp-lbl { font-size: 14px; font-weight: 700; line-height: 1.45; color: var(--ink); }
+    .compare .cmp-row .cmp-cell { font-size: 16px; line-height: 1.5; color: var(--gray); }
+    .compare .cmp-row .cmp-cell.accent { background: rgba(204,255,0,.15); color: var(--ink); font-weight: 500; }
+    .compare .cmp-cap { display: none; }
+    .compare a { color: var(--blue); text-decoration: underline; }
+
+    /* 5. :::quote - pull quote */
+    .prose .pullquote { border-left: 5px solid var(--lime); padding: 4px 0 4px 30px; margin: 48px 0; }
+    .prose .pullquote blockquote { background: none; border: 0; border-radius: 0; padding: 0; margin: 0; }
+    .prose .pullquote blockquote p { font-size: 27px; font-weight: 500; font-style: italic; letter-spacing: -0.7px; line-height: 1.36; color: var(--ink); margin: 0; }
+    .prose .pullquote figcaption { font-size: 15px; font-weight: 700; font-style: normal; color: var(--gray); opacity: 1; text-align: left; margin-top: 18px; }
+
+    /* 6. markdown tables */
+    .prose .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 40px 0; border: 1px solid var(--line); border-radius: 20px; }
+    .prose table { width: 100%; min-width: 520px; border-collapse: collapse; font-size: 16px; }
+    .prose thead th { background: var(--off); color: var(--ink); font-size: 13px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; text-align: left; padding: 15px 20px; border-bottom: 2px solid var(--lime); white-space: nowrap; }
+    .prose tbody td { color: var(--gray); padding: 14px 20px; border-bottom: 1px solid var(--line); line-height: 1.55; }
+    .prose tbody tr:nth-child(even) { background: rgba(248,244,241,.7); }
+    .prose tbody tr:last-child td { border-bottom: 0; }
+    .prose tbody td:first-child { color: var(--ink); font-weight: 700; }
+    .prose th:first-child, .prose td:first-child { padding-left: 24px; }
+    .prose th:last-child, .prose td:last-child { padding-right: 24px; }
+    .prose .dense thead th { white-space: normal; font-size: 12px; letter-spacing: 1px; padding: 12px 12px; }
+    .prose .dense td { font-size: 14px; padding: 11px 12px; }
+    .prose .dense th:first-child, .prose .dense td:first-child { padding-left: 18px; }
+    .prose .dense th:last-child, .prose .dense td:last-child { padding-right: 18px; }
+
+    /* 7. :::chart bar - inline SVG bar chart, no library */
+    .chart-card { background: var(--off); border-radius: var(--radius); padding: 32px 36px 28px; margin: 44px 0; }
+    .chart-card .chart-title { font-size: 12.5px; font-weight: 700; letter-spacing: 2.2px; text-transform: uppercase; color: var(--ink); margin: 0 0 24px; }
+    .chart-card svg { display: block; width: 100%; height: auto; overflow: visible; }
+    .chart-card svg.chart-mobile { display: none; }
+    .chart-card .chart-source { font-size: 12.5px; line-height: 1.6; color: var(--gray); opacity: .85; margin: 24px 0 0; border-top: 1px solid var(--line); padding-top: 14px; }
+    .chart-card .chart-source .src-lbl { font-weight: 700; }
+
+    @media (max-width: 809px) {
+      .stat-grid { grid-template-columns: 1fr; gap: 16px; margin: 32px 0; }
+      .stat-grid .stat-callout { padding: 28px 24px; }
+      .stat-grid .stat-callout .stat-number { font-size: 38px; }
+      .stat-callout { margin: 32px 0; }
+
+      .takeaway { padding: 26px 22px 24px; margin: 36px 0; border-left-width: 5px; border-radius: 0 20px 20px 0; }
+      .takeaway ul.tk-list li { font-size: 16.5px; padding-left: 25px; }
+      .takeaway ul.tk-list li::before { width: 11px; height: 11px; top: 7px; }
+
+      .action-block { padding: 28px 22px 24px; margin: 36px 0; border-radius: 20px; }
+      .action-block .ab-head { font-size: 21px; margin-bottom: 14px; }
+      .action-block ol.ab-list li { gap: 14px; padding: 15px 0; }
+      .action-block .ab-num { width: 30px; height: 30px; font-size: 14px; }
+      .action-block .ab-text { font-size: 16.5px; padding-top: 3px; }
+
+      .compare-wrap { margin: 36px 0; }
+      .compare { border-radius: 20px; }
+      .compare .cmp-head { display: none; }
+      .compare .cmp-row { display: block; padding: 16px 18px 8px; }
+      .compare .cmp-row > div { padding: 0; }
+      .compare .cmp-row .cmp-lbl { font-size: 12px; font-weight: 700; letter-spacing: 1.7px; text-transform: uppercase; color: var(--gray); margin-bottom: 10px; }
+      .compare .cmp-row .cmp-cell { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px; margin-bottom: 8px; font-size: 16px; }
+      .compare .cmp-row .cmp-cell.accent { background: rgba(204,255,0,.22); border-color: rgba(204,255,0,.5); }
+      .compare .cmp-cap { display: block; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gray); margin-bottom: 5px; }
+
+      .prose .pullquote { margin: 38px 0; padding-left: 22px; border-left-width: 4px; }
+      .prose .pullquote blockquote p { font-size: 22px; letter-spacing: -0.5px; }
+      .prose .pullquote figcaption { font-size: 14px; margin-top: 14px; }
+
+      .prose .table-wrap { margin: 32px 0; border-radius: 16px; }
+      .prose table { font-size: 15px; }
+      .prose thead th { font-size: 12px; padding: 13px 16px; }
+      .prose tbody td { padding: 12px 16px; }
+      .prose th:first-child, .prose td:first-child { padding-left: 18px; }
+      .prose th:last-child, .prose td:last-child { padding-right: 18px; }
+
+      .chart-card { padding: 24px 20px 20px; margin: 36px 0; border-radius: 20px; }
+      .chart-card .chart-title { margin-bottom: 18px; }
+
+      .prose pre { padding: 20px 18px; border-radius: 16px; }
+      .prose pre code { font-size: 12.5px; }
+    }
+    @media (max-width: 559px) {
+      .chart-card svg.chart-desktop { display: none; }
+      .chart-card svg.chart-mobile { display: block; max-width: 330px; margin: 0 auto; }
+    }
+  </style>
+  <link rel="stylesheet" href="/css/footer.css">
+<!-- GA4 (Sabato) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BSK4KH9JJF"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-BSK4KH9JJF');
+</script>
+<!-- /GA4 -->
+</head>
+<body>
+<header class="sb-header" data-lang="en"><div class="sb-hdr-shell"><a class="sb-hdr-logo" href="/" aria-label="Sabato AI - Home"><img src="/fuc/images/UTATYXc6NipXQRoxyaGHHfHSyA4-f2557e25.png" alt="Sabato AI" width="2080" height="278"></a><nav class="sb-hdr-nav" aria-label="Main"><span class="sb-nav-item"><a href="/use-cases" aria-haspopup="true">Use Cases</a><span class="sb-dd" data-uc-dropdown="uc"><a href="/use-cases/pre-sales-consultation">Pre-Sales Consultation</a><a href="/use-cases/cart-abandonment-recovery">Cart Abandonment Recovery</a><a href="/use-cases/where-is-my-order">Where Is My Order</a><a href="/use-cases/qualify-and-collect-for-quote">Qualify &amp; Collect for Quote</a><a href="/use-cases/open-a-complaint">Open a Complaint</a><a href="/use-cases/checkout-summary-via-text">Checkout Summary via Text</a><a href="/use-cases/managing-returns">Managing Returns</a><a href="/use-cases/post-delivery-feedback">Post-Delivery Feedback</a><a href="/use-cases/back-in-stock-notification">Back-in-Stock Notification</a><a class="sb-dd-all" href="/use-cases">All use cases</a></span></span><span class="sb-nav-item"><a href="/industries" aria-haspopup="true">Industries</a><span class="sb-dd" data-uc-dropdown="ind"><a href="/industries/home-improvement">Home Improvement</a><a href="/industries/automotive-parts">Automotive &amp; Parts</a><a href="/industries/electronics-tech">Electronics &amp; Tech</a><a href="/industries/furniture-home">Furniture &amp; Home</a><a href="/industries/outdoor-garden">Outdoor &amp; Garden</a><a href="/industries/fashion-apparel">Fashion &amp; Apparel</a><a href="/industries/health-wellness">Health &amp; Wellness</a><a href="/industries/sports-fitness">Sports &amp; Fitness</a><a href="/industries/industrial-b2b">Industrial &amp; B2B</a><a class="sb-dd-all" href="/industries">All industries</a></span></span><a href="/pricing">Pricing</a><a href="/about">About</a><a href="/contact">Contact</a><a class="sb-hdr-flag" href="/it" data-lang-switch aria-label="Italiano">🇮🇹</a></nav><a class="sb-hdr-btn" href="https://cal.com/sabatoai/intro" target="_blank" rel="noopener">Start Free Pilot</a><button class="sb-burger" type="button" aria-expanded="false" aria-controls="sb-menu" aria-label="Open menu"><span></span><span></span></button></div><div class="sb-panel" id="sb-menu"><div class="sb-panel-inner"><a href="/use-cases">Use Cases</a><a href="/industries">Industries</a><a href="/pricing">Pricing</a><a href="/about">About</a><a href="/contact">Contact</a><a href="https://cal.com/sabatoai/intro" target="_blank" rel="noopener">Book a Demo</a><a class="sb-hdr-flag" href="/it" data-lang-switch>🇮🇹</a></div></div></header><script>(function(){var h=document.querySelector(".sb-header");if(!h)return;var b=h.querySelector(".sb-burger"),p=h.querySelector(".sb-panel");if(!b||!p)return;function set(o){h.classList.toggle("sb-open",o);b.setAttribute("aria-expanded",o?"true":"false");document.documentElement.style.overflow=o?"hidden":"";}b.addEventListener("click",function(e){e.preventDefault();set(!h.classList.contains("sb-open"));});p.addEventListener("click",function(e){if(e.target.closest("a"))set(false);});document.addEventListener("keydown",function(e){if(e.key==="Escape")set(false);});addEventListener("resize",function(){if(innerWidth>=1024)set(false);});})();</script>
+<section class="hero post-hero">
+    <a class="backlink" href="/blog">← Back to the blog</a>
+    <div style="display:flex;flex-direction:column;align-items:center;">
+      <span class="tag">The Build File</span>
+      <h1>The twenty calls: what to test before a voice agent answers a real customer</h1>
+      <p class="meta"><span>Aug 11, 2026</span><span>8 min read</span><span>By Sabato AI</span></p>
+    </div>
+  </section>
+  <main>
+    <article class="prose">
+<p><em>The Build File, issue 00. Part of <a href="/blog/the-build-file">The Build File</a>, a season on running a
+voice build without being an engineer.</em></p>
+<p>There is a moment near the end of every voice project where somebody asks whether it's ready,
+and nobody in the room has an answer that isn't a feeling.</p>
+<p>The demos went well. The team is tired and would like to ship. The person who has to decide has
+no way to check, because everything he's been shown was chosen by the people showing it.</p>
+<p>So here is the checklist I'd want in that room. Twenty calls. Make them, score them, and the
+feeling turns into a number.</p>
+<p>One thing to notice before you start: almost every one of these is a test of failing well, not of
+working. Teams test whether the agent can do the job. Nobody tests what happens when the caller
+mumbles, changes his mind, gets angry, or asks something the agent has no business answering.
+That's where the whole risk lives, and it's the half that never makes it into a demo.</p>
+<hr />
+<h2>How to run it</h2>
+<p><strong>Actually phone the number.</strong> Not a test harness, not a web widget. The phone line is the
+product. Half of these failures only appear over a real carrier.</p>
+<p><strong>Use people who aren't on the project.</strong> Anyone who built it will unconsciously speak clearly,
+wait politely, and ask the questions it can answer. Borrow people from the warehouse and from
+sales. Ideally one person who is genuinely impatient.</p>
+<p><strong>Score binary.</strong> Pass or fail, no partial credit, no "well, it nearly did." An agent that nearly
+handles an interruption doesn't.</p>
+<p><strong>Record everything and listen back.</strong> The person on the call is concentrating on talking and
+will miss half of it.</p>
+<p>Two hours, two people, one afternoon. That's the whole cost.</p>
+<hr />
+<h2>Group one: does it behave like a conversation</h2>
+<p><strong>1. The interrupter.</strong> Start talking over it, mid-sentence, halfway through its longest answer.
+<em>Pass: it stops within about a beat and listens. Fail: it finishes its sentence while you're
+speaking.</em></p>
+<p><strong>2. The silence.</strong> Say nothing for six seconds after it asks you something.
+<em>Pass: one calm prompt, then it waits again. Fail: nervous filler, repeating itself, or hanging
+up on a customer who was reading his order number off a box.</em></p>
+<p><strong>3. The correction.</strong> Give it a number, let it confirm, then say "no, sorry, it's actually…".
+<em>Pass: the correction wins everywhere, including in whatever record gets written at the end.
+Fail: the first value survives somewhere downstream and nobody notices for a week.</em></p>
+<p><strong>4. The multi-intent.</strong> "I want to check my order, ask about the warranty, and change my
+delivery address." All in one breath.
+<em>Pass: all three handled, or two of them explicitly parked and returned to. Fail: it answers the
+last one and the other two evaporate.</em></p>
+<p><strong>5. The mid-transaction hang-up.</strong> Give it half the details, then drop the call.
+<em>Pass: clean state, nothing half-written, and a follow-up someone can pick up. Fail: a ghost
+order, or a record that exists but is missing the parts that matter.</em></p>
+<hr />
+<h2>Group two: does it cope with real people on real lines</h2>
+<p><strong>6. The bad line.</strong> Call from a moving car, a lift, or a basement. Somewhere with genuinely poor
+signal.
+<em>Pass: it asks you to repeat rather than guessing. Fail: it invents a plausible sentence out of
+half-heard words and proceeds confidently.</em></p>
+<p><strong>7. The background.</strong> Call from the warehouse. Or a showroom with music. Or a street.
+<em>Pass: still gets the essentials. Fail: everything after the noise starts is wrong.</em></p>
+<p><strong>8. The accent.</strong> Not a colleague reading a script. Somebody from Napoli, from Bari, from
+Bergamo. Glasgow, Marseille, Andalusia — whichever markets you actually sell into.
+<em>Pass: comparable to how it handles a neutral speaker. Fail: it works for the people who built it
+and not for the people who buy from you.</em></p>
+<p><strong>9. The code-switch.</strong> Speak your local language and drop English product names into the middle
+of sentences, the way every customer in this industry actually talks.
+<em>Pass: the product name survives. Fail: the model name comes out as something that doesn't exist
+in your catalogue.</em></p>
+<p><strong>10. The alphanumeric.</strong> Read an order reference, a VAT number and a postcode aloud, once, at
+normal speed.
+<em>Pass: right the first time, or a confirmation that doesn't feel like being interrogated. Fail:
+three attempts and the caller reaching for the keypad.</em></p>
+<p><strong>11. The spelling.</strong> Spell a surname letter by letter. Use one with near neighbours — Rossi,
+Rosso, Russo.
+<em>Pass: it gets it, and it knows when to ask. Fail: silent substitution, which is worse than
+asking.</em></p>
+<hr />
+<h2>Group three: does it tell the truth</h2>
+<p>This group matters more than the other three put together. A slow agent annoys people. A
+confident, fluent, wrong agent costs you money and reputation, and it does it in a voice that
+sounds like your company.</p>
+<p><strong>12. The wrong premise.</strong> Ask about a product you don't sell, or a policy that doesn't exist.
+"What's your price match on this?" when you don't do price matching.
+<em>Pass: says so plainly. Fail: invents a policy, which it will do beautifully.</em></p>
+<p><strong>13. The stale record.</strong> Set it up so the system says in stock and it isn't, or the tracking is
+out of date.
+<em>Pass: the agent commits to nothing it can't verify, and says where the information comes from.
+Fail: a statement you now have to walk back.</em></p>
+<p><strong>14. The commitment trap.</strong> Push it. "So you guarantee it arrives Friday?" Then push again.
+<em>Pass: bounded language that survives being repeated back to you. Fail: a sentence your lawyer
+would have liked to see first.</em></p>
+<p><strong>15. The price probe.</strong> "Can you do better on that price?" Then: "the other place does it
+cheaper."
+<em>Pass: a defined boundary, held under pressure. Fail: improvisation, in either direction —
+inventing a discount, or being rude about it.</em></p>
+<hr />
+<h2>Group four: does it know its limits</h2>
+<p><strong>16. The fitment question.</strong> Ask something that needs reasoning across the catalogue, not a
+lookup. "Will this fit my model X?" "Is this compatible with what I bought last year?"
+<em>Pass: a correct answer, or a clean admission it can't be sure and a route to someone who can.
+Fail: a confident guess.</em> This is where the commercial value of pre-sales voice sits, and it's
+where most builds stop without anyone deciding to stop.</p>
+<p><strong>17. The angry caller.</strong> Be genuinely annoyed. Interrupt. Raise your voice. Say this is the
+third time you've called.
+<em>Pass: it escalates. Fail: it stays cheerful and keeps trying to help, which is the most
+infuriating possible response and the default behaviour of almost every agent I've heard.</em></p>
+<p><strong>18. The handoff.</strong> Get transferred to a person, and listen to what the person says first.
+<em>Pass: they open already knowing what the call is about. Fail: "so, tell me what this is
+regarding" — the most expensive sentence in customer service, because it undoes everything the
+agent just achieved and tells the customer the last four minutes were wasted.</em></p>
+<p><strong>19. The out-of-hours case.</strong> Run the same escalation at 9pm on a Saturday, when there is nobody
+to transfer to.
+<em>Pass: a fallback the caller actually accepts, with a commitment the business can keep. Fail: a
+loop, or a promise of a callback that nothing in your system will generate.</em></p>
+<p><strong>20. The repeat caller.</strong> Call twice in an hour about the same thing.
+<em>Pass: it knows, and doesn't make you start again. Fail: a stranger, every time.</em></p>
+<hr />
+<h2>Reading the results</h2>
+<p>The score is the least interesting output. What matters is the shape of the failures, because
+each group points at a different part of the system.</p>
+<div class="table-wrap dense"><table>
+<thead>
+<tr>
+<th>Failures cluster in</th>
+<th>The weak part is</th>
+<th>Which means</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Group one (1–5)</td>
+<td>Timing and turn-taking</td>
+<td>Nobody owns the pause. Usually nobody has been asked to.</td>
+</tr>
+<tr>
+<td>Group two (6–11)</td>
+<td>Speech recognition, and what it was tuned on</td>
+<td>It was tested on the team, not on your customers</td>
+</tr>
+<tr>
+<td>Group three (12–15)</td>
+<td>The data underneath, and what the agent may promise</td>
+<td>The most expensive category, and the least visible</td>
+</tr>
+<tr>
+<td>Group four (16–20)</td>
+<td>Escalation design and what the agent knows about itself</td>
+<td>Someone treated the human handoff as an afterthought</td>
+</tr>
+</tbody>
+</table></div>
+<p>That mapping is the five parts of a voice agent from the other end. If the pattern here doesn't
+mean much yet, what a voice agent is actually made of
+walks through the same five layers in plain language.</p>
+<p>A first run at twelve or thirteen out of twenty is normal and not a disaster. A first run where
+group three is clean and group one is a mess is a project with a fixable problem. A first run
+where group three is a mess is a project that should not be taking customer calls yet, whatever
+the timeline says.</p>
+<hr />
+<h2>The part everyone skips</h2>
+<p>Run it again every month.</p>
+<p>Models change underneath you. Someone edits the instructions. A supplier's data format shifts. A
+new product category arrives that nobody thought to test. None of these announce themselves, and
+all of them are invisible until a customer finds them for you.</p>
+<p>An agent that passed in March and was never re-tested isn't a system. It's a memory.</p>
+<p>Twenty calls, once a month, by someone who isn't attached to the outcome. It's the cheapest line
+in the whole operation and it's the first one to quietly disappear from the calendar.</p>
+<p>This is also the only honest way to read the numbers on your dashboard, because a monthly score
+against a fixed test is the one measurement that can't drift while looking healthy — which is
+more than can be said for the metrics most voice agents report.</p>
+<hr />
+<p>Take this and use it. Run it against a build your own team is doing, or against something a
+supplier is showing you, or against the agent you already have in production and have never
+tested this way. It works the same in all three cases, which is rather the point.</p>
+<p><em>Next: what a voice agent is actually made of — the five parts, and the one that isn't a part at
+all.</em></p>
+    </article>
+    <section class="cta-band">
+      <p class="hand">hear it for yourself</p>
+      <h2>Put a voice layer on your <span class="nb">e-commerce</span>.</h2>
+      <p>We build it, we run it, you see the numbers. Live in two weeks.</p>
+      <a class="btn-pill" href="https://cal.com/sabatoai/intro" target="_blank" rel="noopener">Start Free Pilot</a>
+    </section>
+  </main>
+  <!-- footer: rendered by tools/apply_footer.py from footer.py - do not paste one here -->
+<script src="/js/enhance.js?v=a6a1e75602" defer></script>
+  <script>
+  /* Chart sharing moves the PNG itself, never the post URL.
+     LinkedIn and X share-intents can only unfurl a URL, so the paths that
+     actually put the image somewhere are: the native share sheet with the file
+     attached (mobile), the clipboard (desktop -> paste into the composer), and
+     a download. */
+  (function () {
+    document.querySelectorAll("figure.chart-card[data-chart-img]").forEach(function (fig) {
+      var row = fig.querySelector(".chart-share");
+      if (!row) return;
+      var src = fig.getAttribute("data-chart-img");
+      var name = src.split("/").pop();
+      function getBlob() { return fetch(src).then(function (r) { return r.blob(); }); }
+
+      var nativeBtn = row.querySelector("[data-share-native]");
+      if (nativeBtn && navigator.share && navigator.canShare) {
+        try {
+          var probe = new File([new Blob([""], { type: "image/png" })], name, { type: "image/png" });
+          if (navigator.canShare({ files: [probe] })) nativeBtn.hidden = false;
+        } catch (e) { /* File ctor unsupported: leave hidden */ }
+        nativeBtn.addEventListener("click", function () {
+          getBlob().then(function (b) {
+            var f = new File([b], name, { type: "image/png" });
+            return navigator.share({ files: [f] });
+          }).catch(function () { window.location.href = src; });
+        });
+      }
+
+      var copyBtn = row.querySelector("[data-share-copy]");
+      if (copyBtn) {
+        copyBtn.addEventListener("click", function () {
+          var label = copyBtn.textContent;
+          // ClipboardItem must be constructed synchronously with a promise for Safari
+          if (!(window.ClipboardItem && navigator.clipboard && navigator.clipboard.write)) {
+            window.location.href = src;
+            return;
+          }
+          navigator.clipboard.write([new ClipboardItem({ "image/png": getBlob() })])
+            .then(function () {
+              copyBtn.textContent = copyBtn.getAttribute("data-done");
+              copyBtn.classList.add("is-done");
+              setTimeout(function () {
+                copyBtn.textContent = label;
+                copyBtn.classList.remove("is-done");
+              }, 1800);
+            })
+            .catch(function () { window.location.href = src; });
+        });
+      }
+    });
+  })();
+  </script>
+<footer class="sb-footer" data-lang="en"><div class="sb-shell"><div class="sb-grid"><div class="sb-brand"><a href="/" aria-label="Sabato AI - Home"><img class="sb-logo" src="/fuc/images/KY1UqOX7zKeKJdbxTotIopeeZIU-f2557e25.png" alt="Sabato AI logo" width="2080" height="278" loading="lazy"></a><p class="sb-tagline">The #1 managed Voice AI <br>for <span class="sb-nb">E-Commerce</span>.</p><p class="sb-backed">Backed by</p><img class="sb-backed-img" src="/fuc/images/V9nq776DtkEODcun83ayNz0liCU-28058054.webp" alt="ElevenLabs Grants" width="1496" height="132" loading="lazy"></div><div class="sb-col sb-col-static"><span class="sb-h4">Company</span><ul><li><a href="/">Home</a></li><li><a href="/pricing">Pricing</a></li><li><a href="/about">About</a></li><li><a href="/contact">Contact us</a></li><li><a href="/blog">Blog</a></li><li><a href="https://cal.com/sabatoai/intro" target="_blank" rel="noopener">Book a Demo</a></li></ul></div><details class="sb-col sb-acc" open><summary><span class="sb-h4">Use Cases</span></summary><ul><li><a href="/use-cases/pre-sales-consultation">Pre-Sales Consultation</a></li><li><a href="/use-cases/cart-abandonment-recovery">Cart Abandonment Recovery</a></li><li><a href="/use-cases/where-is-my-order">Where Is My Order</a></li><li><a href="/use-cases/qualify-and-collect-for-quote">Qualify &amp; Collect for Quote</a></li><li><a href="/use-cases/open-a-complaint">Open a Complaint</a></li><li><a href="/use-cases/checkout-summary-via-text">Checkout Summary via Text</a></li><li><a href="/use-cases/managing-returns">Managing Returns</a></li><li><a href="/use-cases/post-delivery-feedback">Post-Delivery Feedback</a></li><li><a href="/use-cases/back-in-stock-notification">Back-in-Stock Notification</a></li></ul></details><details class="sb-col sb-acc" open><summary><span class="sb-h4">Industries</span></summary><ul><li><a href="/industries/home-improvement">Home Improvement</a></li><li><a href="/industries/automotive-parts">Automotive &amp; Parts</a></li><li><a href="/industries/electronics-tech">Electronics &amp; Tech</a></li><li><a href="/industries/furniture-home">Furniture &amp; Home</a></li><li><a href="/industries/outdoor-garden">Outdoor &amp; Garden</a></li><li><a href="/industries/fashion-apparel">Fashion &amp; Apparel</a></li><li><a href="/industries/health-wellness">Health &amp; Wellness</a></li><li><a href="/industries/sports-fitness">Sports &amp; Fitness</a></li><li><a href="/industries/industrial-b2b">Industrial &amp; B2B</a></li></ul></details></div><div class="sb-bottom"><p class="sb-copy">&copy; 2026 Sabato LTD - 71-75, Shelton Street, Covent Garden, London (UK) - All rights reserved.</p><div class="sb-legal"><a href="/terms">Terms and Conditions</a><a href="/privacy-policy">Privacy and Cookies</a><a href="/it" data-lang-switch>Italiano</a><a href="https://www.linkedin.com/company/sabato-ai" target="_blank" rel="noopener" aria-label="Sabato AI on LinkedIn"><img src="/fuc/images/3vdzRTYV1XV6UUX6QKcsDIfU-e464e3f1.svg" alt="LinkedIn" width="20" height="20" loading="lazy"></a></div></div></div></footer><script>(function(){try{if(!window.matchMedia||!window.matchMedia("(max-width: 809px)").matches)return;var d=document.querySelectorAll(".sb-footer details.sb-acc");for(var i=0;i<d.length;i++)d[i].removeAttribute("open");}catch(e){}})();</script>
+</body>
+</html>

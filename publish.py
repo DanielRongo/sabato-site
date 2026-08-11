@@ -430,6 +430,18 @@ def extract_blocks(body, L):
 
 def render_body(body, L):
     body, blocks = extract_blocks(body, L)
+    # HTML comments are an AUTHORING tool, not output. The Build File series
+    # parks forward links to unpublished issues in comments and switches them on
+    # the day the target ships - markdown passes comments straight through, so
+    # without this the whole publishing calendar ships in the page source of
+    # every post. Stripped before conversion so nothing downstream ever sees it.
+    # The trailing \n? is not cosmetic. A comment parked on its own line INSIDE a
+    # paragraph leaves a blank line behind when only the comment is removed, and
+    # markdown reads a blank line as a paragraph break - which split one sentence
+    # across two paragraphs mid-clause. Eating the newline keeps the sentence
+    # whole. Between paragraphs the surrounding blank line still survives, so
+    # real paragraph breaks are unaffected.
+    body = re.sub(r"[ \t]*<!--.*?-->[ \t]*\n?", "", body, flags=re.S)
     MD.reset()
     out = MD.convert(body)
     # wrap tables for horizontal scroll + rounded border; >=4 columns get
