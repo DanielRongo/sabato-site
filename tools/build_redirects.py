@@ -36,6 +36,13 @@ OUT = os.path.join(SITE, "_redirects")
 
 # (old path, new path, why)
 MAP = [
+    # --- pages we published and then withdrew --------------------------------
+    # Not a pre-pivot survivor: this one was live on production for part of
+    # 11 Aug 2026 and went out in sitemap.xml before it was pulled. A URL Google
+    # has been handed deserves a destination, however briefly it existed.
+    ("/blog/the-build-file",    "/blog/voice-agent-acceptance-test",
+     "season hub withdrawn 11 Aug; issue 00 is the hub now"),
+
     # --- old vertical pages: the pre-pivot positioning -----------------------
     # No equivalent page exists for these verticals any more. The industries hub
     # is the honest destination: the visitor asked "do you serve my sector?" and

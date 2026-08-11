@@ -3,13 +3,12 @@ title: "The twenty calls: what to test before a voice agent answers a real custo
 seo_title: "Voice Agent Acceptance Test: The 20 Calls | Sabato AI"
 slug: voice-agent-acceptance-test
 description: "Twenty phone calls that turn a feeling into a number. Most of them test failing well rather than working - which is the half a demo never shows you."
-category: The Build File
+category: Voice AI DIY
 date: 2026-08-11
 cover_style: black
 ---
 
-*The Build File, issue 00. Part of [The Build File](/blog/the-build-file), a season on running a
-voice build without being an engineer.*
+*The Build File, issue 00. A season on running a voice build without being an engineer.*
 
 There is a moment near the end of every voice project where somebody asks whether it's ready,
 and nobody in the room has an answer that isn't a feeling.

@@ -4,6 +4,7 @@
 # WordPress-era blog) that shipped with no redirects at all. Every
 # target is validated against real files before this file is written.
 
+/blog/the-build-file                                                         /blog/voice-agent-acceptance-test                     301   # season hub withdrawn 11 Aug; issue 00 is the hub now
 /banking                                                                     /industries                                           301   # vertical dropped in pivot
 /saas                                                                        /industries                                           301   # vertical dropped in pivot
 /insurance                                                                   /industries                                           301   # vertical dropped in pivot

@@ -640,14 +640,37 @@ def build_index(posts, L):
 
 
 def update_sitemap(urls):
+    """Add new post URLs, and drop post URLs whose markdown no longer exists.
+
+    This used to only ever ADD. Delete a post and its <loc> stayed in the
+    sitemap forever, pointing at a 404 - the site telling Google to go and fetch
+    a page we removed on purpose. Pruning is scoped to /blog/ and /it/blog/ post
+    URLs, which are exactly the ones this function owns; every other entry in the
+    sitemap is written by hand or by another tool and is left alone.
+    """
     path = os.path.join(SITE, "sitemap.xml")
     xml = open(path, encoding="utf-8").read()
     existing = set(re.findall(r"<loc>(.*?)</loc>", xml))
+    keep = set(urls)
+
+    def owned(u):
+        # a POST url, not the two index pages this function also emits
+        tail = u.replace(BASE, "")
+        return ((tail.startswith("/blog/") or tail.startswith("/it/blog/"))
+                and tail not in ("/blog", "/it/blog"))
+
+    dead = [u for u in existing if owned(u) and u not in keep]
+    for u in dead:
+        xml = re.sub(r"\s*<url>\s*<loc>" + re.escape(u) + r"</loc>.*?</url>", "", xml, flags=re.S)
+
     add = [u for u in urls if u not in existing]
     if add:
         xml = xml.replace("</urlset>",
                           "".join(f"<url><loc>{u}</loc></url>" for u in add) + "</urlset>")
+    if add or dead:
         open(path, "w", encoding="utf-8").write(xml)
+    if dead:
+        print(f"  sitemap: {len(dead)} stale post URL(s) removed")
     return len(add)
 
 

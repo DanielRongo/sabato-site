@@ -11,7 +11,9 @@ where this repo's machinery touches the plan. They do not change the plan.
 
 ## 1. The slug map (fix this before anything else ships)
 
-Season hub: **`/blog/the-build-file`**
+~~Season hub: `/blog/the-build-file`~~ **KILLED 11 Aug by Daniel - do not build it.**
+The series has no hub page. Everything below that assumed one has been amended
+in place; the original wording is kept where it still applies.
 
 | #  | Post                              | Slug                                    |
 |----|-----------------------------------|-----------------------------------------|
@@ -40,7 +42,7 @@ the page, never in the address.
 `should-you-remove-the-phone-number`, `what-a-conversation-actually-costs`,
 `measure-your-voice-agent-latency`. None of the eleven slugs above touches them.
 
-`[BUILD]` The season hub is NOT a post. `publish.py` only renders what is in
+`[BUILD]` SUPERSEDED - the hub was killed on 11 Aug. Original note: the season hub is NOT a post. `publish.py` only renders what is in
 `posts/en/` and `posts/it/`, so `/blog/the-build-file` needs either its own
 generator or to be authored as a post-shaped page. Decide before issue 01,
 because both fixed links point at it.
@@ -80,11 +82,17 @@ build in Europe.
 
 ## 3. The rules per post
 
-**Two fixed links, every time:**
+**One fixed link, every time:**
 
-1. Back to the season hub (in the standfirst or the footer).
+1. ~~Back to the season hub.~~ There is no hub. Removed 11 Aug.
 2. To issue 00, the acceptance test - because every issue eventually says "and
    then test it."
+
+`[BUILD]` With the hub gone, issue 00 is the ONLY hub, and the standfirst of
+every issue carries the series name as plain text rather than a link. This makes
+the fixed link to 00 more load-bearing, not less - it is now the single thing
+holding the eleven posts together as a cluster, and the category page is the
+only other place they all appear.
 
 **Two to four lateral links, chosen by reader question, not by quota.** Place a
 link where the reader has just formed a question, not where a keyword happens to
@@ -161,10 +169,10 @@ Keep this file as the record. It is the only place the map lives.
    will leave `/it/blog` visibly thinner than `/blog`, and the Italian market is
    one this series explicitly argues about (issue 07). Decide once, now, rather
    than per post.
-2. **The hub's build path.** See the `[BUILD]` note in section 1.
-3. **Category.** Existing posts use a single `category` field (Operations, and
-   others). A dedicated `The Build File` category would let the blog index group
-   the season without new template work. Cheapest way to make eleven posts read
-   as one thing.
+2. ~~**The hub's build path.**~~ Moot - no hub.
+3. **Category - SETTLED 11 Aug: `Voice AI DIY`.** Not "The Build File". The
+   category is the reader-facing label on the card and the chip, and it should
+   say what the season is ABOUT, not what it is called. "Voice AI DIY" also
+   carries a search term; a series name carries none. Every issue uses it.
 4. **Publishing cadence.** One a day, per Daniel. The retrofit step in section 5
    is a per-publish task, not an end-of-season task.

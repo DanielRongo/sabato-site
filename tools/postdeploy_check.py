@@ -32,9 +32,9 @@ PAGES = ["/", "/it", "/pricing", "/about", "/contact", "/blog", "/it/blog",
          "/it/blog/should-you-remove-the-phone-number",
          "/blog/what-a-conversation-actually-costs",
          "/it/blog/what-a-conversation-actually-costs",
-         # The Build File - English only for now, so these also exercise the
+         # The Build File - English only, so this also exercises the
          # "no sibling, therefore no hreflang" branch above.
-         "/blog/the-build-file", "/blog/voice-agent-acceptance-test",
+         "/blog/voice-agent-acceptance-test",
          "/use-cases/where-is-my-order", "/it/casi-duso/dove-e-il-mio-ordine",
          "/industries", "/industries/home-improvement", "/industries/fashion-apparel",
          "/it/settori", "/it/settori/clima-e-riscaldamento", "/it/settori/moda-abbigliamento",
