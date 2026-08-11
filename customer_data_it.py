@@ -158,6 +158,10 @@ CUSTOMERS_IT = {
         "name": "Creative Cables",
         "initials": "CC",
         "logo": "/customers/assets/creative-cables-logo.png",
+        # White knockout for use on the black proof card. The stock logo is
+        # dark ink on an OPAQUE near-white plate, so it lands as a grey
+        # rectangle on anything dark. Generated once, not filtered in CSS.
+        "logo_white": "/customers/assets/creative-cables-logo-white.png",
         "person": "Marco Logreco",
         "person_initials": "ML",
         "role": "Head of E-Commerce",

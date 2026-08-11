@@ -65,9 +65,15 @@ THEIRS_HDR = re.compile(r'\s*<header class="site-header".*?</header>\s*', re.S)
 # Our homepage hero and its inline reveal script. Stripped before re-inserting
 # so the script stays a fixed point; it sits between the header and React's root.
 # The proof widget and the script that moves it in front of the FAQ.
+# The script carries data-sb-proof so this pattern never has to know what is
+# INSIDE it. The previous version matched on the script's first statement, and
+# the day that statement changed the strip silently stopped matching: the old
+# script stayed, a new one was appended, and six pages grew a duplicate on every
+# build. An attribute we control cannot drift out from under the regex.
+# The second alternative retires scripts emitted before the marker existed.
 OURS_PROOF = re.compile(
     r'\s*<section class="sb-proof".*?</section>'
-    r'(?:\s*<script>\(function\(\)\{function go\(\).*?</script>)?'
+    r'(?:\s*<script(?: data-sb-proof)?>\(function\(\)\{(?:var W=null;)?function go\(\).*?</script>)*'
     r'\s*', re.S)
 OURS_LOGOS = re.compile(r'\s*<section class="sb-logos".*?</section>\s*', re.S)
 OURS_HERO = re.compile(

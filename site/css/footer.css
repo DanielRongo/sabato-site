@@ -975,9 +975,17 @@ body:has(.sb-logos) [data-framer-name^="Brand Logos" i] { display: none !importa
    the page before the move.
    ========================================================================== */
 
-.sb-proof { background: #fff; padding: 0 30px; }
+/* width: 100% on both, and it is load-bearing. This section gets MOVED inside
+   Framer's tree at runtime, and the parent it lands in is a centring flex
+   column - so the card is a flex item and shrink-to-fits its content. The
+   moment the inner rail capped the content at 1040px the card quietly followed
+   it down to 1152px and stopped lining up with the hero above it. Measured:
+   card left edge went from 40px to 144px with no rule touching the card. */
+.sb-proof { background: #fff; padding: 0 30px; width: 100%; box-sizing: border-box; }
 .sb-proof[hidden] { display: none; }
 .sb-proof-card {
+  width: 100%;
+  box-sizing: border-box;
   max-width: 1360px;
   margin: 0 auto;
   background: #000;
@@ -986,6 +994,53 @@ body:has(.sb-logos) [data-framer-name^="Brand Logos" i] { display: none !importa
   color: #fff;
   font-family: Satoshi, Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   -webkit-font-smoothing: antialiased;
+}
+/* Section header, on the white background ABOVE the black card - so it reads
+   as a section of the page like Features or FAQ, not as a caption belonging to
+   the card. Same 1360px rail as the hero and the logo band, so the left edge
+   of "Success stories" lines up with everything else on the page. */
+.sb-proof-head {
+  width: 100%;
+  box-sizing: border-box;
+  max-width: 1360px;
+  margin: 0 auto 30px;
+  text-align: center;
+  font-family: Satoshi, Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+.sb-proof-head h2 {
+  margin: 0;
+  font-size: 44px;
+  line-height: 1.12;
+  font-weight: 700;
+  letter-spacing: -1.4px;
+  color: #0A0A0A;
+}
+.sb-proof-head p {
+  /* auto side margins, not just text-align: the 58ch cap would otherwise sit
+     hard left and only its text would look centred. */
+  margin: 12px auto 0;
+  font-size: 18px;
+  line-height: 1.55;
+  color: rgba(10, 10, 10, .62);
+  max-width: 58ch;
+}
+
+/* Name on the left, customer mark hard right, one line. Sized by height and
+   not width: the next customer's logo will have completely different
+   proportions and a fixed width would render one of them enormous. */
+.sb-proof-by {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-top: 18px;
+}
+.sb-proof-logo {
+  display: block;
+  flex: 0 0 auto;
+  height: 34px;
+  width: auto;
+  opacity: .92;
 }
 .sb-proof-eyebrow {
   margin: 0;
@@ -996,70 +1051,114 @@ body:has(.sb-logos) [data-framer-name^="Brand Logos" i] { display: none !importa
   color: rgba(248, 244, 241, .5);
 }
 
-/* Results first - that is the order Daniel asked for, and it is the right one:
-   the numbers earn the quote a reading. */
+/* The numbers come SECOND now and are sized to look it. Daniel wanted Marco to
+   outrank the metrics, and prominence is a budget: making the face and the
+   quote bigger only reads as a hierarchy if the figures also come down. They
+   were 54px above a 22px quote - the quote could not win at any size while
+   that held. Below the quote, behind a top rule, they read as the receipt for
+   what he just said, which is the job they were always doing. */
 .sb-proof-stats {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 28px;
-  margin: 26px 0 0;
-  padding: 0 0 34px;
-  border-bottom: 1px solid rgba(248, 244, 241, .16);
+  max-width: 1040px;
+  margin: 38px auto 0;
+  padding: 30px 0 0;
+  border-top: 1px solid rgba(248, 244, 241, .16);
+  text-align: center;
 }
 .sb-proof-num {
   display: block;
-  font-size: 54px;
-  line-height: 1.02;
+  font-size: 56px;
+  line-height: 1.03;
   font-weight: 900;
-  letter-spacing: -1.5px;
+  letter-spacing: -1.8px;
   color: #CCFF00;
   font-variant-numeric: tabular-nums;
 }
 .sb-proof-lab {
   display: block;
-  margin-top: 8px;
+  /* auto margins for the same reason as the subtitle: a left-anchored 26ch box
+     inside a centred cell centres the text but not the block. */
+  margin: 10px auto 0;
   font-size: 14.5px;
   line-height: 1.45;
-  color: rgba(248, 244, 241, .72);
+  color: rgba(248, 244, 241, .66);
   max-width: 26ch;
 }
 
+/* The hero of the card. `align-items: center` and not flex-start: with a 132px
+   portrait next to two lines of quote, top-aligning leaves the face floating
+   above a short block of text. */
+/* INNER RAIL. The card keeps the site's 1360px width so its edges line up with
+   the hero and the logo band, but the content inside runs at 1040px. At the
+   full width a line of quote was ~110 characters, well past the 60-75 that
+   reads comfortably, and the right-aligned logo ended up 690px from the name
+   it belongs to - which is what read as "not aligned". Same rail on the stats
+   below, so the three columns and the quote share one left and right edge. */
 .sb-proof-quote {
   display: flex;
-  align-items: flex-start;
-  gap: 28px;
-  margin: 34px 0 0;
+  align-items: center;
+  gap: 44px;
+  max-width: 1040px;
+  margin: 30px auto 0;
 }
+/* 260px and a 20px radius: EXACTLY what templates/customer.html gives the
+   portrait on the case study page. Daniel asked for the same size, and taking
+   the shape with it means the widget and the page it links to read as one
+   thing rather than two designs of the same man. If that template changes,
+   change this with it - the pairing is the point. */
 .sb-proof-face {
-  flex: 0 0 96px;
-  width: 96px;
-  height: 96px;
+  flex: 0 0 260px;
+  width: 260px;
+  height: 260px;
   border-radius: 50%;
   object-fit: cover;
   display: block;
   background: rgba(248, 244, 241, .1);
+  /* The lime ring, back by request. At 260px it needs 3px to read as a ring
+     rather than an artefact - 2px looked like a rendering seam at this size. */
+  box-shadow: 0 0 0 3px rgba(204, 255, 0, .6);
 }
 .sb-proof-said { min-width: 0; }
 .sb-proof-said blockquote {
   margin: 0;
-  font-size: 22px;
-  line-height: 1.5;
+  font-size: 27px;
+  line-height: 1.42;
   font-weight: 500;
-  letter-spacing: -.2px;
-  max-width: 62ch;
+  letter-spacing: -.45px;
+  /* Wider than the old 62ch so the bigger type does not run to five lines. */
+  max-width: 56ch;
 }
-.sb-proof-said figcaption {
-  margin-top: 16px;
-  font-size: 14.5px;
+/* English runs shorter than Italian for the same quote, so it carries more size
+   at the same line count. Per language, not global: at 30px the Italian quote
+   spills to five lines and unbalances the card against the 260px portrait.
+   Wrapped in min-width, because a language selector outranks a plain media
+   query - unwrapped it also won on phones and pushed the English quote to
+   EIGHT lines, a 1062px card against Italian's 898px. */
+@media (min-width: 768px) {
+  .sb-proof[data-lang="en"] .sb-proof-said blockquote {
+    font-size: 30px;
+    letter-spacing: -.55px;
+  }
+}
+.sb-proof-who {
+  margin: 0;
+  min-width: 0;
+  font-size: 15px;
   line-height: 1.5;
   color: rgba(248, 244, 241, .6);
 }
-.sb-proof-said figcaption b { display: block; color: #fff; font-weight: 700; }
+.sb-proof-who b { display: block; color: #fff; font-weight: 700; }
 
 .sb-proof-cta {
-  display: inline-flex;
+  /* flex + width:fit-content + auto margins. `inline-flex` cannot be centred by
+     auto margins - it has no free space to distribute - which is why this is a
+     block-level flex box rather than the inline one it started as. */
+  display: flex;
+  width: fit-content;
   align-items: center;
-  margin: 34px 0 0;
+  margin: 34px auto 0;
   background: #CCFF00;
   color: #0A0A0A;
   border-radius: 100px;
@@ -1076,14 +1175,31 @@ body:has(.sb-logos) [data-framer-name^="Brand Logos" i] { display: none !importa
 
 @media (max-width: 767.98px) {
   .sb-proof { padding: 0 20px; }
-  .sb-proof-card { padding: 34px 22px 32px; border-radius: 20px; }
+  .sb-proof-head { margin-bottom: 20px; }
+  .sb-proof-head h2 { font-size: 30px; letter-spacing: -.9px; }
+  .sb-proof-head p { font-size: 16px; margin-top: 10px; }
+  .sb-proof-card { padding: 30px 22px 30px; border-radius: 20px; }
   /* Three 54px numbers do not fit a 350px card. One column keeps each figure
      next to the label that explains it, which is the point of the figure. */
-  .sb-proof-stats { grid-template-columns: 1fr; gap: 20px; padding-bottom: 26px; }
-  .sb-proof-num { font-size: 40px; }
-  .sb-proof-lab { font-size: 14px; max-width: none; }
-  .sb-proof-quote { flex-direction: column; gap: 18px; margin-top: 26px; }
-  .sb-proof-face { flex: 0 0 72px; width: 72px; height: 72px; }
-  .sb-proof-said blockquote { font-size: 18px; line-height: 1.55; }
+  /* Three columns, not one. As the SECOND element they are a supporting strip,
+     and a strip is what a row reads as; three stacked 40px figures after the
+     quote would take the prominence straight back. 26px still fits "39%" in a
+     ~95px column at 350px card width - measured, not guessed. */
+  .sb-proof-stats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px; margin-top: 28px; padding-top: 24px;
+  }
+  .sb-proof-num { font-size: 34px; letter-spacing: -1.1px; }
+  .sb-proof-lab { font-size: 11.5px; line-height: 1.35; max-width: none; }
+  /* Centred here too, so the whole card reads on one axis on a phone. */
+  .sb-proof-quote { flex-direction: column; align-items: center; text-align: center; gap: 22px; margin-top: 24px; }
+  /* 180px, matching templates/customer.html's phone breakpoint for the same
+     portrait, and round like its desktop self. */
+  .sb-proof-face { flex: 0 0 180px; width: 180px; height: 180px; }
+  .sb-proof-said blockquote { font-size: 20px; line-height: 1.5; letter-spacing: -.3px; }
+  /* Stacked, not spread: name over logo. justify-content: space-between on a
+     ~330px line pushed the mark so far right it read as a separate element. */
+  .sb-proof-by { flex-direction: column; gap: 14px; margin-top: 16px; }
+  .sb-proof-logo { height: 26px; }
   .sb-proof-cta { margin-top: 26px; font-size: 15px; padding: 13px 24px; }
 }
