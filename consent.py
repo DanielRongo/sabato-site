@@ -49,9 +49,11 @@ MAX_AGE_DAYS = 180
 COPY = {
     "en": dict(
         title="Cookies",
-        body="Strictly necessary cookies keep this site working. Analytics and "
-             "marketing cookies only run if you say yes — nothing is set "
-             "before you choose.",
+        # ONE LINE. At 13.5px the strip leaves roughly 90 characters beside
+        # the buttons on a 1200px card; past that it wraps and stops being a
+        # slim bar. Keep any edit under that, and check it at 1280px.
+        body="We use cookies for analytics and to see which companies visit. "
+             "Nothing runs until you choose.",
         policy="Privacy and Cookies", policy_href="/privacy-policy",
         accept="Accept all", reject="Reject all",
         prefs="Preferences", save="Save choices",
@@ -68,9 +70,9 @@ COPY = {
     ),
     "it": dict(
         title="Cookie",
-        body="I cookie tecnici servono a far funzionare il sito. Quelli di "
-             "analisi e marketing partono solo se acconsenti: prima della tua "
-             "scelta non viene impostato nulla.",
+        # Italian runs ~15% longer than English; trimmed to match.
+        body="Usiamo cookie per statistiche e identificazione aziendale. "
+             "Niente parte senza il tuo consenso.",
         policy="Privacy e Cookie", policy_href="/it/privacy-e-cookie",
         accept="Accetta tutti", reject="Rifiuta tutti",
         prefs="Preferenze", save="Salva le scelte",
@@ -104,24 +106,28 @@ def _rows(c):
 def consent_html(lang="en"):
     c = COPY[lang]
     return (
+        # A strip, not a panel. The headline is gone and the dialog takes its
+        # accessible name from aria-label instead - a visible <h2> on a one-line
+        # bar is just a second line.
+        # The preferences panel comes AFTER the row, so opening it grows the bar
+        # downward instead of shoving the buttons around.
         '<div class="sb-consent" id="sb-consent" role="dialog" '
-        'aria-labelledby="sb-consent-title" aria-describedby="sb-consent-body" '
+        'aria-label="%s" aria-describedby="sb-consent-body" '
         'data-lang="%s" hidden>'
         '<div class="sb-c-card">'
-        '<div class="sb-c-head">'
-        '<h2 id="sb-consent-title">%s</h2>'
+        '<div class="sb-c-bar">'
         '<p id="sb-consent-body">%s <a href="%s">%s</a></p>'
-        '</div>'
-        '<div class="sb-c-prefs" hidden>%s</div>'
         '<div class="sb-c-btns">'
         # Accept and reject are adjacent, identical in size, first layer.
         '<button type="button" class="sb-c-btn sb-c-primary" data-sb-c="accept">%s</button>'
         '<button type="button" class="sb-c-btn sb-c-ghost" data-sb-c="reject">%s</button>'
         '<button type="button" class="sb-c-btn sb-c-text" data-sb-c="prefs">%s</button>'
         '<button type="button" class="sb-c-btn sb-c-primary" data-sb-c="save" hidden>%s</button>'
-        '</div></div></div>%s'
-        % (lang, c["title"], c["body"], c["policy_href"], c["policy"],
-           _rows(c), c["accept"], c["reject"], c["prefs"], c["save"], SCRIPT)
+        '</div></div>'
+        '<div class="sb-c-prefs" hidden>%s</div>'
+        '</div></div>%s'
+        % (c["title"], lang, c["body"], c["policy_href"], c["policy"],
+           c["accept"], c["reject"], c["prefs"], c["save"], _rows(c), SCRIPT)
     )
 
 
