@@ -145,23 +145,23 @@ PLAYBOOKS = {
 
 
         "workflows": {
-            "h2": "What it takes off your team",
+            "h2": "What Sabato can take off your team",
             "lede": "Peak is four ordinary problems arriving at once. Each one is "
                     "a workflow the agent already runs.",
             "go": "See the workflow",
             "items": [
                 ("Where Is My Order", "/use-cases/where-is-my-order",
                  "The call that defines the week. Status read live from your "
-                 "store, confirmed by text."),
+                 "store, confirmed by text.", "wismo"),
+                ("Pre-Sales Consultation", "/use-cases/pre-sales-consultation",
+                 "Peak buyers ask before they order - will it fit, will it "
+                 "arrive in time. Answered on the call, not after it.", "presales"),
                 ("Managing Returns", "/use-cases/managing-returns",
                  "January's peak. Booked on the phone the moment the portal says "
-                 "no."),
+                 "no.", "returns"),
                 ("Back-in-Stock Notification", "/use-cases/back-in-stock-notification",
                  "Sellouts are peak's other face. Callers get notified the moment "
-                 "it's back."),
-                ("Cart Abandonment Recovery", "/use-cases/cart-abandonment-recovery",
-                 "Peak carts stall on delivery dates and stock. One sixty-second "
-                 "call answers both."),
+                 "it's back.", "restock"),
             ],
         },
 

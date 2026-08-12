@@ -102,23 +102,23 @@ PLAYBOOKS_IT = {
 
 
         "workflows": {
-            "h2": "Cosa toglie al tuo team",
+            "h2": "Cosa Sabato può togliere al tuo team",
             "lede": "Il picco è quattro problemi ordinari che arrivano insieme. "
                     "Ognuno è un flusso che l'agente già gestisce.",
             "go": "Vedi il flusso",
             "items": [
                 ("Dov'è il mio ordine", "/it/casi-duso/dove-e-il-mio-ordine",
                  "La chiamata che definisce la settimana. Stato letto in tempo "
-                 "reale, confermato via messaggio."),
+                 "reale, confermato via messaggio.", "wismo"),
+                ("Consulenza pre-vendita", "/it/casi-duso/consulenza-pre-vendita",
+                 "In alta stagione si chiede prima di ordinare: se va bene, se "
+                 "arriva in tempo. Risposta durante la chiamata, non dopo.", "presales"),
                 ("Gestione resi", "/it/casi-duso/gestione-resi",
                  "Il picco di gennaio. Prenotato al telefono nel momento in cui "
-                 "il portale dice no."),
+                 "il portale dice no.", "returns"),
                 ("Notifica ritorno in stock", "/it/casi-duso/notifica-ritorno-in-stock",
                  "L'altra faccia del picco è finire le scorte. Chi chiama viene "
-                 "avvisato appena torna."),
-                ("Recupero carrelli abbandonati", "/it/casi-duso/recupero-carrelli-abbandonati",
-                 "In picco i carrelli si bloccano su date e disponibilità. Una "
-                 "chiamata da un minuto risolve entrambe."),
+                 "avvisato appena torna.", "restock"),
             ],
         },
 

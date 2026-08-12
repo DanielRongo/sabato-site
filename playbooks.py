@@ -161,6 +161,10 @@ EXTRA_CSS = """
     .pb-card { display: block; background: var(--off); border-radius: var(--radius);
       padding: 30px 32px; transition: transform .15s ease; }
     .pb-card:hover { transform: translateY(-2px); }
+    .pb-ic { display: flex; align-items: center; justify-content: center;
+      width: 44px; height: 44px; border-radius: 12px; background: var(--black);
+      margin: 0 0 18px; }
+    .pb-ic svg { width: 22px; height: 22px; display: block; }
     .pb-card h3 { font-size: 20px; font-weight: 700; letter-spacing: -.4px;
       color: var(--ink); margin: 0 0 8px; }
     .pb-card p { font-size: 16px; line-height: 1.65; color: var(--gray); margin: 0; }
@@ -184,6 +188,30 @@ EXTRA_CSS = """
       .pb-proofline .pb-l { font-size: 11.5px; }
     }
 """
+
+
+# One 24x24 lime line-glyph per workflow tile, on the same grid and the same 2px
+# stroke as industry_icons.py - a mixed set of stroke widths is the fastest way
+# to make a glyph family look bought rather than drawn. The glyph sits in a black
+# badge because these tiles are light grey: lime on near-white is unreadable,
+# and lime on black is the site's own pairing.
+_ICW = ('<svg viewBox="0 0 24 24" fill="none" stroke="rgb(204,255,0)" stroke-width="2" '
+        'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">%s</svg>')
+ICONS = {
+    # parcel in transit
+    "wismo": _ICW % ('<path d="M3 7.5 12 3l9 4.5v9L12 21l-9-4.5z"/>'
+                     '<path d="M3 7.5 12 12l9-4.5"/><path d="M12 12v9"/>'),
+    # speech bubble with a question - someone deciding, out loud
+    "presales": _ICW % ('<path d="M3.5 6.5a2 2 0 0 1 2-2h13a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-6.5'
+                        'L7.5 20v-3.5H5.5a2 2 0 0 1-2-2z"/>'
+                        '<path d="M10.2 9a2 2 0 1 1 2.4 2.4c-.6.2-.8.6-.8 1.1"/>'
+                        '<path d="M11.8 14.2h.02"/>'),
+    # counter-clockwise arrow: undo, send back
+    "returns": _ICW % ('<path d="M3.5 12a8.5 8.5 0 1 0 2.5-6"/><path d="M3.5 3.5v5h5"/>'),
+    # bell
+    "restock": _ICW % ('<path d="M18 9.5a6 6 0 1 0-12 0c0 5.5-2.2 6.8-2.2 6.8h16.4S18 15 18 9.5z"/>'
+                       '<path d="M13.8 19.6a2.1 2.1 0 0 1-3.6 0"/>'),
+}
 
 
 def esc(s):
@@ -276,9 +304,10 @@ def section_faq(d):
 def section_workflows(d):
     w = d["workflows"]
     cards = "".join(
-        '<a class="pb-card" href="%s"><h3>%s</h3><p>%s</p>'
-        '<span class="pb-go">%s &rarr;</span></a>' % (href, esc(label), esc(line), esc(w["go"]))
-        for label, href, line in w["items"])
+        '<a class="pb-card" href="%s"><span class="pb-ic">%s</span>'
+        '<h3>%s</h3><p>%s</p><span class="pb-go">%s &rarr;</span></a>'
+        % (href, ICONS.get(icon, ""), esc(label), esc(line), esc(w["go"]))
+        for label, href, line, icon in w["items"])
     return """
     <section class="pb-wf">
       <h2>%s</h2>
