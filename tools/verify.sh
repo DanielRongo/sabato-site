@@ -50,6 +50,9 @@ python3 tools/inject_ga.py
 # RB2B goes second so it lands after the GA block in <head>. Both are
 # marker-fenced and self-verify their own count, so re-runs are no-ops.
 python3 tools/inject_reb2b.py
+# LAST: the banner is what flips the two above on. It goes before </body>,
+# outside Framer's React root - inside it, hydration deletes it.
+python3 tools/inject_consent.py
 
 echo
 echo "==> 3/5  serve the built site the way Netlify would"
@@ -60,6 +63,13 @@ sleep 2
 
 echo
 echo "==> 4/5  Playwright sweep against http://127.0.0.1:$PORT"
+# If your harness caps a single command (the Cowork container stops at 10 min),
+# postdeploy_check.py and audit_links.py both take an optional "start:end" page
+# slice as a second argument, e.g.
+#     python3 tools/postdeploy_check.py http://127.0.0.1:8909 0:26
+#     python3 tools/postdeploy_check.py http://127.0.0.1:8909 26:
+# Same checks, fewer pages per call. The click-through block runs on the final
+# slice only, so it still happens exactly once.
 if ! python3 tools/postdeploy_check.py "http://127.0.0.1:$PORT"; then
   echo
   echo "GATE FAILED - no receipt written. Nothing is safe to push." >&2

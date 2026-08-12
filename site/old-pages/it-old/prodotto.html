@@ -3,6 +3,11 @@
 <!-- Published Jul 24, 2026, 8:35 AM UTC -->
 <html lang="en" data-redirect-timezone="1">
 <head>
+<!-- Consent Mode (Sabato) -->
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}(function(){var a="denied",m="denied";try{var c=JSON.parse(localStorage.getItem("sb-consent")||"null");if(c&&c.v===1&&(Date.now()-Date.parse(c.ts))<180*864e5){a=c.analytics?"granted":"denied";m=c.marketing?"granted":"denied";}}catch(e){}gtag("consent","default",{ad_storage:m,ad_user_data:m,ad_personalization:m,analytics_storage:a,functionality_storage:"granted",security_storage:"granted",wait_for_update:500});})();</script>
+<!-- /Consent Mode -->
+
+
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
 	<meta name="generator" content="Framer ed99727">
@@ -196,7 +201,8 @@
 	<!-- Global site tag (gtag.js) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-BSK4KH9JJF"></script>
 <!-- RB2B (Sabato) -->
-<script>!function(key) {if (window.reb2b) return;window.reb2b = {loaded: true};var s = document.createElement("script");s.async = true;s.src = "https://ddwl4m2hdecbv.cloudfront.net/b/" + key + "/" + key + ".js.gz";document.getElementsByTagName("script")[0].parentNode.insertBefore(s, document.getElementsByTagName("script")[0]);}("5NRP9H3Q9YO1");</script>
+<script>window.sbReb2b=function(){!function(key) {if (window.reb2b) return;window.reb2b = {loaded: true};var s = document.createElement("script");s.async = true;s.src = "https://ddwl4m2hdecbv.cloudfront.net/b/" + key + "/" + key + ".js.gz";document.getElementsByTagName("script")[0].parentNode.insertBefore(s, document.getElementsByTagName("script")[0]);}("5NRP9H3Q9YO1");};
+(function(){try{var c=JSON.parse(localStorage.getItem("sb-consent")||"null");if(c&&c.v===1&&c.marketing&&(Date.now()-Date.parse(c.ts))<180*864e5)window.sbReb2b();}catch(e){}})();</script>
 <!-- /RB2B -->
 </head>
 <body>
@@ -241,5 +247,59 @@
 })();
 </script>
 <script src="/js/enhance.js?v=a6a1e75602" defer></script>
+<!-- Consent (Sabato) -->
+<div class="sb-consent" id="sb-consent" role="dialog" aria-labelledby="sb-consent-title" aria-describedby="sb-consent-body" data-lang="en" hidden><div class="sb-c-card"><div class="sb-c-head"><h2 id="sb-consent-title">Cookies</h2><p id="sb-consent-body">Strictly necessary cookies keep this site working. Analytics and marketing cookies only run if you say yes — nothing is set before you choose. <a href="/privacy-policy">Privacy and Cookies</a></p></div><div class="sb-c-prefs" hidden><label class="sb-c-row"><span class="sb-c-rt"><b>Strictly necessary</b><i>Page delivery, security, and remembering this choice. Always on.</i></span><input type="checkbox" checked disabled></label><label class="sb-c-row"><span class="sb-c-rt"><b>Analytics</b><i>Google Analytics 4. Which pages get read and how people arrive, in aggregate.</i></span><input type="checkbox" data-sb-cat="analytics"></label><label class="sb-c-row"><span class="sb-c-rt"><b>Marketing</b><i>RB2B. Identifies visiting companies so we can follow up. Resolves US visitors only.</i></span><input type="checkbox" data-sb-cat="marketing"></label></div><div class="sb-c-btns"><button type="button" class="sb-c-btn sb-c-primary" data-sb-c="accept">Accept all</button><button type="button" class="sb-c-btn sb-c-ghost" data-sb-c="reject">Reject all</button><button type="button" class="sb-c-btn sb-c-text" data-sb-c="prefs">Preferences</button><button type="button" class="sb-c-btn sb-c-primary" data-sb-c="save" hidden>Save choices</button></div></div></div><script data-sb-consent>(function(){
+var K="sb-consent",V=1,MAXMS=180*864e5;
+function read(){try{var o=JSON.parse(localStorage.getItem(K)||"null");
+if(!o||o.v!==V)return null;
+if(o.ts&&(Date.now()-Date.parse(o.ts))>MAXMS)return null;return o;}catch(e){return null;}}
+function write(a,m){try{localStorage.setItem(K,JSON.stringify(
+{v:V,ts:new Date().toISOString(),analytics:!!a,marketing:!!m}));}catch(e){}}
+function apply(a,m){
+// Consent Mode v2. inject_ga.py has already defaulted these to denied, so this
+// only ever loosens - and only on an explicit click.
+if(window.gtag)window.gtag("consent","update",{
+ad_storage:m?"granted":"denied",ad_user_data:m?"granted":"denied",
+ad_personalization:m?"granted":"denied",analytics_storage:a?"granted":"denied"});
+// RB2B is not loaded at all until marketing is granted - see inject_reb2b.py,
+// which defines the loader without calling it.
+if(m&&window.sbReb2b)window.sbReb2b();}
+var el=null;
+function box(){return el||(el=document.getElementById("sb-consent"));}
+function show(pre){var b=box();if(!b)return;
+var c=pre||read()||{};
+var t=b.querySelectorAll("[data-sb-cat]"),i;
+for(i=0;i<t.length;i++)t[i].checked=!!c[t[i].getAttribute("data-sb-cat")];
+b.hidden=false;}
+function hide(){var b=box();if(b)b.hidden=true;}
+function close_(a,m){write(a,m);apply(a,m);hide();}
+function wire(){var b=box();if(!b)return;
+b.addEventListener("click",function(e){
+var t=e.target.closest?e.target.closest("[data-sb-c]"):null;if(!t)return;
+var act=t.getAttribute("data-sb-c");
+if(act==="accept")return close_(true,true);
+if(act==="reject")return close_(false,false);
+if(act==="prefs"){b.querySelector(".sb-c-prefs").hidden=false;
+t.hidden=true;b.querySelector('[data-sb-c="save"]').hidden=false;
+b.className+=" sb-c-open";return;}
+if(act==="save"){var g={},n=b.querySelectorAll("[data-sb-cat]"),i;
+for(i=0;i<n.length;i++)g[n[i].getAttribute("data-sb-cat")]=n[i].checked;
+return close_(g.analytics,g.marketing);}});
+// Withdrawal, from the footer link on every page.
+document.addEventListener("click",function(e){
+var o=e.target.closest?e.target.closest("[data-sb-consent-open]"):null;
+if(!o)return;e.preventDefault();
+b.querySelector(".sb-c-prefs").hidden=false;
+b.querySelector('[data-sb-c="prefs"]').hidden=true;
+b.querySelector('[data-sb-c="save"]').hidden=false;
+b.className+=" sb-c-open";
+show(read()||{});});
+var saved=read();
+if(saved)apply(saved.analytics,saved.marketing);else show({});}
+window.sbConsent={open:function(){show(read()||{});},get:read};
+if(document.readyState==="loading")
+document.addEventListener("DOMContentLoaded",wire);else wire();
+})();</script>
+<!-- /Consent -->
 </body>
 </html>

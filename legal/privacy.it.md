@@ -96,9 +96,13 @@ I cookie sono piccoli file di testo memorizzati sul tuo dispositivo che ci aiuta
 
 Questo sito utilizza Google Analytics 4 per capire quali pagine vengono lette e da dove arrivano i visitatori. Vengono impostati cookie della famiglia `_ga`, che contengono un identificativo generato casualmente e hanno una durata massima di due anni. Li utilizziamo solo in forma aggregata, per decidere cosa scrivere e cosa correggere. Non li utilizziamo per finalità pubblicitarie e non li cediamo a terzi.
 
-Stiamo introducendo un banner di consenso affinché questi cookie analitici vengano impostati solo dopo la tua accettazione. Fino a quando il banner non sarà attivo, puoi impedirne del tutto l'installazione tramite le impostazioni del browser oppure utilizzando il [componente aggiuntivo ufficiale di Google](https://tools.google.com/dlpage/gaoptout). Il blocco dei cookie analitici non pregiudica in alcun modo il funzionamento di questo sito.
+Questi cookie analitici vengono impostati solo dopo la tua accettazione. Alla prima visita compare un banner di consenso con tutte le opzioni disattivate: prima della tua scelta non viene eseguito nulla oltre a quanto strettamente necessario. Google Analytics è caricato in modalità Consent Mode con l'archiviazione negata per impostazione predefinita: se rifiuti, non viene scritto alcun cookie né memorizzato alcun identificativo. Puoi modificare o revocare la tua scelta in qualsiasi momento tramite il link **Preferenze cookie** presente nel footer di ogni pagina, oppure impedire del tutto l'analisi tramite le impostazioni del browser o il [componente aggiuntivo ufficiale di Google](https://tools.google.com/dlpage/gaoptout). Il blocco dei cookie analitici non pregiudica in alcun modo il funzionamento di questo sito.
 
-Questo sito non installa cookie pubblicitari né pixel di tracciamento di terze parti.
+Utilizziamo inoltre RB2B, un servizio di identificazione aziendale che riconosce l'azienda da cui proviene la visita, per poter dare seguito alle richieste commerciali. Viene eseguito solo se accetti la categoria **Marketing** e non viene mai caricato prima. L'identificazione a livello di persona di RB2B opera esclusivamente su visitatori situati negli Stati Uniti e non identifica visitatori nell'Unione Europea o nel Regno Unito.
+
+Questo sito non installa cookie pubblicitari e non mostra pubblicità.
+
+La tua scelta sul consenso è conservata nel local storage del browser sotto la chiave `sb-consent`, insieme alla data in cui l'hai espressa. È strettamente necessaria — è la prova di ciò che hai richiesto — e scade dopo 180 giorni, trascorsi i quali ti chiediamo di nuovo.
 
 ### Cookie nell'app Shopify
 

@@ -94,6 +94,16 @@ def lang_of(path):
 
 def main():
     base = (sys.argv[1] if len(sys.argv) > 1 else "http://127.0.0.1:8909").rstrip("/")
+    # Optional "start:end" page slice. 22 pages x 2 widths is ~45 page loads
+    # with a 2.8s settle each, which now runs past the 10-minute ceiling on a
+    # single command in the Cowork container. Slicing splits the run without
+    # relaxing any check - same widths, same assertions, fewer pages per call.
+    global PAGES
+    sl = sys.argv[2] if len(sys.argv) > 2 else ""
+    if sl:
+        a, b = (sl.split(":") + [""])[:2]
+        PAGES = PAGES[int(a or 0):int(b) if b else None]
+        print("slice %s -> %d page(s)" % (sl, len(PAGES)))
     dead, lang, rel, gone = [], [], [], []
     status = {}
     with sync_playwright() as p:

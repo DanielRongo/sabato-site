@@ -67,6 +67,7 @@ COPY_EN = dict(
     links=[("Home", "/"), ("Pricing", "/pricing"), ("About", "/about"),
            ("Contact us", "/contact"), ("Blog", "/blog")],
     demo="Book a Demo", terms="Terms and Conditions", privacy="Privacy and Cookies",
+    cookies="Cookie preferences",
     other_label="Italiano", other_href="/it", logo_alt="Sabato AI - Home",
     terms_href="/terms", privacy_href="/privacy-policy",
 )
@@ -76,6 +77,7 @@ COPY_IT = dict(
     links=[("Home", "/it"), ("Prezzi", "/it/prezzi"), ("Chi Siamo", "/it/chi-siamo"),
            ("Contattaci", "/it/contatti"), ("Blog", "/it/blog")],
     demo="Prenota una Demo", terms="Termini e Condizioni", privacy="Privacy e Cookie",
+    cookies="Preferenze cookie",
     other_label="English", other_href="/", logo_alt="Sabato AI - Home",
     # Real Italian pages since 7 Aug 2026 - these used to point at the English
     # originals, which is why the audit needed a cross-language exemption.
@@ -185,6 +187,10 @@ def footer_html(lang="en"):
             f'<div class="sb-legal">'
               f'<a href="{c["terms_href"]}">{c["terms"]}</a>'
               f'<a href="{c["privacy_href"]}">{c["privacy"]}</a>'
+              # Withdrawal has to be as easy as giving it (GDPR art. 7(3)), so
+              # the banner is reachable from every page forever - not just once
+              # on the first visit. consent.py listens for this attribute.
+              f'<a href="#" data-sb-consent-open>{c["cookies"]}</a>'
               # data-lang-switch marks this as a deliberate cross-language link.
               # tools/audit_links.py and enhance.js both skip it - without the
               # marker the audit would report the switcher as a language leak,

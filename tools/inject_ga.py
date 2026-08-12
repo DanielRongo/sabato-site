@@ -20,11 +20,57 @@ Templates are patched too - otherwise the next publish.py / industries.py run
 silently strips the tag off every page it regenerates.
 """
 import glob
+import os
 import re
 import sys
 
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from consent import STORAGE_KEY, VERSION, MAX_AGE_DAYS  # noqa: E402
+
 GA_ID = "G-BSK4KH9JJF"
 OLD_IDS = ["G-499419803"]
+
+# ---------------------------------------------------------------------------
+# Google Consent Mode v2, defaulted to DENIED.
+#
+# This is the half that makes the banner mean anything. Without it GA4 sets its
+# _ga cookie the moment the page loads and the banner is decoration - prior
+# consent is the whole requirement, and a banner shown after the fact is
+# written evidence that we knew.
+#
+# It goes in FIRST, immediately after <head>, and it does not touch the tag
+# itself. gtag() only pushes onto window.dataLayer, so defining it early and
+# queueing the default means our denial is the first thing in the queue no
+# matter where the loader or the config call ends up - which matters, because
+# the Framer pages carry their own gtag pair roughly 200KB before </head> and
+# we do not want to be surgically editing their generated bundle.
+#
+# Denied is not off: GA4 still sends cookieless pings, so traffic volume and
+# page popularity survive a refusal. That was Daniel's call over blocking the
+# script outright, on the grounds that otherwise the analytics only ever show
+# the subset who accepted, with no way to size the gap.
+#
+# A returning visitor's stored choice is read here so their acceptance applies
+# to the very first pageview rather than the second.
+# ---------------------------------------------------------------------------
+CM_OPEN = "<!-- Consent Mode (Sabato) -->"
+CM_CLOSE = "<!-- /Consent Mode -->"
+CONSENT_DEFAULT = (
+    CM_OPEN + "\n"
+    '<script>window.dataLayer=window.dataLayer||[];'
+    'function gtag(){dataLayer.push(arguments);}'
+    '(function(){var a="denied",m="denied";try{'
+    'var c=JSON.parse(localStorage.getItem("' + STORAGE_KEY + '")||"null");'
+    'if(c&&c.v===' + str(VERSION) + '&&(Date.now()-Date.parse(c.ts))<'
+    + str(MAX_AGE_DAYS) + '*864e5){a=c.analytics?"granted":"denied";'
+    'm=c.marketing?"granted":"denied";}}catch(e){}'
+    'gtag("consent","default",{ad_storage:m,ad_user_data:m,'
+    'ad_personalization:m,analytics_storage:a,functionality_storage:"granted",'
+    'security_storage:"granted",wait_for_update:500});})();</script>\n'
+    + CM_CLOSE + "\n"
+)
+CM_RX = re.compile(re.escape(CM_OPEN) + r".*?" + re.escape(CM_CLOSE) + r"\n?", re.DOTALL)
+HEAD_OPEN_RX = re.compile(r"<head\b[^>]*>", re.IGNORECASE)
 
 MARK_OPEN = "<!-- GA4 (Sabato) -->"
 MARK_CLOSE = "<!-- /GA4 -->"
@@ -48,6 +94,14 @@ def process(path):
     """Return (action, changed) for one HTML file."""
     src = open(path, encoding="utf-8").read()
     out = src
+
+    # Consent default first, always - strip and re-add so re-runs are no-ops
+    # and so the block stays at the very top of <head> if anything ever
+    # inserts above it.
+    out = CM_RX.sub("", out)
+    m = HEAD_OPEN_RX.search(out)
+    if m:
+        out = out[:m.end()] + "\n" + CONSENT_DEFAULT + out[m.end():]
 
     # Framer pages: rewrite the placeholder ID wherever it appears.
     retagged = 0
@@ -105,7 +159,26 @@ def main():
         for d in dupes:
             print("   ", d)
         sys.exit(1)
-    print("every page carries the tag exactly once")
+
+    # The consent default must exist exactly once AND come before the first
+    # config call. Ordering is the whole point - a denial queued after the
+    # config has already run is a cookie already set.
+    bad_order = []
+    for f in files:
+        s = open(f, encoding="utf-8").read()
+        if s.count(CM_OPEN) != 1:
+            bad_order.append((f, "count", s.count(CM_OPEN)))
+            continue
+        cfg = s.find("'%s'" % GA_ID)
+        if cfg != -1 and s.find(CM_OPEN) > cfg:
+            bad_order.append((f, "consent-after-config", cfg))
+    if bad_order:
+        print("\nCONSENT DEFAULT WRONG:")
+        for d in bad_order:
+            print("   ", d)
+        sys.exit(1)
+    print("every page carries the tag exactly once, behind a denied-by-default "
+          "consent state")
 
 
 if __name__ == "__main__":

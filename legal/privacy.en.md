@@ -96,9 +96,13 @@ Cookies are small text files stored on your device to help us recognize your bro
 
 This website uses Google Analytics 4 to understand which pages are read and how visitors arrive. It sets cookies in the `_ga` family, which contain a randomly generated identifier and expire after up to two years. We use this only in aggregate, to decide what to write and what to fix. We do not use it for advertising and we do not sell it.
 
-We are currently rolling out a consent banner so that these analytics cookies are only set once you accept them. Until that banner is live, you can prevent them entirely through your browser settings or by using Google's official [opt-out browser add-on](https://tools.google.com/dlpage/gaoptout). Blocking analytics cookies does not affect any part of this website.
+These analytics cookies are only set once you accept them. A consent banner appears on your first visit with your choices defaulted to off, and nothing beyond the strictly necessary runs until you choose. Analytics is loaded in Google's Consent Mode with storage denied by default, which means that if you decline, no cookie is written and no identifier is stored. You can change or withdraw your choice at any time using the **Cookie preferences** link in the footer of every page, or prevent analytics entirely through your browser settings or Google's official [opt-out browser add-on](https://tools.google.com/dlpage/gaoptout). Blocking analytics cookies does not affect any part of this website.
 
-This website sets no advertising cookies and no third-party tracking pixels.
+We also use RB2B, a business-identification service that recognises the company a visitor is browsing from so that we can follow up on business enquiries. It only runs if you accept the **Marketing** category, and it is never loaded before then. RB2B's person-level identification operates only on visitors located in the United States; it does not resolve visitors in the EU or UK.
+
+This website sets no advertising cookies and shows no advertising.
+
+Your consent choice is stored in your browser's local storage under `sb-consent`, together with the date you made it. It is strictly necessary — it is the record of what you asked for — and it expires after 180 days, at which point we ask again.
 
 ### Cookies in the Shopify app
 

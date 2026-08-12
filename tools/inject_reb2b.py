@@ -29,21 +29,42 @@ script that runs before any consent is collected, which stacks on the same gap
 GA4 already has here; the cookie-consent banner on the backlog covers both.
 """
 import glob
+import os
 import re
 import sys
+
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from consent import STORAGE_KEY, VERSION, MAX_AGE_DAYS  # noqa: E402
 
 KEY = "5NRP9H3Q9YO1"
 
 MARK_OPEN = "<!-- RB2B (Sabato) -->"
 MARK_CLOSE = "<!-- /RB2B -->"
 
+# DEFINED, NOT CALLED.
+#
+# RB2B identifies individual visitors, so it is marketing under any reading and
+# cannot run before opt-in. Consent Mode is not an option here the way it is for
+# GA4 - there is no cookieless mode for a vendor whose product IS the identity -
+# so the loader simply does not execute until someone ticks Marketing.
+#
+# The vendor's own IIFE is preserved byte for byte inside the wrapper. It is
+# their published minified form; rewriting a third-party loader by hand is how
+# you end up debugging somebody else's script at midnight. All we do is stop
+# calling it immediately and hand the trigger to consent.py, which invokes
+# window.sbReb2b() on grant.
 SNIPPET = (
     MARK_OPEN + "\n"
-    '<script>!function(key) {if (window.reb2b) return;window.reb2b = {loaded: true};'
+    '<script>window.sbReb2b=function(){'
+    '!function(key) {if (window.reb2b) return;window.reb2b = {loaded: true};'
     'var s = document.createElement("script");s.async = true;'
     's.src = "https://ddwl4m2hdecbv.cloudfront.net/b/" + key + "/" + key + ".js.gz";'
     'document.getElementsByTagName("script")[0].parentNode.insertBefore(s, '
-    'document.getElementsByTagName("script")[0]);}("' + KEY + '");</script>\n'
+    'document.getElementsByTagName("script")[0]);}("' + KEY + '");};\n'
+    '(function(){try{var c=JSON.parse(localStorage.getItem("' + STORAGE_KEY + '")'
+    '||"null");if(c&&c.v===' + str(VERSION) + '&&c.marketing&&'
+    '(Date.now()-Date.parse(c.ts))<' + str(MAX_AGE_DAYS) + '*864e5)'
+    'window.sbReb2b();}catch(e){}})();</script>\n'
     + MARK_CLOSE + "\n"
 )
 

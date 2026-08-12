@@ -20,6 +20,11 @@ PROOF_PATHS = ("/", "/it", "/pricing", "/about", "/it/prezzi", "/it/chi-siamo")
 PROMOTABLE_SLUGS = {s for s, d in CUSTOMERS.items() if d.get("promotable")}
 
 BASE = sys.argv[1].rstrip("/") if len(sys.argv) > 1 else "http://127.0.0.1:8909"
+# Optional "start:end" slice. The full sweep is ~50 page loads with a 2.5s
+# settle each, which now runs past the 10-minute ceiling on a single command in
+# the Cowork container. Slicing lets the gate be run in two halves without
+# weakening any individual check - it is a harness accommodation, not a shortcut.
+SLICE = sys.argv[2] if len(sys.argv) > 2 else ""
 PAGES = ["/", "/it", "/pricing", "/about", "/contact", "/blog", "/it/blog",
          # The Italian pricing and about pages were never swept until the proof
          # widget landed on them. Two more page loads, one more blind spot gone.
@@ -51,6 +56,11 @@ PAGES = ["/", "/it", "/pricing", "/about", "/contact", "/blog", "/it/blog",
          "/privacy-policy", "/roi-calculator",
          "/customers/clima-convenienza", "/it/clienti/clima-convenienza",
          "/customers/creative-cables", "/it/clienti/creative-cables"]
+
+if SLICE:
+    _a, _b = (SLICE.split(":") + [""])[:2]
+    PAGES = PAGES[int(_a or 0):int(_b) if _b else None]
+    print("slice %s -> %d page(s)" % (SLICE, len(PAGES)))
 
 NAV_COUNT_JS = """(label) => {
   let c = 0;
@@ -127,14 +137,23 @@ with sync_playwright() as p:
                         a => Array.from(a || [])[0] === 'config').map(a => a[1]);
                       return loaders === 1 && cfg.length === 1 && cfg[0] === id;
                     }""", "G-BSK4KH9JJF"),
-                    "reb2b_tag_once": pg.evaluate("""(key) => {
-                      // The inline loader sets window.reb2b synchronously, before
-                      // the remote script is fetched - so this is a real assertion
-                      // even in a container that cannot reach cloudfront.
-                      const inline = [...document.querySelectorAll('script')]
-                        .filter(s => !s.src && (s.textContent || '').includes(key)).length;
-                      return inline === 1 && !!(window.reb2b && window.reb2b.loaded);
-                    }""", "5NRP9H3Q9YO1"),
+                    "reb2b_gated": pg.evaluate("""(key) => {
+                  // THE COMPLIANCE ASSERTION. A fresh visitor has given no
+                  // consent, so the loader must be DEFINED and NOT CALLED.
+                  // window.reb2b being set on a first load means the tag fired
+                  // before anyone agreed to it - which is the exact failure a
+                  // consent banner exists to prevent, and it is invisible to
+                  // every other check here.
+                  const inline = [...document.querySelectorAll('script')]
+                    .filter(s => !s.src && (s.textContent || '').includes(key)).length;
+                  return inline === 1 && typeof window.sbReb2b === 'function'
+                         && !window.reb2b;
+                }""", "5NRP9H3Q9YO1"),
+                "no_cookies_before_consent": pg.evaluate("""() => {
+                  // Same idea, measured at the browser rather than the tag:
+                  // nothing in the _ga family may exist before a choice.
+                  return !/(^|;\s*)_ga/.test(document.cookie);
+                }"""),
                 }
                 failed = {k: v for k, v in checks.items() if not v}
                 if failed:
@@ -155,6 +174,21 @@ with sync_playwright() as p:
                 "blog_footer_same_tab": bool(blog["footer"]) and
                     blog["footer"][0]["target"] != "_blank",
                 "no_dup_nav": pg.evaluate(NAV_COUNT_JS, "Prezzi" if it else "Pricing") == 1,
+                # The banner itself: present, visible on a first visit (no
+                # stored choice), in the page's own language, and offering
+                # reject at the same layer as accept. A banner that only shows
+                # accept at the first layer is the violation regulators
+                # actually fine people for.
+                "consent_banner": pg.evaluate("""(want) => {
+                  const b = document.getElementById('sb-consent');
+                  if (!b || b.hidden) return false;
+                  if (b.getAttribute('data-lang') !== want) return false;
+                  const has = a => !!b.querySelector('[data-sb-c="' + a + '"]:not([hidden])');
+                  return has('accept') && has('reject');
+                }""", "it" if it else "en"),
+                # Withdrawal must be reachable from every page, forever.
+                "consent_reopen_link": pg.evaluate(
+                    "!!document.querySelector('[data-sb-consent-open]')"),
                 "logo_present": pg.evaluate(
                     "!!document.querySelector('img[src*=\"UTATYXc6\"], a[href=\"/\"] img, a[href=\"./\"] img')"),
                 # unlisted means unlisted: no page may link to the calculator
@@ -171,14 +205,23 @@ with sync_playwright() as p:
                     a => Array.from(a || [])[0] === 'config').map(a => a[1]);
                   return loaders === 1 && cfg.length === 1 && cfg[0] === id;
                 }""", "G-BSK4KH9JJF"),
-                "reb2b_tag_once": pg.evaluate("""(key) => {
-                  // The inline loader sets window.reb2b synchronously, before
-                  // the remote script is fetched - so this is a real assertion
-                  // even in a container that cannot reach cloudfront.
+                "reb2b_gated": pg.evaluate("""(key) => {
+                  // THE COMPLIANCE ASSERTION. A fresh visitor has given no
+                  // consent, so the loader must be DEFINED and NOT CALLED.
+                  // window.reb2b being set on a first load means the tag fired
+                  // before anyone agreed to it - which is the exact failure a
+                  // consent banner exists to prevent, and it is invisible to
+                  // every other check here.
                   const inline = [...document.querySelectorAll('script')]
                     .filter(s => !s.src && (s.textContent || '').includes(key)).length;
-                  return inline === 1 && !!(window.reb2b && window.reb2b.loaded);
+                  return inline === 1 && typeof window.sbReb2b === 'function'
+                         && !window.reb2b;
                 }""", "5NRP9H3Q9YO1"),
+                "no_cookies_before_consent": pg.evaluate("""() => {
+                  // Same idea, measured at the browser rather than the tag:
+                  // nothing in the _ga family may exist before a choice.
+                  return !/(^|;\s*)_ga/.test(document.cookie);
+                }"""),
             }
             if not it and path in ("/", "/pricing", "/about", "/contact"):
                 checks["dropdown_present"] = pg.evaluate("!!document.querySelector('[data-uc-dropdown]')")
@@ -296,18 +339,20 @@ with sync_playwright() as p:
     b.close()
 
 # click-through test: an href alone is not proof - Framer's router can intercept
-print("\nclick-through checks:")
+# Skipped on a leading slice so it runs exactly once per full gate, not twice.
+CLICKS = not SLICE or SLICE.split(":")[1:] == [""] or SLICE.endswith(":")
+print("\nclick-through checks:" if CLICKS else "\nclick-through: deferred to final slice")
 with sync_playwright() as p:
     b = p.chromium.launch(executable_path="/opt/pw-browsers/chromium", args=["--no-sandbox"])
     ctx = b.new_context(viewport={"width": 1440, "height": 900})
-    for src, label, expect in [("/", "Managing Returns", "/use-cases/managing-returns"),
+    for src, label, expect in ([] if not CLICKS else [("/", "Managing Returns", "/use-cases/managing-returns"),
                                ("/", "Industrial & B2B", "/industries/industrial-b2b"),
                                ("/pricing", "Industries", "/industries"),
                                ("/it", "Automotive e Ricambi", "/it/settori/ricambi-auto"),
                                ("/it/blog", "Settori", "/it/settori"),
                                ("/blog", "Open a Complaint", "/use-cases/open-a-complaint"),
                                ("/use-cases/where-is-my-order", "Pre-Sales Consultation",
-                                "/use-cases/pre-sales-consultation")]:
+                                "/use-cases/pre-sales-consultation")]):
         pg = ctx.new_page()
         try:
             pg.goto(BASE + src, wait_until="networkidle", timeout=45000)
