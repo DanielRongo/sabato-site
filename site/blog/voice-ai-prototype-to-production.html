@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Why Every Voice AI Demo Works | Sabato AI</title>
+  <meta name="description" content="A demo is one call, one voice, one question - chosen by the person demonstrating. Here is what it leaves out, and the one question to ask instead.">
+  <link rel="alternate" hreflang="en" href="https://www.sabato.ai/blog/voice-ai-prototype-to-production">
+  <link rel="alternate" hreflang="it" href="https://www.sabato.ai/it/blog/voice-ai-prototype-to-production">
+  <link rel="alternate" hreflang="x-default" href="https://www.sabato.ai/blog/voice-ai-prototype-to-production">
+  <link rel="canonical" href="https://www.sabato.ai/blog/voice-ai-prototype-to-production">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Why Every Voice AI Demo Works | Sabato AI">
+  <meta property="og:description" content="A demo is one call, one voice, one question - chosen by the person demonstrating. Here is what it leaves out, and the one question to ask instead.">
+  <meta property="og:url" content="https://www.sabato.ai/blog/voice-ai-prototype-to-production">
+  <meta property="og:image" content="https://www.sabato.ai/fuc/assets/8Q4ofjOgRTqsr8FpanTJF9nzLwU.png">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary_large_image">
+  <link href="/fuc/images/hWFOqN6Okd1QgfKhizqgIF1s.png" rel="icon" media="(prefers-color-scheme: light)">
+  <link href="/fuc/images/dEcuqc3xAQ3JJoX4xQDYrMQefA.png" rel="icon" media="(prefers-color-scheme: dark)">
+  <link rel="apple-touch-icon" href="/fuc/images/dEcuqc3xAQ3JJoX4xQDYrMQefA.png">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Every voice demo works. That's what makes them dangerous.", "description": "A demo is one call, one voice, one question - chosen by the person demonstrating. Here is what it leaves out, and the one question to ask instead.", "datePublished": "2026-08-12", "dateModified": "2026-08-12", "inLanguage": "en", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://www.sabato.ai/blog/voice-ai-prototype-to-production"}, "author": {"@type": "Organization", "name": "Sabato AI", "url": "https://www.sabato.ai"}, "publisher": {"@type": "Organization", "name": "Sabato AI", "url": "https://www.sabato.ai"}}</script>
+  <style>
+    /* ============ Fonts (local mirrors, same files the site loads) ============ */
+    @font-face { font-family: "Satoshi"; src: url("/fuc/third-party-assets/fontshare/wf/TTX2Z3BF3P6Y5BQT3IV2VNOK6FL22KUT/7QYRJOI3JIMYHGY6CH7SOIFRQLZOLNJ6/KFIAZD4RUMEZIYV6FQ3T3GP5PDBDB6JY.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 400; }
+    @font-face { font-family: "Satoshi"; src: url("/fuc/third-party-assets/fontshare/wf/P2LQKHE6KA6ZP4AAGN72KDWMHH6ZH3TA/ZC32TK2P7FPS5GFTL46EU6KQJA24ZYDB/7AHDUZ4A7LFLVFUIFSARGIWCRQJHISQP.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 500; }
+    @font-face { font-family: "Satoshi"; src: url("/fuc/third-party-assets/fontshare/wf/LAFFD4SDUCDVQEXFPDC7C53EQ4ZELWQI/PXCT3G6LO6ICM5I3NTYENYPWJAECAWDD/GHM6WVH6MILNYOOCXHXB5GTSGNTMGXZR.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 700; }
+    @font-face { font-family: "Satoshi"; src: url("/fuc/third-party-assets/fontshare/wf/NHPGVFYUXYXE33DZ75OIT4JFGHITX5PE/PSUTMASCDJTVPERDYJZPN23BVUFUCQIF/J64QX5IPOHK56I2KYUNBQ5M2XWZEYKYX.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 900; }
+    @font-face { font-family: "Kalam"; src: url("/fuc/third-party-assets/fontshare/wf/L5Z4DJRD7OROEK74MORC4URSE7ILAXYH/6QNQQQT3NGMLLBQ3J7CCWACN46YUMIJB/GNJHSO7TKXAQJXNY3V3S4VE64D4XKQCP.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 700; }
+    @font-face { font-family: "Inter"; src: url("/fuc/assets/GrgcKwrN6d3Uz8EwcLHZxwEfC4.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 400; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+2000-206F, U+20AC, U+2122; }
+    @font-face { font-family: "Inter"; src: url("/fuc/assets/UjlFhCnUjxhNfep4oYBPqnEssyo.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 500; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+2000-206F, U+20AC, U+2122; }
+    @font-face { font-family: "Inter"; src: url("/fuc/assets/syRNPWzAMIrcJ3wIlPIP43KjQs.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 700; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+2000-206F, U+20AC, U+2122; }
+
+    /* ============ Tokens ============ */
+    :root {
+      --lime: rgb(204, 255, 0);        /* CTA / accent */
+      --black: rgb(0, 0, 0);           /* hero + footer bands */
+      --ink: rgb(18, 10, 11);          /* primary text */
+      --gray: rgb(69, 65, 64);         /* body/secondary text */
+      --off: rgb(248, 244, 241);       /* light card background */
+      --line: rgb(227, 226, 226);      /* hairlines */
+      --blue: rgb(0, 102, 204);        /* text links - 5.6:1 on white, AA at any size */
+      --font: "Satoshi", "Inter", -apple-system, "Helvetica Neue", sans-serif;
+      --hand: "Kalam", cursive;
+      --radius: 24px;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font); background: #fff; color: var(--ink); }
+    img { display: block; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ============ Header / Nav ============ */
+    .site-header { position: sticky; top: 0; z-index: 100; max-width: 1200px; margin: 0 auto; padding: 16px 30px; }
+    .nav-shell { background: #fff; border-radius: var(--radius); height: 88px; padding: 16px 70px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .nav-logo img { width: 132px; height: auto; }
+    .nav-links { display: flex; align-items: center; gap: 48px; }
+    .nav-links a { font-size: 16px; font-weight: 500; line-height: 1.7; color: var(--ink); transition: opacity .2s; }
+    .nav-links a:hover { opacity: .6; }
+    .nav-links a.active { font-weight: 700; }
+    .nav-flag { font-size: 16px; line-height: 1; }
+    .btn-pill { display: inline-block; background: var(--lime); color: #000; border-radius: 100px; padding: 12px 30px; font-family: var(--font); font-size: 16px; font-weight: 700; line-height: 1.7; transition: transform .2s ease; white-space: nowrap; }
+    .btn-pill:hover { transform: scale(1.04); }
+
+    /* ============ Dark hero band ============ */
+    .hero { background: var(--black); border-radius: var(--radius); margin: 0 auto; padding: 96px 40px 104px; text-align: center; max-width: 1200px; width: calc(100% - 80px); margin-left: auto; margin-right: auto;}
+    .hero .hand { font-family: var(--hand); font-weight: 700; font-size: 19px; color: #fff; margin-bottom: 18px; }
+    .hero h1 { color: #fff; font-size: 64px; font-weight: 700; letter-spacing: -2px; line-height: 1.15; max-width: 900px; margin: 0 auto; }
+    .hero .sub { color: #fff; font-size: 20px; font-weight: 400; line-height: 1.7; opacity: .85; max-width: 640px; margin: 20px auto 0; }
+
+    /* ============ Main shell ============ */
+    .shell { max-width: 1200px; margin: 0 auto; padding: 0 30px; }
+
+    /* ============ Blog index grid ============ */
+    .post-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; padding: 64px 0 96px; }
+    .post-card { background: var(--off); border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column; transition: transform .25s ease; }
+    .post-card:hover { transform: translateY(-4px); }
+    .post-card .card-img { aspect-ratio: 16 / 9; width: 100%; object-fit: cover; }
+    .post-card .card-body { padding: 28px 28px 26px; display: flex; flex-direction: column; gap: 14px; flex: 1; }
+    .tag { display: inline-block; align-self: flex-start; background: var(--lime); color: #000; border-radius: 100px; padding: 4px 14px; font-size: 13px; font-weight: 700; line-height: 1.6; letter-spacing: .2px; }
+    .post-card h2 { font-size: 24px; font-weight: 700; letter-spacing: -0.5px; line-height: 1.25; color: var(--ink); }
+    .post-card p.excerpt { font-size: 16px; line-height: 1.6; color: var(--gray); flex: 1; }
+    .post-card .meta { font-size: 14px; font-weight: 500; color: var(--gray); opacity: .75; }
+
+    /* ============ Article ============ */
+    .post-hero { padding: 72px 40px 80px; max-width: 1200px; width: calc(100% - 80px); margin-left: auto; margin-right: auto;}
+    .post-hero .backlink { display: inline-block; color: #fff; opacity: .6; font-size: 15px; font-weight: 500; margin-bottom: 28px; transition: opacity .2s; }
+    .post-hero .backlink:hover { opacity: 1; }
+    .post-hero h1 { font-size: 52px; letter-spacing: -1.5px; }
+    .post-hero .tag { align-self: center; margin-bottom: 22px; }
+    .post-hero .meta { color: #fff; opacity: .65; font-size: 16px; font-weight: 500; margin-top: 22px; }
+    .post-hero .meta span + span::before { content: "·"; margin: 0 10px; }
+
+    article.prose { max-width: 760px; margin: 0 auto; padding: 72px 30px 40px; }
+    .prose h2 { font-size: 36px; font-weight: 700; letter-spacing: -1px; line-height: 1.2; color: var(--ink); margin: 56px 0 20px; }
+    .prose h3 { font-size: 25px; font-weight: 700; letter-spacing: -0.5px; line-height: 1.3; color: var(--ink); margin: 40px 0 14px; }
+    .prose p { font-size: 18px; line-height: 1.75; color: var(--gray); margin: 0 0 22px; }
+    .prose strong { color: var(--ink); font-weight: 700; }
+    .prose a { color: var(--blue); text-decoration: underline; }
+    .prose ul, .prose ol { margin: 0 0 24px; padding-left: 26px; }
+    .prose li { font-size: 18px; line-height: 1.7; color: var(--gray); margin-bottom: 10px; }
+    .prose li::marker { color: var(--ink); }
+    .prose blockquote { border-left: 4px solid var(--lime); background: var(--off); border-radius: 0 16px 16px 0; padding: 24px 28px; margin: 32px 0; }
+    .prose blockquote p { font-size: 19px; font-weight: 500; font-style: italic; color: var(--ink); margin: 0; }
+    .prose blockquote p + p { margin-top: 12px; font-size: 15px; font-style: normal; font-weight: 500; color: var(--gray); }
+    .prose figure { margin: 32px 0; }
+    .prose figure img { border-radius: 16px; }
+    .prose figcaption { font-size: 14px; color: var(--gray); opacity: .75; margin-top: 10px; text-align: center; }
+    .prose hr { border: 0; border-top: 1px solid var(--line); margin: 48px 0; }
+
+    /* tables */
+    .prose .table-wrap { overflow-x: auto; margin: 32px 0; border: 1px solid var(--line); border-radius: 16px; }
+    .prose table { width: 100%; border-collapse: collapse; font-size: 16px; }
+    .prose th { background: var(--off); color: var(--ink); font-weight: 700; text-align: left; padding: 14px 18px; border-bottom: 1px solid var(--line); }
+    .prose td { color: var(--gray); padding: 13px 18px; border-bottom: 1px solid var(--line); line-height: 1.55; }
+    .prose tr:last-child td { border-bottom: 0; }
+
+    /* key-stat callout */
+    .stat-callout { background: var(--black); border-radius: var(--radius); padding: 40px 44px; margin: 36px 0; }
+    .stat-callout .stat-number { font-size: 56px; font-weight: 900; letter-spacing: -1.5px; line-height: 1.1; color: var(--lime); }
+    .stat-callout .stat-label { font-size: 18px; line-height: 1.6; color: #fff; opacity: .85; margin-top: 10px; }
+    .stat-callout .stat-source { font-size: 13px; color: #fff; opacity: .45; margin-top: 14px; }
+
+    /* FAQ */
+    .faq { margin: 56px 0 0; }
+    .faq .faq-item { background: var(--off); border-radius: 16px; padding: 24px 28px; margin-bottom: 14px; }
+    .faq .faq-q { font-size: 20px; font-weight: 700; letter-spacing: -0.3px; color: var(--ink); margin: 0 0 8px; }
+    .faq .faq-a { font-size: 17px; line-height: 1.65; color: var(--gray); margin: 0; }
+    .faq .faq-a a { color: var(--blue); text-decoration: underline; }
+
+    /* chart attribution + sharing */
+    .prose .chart-brand { display: flex; align-items: center; gap: 8px; margin-top: 18px;
+      padding-top: 14px; border-top: 1px solid var(--line); }
+    .prose .chart-brand img { border-radius: 4px; display: block; }
+    .prose .chart-brand span { font-size: 12px; color: var(--gray); opacity: .8; letter-spacing: .2px; }
+    .prose .chart-share { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 12px 0 0; }
+    .prose .chart-share .cs-label { font-size: 12px; color: var(--gray); margin-right: 2px; }
+    .prose .chart-share .cs-btn { display: inline-flex; align-items: center; justify-content: center;
+      min-width: 30px; height: 30px; padding: 0 10px; border-radius: 8px; border: 1px solid var(--line);
+      background: #fff; color: var(--ink); font-size: 12px; font-weight: 700; text-decoration: none;
+      line-height: 1; transition: background .15s ease, border-color .15s ease; }
+    .prose .chart-share .cs-btn:hover { background: var(--lime); border-color: var(--lime); }
+    .prose .chart-share .cs-dl { font-weight: 600; }
+    .prose .chart-share button.cs-btn { font-family: inherit; cursor: pointer; }
+    /* .cs-btn sets display, which outranks the UA [hidden] rule - restore it */
+    .prose .chart-share .cs-btn[hidden] { display: none; }
+    .prose .chart-share .cs-btn.is-done { background: var(--lime); border-color: var(--lime); }
+    .nb { white-space: nowrap; }
+    @media (max-width: 640px) {
+      .prose .chart-share { gap: 6px; }
+      .prose .chart-share .cs-label { width: 100%; margin-bottom: 2px; }
+    }
+    /* Sources */
+    .sources { border-top: 1px solid var(--line); margin-top: 56px; padding-top: 28px; }
+    .sources h2 { font-size: 20px; letter-spacing: -0.3px; margin: 0 0 14px; }
+    .sources ol { padding-left: 22px; margin: 0; }
+    .sources li { font-size: 14px; line-height: 1.7; color: var(--gray); margin-bottom: 6px; }
+    .sources a { color: var(--blue); text-decoration: underline; word-break: break-all; }
+
+    /* Bottom CTA band */
+    .cta-band { background: var(--black); border-radius: var(--radius); margin: 72px auto 40px; padding: 88px 40px; text-align: center; max-width: 1200px; width: calc(100% - 80px); margin-left: auto; margin-right: auto;}
+    .cta-band .hand { font-family: var(--hand); font-weight: 700; font-size: 19px; color: #fff; margin-bottom: 14px; }
+    .cta-band h2 { color: #fff; font-size: 48px; font-weight: 700; letter-spacing: -1.5px; line-height: 1.15; max-width: 720px; margin: 0 auto 16px; }
+    .cta-band p { color: #fff; opacity: .8; font-size: 19px; line-height: 1.7; max-width: 560px; margin: 0 auto 34px; }
+
+    /* ============ Footer ============ */
+
+    /* ============ Mobile (Framer breakpoint) ============ */
+    @media (max-width: 809px) {
+      .site-header { padding: 12px 16px; }
+      .nav-shell { height: 72px; padding: 12px 22px; border-radius: 20px; }
+      .nav-links { display: none; }
+      .nav-logo img { width: 108px; }
+      .btn-pill { padding: 10px 22px; font-size: 15px; }
+      .hero { margin: 0 auto; padding: 64px 24px 72px; max-width: 1200px; width: calc(100% - 32px); margin-left: auto; margin-right: auto;}
+      .hero h1 { font-size: 40px; letter-spacing: -1.2px; }
+      .hero .sub { font-size: 18px; }
+      .shell { padding: 0 20px; }
+      .post-grid { grid-template-columns: 1fr; gap: 20px; padding: 40px 0 64px; }
+      .post-hero { padding: 56px 24px 60px; max-width: 1200px; width: calc(100% - 32px); margin-left: auto; margin-right: auto;}
+      .post-hero h1 { font-size: 34px; letter-spacing: -1px; }
+      .post-hero .meta { font-size: 14px; }
+      article.prose { padding: 48px 20px 24px; }
+      .prose h2 { font-size: 28px; margin: 44px 0 16px; }
+      .prose h3 { font-size: 22px; }
+      .prose p, .prose li { font-size: 17px; }
+      .stat-callout { padding: 30px 26px; }
+      .stat-callout .stat-number { font-size: 42px; }
+      .cta-band { margin: 56px auto 24px; padding: 64px 24px; max-width: 1200px; width: calc(100% - 32px); margin-left: auto; margin-right: auto;}
+      .cta-band h2 { font-size: 32px; letter-spacing: -1px; }
+    }
+    @media (min-width: 810px) and (max-width: 1099px) {
+      .nav-shell { padding: 16px 36px; }
+      .nav-links { gap: 28px; }
+      .post-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+        /* ============ Authored content blocks ============ */
+    svg text { font-family: var(--font); }
+
+    /* code (fenced blocks + inline) */
+    .prose pre { background: var(--black); border-radius: 20px; padding: 26px 30px; margin: 32px 0; overflow-x: auto; }
+    .prose pre code { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 13.5px; line-height: 1.8; color: rgb(248,244,241); white-space: pre; }
+    .prose p code, .prose li code, .prose td code { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: .9em; background: var(--off); border: 1px solid var(--line); border-radius: 6px; padding: 1px 6px; color: var(--ink); }
+
+    /* 1. :::keystat - big lime number on a black card */
+    .stat-callout { margin: 40px 0; }
+    .stat-callout .stat-number { margin: 0; }
+    .stat-callout .stat-label { margin: 10px 0 0; }
+    .stat-callout .stat-source { border-top: 1px solid rgba(248,244,241,.16); padding-top: 13px; margin: 18px 0 0; }
+    .stat-callout .stat-source .src-lbl { font-weight: 700; opacity: .85; }
+    .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 40px 0; }
+    .stat-grid .stat-callout { margin: 0; padding: 34px 32px; display: flex; flex-direction: column; }
+    .stat-grid .stat-callout .stat-source { margin-top: auto; padding-top: 18px; }
+    .stat-grid .stat-callout .stat-number { font-size: 46px; }
+    .stat-grid .stat-callout .stat-label { font-size: 16.5px; }
+
+    /* 2. :::takeaway - the save-worthy summary */
+    .takeaway { background: var(--off); border-left: 6px solid var(--lime); border-radius: 0 var(--radius) var(--radius) 0; padding: 34px 40px 32px; margin: 44px 0; }
+    .takeaway .tk-head { display: inline-block; background: var(--lime); color: #000; border-radius: 100px; padding: 5px 15px; font-size: 12.5px; font-weight: 700; letter-spacing: 1.7px; text-transform: uppercase; margin: 0 0 20px; }
+    .takeaway ul.tk-list { list-style: none; margin: 0; padding: 0; }
+    .takeaway ul.tk-list li { position: relative; padding-left: 28px; font-size: 17.5px; font-weight: 500; line-height: 1.6; color: var(--ink); margin: 0 0 14px; }
+    .takeaway ul.tk-list li:last-child { margin-bottom: 0; }
+    .takeaway ul.tk-list li::before { content: ""; position: absolute; left: 0; top: 8px; width: 12px; height: 12px; border-radius: 4px; background: var(--lime); box-shadow: inset 0 0 0 1px rgba(18,10,11,.16); }
+    .takeaway a { color: var(--blue); text-decoration: underline; }
+
+    /* 3. :::action - numbered "do this" checklist */
+    .action-block { border: 1px solid var(--line); border-radius: var(--radius); padding: 36px 40px 32px; margin: 44px 0; }
+    .action-block .ab-head { font-size: 24px; font-weight: 700; letter-spacing: -0.6px; line-height: 1.25; color: var(--ink); margin: 0 0 20px; }
+    .action-block ol.ab-list { list-style: none; margin: 0; padding: 0; }
+    .action-block ol.ab-list li { display: flex; align-items: flex-start; gap: 18px; padding: 17px 0; border-top: 1px solid var(--line); margin: 0; }
+    .action-block ol.ab-list li:first-child { border-top: 0; padding-top: 4px; }
+    .action-block ol.ab-list li:last-child { padding-bottom: 2px; }
+    .action-block .ab-num { flex: none; width: 34px; height: 34px; border-radius: 50%; background: var(--lime); color: #000; font-size: 15px; font-weight: 900; display: flex; align-items: center; justify-content: center; }
+    .action-block .ab-text { font-size: 17.5px; line-height: 1.62; color: var(--gray); padding-top: 5px; }
+    .action-block .ab-text strong { color: var(--ink); font-weight: 700; }
+    .action-block a { color: var(--blue); text-decoration: underline; }
+
+    /* 4. :::compare - two-column comparison card */
+    .compare-wrap { margin: 44px 0; }
+    .compare-wrap .cmp-title { font-size: 12.5px; font-weight: 700; letter-spacing: 2.2px; text-transform: uppercase; color: var(--gray); margin: 0 0 14px; }
+    .compare { border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; margin: 0; }
+    .compare .cmp-head, .compare .cmp-row { display: grid; grid-template-columns: 1.02fr 1fr 1fr; }
+    .compare .cmp-head > div, .compare .cmp-row > div { padding: 15px 22px; }
+    .compare .cmp-head { border-bottom: 1px solid var(--line); background: var(--off); }
+    .compare .cmp-head .cmp-col { font-size: 15px; font-weight: 700; line-height: 1.35; color: var(--ink); }
+    .compare .cmp-head .cmp-col.accent { background: var(--lime); color: #000; }
+    .compare .cmp-row + .cmp-row { border-top: 1px solid var(--line); }
+    .compare .cmp-row .cmp-lbl { font-size: 14px; font-weight: 700; line-height: 1.45; color: var(--ink); }
+    .compare .cmp-row .cmp-cell { font-size: 16px; line-height: 1.5; color: var(--gray); }
+    .compare .cmp-row .cmp-cell.accent { background: rgba(204,255,0,.15); color: var(--ink); font-weight: 500; }
+    .compare .cmp-cap { display: none; }
+    .compare a { color: var(--blue); text-decoration: underline; }
+
+    /* 5. :::quote - pull quote */
+    .prose .pullquote { border-left: 5px solid var(--lime); padding: 4px 0 4px 30px; margin: 48px 0; }
+    .prose .pullquote blockquote { background: none; border: 0; border-radius: 0; padding: 0; margin: 0; }
+    .prose .pullquote blockquote p { font-size: 27px; font-weight: 500; font-style: italic; letter-spacing: -0.7px; line-height: 1.36; color: var(--ink); margin: 0; }
+    .prose .pullquote figcaption { font-size: 15px; font-weight: 700; font-style: normal; color: var(--gray); opacity: 1; text-align: left; margin-top: 18px; }
+
+    /* 6. markdown tables */
+    .prose .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 40px 0; border: 1px solid var(--line); border-radius: 20px; }
+    .prose table { width: 100%; min-width: 520px; border-collapse: collapse; font-size: 16px; }
+    .prose thead th { background: var(--off); color: var(--ink); font-size: 13px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; text-align: left; padding: 15px 20px; border-bottom: 2px solid var(--lime); white-space: nowrap; }
+    .prose tbody td { color: var(--gray); padding: 14px 20px; border-bottom: 1px solid var(--line); line-height: 1.55; }
+    .prose tbody tr:nth-child(even) { background: rgba(248,244,241,.7); }
+    .prose tbody tr:last-child td { border-bottom: 0; }
+    .prose tbody td:first-child { color: var(--ink); font-weight: 700; }
+    .prose th:first-child, .prose td:first-child { padding-left: 24px; }
+    .prose th:last-child, .prose td:last-child { padding-right: 24px; }
+    .prose .dense thead th { white-space: normal; font-size: 12px; letter-spacing: 1px; padding: 12px 12px; }
+    .prose .dense td { font-size: 14px; padding: 11px 12px; }
+    .prose .dense th:first-child, .prose .dense td:first-child { padding-left: 18px; }
+    .prose .dense th:last-child, .prose .dense td:last-child { padding-right: 18px; }
+
+    /* 7. :::chart bar - inline SVG bar chart, no library */
+    .chart-card { background: var(--off); border-radius: var(--radius); padding: 32px 36px 28px; margin: 44px 0; }
+    .chart-card .chart-title { font-size: 12.5px; font-weight: 700; letter-spacing: 2.2px; text-transform: uppercase; color: var(--ink); margin: 0 0 24px; }
+    .chart-card svg { display: block; width: 100%; height: auto; overflow: visible; }
+    .chart-card svg.chart-mobile { display: none; }
+    .chart-card .chart-source { font-size: 12.5px; line-height: 1.6; color: var(--gray); opacity: .85; margin: 24px 0 0; border-top: 1px solid var(--line); padding-top: 14px; }
+    .chart-card .chart-source .src-lbl { font-weight: 700; }
+
+    @media (max-width: 809px) {
+      .stat-grid { grid-template-columns: 1fr; gap: 16px; margin: 32px 0; }
+      .stat-grid .stat-callout { padding: 28px 24px; }
+      .stat-grid .stat-callout .stat-number { font-size: 38px; }
+      .stat-callout { margin: 32px 0; }
+
+      .takeaway { padding: 26px 22px 24px; margin: 36px 0; border-left-width: 5px; border-radius: 0 20px 20px 0; }
+      .takeaway ul.tk-list li { font-size: 16.5px; padding-left: 25px; }
+      .takeaway ul.tk-list li::before { width: 11px; height: 11px; top: 7px; }
+
+      .action-block { padding: 28px 22px 24px; margin: 36px 0; border-radius: 20px; }
+      .action-block .ab-head { font-size: 21px; margin-bottom: 14px; }
+      .action-block ol.ab-list li { gap: 14px; padding: 15px 0; }
+      .action-block .ab-num { width: 30px; height: 30px; font-size: 14px; }
+      .action-block .ab-text { font-size: 16.5px; padding-top: 3px; }
+
+      .compare-wrap { margin: 36px 0; }
+      .compare { border-radius: 20px; }
+      .compare .cmp-head { display: none; }
+      .compare .cmp-row { display: block; padding: 16px 18px 8px; }
+      .compare .cmp-row > div { padding: 0; }
+      .compare .cmp-row .cmp-lbl { font-size: 12px; font-weight: 700; letter-spacing: 1.7px; text-transform: uppercase; color: var(--gray); margin-bottom: 10px; }
+      .compare .cmp-row .cmp-cell { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px; margin-bottom: 8px; font-size: 16px; }
+      .compare .cmp-row .cmp-cell.accent { background: rgba(204,255,0,.22); border-color: rgba(204,255,0,.5); }
+      .compare .cmp-cap { display: block; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gray); margin-bottom: 5px; }
+
+      .prose .pullquote { margin: 38px 0; padding-left: 22px; border-left-width: 4px; }
+      .prose .pullquote blockquote p { font-size: 22px; letter-spacing: -0.5px; }
+      .prose .pullquote figcaption { font-size: 14px; margin-top: 14px; }
+
+      .prose .table-wrap { margin: 32px 0; border-radius: 16px; }
+      .prose table { font-size: 15px; }
+      .prose thead th { font-size: 12px; padding: 13px 16px; }
+      .prose tbody td { padding: 12px 16px; }
+      .prose th:first-child, .prose td:first-child { padding-left: 18px; }
+      .prose th:last-child, .prose td:last-child { padding-right: 18px; }
+
+      .chart-card { padding: 24px 20px 20px; margin: 36px 0; border-radius: 20px; }
+      .chart-card .chart-title { margin-bottom: 18px; }
+
+      .prose pre { padding: 20px 18px; border-radius: 16px; }
+      .prose pre code { font-size: 12.5px; }
+    }
+    @media (max-width: 559px) {
+      .chart-card svg.chart-desktop { display: none; }
+      .chart-card svg.chart-mobile { display: block; max-width: 330px; margin: 0 auto; }
+    }
+  </style>
+  <link rel="stylesheet" href="/css/footer.css">
+<!-- GA4 (Sabato) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BSK4KH9JJF"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-BSK4KH9JJF');
+</script>
+<!-- /GA4 -->
+</head>
+<body>
+<header class="sb-header" data-lang="en"><div class="sb-hdr-shell"><a class="sb-hdr-logo" href="/" aria-label="Sabato AI - Home"><img src="/fuc/images/UTATYXc6NipXQRoxyaGHHfHSyA4-f2557e25.png" alt="Sabato AI" width="2080" height="278"></a><nav class="sb-hdr-nav" aria-label="Main"><span class="sb-nav-item"><a href="/use-cases" aria-haspopup="true">Use Cases</a><span class="sb-dd sb-dd-2col" data-uc-dropdown="uc"><span class="sb-dd-col"><span class="sb-dd-head">Workflows</span><a href="/use-cases/pre-sales-consultation">Pre-Sales Consultation</a><a href="/use-cases/cart-abandonment-recovery">Cart Abandonment Recovery</a><a href="/use-cases/where-is-my-order">Where Is My Order</a><a href="/use-cases/qualify-and-collect-for-quote">Qualify &amp; Collect for Quote</a><a href="/use-cases/open-a-complaint">Open a Complaint</a><a href="/use-cases/checkout-summary-via-text">Checkout Summary via Text</a><a href="/use-cases/managing-returns">Managing Returns</a><a href="/use-cases/post-delivery-feedback">Post-Delivery Feedback</a><a href="/use-cases/back-in-stock-notification">Back-in-Stock Notification</a><a class="sb-dd-all" href="/use-cases">All workflows</a></span><span class="sb-dd-col"><span class="sb-dd-head">Playbooks</span><a href="/playbooks/peak-season">Peak Season</a></span></span></span><span class="sb-nav-item"><a href="/industries" aria-haspopup="true">Industries</a><span class="sb-dd" data-uc-dropdown="ind"><a href="/industries/home-improvement">Home Improvement</a><a href="/industries/automotive-parts">Automotive &amp; Parts</a><a href="/industries/electronics-tech">Electronics &amp; Tech</a><a href="/industries/furniture-home">Furniture &amp; Home</a><a href="/industries/outdoor-garden">Outdoor &amp; Garden</a><a href="/industries/fashion-apparel">Fashion &amp; Apparel</a><a href="/industries/health-wellness">Health &amp; Wellness</a><a href="/industries/sports-fitness">Sports &amp; Fitness</a><a href="/industries/industrial-b2b">Industrial &amp; B2B</a><a class="sb-dd-all" href="/industries">All industries</a></span></span><a href="/pricing">Pricing</a><a href="/about">About</a><a href="/contact">Contact</a><a class="sb-hdr-flag" href="/it" data-lang-switch aria-label="Italiano">🇮🇹</a></nav><a class="sb-hdr-btn" href="https://cal.com/sabatoai/intro" target="_blank" rel="noopener">Start Free Pilot</a><button class="sb-burger" type="button" aria-expanded="false" aria-controls="sb-menu" aria-label="Open menu"><span></span><span></span></button></div><div class="sb-panel" id="sb-menu"><div class="sb-panel-inner"><a href="/use-cases">Use Cases</a><a href="/industries">Industries</a><a href="/pricing">Pricing</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/playbooks/peak-season">Peak Season</a><a href="https://cal.com/sabatoai/intro" target="_blank" rel="noopener">Book a Demo</a><a class="sb-hdr-flag" href="/it" data-lang-switch>🇮🇹</a></div></div></header><script>(function(){var h=document.querySelector(".sb-header");if(!h)return;var b=h.querySelector(".sb-burger"),p=h.querySelector(".sb-panel");if(!b||!p)return;function set(o){h.classList.toggle("sb-open",o);b.setAttribute("aria-expanded",o?"true":"false");document.documentElement.style.overflow=o?"hidden":"";}b.addEventListener("click",function(e){e.preventDefault();set(!h.classList.contains("sb-open"));});p.addEventListener("click",function(e){if(e.target.closest("a"))set(false);});document.addEventListener("keydown",function(e){if(e.key==="Escape")set(false);});addEventListener("resize",function(){if(innerWidth>=1024)set(false);});})();</script>
+<section class="hero post-hero">
+    <a class="backlink" href="/blog">← Back to the blog</a>
+    <div style="display:flex;flex-direction:column;align-items:center;">
+      <span class="tag">Voice AI DIY</span>
+      <h1>Every voice demo works. That's what makes them dangerous.</h1>
+      <p class="meta"><span>Aug 12, 2026</span><span>6 min read</span><span>By Sabato AI</span><span><a href="/it/blog/voice-ai-prototype-to-production" style="color:#fff;text-decoration:underline;text-underline-offset:3px;">Leggi in italiano 🇮🇹</a></span></p>
+    </div>
+  </section>
+  <main>
+    <article class="prose">
+<p><em>The Build File, issue 02. A season on running a voice build without being an engineer.</em></p>
+<p>Voice agent demos work.</p>
+<p>Not usually. Not most of the time. They work, essentially always, and that should be far more suspicious than it is.</p>
+<p>It isn't because anyone is cheating. It's because a demo is, structurally, one call: one voice, one clean line, one question, chosen by the person doing the demonstrating. That isn't evidence. It's a sample selected by someone with an interest in the selection.</p>
+<p>Which is fine, as long as everyone in the room knows that's what they're looking at. The problem is what happens next. The demo lands, the team feels validated, and a sentence enters the project that will cost you four months: we already have it working.</p>
+<p>You don't. You have the first ten percent, and it looks like the last ninety.</p>
+<hr />
+<h2>The inversion</h2>
+<p>Here is the shape of a voice build, and it is the opposite of what everyone assumes.</p>
+<p>Getting an agent to hold one good conversation is now a small piece of work. Genuinely small. A capable developer can do it in a few days, and the result will be impressive enough to show a board.</p>
+<p>Getting it to hold the thousandth conversation, with the caller you didn't pick, on the line you don't control, about the product that changed last week, is most of the work. All of it is invisible in a demo, because a demo is designed — reasonably — to show the thing succeeding.</p>
+<p>So the ratio people carry in their heads is upside down. The prototype feels like ninety percent of the project because it produced ninety percent of the visible progress. It is about ten percent of the work.</p>
+<hr />
+<h2>The six things a demo leaves out</h2>
+<p>Each of these is weeks. Several are months.</p>
+<p><strong>1. The second kind of caller.</strong> The person speaking in the demo is almost always someone on the project. They articulate, they wait their turn, and they ask questions they know it can answer. They are, without meaning to be, the easiest caller your business will ever have. The demo tells you nothing about the customer in a van with the window down, or the one from Bari, or the one who drops English product names into the middle of a sentence.</p>
+<p><strong>2. The path where things go wrong.</strong> Every demo follows the route where everything goes as expected. Real calls leave that route inside the first twenty seconds — the caller changes his mind, asks two things at once, gives the wrong reference number and corrects it, or wants something you don't sell. The unhappy paths aren't a subset of the work. They are the work.</p>
+<p><strong>3. Live data, behaving badly.</strong> Demos run against a snapshot, or a copy, or a fixture someone prepared. Nobody demos with the system running slow. Nobody demos the moment the stock figure is twenty minutes stale, which is exactly when a confident agent tells a customer something that was true earlier. This is the layer where in-house builds most often quietly die, and it never appears in the room.</p>
+<p><strong>4. The second language.</strong> If you sell in more than one country, a demo in one language has tested one of your markets. The others aren't a setting. They're a repeat of most of this work, and the cost isn't linear — what a voice agent actually costs to run goes through why.</p>
+<p><strong>5. Volume.</strong> One call at a time and forty calls at once are not the same system behaving differently. They're different systems. Nothing in a demo tells you which one you have.</p>
+<p><strong>6. Time.</strong> A demo is a photograph. The thing has to work in March, when the underlying models have changed beneath it, someone has edited the instructions, a supplier's data format has moved and three new product categories exist that nobody thought to test.</p>
+<hr />
+<h2>Why the demo is specifically seductive to you</h2>
+<p>This is the part I'd want the person approving the budget to sit with.</p>
+<p>Of everything in a voice build, the conversation is the only component you can personally evaluate. You can hear it. You have forty years of expertise in whether something sounds right on a phone, and that expertise is real.</p>
+<p>You cannot hear the data layer. You cannot hear how the agent behaves when the system is unreachable. You cannot hear what it's permitted to change in a customer record, or what happens at 9pm on a Saturday when there's nobody to transfer to, or how it handles the fortieth simultaneous call.</p>
+<p>So the one part you're qualified to judge is the part that's least diagnostic — and it's also the part that's furthest along, because it's the part your team enjoyed building. Every incentive in the room points at the same wrong conclusion, and nobody in it is acting in bad faith.</p>
+<p>That's why "it sounded great" keeps producing projects that slip two quarters. It sounded great because that's the easy part and you're the expert on it.</p>
+<hr />
+<h2>What to ask instead</h2>
+<p>Don't ask for a better demo. Ask for the opposite one.</p>
+<blockquote>
+<p>"Show me three calls where it did the wrong thing."</p>
+</blockquote>
+<p>That's the whole intervention. A team that has been testing properly will have them ready, will be slightly pleased to show you, and will already know why each one happened. A team that can't produce three has not been looking for them — which is the actual finding, and it's worth more than anything in the successful demo.</p>
+<p>Then two follow-ups:</p>
+<blockquote>
+<p>"What did it do when the data was wrong?"</p>
+</blockquote>
+<p>Not unavailable. Wrong. Stale, contradictory, or pointing at a product that was discontinued.</p>
+<blockquote>
+<p>"Who has phoned it who isn't in this company?"</p>
+</blockquote>
+<p>If the answer is nobody, the agent has been tested on the friendliest possible population, and the results mean roughly nothing.</p>
+<p>If you want the structured version of this, it's <a href="/blog/voice-agent-acceptance-test">the twenty calls</a> — the same instinct, written out so someone can score it in an afternoon.</p>
+<hr />
+<h2>The reframe</h2>
+<p>A prototype's job is not to prove the thing can work. Everyone already knows it can work; that question was settled by the whole industry a while ago.</p>
+<p>A prototype's job is to find out how it breaks, in your business, with your customers, on your data. Measured that way, a prototype that only ever succeeded taught you nothing, and cost you however long it took to build.</p>
+<p>Which flips what "we already have it working" means. It isn't a status report. It's a description of the starting line — and if it's being offered as a reason to shorten the timeline, that's the moment to slow down rather than speed up.</p>
+<p>The good news is that this is a cheap thing to fix. A week of deliberately trying to break it tells you more than another month of polishing it, and it's the week that decides whether the scope you approved was the right one — which is the scoping problem, and the next thing worth getting right.</p>
+<hr />
+<p><em>The Build File is a season for people approving voice builds rather than writing them.</em></p>
+    </article>
+    <section class="cta-band">
+      <p class="hand">hear it for yourself</p>
+      <h2>Put a voice layer on your <span class="nb">e-commerce</span>.</h2>
+      <p>We build it, we run it, you see the numbers. Live in two weeks.</p>
+      <a class="btn-pill" href="https://cal.com/sabatoai/intro" target="_blank" rel="noopener">Start Free Pilot</a>
+    </section>
+  </main>
+  <!-- footer: rendered by tools/apply_footer.py from footer.py - do not paste one here -->
+<script src="/js/enhance.js?v=a6a1e75602" defer></script>
+  <script>
+  /* Chart sharing moves the PNG itself, never the post URL.
+     LinkedIn and X share-intents can only unfurl a URL, so the paths that
+     actually put the image somewhere are: the native share sheet with the file
+     attached (mobile), the clipboard (desktop -> paste into the composer), and
+     a download. */
+  (function () {
+    document.querySelectorAll("figure.chart-card[data-chart-img]").forEach(function (fig) {
+      var row = fig.querySelector(".chart-share");
+      if (!row) return;
+      var src = fig.getAttribute("data-chart-img");
+      var name = src.split("/").pop();
+      function getBlob() { return fetch(src).then(function (r) { return r.blob(); }); }
+
+      var nativeBtn = row.querySelector("[data-share-native]");
+      if (nativeBtn && navigator.share && navigator.canShare) {
+        try {
+          var probe = new File([new Blob([""], { type: "image/png" })], name, { type: "image/png" });
+          if (navigator.canShare({ files: [probe] })) nativeBtn.hidden = false;
+        } catch (e) { /* File ctor unsupported: leave hidden */ }
+        nativeBtn.addEventListener("click", function () {
+          getBlob().then(function (b) {
+            var f = new File([b], name, { type: "image/png" });
+            return navigator.share({ files: [f] });
+          }).catch(function () { window.location.href = src; });
+        });
+      }
+
+      var copyBtn = row.querySelector("[data-share-copy]");
+      if (copyBtn) {
+        copyBtn.addEventListener("click", function () {
+          var label = copyBtn.textContent;
+          // ClipboardItem must be constructed synchronously with a promise for Safari
+          if (!(window.ClipboardItem && navigator.clipboard && navigator.clipboard.write)) {
+            window.location.href = src;
+            return;
+          }
+          navigator.clipboard.write([new ClipboardItem({ "image/png": getBlob() })])
+            .then(function () {
+              copyBtn.textContent = copyBtn.getAttribute("data-done");
+              copyBtn.classList.add("is-done");
+              setTimeout(function () {
+                copyBtn.textContent = label;
+                copyBtn.classList.remove("is-done");
+              }, 1800);
+            })
+            .catch(function () { window.location.href = src; });
+        });
+      }
+    });
+  })();
+  </script>
+<footer class="sb-footer" data-lang="en"><div class="sb-shell"><div class="sb-grid"><div class="sb-brand"><a href="/" aria-label="Sabato AI - Home"><img class="sb-logo" src="/fuc/images/KY1UqOX7zKeKJdbxTotIopeeZIU-f2557e25.png" alt="Sabato AI logo" width="2080" height="278" loading="lazy"></a><p class="sb-tagline">The #1 managed Voice AI <br>for <span class="sb-nb">E-Commerce</span>.</p><p class="sb-backed">Backed by</p><img class="sb-backed-img" src="/fuc/images/V9nq776DtkEODcun83ayNz0liCU-28058054.webp" alt="ElevenLabs Grants" width="1496" height="132" loading="lazy"></div><div class="sb-col sb-col-static"><span class="sb-h4">Company</span><ul><li><a href="/">Home</a></li><li><a href="/pricing">Pricing</a></li><li><a href="/about">About</a></li><li><a href="/contact">Contact us</a></li><li><a href="/blog">Blog</a></li><li><a href="https://cal.com/sabatoai/intro" target="_blank" rel="noopener">Book a Demo</a></li></ul></div><details class="sb-col sb-acc" open><summary><span class="sb-h4">Use Cases</span></summary><ul><li><a href="/use-cases/pre-sales-consultation">Pre-Sales Consultation</a></li><li><a href="/use-cases/cart-abandonment-recovery">Cart Abandonment Recovery</a></li><li><a href="/use-cases/where-is-my-order">Where Is My Order</a></li><li><a href="/use-cases/qualify-and-collect-for-quote">Qualify &amp; Collect for Quote</a></li><li><a href="/use-cases/open-a-complaint">Open a Complaint</a></li><li><a href="/use-cases/checkout-summary-via-text">Checkout Summary via Text</a></li><li><a href="/use-cases/managing-returns">Managing Returns</a></li><li><a href="/use-cases/post-delivery-feedback">Post-Delivery Feedback</a></li><li><a href="/use-cases/back-in-stock-notification">Back-in-Stock Notification</a></li></ul></details><details class="sb-col sb-acc" open><summary><span class="sb-h4">Industries</span></summary><ul><li><a href="/industries/home-improvement">Home Improvement</a></li><li><a href="/industries/automotive-parts">Automotive &amp; Parts</a></li><li><a href="/industries/electronics-tech">Electronics &amp; Tech</a></li><li><a href="/industries/furniture-home">Furniture &amp; Home</a></li><li><a href="/industries/outdoor-garden">Outdoor &amp; Garden</a></li><li><a href="/industries/fashion-apparel">Fashion &amp; Apparel</a></li><li><a href="/industries/health-wellness">Health &amp; Wellness</a></li><li><a href="/industries/sports-fitness">Sports &amp; Fitness</a></li><li><a href="/industries/industrial-b2b">Industrial &amp; B2B</a></li></ul></details></div><div class="sb-bottom"><p class="sb-copy">&copy; 2026 Sabato LTD - 71-75, Shelton Street, Covent Garden, London (UK) - All rights reserved.</p><div class="sb-legal"><a href="/terms">Terms and Conditions</a><a href="/privacy-policy">Privacy and Cookies</a><a href="/it" data-lang-switch>Italiano</a><a href="https://www.linkedin.com/company/sabato-ai" target="_blank" rel="noopener" aria-label="Sabato AI on LinkedIn"><img src="/fuc/images/3vdzRTYV1XV6UUX6QKcsDIfU-e464e3f1.svg" alt="LinkedIn" width="20" height="20" loading="lazy"></a></div></div></div></footer><script>(function(){try{var mq=window.matchMedia&&window.matchMedia("(max-width: 809px)");var d=document.querySelectorAll(".sb-footer details.sb-acc");var i;if(mq&&mq.matches)for(i=0;i<d.length;i++)d[i].removeAttribute("open");for(i=0;i<d.length;i++)(function(el){var s=el.querySelector("summary");if(!s)return;s.addEventListener("click",function(e){if(!mq||!mq.matches)e.preventDefault();});})(d[i]);window.addEventListener("resize",function(){if(mq&&mq.matches)return;for(var j=0;j<d.length;j++)d[j].setAttribute("open","");});}catch(e){}})();</script>
+</body>
+</html>
