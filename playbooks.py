@@ -211,6 +211,9 @@ ICONS = {
     # bell
     "restock": _ICW % ('<path d="M18 9.5a6 6 0 1 0-12 0c0 5.5-2.2 6.8-2.2 6.8h16.4S18 15 18 9.5z"/>'
                        '<path d="M13.8 19.6a2.1 2.1 0 0 1-3.6 0"/>'),
+    # a document with a tick: the order, confirmed in writing
+    "checkout": _ICW % ('<path d="M6 3h7l5 5v12a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/>'
+                        '<path d="M13 3v5h5"/><path d="M8.6 14.4l2.2 2.2 4.4-4.4"/>'),
 }
 
 

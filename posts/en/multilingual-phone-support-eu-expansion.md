@@ -16,6 +16,8 @@ more likely to repurchase when customer care speaks the buyer's language
 Source: CSA Research, 8,709 consumers in 29 countries, 2020
 :::
 
+Want the short version - what it costs, what comes off your team, how fast it goes live? That's the [Expand Into New Countries playbook](/playbooks/international-expansion). This post is the long version: the sequencing, the click-paths and the maths underneath it.
+
 ## Step 1 - Which markets are already calling you?
 
 Don't start with a market map. Start with your own data. Your goal this week: a ranked list of your top three non-domestic markets by revenue and average order value - not by sessions. Sessions tell you who's curious. Revenue tells you who's buying despite the language barrier, which means they'd buy more without it.

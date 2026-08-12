@@ -16,6 +16,8 @@ di probabilità in più di riacquisto quando l'assistenza parla la lingua del cl
 Fonte: CSA Research, 8.709 consumatori in 29 paesi, 2020
 :::
 
+Vuoi la versione breve - quanto costa, cosa esce dal tuo team, quanto ci vuole ad andare online? È il [playbook Espandi in nuovi Paesi](/it/playbook/espansione-internazionale). Questo post è la versione lunga: la sequenza, i percorsi in GA4 e i conti sotto.
+
 ## Step 1 - Quali mercati ti stanno già chiamando?
 
 Non partire da una mappa dei mercati. Parti dai tuoi dati. Il tuo obiettivo per questa settimana: una classifica dei tuoi tre principali mercati esteri per fatturato e valore medio dell'ordine - non per sessioni. Le sessioni ti dicono chi è curioso. Il fatturato ti dice chi compra nonostante la barriera linguistica, il che significa che comprerebbe di più senza.
