@@ -251,6 +251,26 @@
     .queue-viz .fine a, .pb-light .fine a { color: inherit; text-decoration: underline;
       text-underline-offset: 2px; }
 
+    /* Headline inside the left column (see h2_in_col in section_blocks). The
+       eyebrow stays full width above; the headline and the graphic then start
+       on the same line. .pb-light h2 already styles it - only the margins
+       change, because it is now the first thing in a grid cell rather than a
+       block sitting above one. */
+    .pb-light .pb-h2col .qcopy h2 { margin: 0 0 24px; }
+    /* Optical, not mechanical. Both cells start at the same y, but half-leading
+       scales with font-size: a 38px headline at line-height 1.15 sits ~2.9px
+       below its box, a 17.5px label at 1.75 sits ~6.5px below its own. Left
+       alone, the label's cap-top lands ~5px lower than the headline's and the
+       two first lines read as not-quite-level - which is exactly the complaint.
+       Measured, not eyeballed: see the h2InkTop/labelInkTop probe in the notes. */
+    .pb-light .pb-h2col .queue-viz { margin-top: -5px; }
+    @media (max-width: 809px) {
+      /* Single column - the graphic sits under the copy, so there is nothing
+         to align to and the negative margin would just eat the gap. */
+      .pb-light .pb-h2col .qcopy h2 { margin-bottom: 18px; }
+      .pb-light .pb-h2col .queue-viz { margin-top: 0; }
+    }
+
     /* ============ Playbook: HTML bar chart ============ */
     /* The label is typed EXACTLY like .qbody in the column beside it - same
        size, same line-height - because that is the whole point of building this
@@ -443,8 +463,8 @@
     <section class="pb-light">
       <div class="queue-inner">
         <p class="eyebrow">AND ENGLISH DOESN'T CLOSE THE GAP</p>
-        <h2>They read English.<br>They still won't call in it.</h2>
-        <div class="queue-grid"><div class="qcopy"><p class="qbody">Reading a product page in a second language is easy. Explaining a delivery problem down a phone line in one is not.</p><p class="qbody">Even among the shoppers most confident reading English, <b>60% still want customer care in their own language</b> - and 75% say they are more likely to buy the brand again when they get it.</p></div><div class="queue-viz"><div class="pb-bars"><div class="pb-bar"><p class="pb-bar-l">Confident English readers who still want care in their own language</p><div class="pb-bar-track"><div class="pb-bar-fill" style="width:60%"><span>60%</span></div></div></div><div class="pb-bar"><p class="pb-bar-l">More likely to buy the brand again when care is in their language</p><div class="pb-bar-track"><div class="pb-bar-fill" style="width:75%"><span>75%</span></div></div></div></div><p class="fine"><a href="https://csa-research.com/l/media/Consumers-Prefer-their-Own-Language" rel="nofollow noopener" target="_blank">CSA Research, &ldquo;Can&rsquo;t Read, Won&rsquo;t Buy &ndash; B2C&rdquo;</a>, 2020 &ndash; 8,709 consumers in 29 countries.</p></div></div>
+        
+        <div class="queue-grid pb-h2col"><div class="qcopy"><h2>They read English.<br>They still won't call in it.</h2><p class="qbody">Reading a product page in a second language is easy. Explaining a delivery problem down a phone line in one is not.</p><p class="qbody">Even among the shoppers most confident reading English, <b>60% still want customer care in their own language</b> - and 75% say they are more likely to buy the brand again when they get it.</p></div><div class="queue-viz"><div class="pb-bars"><div class="pb-bar"><p class="pb-bar-l">Confident English readers who still want care in their own language</p><div class="pb-bar-track"><div class="pb-bar-fill" style="width:60%"><span>60%</span></div></div></div><div class="pb-bar"><p class="pb-bar-l">More likely to buy the brand again when care is in their language</p><div class="pb-bar-track"><div class="pb-bar-fill" style="width:75%"><span>75%</span></div></div></div></div><p class="fine"><a href="https://csa-research.com/l/media/Consumers-Prefer-their-Own-Language" rel="nofollow noopener" target="_blank">CSA Research, &ldquo;Can&rsquo;t Read, Won&rsquo;t Buy &ndash; B2C&rdquo;</a>, 2020 &ndash; 8,709 consumers in 29 countries.</p></div></div>
       </div>
     </section>
     <section class="queue-band">

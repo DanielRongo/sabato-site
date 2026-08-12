@@ -116,6 +116,26 @@ EXTRA_CSS = """
     .queue-viz .fine a, .pb-light .fine a { color: inherit; text-decoration: underline;
       text-underline-offset: 2px; }
 
+    /* Headline inside the left column (see h2_in_col in section_blocks). The
+       eyebrow stays full width above; the headline and the graphic then start
+       on the same line. .pb-light h2 already styles it - only the margins
+       change, because it is now the first thing in a grid cell rather than a
+       block sitting above one. */
+    .pb-light .pb-h2col .qcopy h2 { margin: 0 0 24px; }
+    /* Optical, not mechanical. Both cells start at the same y, but half-leading
+       scales with font-size: a 38px headline at line-height 1.15 sits ~2.9px
+       below its box, a 17.5px label at 1.75 sits ~6.5px below its own. Left
+       alone, the label's cap-top lands ~5px lower than the headline's and the
+       two first lines read as not-quite-level - which is exactly the complaint.
+       Measured, not eyeballed: see the h2InkTop/labelInkTop probe in the notes. */
+    .pb-light .pb-h2col .queue-viz { margin-top: -5px; }
+    @media (max-width: 809px) {
+      /* Single column - the graphic sits under the copy, so there is nothing
+         to align to and the negative margin would just eat the gap. */
+      .pb-light .pb-h2col .qcopy h2 { margin-bottom: 18px; }
+      .pb-light .pb-h2col .queue-viz { margin-top: 0; }
+    }
+
     /* ============ Playbook: HTML bar chart ============ */
     /* The label is typed EXACTLY like .qbody in the column beside it - same
        size, same line-height - because that is the whole point of building this
@@ -308,9 +328,37 @@ def section_blocks(d):
     for b in d["blocks"]:
         body = "".join('<p class="qbody">%s</p>' % b_p for b_p in b["body"])
         fine = '<p class="fine">%s</p>' % b["fine"] if b.get("fine") else ""
+        h2 = "<h2>%s</h2>" % nb(esc(b["h2"]))
+        head_h2 = h2                      # full-width above the grid, by default
         if b.get("viz"):
-            grid = ('<div class="queue-grid"><div class="qcopy">%s</div>'
-                    '<div class="queue-viz">%s%s</div></div>' % (body, b["viz"], fine))
+            # h2_in_col: the headline moves INSIDE the left column, so the
+            # graphic starts level with it instead of below it.
+            #
+            # Daniel, 12 Aug: "the graphic ... is still not aligned in height
+            # with They read English. They still won't call in it." With the
+            # headline spanning the full width, the graphic could only ever
+            # begin below it - roughly 170px lower - so the two halves read as
+            # stacked rather than side by side.
+            #
+            # It also fixes the height imbalance that top-aligning exposed: the
+            # copy column was 153px against a 299px graphic. Adding the headline
+            # to that column brings the two within a few pixels of each other,
+            # so the block finally reads as one row.
+            #
+            # OPT-IN, not automatic. At half width a 38px headline only has room
+            # for about 27 characters a line, and peak-season's is longer - it
+            # would silently rewrap there. Blocks declare this when their
+            # headline is short enough to survive the narrower column.
+            if b.get("h2_in_col"):
+                head_h2 = ""
+                grid = ('<div class="queue-grid pb-h2col">'
+                        '<div class="qcopy">%s%s</div>'
+                        '<div class="queue-viz">%s%s</div></div>'
+                        % (h2, body, b["viz"], fine))
+            else:
+                grid = ('<div class="queue-grid"><div class="qcopy">%s</div>'
+                        '<div class="queue-viz">%s%s</div></div>'
+                        % (body, b["viz"], fine))
         else:
             # A block with no picture still has to carry its source. The first
             # version attached `fine` to the visual, so the one block without one
@@ -325,10 +373,10 @@ def section_blocks(d):
     <section class="%s">
       <div class="queue-inner">
         <p class="eyebrow">%s</p>
-        <h2>%s</h2>
+        %s
         %s
       </div>
-    </section>""" % (cls, esc(b["eyebrow"]), nb(esc(b["h2"])), grid))
+    </section>""" % (cls, esc(b["eyebrow"]), head_h2, grid))
     return "".join(out)
 
 

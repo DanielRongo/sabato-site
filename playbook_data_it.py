@@ -240,6 +240,7 @@ PLAYBOOKS_IT = {
                     "che gliela dà.",
                 ],
                 "viz": INTL_BARS_IT,
+                "h2_in_col": True,
                 "fine": ('<a href="' + _CSA + '" rel="nofollow noopener" '
                          'target="_blank">CSA Research, &ldquo;Can&rsquo;t Read, '
                          'Won&rsquo;t Buy &ndash; B2C&rdquo;</a>, 2020 &ndash; '
