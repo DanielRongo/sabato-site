@@ -141,48 +141,37 @@ def proof_html(lang="en"):
 # node inserted then is removed again, which is the whole reason this script
 # exists rather than the markup simply being emitted in place.
 MOVE_SCRIPT = (
-    "<script data-sb-proof>(function(){var W=null;"
-    # W holds the node in a CLOSURE, and go() runs three times rather than once.
-    # Moving the widget puts it inside React's tree, and a late reconcile can
-    # delete it again exactly the way the build-time probe was deleted - which
-    # showed up here as the widget being intermittently absent on load, roughly
-    # one run in ten under a cold cache. Because the reference outlives the
-    # removal, a later pass can put the same node back; a plain re-query could
-    # not, since by then there is nothing in the document to find.
+    "<script data-sb-proof>(function(){var W=null,F=null;"
+    # W and F hold the widget and its FAQ anchor in a CLOSURE, and go() runs
+    # three times: React can delete the moved node in a late reconcile exactly
+    # the way it deleted the build-time probe, and once it has, a re-query finds
+    # nothing to put back.
     "function go(){"
     "var w=W||document.querySelector('section.sb-proof');if(!w)return;W=w;"
     "var all=document.querySelectorAll('#main [data-framer-name]'),faq=null,i;"
     "for(i=0;i<all.length;i++){"
     "var n=(all[i].getAttribute('data-framer-name')||'').toLowerCase().trim();"
     "if(n.indexOf('faq section')===0){faq=all[i];break;}}"
-    "if(faq&&faq.parentNode&&w.nextElementSibling!==faq)"
-    "faq.parentNode.insertBefore(w,faq);"
-    "w.hidden=false;fit();}"
-    # Aligns the logo to the END OF THE LAST-WRAPPING LINE rather than to the
-    # edge of the text COLUMN. CSS cannot express this: the column is 736px but
-    # English wraps 69px short of it, so a right-aligned mark hangs past the
-    # text. Italian happens to fill the column, which is why it looked correct
-    # in one language and wrong in the other. A Range over the blockquote gives
-    # one rect per rendered line; the widest one is the real right edge.
-    "function fit(){"
-    "var w=document.querySelector('section.sb-proof');if(!w)return;"
-    "var q=w.querySelector('blockquote'),by=w.querySelector('.sb-proof-by');"
-    "if(!q||!by)return;by.style.width='';"
-    "if(innerWidth<768)return;"                # stacked on phone, nothing to align
-    "var r=document.createRange();r.selectNodeContents(q);"
-    "var rects=r.getClientRects(),m=0,i;"
-    "for(i=0;i<rects.length;i++){if(rects[i].width>1&&rects[i].right>m)m=rects[i].right;}"
-    "var l=q.getBoundingClientRect().left;"
-    "if(m>l+40)by.style.width=Math.ceil(m-l)+'px';}"
+    "if(faq){F=faq;if(faq.parentNode&&w.nextElementSibling!==faq)"
+    "faq.parentNode.insertBefore(w,faq);}"
+    "w.hidden=false;ord();}"
+    # THE PHONE BUG, 11 Aug: at its phone breakpoint Framer lays #main out as a
+    # flex column and positions sections with CSS `order` (hero 1 ... faq 10) -
+    # DOM position stops mattering. Our widget had no order, so it defaulted to
+    # 0 and flex sorted it to the top of the page, directly after the hero.
+    # Desktop keeps every order at 0, which is why every DOM-based check
+    # passed while phones showed it in the wrong place. Copying the FAQ's own
+    # computed order makes the two a tie, and flex breaks ties by DOM order -
+    # where we are already immediately before the FAQ. Re-applied on resize,
+    # because the order values change per breakpoint.
+    "function ord(){if(!W||!F)return;"
+    "var o=getComputedStyle(F).order;"
+    "if(W.style.order!==o)W.style.order=o;}"
     "function arm(){var d=[300,1500,4000],i;"
     "for(i=0;i<d.length;i++)setTimeout(go,d[i]);}"
     "if(document.readyState==='complete')arm();"
     "else window.addEventListener('load',arm);"
-    # Re-measure on resize: the line breaks move, so the right edge moves with
-    # them. Fonts landing late shift it too, hence the second pass on webfont
-    # load where the browser supports it.
-    "addEventListener('resize',fit);"
-    "if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);"
+    "addEventListener('resize',ord);"
     "})();</script>")
 
 

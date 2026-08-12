@@ -566,6 +566,38 @@ header[class^="framer-"] { display: none !important; }
   font-weight: 700;
 }
 
+/* ---- two-column Use Cases menu: Workflows | Playbooks -------------------- */
+/* One menu, two taxonomies. min-width, not width: the Playbooks column grows as
+   playbooks are written, and a fixed width would either waste space today or
+   clip the list in a month. */
+.sb-dd-2col {
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 10px;
+  min-width: 520px;
+  padding: 16px;
+}
+.sb-dd-2col .sb-dd-col {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 232px;
+}
+/* The divider is a border on the second column rather than a separate element,
+   so it cannot survive a column being removed. */
+.sb-dd-2col .sb-dd-col + .sb-dd-col {
+  border-left: 1px solid rgba(0, 0, 0, .1);
+  padding-left: 12px;
+}
+.sb-hdr-nav .sb-dd-2col .sb-dd-head {
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  color: rgba(18, 10, 11, .45);
+  padding: 6px 12px 8px;
+}
+
 /* The panel is absolutely positioned, so it must not be clipped or shifted by
    the shell. Below 1024 the whole nav is gone and the menu takes over. */
 @media (max-width: 1023px) {

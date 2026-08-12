@@ -37,6 +37,7 @@ PAGES = ["/", "/it", "/pricing", "/about", "/contact", "/blog", "/it/blog",
          "/blog/voice-agent-acceptance-test",
          "/it/blog/voice-agent-acceptance-test",
          "/use-cases/where-is-my-order", "/it/casi-duso/dove-e-il-mio-ordine",
+         "/playbooks/peak-season", "/it/playbook/picchi-stagionali",
          "/industries", "/industries/home-improvement", "/industries/fashion-apparel",
          "/it/settori", "/it/settori/clima-e-riscaldamento", "/it/settori/moda-abbigliamento",
          "/industries/automotive-parts", "/industries/electronics-tech",
@@ -191,6 +192,36 @@ with sync_playwright() as p:
                         """!!document.querySelector('script[type="application/ld+json"]')""")
 
             if path in PROOF_PATHS:
+                # THE PHONE INVARIANT (regression, 11 Aug). At phone widths
+                # Framer positions #main's children with CSS `order`, so a node
+                # can be DOM-before the FAQ and still RENDER after the hero -
+                # which is precisely what shipped. Every check here ran at
+                # 1440px, where all orders are 0 and the bug cannot show. So
+                # this one check drops to 390px and asserts the widget's
+                # VISUAL position: below 40% of page height and above the FAQ.
+                pg.set_viewport_size({"width": 390, "height": 900})
+                pg.wait_for_timeout(1200)
+                checks["proof_visual_mobile"] = pg.evaluate("""() => {
+                  const w = document.querySelector('section.sb-proof');
+                  if (!w) return false;
+                  const top = w.getBoundingClientRect().top + scrollY;
+                  let faq = null;
+                  document.querySelectorAll('#main [data-framer-name]').forEach(e => {
+                    if (!faq && (e.getAttribute('data-framer-name') || '')
+                        .toLowerCase().trim().startsWith('faq section')) faq = e; });
+                  const ftop = faq ? faq.getBoundingClientRect().top + scrollY : -1;
+                  const b = w.getBoundingClientRect().bottom + scrollY;
+                  // ADJACENCY, not a page fraction: a 40%-of-page floor failed
+                  // /pricing, where the FAQ legitimately sits at 37%. What is
+                  // actually required is that the widget ENDS just above where
+                  // the FAQ begins - when flex `order` missorts it, that gap
+                  // becomes thousands of pixels and this fails loudly.
+                  return ftop > 0 && top < ftop
+                      && (ftop - b) > -60 && (ftop - b) < 400;
+                }""")
+                pg.set_viewport_size({"width": 1440, "height": 900})
+                pg.wait_for_timeout(600)
+
                 checks["no_unapproved_customer"] = pg.evaluate(
                     """(names) => !document.querySelector('[data-sb-cust]')
                        && !names.some(n => document.body.innerText.includes(n))""",

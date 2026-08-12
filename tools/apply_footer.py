@@ -73,7 +73,13 @@ THEIRS_HDR = re.compile(r'\s*<header class="site-header".*?</header>\s*', re.S)
 # The second alternative retires scripts emitted before the marker existed.
 OURS_PROOF = re.compile(
     r'\s*<section class="sb-proof".*?</section>'
-    r'(?:\s*<script(?: data-sb-proof)?>\(function\(\)\{(?:var W=null;)?function go\(\).*?</script>)*'
+    # Keyed on the data-sb-proof ATTRIBUTE, with no knowledge of what is inside
+    # the script. The previous pattern also matched the script's first
+    # statements, and editing those silently broke the strip - the fixed-point
+    # guarantee died the moment the script changed. The second alternative
+    # retires scripts emitted before the marker existed.
+    r'(?:\s*<script data-sb-proof>.*?</script>'
+    r'|\s*<script>\(function\(\)\{(?:var W=null;)?function go\(\).*?</script>)*'
     r'\s*', re.S)
 OURS_LOGOS = re.compile(r'\s*<section class="sb-logos".*?</section>\s*', re.S)
 OURS_HERO = re.compile(

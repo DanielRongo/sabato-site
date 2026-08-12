@@ -44,6 +44,8 @@ import os
 import sys
 
 from footer import nav_data   # same enhance.js arrays the footer reads
+from playbook_data import PLAYBOOKS, ORDER            # the trigger half of the menu
+from playbook_data_it import PLAYBOOKS_IT, ORDER_IT
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 CAL = "https://cal.com/sabatoai/intro"
@@ -58,8 +60,28 @@ NAV = {
            ("Prezzi", "/it/prezzi", None), ("Chi Siamo", "/it/chi-siamo", None),
            ("Contatti", "/it/contatti", None)],
 }
-ALL_LABEL = {"en": {"uc": "All use cases", "ind": "All industries"},
-             "it": {"uc": "Tutti i casi d'uso", "ind": "Tutti i settori"}}
+ALL_LABEL = {"en": {"uc": "All workflows", "ind": "All industries"},
+             "it": {"uc": "Tutti i flussi", "ind": "Tutti i settori"}}
+# Two taxonomies, one menu. The left column is what the agent DOES on a call;
+# the right column is WHY someone is looking in the first place. Same buyer, two
+# different moments, so they have to be visible at the same time rather than one
+# buried under the other.
+COL_HEAD = {"en": {"uc": "Workflows", "pb": "Playbooks"},
+            "it": {"uc": "Flussi", "pb": "Playbook"}}
+PB_BASE = {"en": "/playbooks/", "it": "/it/playbook/"}
+
+
+def playbook_items(lang):
+    """(label, href) for every playbook that exists.
+
+    Read from playbook_data, so a new playbook appears in the menu the moment it
+    is written. The use-case half of this menu already learned that lesson: its
+    items come from the enhance.js arrays rather than a second hand-kept list,
+    because a second list is a second thing to forget.
+    """
+    src, order, base = ((PLAYBOOKS, ORDER, PB_BASE["en"]) if lang == "en"
+                        else (PLAYBOOKS_IT, ORDER_IT, PB_BASE["it"]))
+    return [(src[s]["nav"], base + s) for s in order]
 COPY = {
     "en": dict(home="/", btn="Start Free Pilot", demo="Book a Demo",
                other="/it", other_flag="\U0001F1EE\U0001F1F9", other_label="Italiano",
@@ -94,9 +116,17 @@ def lang_of(rel):
 
 
 def _plain_links(lang):
-    """Flat list - used by the mobile panel, where dropdowns make no sense."""
-    return "".join(f'<a href="{h}">{html.escape(l, quote=False)}</a>'
-                   for l, h, _ in NAV[lang])
+    """Flat list - used by the mobile panel, where dropdowns make no sense.
+
+    Playbooks are appended rather than nested. On a phone the whole point of this
+    panel is that everything is one tap away, and a page reachable only through a
+    hover menu does not exist on a phone at all.
+    """
+    out = "".join(f'<a href="{h}">{html.escape(l, quote=False)}</a>'
+                  for l, h, _ in NAV[lang])
+    out += "".join(f'<a href="{h}">{html.escape(l, quote=False)}</a>'
+                   for l, h in playbook_items(lang))
+    return out
 
 
 def _desktop_nav(lang):
@@ -123,10 +153,25 @@ def _desktop_nav(lang):
                       for l, h in items)
         lis += (f'<a class="sb-dd-all" href="{href}">'
                 f'{html.escape(ALL_LABEL[lang][kind], quote=False)}</a>')
+        if kind == "uc":
+            # data-uc-dropdown stays on the OUTER span. postdeploy_check asserts
+            # that attribute on four pages; moving it into a column would keep
+            # the check green while quietly changing what it guards.
+            pb = "".join(f'<a href="{h}">{html.escape(l, quote=False)}</a>'
+                         for l, h in playbook_items(lang))
+            body = (f'<span class="sb-dd-col">'
+                    f'<span class="sb-dd-head">{html.escape(COL_HEAD[lang]["uc"], quote=False)}</span>'
+                    f'{lis}</span>'
+                    f'<span class="sb-dd-col">'
+                    f'<span class="sb-dd-head">{html.escape(COL_HEAD[lang]["pb"], quote=False)}</span>'
+                    f'{pb}</span>')
+            dd = f'<span class="sb-dd sb-dd-2col" data-uc-dropdown="{kind}">{body}</span>'
+        else:
+            dd = f'<span class="sb-dd" data-uc-dropdown="{kind}">{lis}</span>'
         out.append(
             f'<span class="sb-nav-item">'
             f'<a href="{href}" aria-haspopup="true">{esc}</a>'
-            f'<span class="sb-dd" data-uc-dropdown="{kind}">{lis}</span>'
+            f'{dd}'
             f'</span>')
     return "".join(out)
 
