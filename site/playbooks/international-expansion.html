@@ -203,14 +203,26 @@
       color: var(--gray); font-size: 17.5px; line-height: 1.75; margin: 0;
     }
     .pb-light .qcopy .qbody b { color: var(--ink); }
-    .pb-light .qbody + .qbody { margin-top: 16px; }
+    /* 16px lost against a 1.75 line-height on 17.5px copy - the paragraph gap
+       came out the same as the line gap, so two paragraphs read as one. */
+    .pb-light .qbody + .qbody { margin-top: 24px; }
+    /* TOP-aligned, not centred. The use-case stylesheet centres .queue-grid,
+       which is right for a short caption beside a tall drawing. It is wrong for
+       copy beside a chart that opens with its own label: centring pushed the
+       first line of body copy 70px below the first line of the chart, so the
+       column read as though it had been dropped in by accident. */
     .pb-light .queue-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px;
-      align-items: center; }
+      align-items: start; }
+    /* .pb-light carries no bottom padding (it is normally the last block before
+       a section that brings its own 96px top padding). A dark band brings none -
+       it is a full-bleed card with internal padding only - so a light block
+       followed by one had its source line touching the black edge. */
+    .pb-light + .queue-band { margin-top: 104px; }
     /* Source lines are small print, not decoration - if a reader cannot read the
        citation the number might as well be unsourced. rgb(110,108,107) clears
        4.5:1 on white; the 140-grey it replaced sat at 3.4:1 and failed AA. */
     .pb-light .fine, .pb-light .queue-viz .fine {
-      color: rgb(110,108,107); font-size: 12px; line-height: 1.6; margin: 18px 0 0;
+      color: rgb(110,108,107); font-size: 12px; line-height: 1.6; margin: 26px 0 0;
     }
     /* Same reasoning on the dark bands: .45 alpha over black is 4.1:1. */
     .queue-band .queue-viz .fine, .queue-band .fine { color: rgba(248,244,241,.66); }
@@ -243,6 +255,7 @@
       .pb-light h2 { font-size: 29px; letter-spacing: -.9px; }
       .pb-light .queue-grid { grid-template-columns: 1fr; gap: 34px; }
       .pb-light .qbody { font-size: 16.5px; }
+      .pb-light + .queue-band { margin-top: 64px; }
     }
 
     /* ============ Playbook: slim mid-page CTA ============ */
@@ -341,7 +354,7 @@
     <section class="split-hero">
       <div class="hero-copy">
         <span class="tag">Playbook</span>
-        <h1>Sell in five countries. <span class="nb">Answer in five languages.</span></h1>
+        <h1>Sell in five countries.<br>Answer in five languages.</h1>
         <p class="sub">Opening a market takes an afternoon. Covering its phone line takes a headcount you cannot justify at launch volume. A voice agent answers in the caller's language from day one - live in two weeks.</p>
         <div class="hero-cta">
           <a class="btn-pill" href="https://cal.com/sabatoai/intro" target="_blank" rel="noopener">Start Free Pilot</a>
@@ -352,7 +365,7 @@
 
 <svg viewBox="0 0 560 330" role="img" aria-label="Five local phone numbers in five different languages, all answered by one voice agent.">
   <rect x="0" y="0" width="560" height="330" rx="24" fill="rgb(249,250,253)"/>
-  <text x="40" y="48" font-size="16" font-weight="700" letter-spacing="2.2" fill="rgb(69,65,64)">FIVE COUNTRIES, ONE LINE</text>
+  <text x="40" y="48" font-size="19" font-weight="700" letter-spacing="2.2" fill="rgb(69,65,64)">FIVE COUNTRIES, ONE LINE</text>
 
   <g fill="none" stroke="rgb(203,202,202)" stroke-width="2">
     <path d="M240 93 C 288 93 288 185 322 185"/>
@@ -364,29 +377,29 @@
 
   <g>
     <rect x="40" y="74" width="200" height="38" rx="11" fill="#fff" stroke="rgb(227,226,226)"/>
-    <text x="58" y="99" font-size="17" font-weight="700" fill="rgb(18,10,11)">+49</text>
-    <text x="110" y="99" font-size="17" font-weight="500" fill="rgb(100,98,97)">German</text>
+    <text x="58" y="99" font-size="19" font-weight="700" fill="rgb(18,10,11)">+49</text>
+    <text x="110" y="99" font-size="19" font-weight="500" fill="rgb(100,98,97)">German</text>
 
     <rect x="40" y="120" width="200" height="38" rx="11" fill="#fff" stroke="rgb(227,226,226)"/>
-    <text x="58" y="145" font-size="17" font-weight="700" fill="rgb(18,10,11)">+33</text>
-    <text x="110" y="145" font-size="17" font-weight="500" fill="rgb(100,98,97)">French</text>
+    <text x="58" y="145" font-size="19" font-weight="700" fill="rgb(18,10,11)">+33</text>
+    <text x="110" y="145" font-size="19" font-weight="500" fill="rgb(100,98,97)">French</text>
 
     <rect x="40" y="166" width="200" height="38" rx="11" fill="#fff" stroke="rgb(227,226,226)"/>
-    <text x="58" y="191" font-size="17" font-weight="700" fill="rgb(18,10,11)">+34</text>
-    <text x="110" y="191" font-size="17" font-weight="500" fill="rgb(100,98,97)">Spanish</text>
+    <text x="58" y="191" font-size="19" font-weight="700" fill="rgb(18,10,11)">+34</text>
+    <text x="110" y="191" font-size="19" font-weight="500" fill="rgb(100,98,97)">Spanish</text>
 
     <rect x="40" y="212" width="200" height="38" rx="11" fill="#fff" stroke="rgb(227,226,226)"/>
-    <text x="58" y="237" font-size="17" font-weight="700" fill="rgb(18,10,11)">+31</text>
-    <text x="110" y="237" font-size="17" font-weight="500" fill="rgb(100,98,97)">Dutch</text>
+    <text x="58" y="237" font-size="19" font-weight="700" fill="rgb(18,10,11)">+31</text>
+    <text x="110" y="237" font-size="19" font-weight="500" fill="rgb(100,98,97)">Dutch</text>
 
     <rect x="40" y="258" width="200" height="38" rx="11" fill="#fff" stroke="rgb(227,226,226)"/>
-    <text x="58" y="283" font-size="17" font-weight="700" fill="rgb(18,10,11)">+46</text>
-    <text x="110" y="283" font-size="17" font-weight="500" fill="rgb(100,98,97)">Swedish</text>
+    <text x="58" y="283" font-size="19" font-weight="700" fill="rgb(18,10,11)">+46</text>
+    <text x="110" y="283" font-size="19" font-weight="500" fill="rgb(100,98,97)">Swedish</text>
   </g>
 
   <rect x="322" y="145" width="216" height="80" rx="18" fill="rgb(18,10,11)"/>
-  <text x="430" y="180" font-size="19" font-weight="700" fill="#fff" text-anchor="middle">one voice agent</text>
-  <text x="430" y="206" font-size="16" font-weight="500" fill="rgb(204,255,0)" text-anchor="middle">answers in their language</text>
+  <text x="430" y="180" font-size="21" font-weight="700" fill="#fff" text-anchor="middle">one voice agent</text>
+  <text x="430" y="206" font-size="19" font-weight="500" fill="rgb(204,255,0)" text-anchor="middle">every language</text>
 </svg>
 
       </div>
@@ -403,7 +416,7 @@
     <section class="pb-light">
       <div class="queue-inner">
         <p class="eyebrow">AND ENGLISH DOESN'T CLOSE THE GAP</p>
-        <h2>They read English. <span class="nb">They still won't call in it.</span></h2>
+        <h2>They read English.<br>They still won't call in it.</h2>
         <div class="queue-grid"><div class="qcopy"><p class="qbody">Reading a product page in a second language is easy. Explaining a delivery problem down a phone line in one is not.</p><p class="qbody">Even among the shoppers most confident reading English, <b>60% still want customer care in their own language</b> - and 75% say they are more likely to buy the brand again when they get it.</p></div><div class="queue-viz">
 <svg viewBox="0 0 560 286" role="img" aria-label="Two bars. Sixty per cent of the shoppers most confident reading English still want customer care in their own language; seventy-five per cent are more likely to buy the brand again when they get it.">
   <text x="0" y="24" font-size="21" font-weight="700" fill="rgb(18,10,11)">Confident English readers who still</text>

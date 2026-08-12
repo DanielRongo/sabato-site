@@ -86,14 +86,14 @@ if ! python3 tools/scene_audit.py; then
 fi
 
 echo
-echo "==> 4b2/5  SVG type is readable on a phone"
+echo "==> 4b2/5  phone render: SVG type readable, no sideways scroll"
 # An SVG scales to its container, so the font-size in the source is not the size
 # anyone reads - on a 390px phone the playbook graphics render at ~0.61x. The
 # international-expansion bar chart shipped its first draft at 15px, i.e. 9.3px
 # on a phone, and the peak-season hero had been live at 7.3px for a week. Every
 # other check here passed both times: contrast_audit never looks inside an SVG
 # and the DOM reports the declared size, which looks perfectly sensible.
-if ! python3 tools/svg_type_audit.py "http://127.0.0.1:$PORT"; then
+if ! python3 tools/phone_render_audit.py "http://127.0.0.1:$PORT"; then
   echo
   echo "GATE FAILED - no receipt written. Nothing is safe to push." >&2
   exit 1

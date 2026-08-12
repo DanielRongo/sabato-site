@@ -44,7 +44,7 @@ INTL_HERO_SVG_IT = _it(INTL_HERO_SVG, [
     (">Spanish<", ">spagnolo<"), (">Dutch<", ">olandese<"),
     (">Swedish<", ">svedese<"),
     (">one voice agent<", ">un agente vocale<"),
-    (">answers in their language<", ">risponde nella sua lingua<"),
+    (">every language<", ">ogni lingua<"),
     ('aria-label="Five local phone numbers in five different languages, all answered by one voice agent."',
      'aria-label="Cinque numeri locali in cinque lingue diverse, tutti gestiti da un solo agente vocale."'),
 ])
@@ -206,7 +206,9 @@ PLAYBOOKS_IT = {
                        "settimana. Un agente vocale prende le chiamate nella "
                        "lingua locale dal primo giorno: nessuna assunzione "
                        "all'estero, nessuna agenzia, nessun volume minimo.",
-        "h1": "Vendi in cinque Paesi. [nb]Rispondi in cinque lingue.[/nb]",
+        # [br], non [nb]: vedi la nota in playbook_data.py - un [nb] su questa
+        # frase fa scorrere la pagina in orizzontale su uno schermo da 390px.
+        "h1": "Vendi in cinque Paesi.[br]Rispondi in cinque lingue.",
         "sub": "Aprire un mercato richiede un pomeriggio. Coprirne il telefono "
                "richiede una persona che ai volumi di lancio non puoi "
                "giustificare. Un agente vocale risponde nella lingua di chi "
@@ -233,7 +235,7 @@ PLAYBOOKS_IT = {
             {
                 "tone": "light",
                 "eyebrow": "E L'INGLESE NON COLMA IL DIVARIO",
-                "h2": "Leggono l'inglese. [nb]Non ci telefonano.[/nb]",
+                "h2": "Leggono l'inglese.[br]Non ci telefonano.",
                 "body": [
                     "Leggere una scheda prodotto in una seconda lingua è facile. "
                     "Spiegare al telefono un problema di consegna, molto meno.",

@@ -94,7 +94,7 @@ BAND_SVG = """
 INTL_HERO_SVG = """
 <svg viewBox="0 0 560 330" role="img" aria-label="Five local phone numbers in five different languages, all answered by one voice agent.">
   <rect x="0" y="0" width="560" height="330" rx="24" fill="rgb(249,250,253)"/>
-  <text x="40" y="48" font-size="16" font-weight="700" letter-spacing="2.2" fill="rgb(69,65,64)">FIVE COUNTRIES, ONE LINE</text>
+  <text x="40" y="48" font-size="19" font-weight="700" letter-spacing="2.2" fill="rgb(69,65,64)">FIVE COUNTRIES, ONE LINE</text>
 
   <g fill="none" stroke="rgb(203,202,202)" stroke-width="2">
     <path d="M240 93 C 288 93 288 185 322 185"/>
@@ -106,29 +106,29 @@ INTL_HERO_SVG = """
 
   <g>
     <rect x="40" y="74" width="200" height="38" rx="11" fill="#fff" stroke="rgb(227,226,226)"/>
-    <text x="58" y="99" font-size="17" font-weight="700" fill="rgb(18,10,11)">+49</text>
-    <text x="110" y="99" font-size="17" font-weight="500" fill="rgb(100,98,97)">German</text>
+    <text x="58" y="99" font-size="19" font-weight="700" fill="rgb(18,10,11)">+49</text>
+    <text x="110" y="99" font-size="19" font-weight="500" fill="rgb(100,98,97)">German</text>
 
     <rect x="40" y="120" width="200" height="38" rx="11" fill="#fff" stroke="rgb(227,226,226)"/>
-    <text x="58" y="145" font-size="17" font-weight="700" fill="rgb(18,10,11)">+33</text>
-    <text x="110" y="145" font-size="17" font-weight="500" fill="rgb(100,98,97)">French</text>
+    <text x="58" y="145" font-size="19" font-weight="700" fill="rgb(18,10,11)">+33</text>
+    <text x="110" y="145" font-size="19" font-weight="500" fill="rgb(100,98,97)">French</text>
 
     <rect x="40" y="166" width="200" height="38" rx="11" fill="#fff" stroke="rgb(227,226,226)"/>
-    <text x="58" y="191" font-size="17" font-weight="700" fill="rgb(18,10,11)">+34</text>
-    <text x="110" y="191" font-size="17" font-weight="500" fill="rgb(100,98,97)">Spanish</text>
+    <text x="58" y="191" font-size="19" font-weight="700" fill="rgb(18,10,11)">+34</text>
+    <text x="110" y="191" font-size="19" font-weight="500" fill="rgb(100,98,97)">Spanish</text>
 
     <rect x="40" y="212" width="200" height="38" rx="11" fill="#fff" stroke="rgb(227,226,226)"/>
-    <text x="58" y="237" font-size="17" font-weight="700" fill="rgb(18,10,11)">+31</text>
-    <text x="110" y="237" font-size="17" font-weight="500" fill="rgb(100,98,97)">Dutch</text>
+    <text x="58" y="237" font-size="19" font-weight="700" fill="rgb(18,10,11)">+31</text>
+    <text x="110" y="237" font-size="19" font-weight="500" fill="rgb(100,98,97)">Dutch</text>
 
     <rect x="40" y="258" width="200" height="38" rx="11" fill="#fff" stroke="rgb(227,226,226)"/>
-    <text x="58" y="283" font-size="17" font-weight="700" fill="rgb(18,10,11)">+46</text>
-    <text x="110" y="283" font-size="17" font-weight="500" fill="rgb(100,98,97)">Swedish</text>
+    <text x="58" y="283" font-size="19" font-weight="700" fill="rgb(18,10,11)">+46</text>
+    <text x="110" y="283" font-size="19" font-weight="500" fill="rgb(100,98,97)">Swedish</text>
   </g>
 
   <rect x="322" y="145" width="216" height="80" rx="18" fill="rgb(18,10,11)"/>
-  <text x="430" y="180" font-size="19" font-weight="700" fill="#fff" text-anchor="middle">one voice agent</text>
-  <text x="430" y="206" font-size="16" font-weight="500" fill="rgb(204,255,0)" text-anchor="middle">answers in their language</text>
+  <text x="430" y="180" font-size="21" font-weight="700" fill="#fff" text-anchor="middle">one voice agent</text>
+  <text x="430" y="206" font-size="19" font-weight="500" fill="rgb(204,255,0)" text-anchor="middle">every language</text>
 </svg>
 """
 
@@ -313,7 +313,11 @@ PLAYBOOKS = {
         "description": "Open a market and answer its phone line the same week. "
                        "A voice agent takes calls in the local language from day "
                        "one - no hiring abroad, no agency, no minimum volume.",
-        "h1": "Sell in five countries. [nb]Answer in five languages.[/nb]",
+        # [br], NOT [nb]. "Answer in five languages." inside a nowrap span is
+        # 430px wide at the 37px phone h1 size, which made the whole page scroll
+        # sideways on a 390px screen. [nb] is only safe on a phrase short enough
+        # to survive the narrowest column it will ever sit in.
+        "h1": "Sell in five countries.[br]Answer in five languages.",
         "sub": "Opening a market takes an afternoon. Covering its phone line "
                "takes a headcount you cannot justify at launch volume. A voice "
                "agent answers in the caller's language from day one - live in "
@@ -340,7 +344,7 @@ PLAYBOOKS = {
             {
                 "tone": "light",
                 "eyebrow": "AND ENGLISH DOESN'T CLOSE THE GAP",
-                "h2": "They read English. [nb]They still won't call in it.[/nb]",
+                "h2": "They read English.[br]They still won't call in it.",
                 "body": [
                     "Reading a product page in a second language is easy. "
                     "Explaining a delivery problem down a phone line in one is "

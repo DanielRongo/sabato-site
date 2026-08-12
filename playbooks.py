@@ -68,14 +68,26 @@ EXTRA_CSS = """
       color: var(--gray); font-size: 17.5px; line-height: 1.75; margin: 0;
     }
     .pb-light .qcopy .qbody b { color: var(--ink); }
-    .pb-light .qbody + .qbody { margin-top: 16px; }
+    /* 16px lost against a 1.75 line-height on 17.5px copy - the paragraph gap
+       came out the same as the line gap, so two paragraphs read as one. */
+    .pb-light .qbody + .qbody { margin-top: 24px; }
+    /* TOP-aligned, not centred. The use-case stylesheet centres .queue-grid,
+       which is right for a short caption beside a tall drawing. It is wrong for
+       copy beside a chart that opens with its own label: centring pushed the
+       first line of body copy 70px below the first line of the chart, so the
+       column read as though it had been dropped in by accident. */
     .pb-light .queue-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px;
-      align-items: center; }
+      align-items: start; }
+    /* .pb-light carries no bottom padding (it is normally the last block before
+       a section that brings its own 96px top padding). A dark band brings none -
+       it is a full-bleed card with internal padding only - so a light block
+       followed by one had its source line touching the black edge. */
+    .pb-light + .queue-band { margin-top: 104px; }
     /* Source lines are small print, not decoration - if a reader cannot read the
        citation the number might as well be unsourced. rgb(110,108,107) clears
        4.5:1 on white; the 140-grey it replaced sat at 3.4:1 and failed AA. */
     .pb-light .fine, .pb-light .queue-viz .fine {
-      color: rgb(110,108,107); font-size: 12px; line-height: 1.6; margin: 18px 0 0;
+      color: rgb(110,108,107); font-size: 12px; line-height: 1.6; margin: 26px 0 0;
     }
     /* Same reasoning on the dark bands: .45 alpha over black is 4.1:1. */
     .queue-band .queue-viz .fine, .queue-band .fine { color: rgba(248,244,241,.66); }
@@ -108,6 +120,7 @@ EXTRA_CSS = """
       .pb-light h2 { font-size: 29px; letter-spacing: -.9px; }
       .pb-light .queue-grid { grid-template-columns: 1fr; gap: 34px; }
       .pb-light .qbody { font-size: 16.5px; }
+      .pb-light + .queue-band { margin-top: 64px; }
     }
 
     /* ============ Playbook: slim mid-page CTA ============ */
@@ -223,8 +236,19 @@ def esc(s):
 
 def nb(s):
     """[nb]...[/nb] keeps a phrase on one line, same convention as every other
-    template here."""
-    return s.replace("[nb]", '<span class="nb">').replace("[/nb]", "</span>")
+    template here. [br] forces a break.
+
+    The two are not interchangeable and the difference matters. [nb] is a
+    REQUEST - it stops a phrase splitting if the line happens to be tight, and
+    does nothing at all when the container is wide enough to fit everything.
+    A 38px h2 in a 1060px column fits a lot, so a two-clause headline written
+    with [nb] alone renders as one long line on desktop and only breaks on a
+    phone, which is the opposite of the intent. [br] is the instruction: break
+    here, at every width.
+    """
+    return (s.replace("[nb]", '<span class="nb">')
+             .replace("[/nb]", "</span>")
+             .replace("[br]", "<br>"))
 
 
 def template(lang):
@@ -353,7 +377,10 @@ def jsonld(slug, d, lang):
     url = "https://www.sabato.ai" + (LANGS[lang]["base"] % slug)
     out = [{
         "@context": "https://schema.org", "@type": "Article",
-        "headline": re.sub(r"\[/?nb\]", "", d["h1"]),
+        # Strip EVERY layout token, not just [nb] - a headline that ships
+        # "...countries.[br]Answer..." to Google is worse than no schema at all.
+        # [br] becomes a space because it is a sentence boundary on the page.
+        "headline": re.sub(r"\[/?nb\]", "", d["h1"].replace("[br]", " ")).strip(),
         "description": d["description"],
         "url": url,
         "mainEntityOfPage": {"@type": "WebPage", "@id": url},
