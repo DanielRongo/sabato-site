@@ -94,11 +94,27 @@ LANGS = {"en": COPY_EN, "it": COPY_IT}
 #
 # Safe to run here, unlike everything in enhance.js, because this footer is ours
 # and lives outside React's root - there is no hydration to collide with.
+# ...and on DESKTOP the summaries must not toggle at all. The CSS makes them
+# LOOK like plain column headings (no marker, cursor: default), but <summary>
+# stays a native toggle - so clicking "Use Cases" in the footer collapsed the
+# whole column of links. Styling something inert does not make it inert.
+# preventDefault on wide viewports does, and covers Enter/Space too, because
+# the browser routes those through the same click activation. The resize
+# handler re-opens everything at desktop width so a column collapsed on a
+# phone cannot arrive closed when the same window is stretched wide.
 COLLAPSE_SCRIPT = (
     '<script>(function(){try{'
-    'if(!window.matchMedia||!window.matchMedia("(max-width: 809px)").matches)return;'
-    'var d=document.querySelectorAll(".sb-footer details.sb-acc");'
-    'for(var i=0;i<d.length;i++)d[i].removeAttribute("open");'
+    'var mq=window.matchMedia&&window.matchMedia("(max-width: 809px)");'
+    'var d=document.querySelectorAll(".sb-footer details.sb-acc");var i;'
+    'if(mq&&mq.matches)for(i=0;i<d.length;i++)d[i].removeAttribute("open");'
+    'for(i=0;i<d.length;i++)(function(el){'
+    'var s=el.querySelector("summary");if(!s)return;'
+    's.addEventListener("click",function(e){'
+    'if(!mq||!mq.matches)e.preventDefault();});'
+    '})(d[i]);'
+    'window.addEventListener("resize",function(){'
+    'if(mq&&mq.matches)return;'
+    'for(var j=0;j<d.length;j++)d[j].setAttribute("open","");});'
     '}catch(e){}})();</script>'
 )
 
