@@ -1270,7 +1270,12 @@ body:has(.sb-logos) [data-framer-name^="Brand Logos" i] { display: none !importa
 }
 .sb-consent[hidden] { display: none; }
 .sb-c-card {
-  max-width: 1200px; margin: 0 auto; background: rgb(18, 10, 11);
+  /* rgb(0,0,0) - the same surface as .sb-footer, .cta-band, .queue-band and
+     .sb-proof-card. NOT rgb(18,10,11): that is --ink, the primary TEXT colour,
+     and it shipped here by mistake. It reads as a warm off-black patch sitting
+     against the pure-black footer, which is exactly where this bar spends most
+     of its life. Two tokens, two jobs - ink is for type, black is for surfaces. */
+  max-width: 1200px; margin: 0 auto; background: rgb(0, 0, 0);
   border-radius: 14px; padding: 11px 16px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, .26);
 }
