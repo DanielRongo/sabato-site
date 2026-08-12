@@ -1015,10 +1015,25 @@ body:has(.sb-logos) [data-framer-name^="Brand Logos" i] { display: none !importa
    card left edge went from 40px to 144px with no rule touching the card. */
 .sb-proof { background: #fff; padding: 0 30px; width: 100%; box-sizing: border-box; }
 .sb-proof[hidden] { display: none; }
+/* The homepage copy is slotted between two Framer sections that bring their own
+   vertical rhythm. An authored page has none to inherit, so the inline copy
+   supplies it - 96px, the same top padding every other section on a playbook
+   page uses, so "Success stories" is not glued to the section above it. */
+/* .sb-proof.sb-proof-inline, not .sb-proof-inline: the phone block further down
+   sets `padding: 0 20px` on .sb-proof, and a shorthand later in the file beats a
+   single-class rule earlier in it - which is why the top padding was 96px on
+   desktop and silently 0 on mobile. Two classes outrank one at any position. */
+.sb-proof.sb-proof-inline { padding-top: 96px; }
+@media (max-width: 767.98px) { .sb-proof.sb-proof-inline { padding-top: 64px; } }
 .sb-proof-card {
   width: 100%;
   box-sizing: border-box;
-  max-width: 1360px;
+  /* 1200, not 1360. The hero and the logo band run at 1360 because they are
+     full-bleed openers; every CONTENT section on this site - the closing CTA
+     band, the footer shell, Framer's FAQ - runs at 1200. This card sat 160px
+     wider than the closing CTA band it shares a page with, and since both are
+     big black rounded cards, that mismatch was the only thing you could see. */
+  max-width: 1200px;
   margin: 0 auto;
   background: #000;
   border-radius: 24px;
@@ -1034,7 +1049,7 @@ body:has(.sb-logos) [data-framer-name^="Brand Logos" i] { display: none !importa
 .sb-proof-head {
   width: 100%;
   box-sizing: border-box;
-  max-width: 1360px;
+  max-width: 1200px;
   margin: 0 auto 30px;
   text-align: center;
   font-family: Satoshi, Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -1093,7 +1108,7 @@ body:has(.sb-logos) [data-framer-name^="Brand Logos" i] { display: none !importa
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 28px;
-  max-width: 1040px;
+  max-width: 1000px;
   margin: 38px auto 0;
   padding: 30px 0 0;
   border-top: 1px solid rgba(248, 244, 241, .16);
@@ -1132,7 +1147,9 @@ body:has(.sb-logos) [data-framer-name^="Brand Logos" i] { display: none !importa
   display: flex;
   align-items: center;
   gap: 44px;
-  max-width: 1040px;
+  /* 1000 inside a 1200 card with 56px padding leaves a 44px inset each side -
+     the same breathing room the 1040 rail had inside the old 1360 card. */
+  max-width: 1000px;
   margin: 30px auto 0;
 }
 /* 260px and a 20px radius: EXACTLY what templates/customer.html gives the
