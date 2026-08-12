@@ -33,6 +33,7 @@ sys.path.insert(0, ROOT)
 
 from playbook_data import PLAYBOOKS, ORDER                     # noqa: E402
 from playbook_data_it import PLAYBOOKS_IT, ORDER_IT            # noqa: E402
+from proof import proof_inline_html                            # noqa: E402
 
 SITE = os.path.join(ROOT, "site")
 CAL = "https://cal.com/sabatoai/intro"
@@ -85,8 +86,21 @@ EXTRA_CSS = """
     .queue-band .qcopy .qbody { color: rgba(248, 244, 241, .82); font-size: 17.5px;
       line-height: 1.75; margin: 0; }
     .queue-band .qbody + .qbody { margin-top: 16px; }
-    /* A block with no picture gets a reading measure instead of the full 1060px. */
-    .pb-wide { max-width: 760px; }
+    /* A block with no picture gets a reading measure instead of the full 1060px,
+       and is centred and sized up: it is a statement, not a caption. */
+    .pb-wide { max-width: 820px; }
+    .pb-statement { margin: 0 auto; text-align: center; }
+    .queue-band .pb-statement .qbody,
+    .pb-light .pb-statement .qbody { font-size: 22px; line-height: 1.6; }
+    .pb-statement .qbody + .qbody { margin-top: 22px; }
+    .queue-band:has(.pb-statement) .eyebrow,
+    .queue-band:has(.pb-statement) h2,
+    .pb-light:has(.pb-statement) .eyebrow,
+    .pb-light:has(.pb-statement) h2 { text-align: center; }
+    @media (max-width: 809px) {
+      .queue-band .pb-statement .qbody,
+      .pb-light .pb-statement .qbody { font-size: 18.5px; }
+    }
     .queue-viz .fine a, .pb-light .fine a { color: inherit; text-decoration: underline;
       text-underline-offset: 2px; }
     @media (max-width: 809px) {
@@ -153,26 +167,6 @@ EXTRA_CSS = """
     .pb-card .pb-go { display: inline-block; margin-top: 14px; font-size: 15px;
       font-weight: 700; color: var(--blue); }
 
-    /* ============ Playbook: the proof strip ============ */
-    .pb-proofline { max-width: 1200px; margin: 96px auto 0; padding: 0 40px; }
-    .pb-proofline .pb-inner { background: var(--black); border-radius: var(--radius);
-      padding: 56px 56px 52px; color: #fff; }
-    .pb-proofline .eyebrow { color: var(--lime); font-size: 13px; font-weight: 700;
-      letter-spacing: 2.5px; margin: 0 0 18px; }
-    .pb-proofline blockquote { font-size: 24px; line-height: 1.45; font-weight: 500;
-      letter-spacing: -.4px; margin: 0 0 20px; max-width: 900px; }
-    .pb-proofline .pb-who { font-size: 15px; line-height: 1.5;
-      color: rgba(248, 244, 241, .6); }
-    .pb-proofline .pb-who b { color: #fff; display: block; font-weight: 700; }
-    .pb-proofline .pb-nums { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 28px; margin-top: 34px; padding-top: 30px;
-      border-top: 1px solid rgba(248, 244, 241, .16); }
-    .pb-proofline .pb-n { display: block; font-size: 40px; font-weight: 900;
-      letter-spacing: -1.2px; color: var(--lime); font-variant-numeric: tabular-nums; }
-    .pb-proofline .pb-l { display: block; margin-top: 8px; font-size: 14px;
-      line-height: 1.45; color: rgba(248, 244, 241, .66); }
-    .pb-proofline .pb-read { display: inline-block; margin-top: 28px; font-size: 15px;
-      font-weight: 700; color: var(--lime); }
 
     @media (max-width: 809px) {
       .pb-steps { padding: 72px 22px 0; }
@@ -243,7 +237,10 @@ def section_blocks(d):
             # version attached `fine` to the visual, so the one block without one
             # - the block with the 48.9% figure on it - published an unsourced
             # number. Every figure on these pages cites itself or it does not ship.
-            grid = '<div class="qcopy pb-wide">%s%s</div>' % (body, fine)
+            # A block with no picture IS the statement - centred and a size up,
+            # because at body-copy size a lone column of text reads as a caption
+            # for a graphic that never arrives.
+            grid = '<div class="qcopy pb-wide pb-statement">%s%s</div>' % (body, fine)
         cls = "queue-band" if b.get("tone", "dark") == "dark" else "pb-light"
         out.append("""
     <section class="%s">
@@ -256,34 +253,6 @@ def section_blocks(d):
     return "".join(out)
 
 
-def section_steps(d):
-    s = d["steps"]
-    rows = "".join(
-        '<div class="pb-step"><div class="pb-when">%s<span>%s</span></div>'
-        '<div><h3>%s</h3>%s</div></div>'
-        % (esc(w), esc(sub), esc(t), "".join("<p>%s</p>" % p for p in body))
-        for w, sub, t, body in s["rows"])
-    return """
-    <section class="pb-steps">
-      <h2>%s</h2>
-      <p class="pb-lede">%s</p>
-      %s
-    </section>""" % (nb(esc(s["h2"])), esc(s["lede"]), rows)
-
-
-def section_mid(d, lang):
-    """A slim CTA between the problem and the mechanics. On a landing page the
-    reader who is already convinced must never have to scroll to convert - the
-    black band at the bottom stays the finale, this is the exit for the
-    impatient."""
-    m = d.get("midcta")
-    if not m:
-        return ""
-    return """
-    <section class="pb-mid">
-      <p>%s</p>
-      <a class="btn-pill" href="%s" target="_blank" rel="noopener">%s</a>
-    </section>""" % (esc(m), CAL, esc(LANGS[lang]["cta_btn"]))
 
 
 def section_faq(d):
@@ -318,24 +287,16 @@ def section_workflows(d):
     </section>""" % (nb(esc(w["h2"])), esc(w["lede"]), cards)
 
 
-def section_proof(d):
-    p = d.get("proof")
-    if not p:
-        return ""
-    nums = "".join('<div><span class="pb-n">%s</span><span class="pb-l">%s</span></div>'
-                   % (esc(v), esc(l)) for v, l in p["nums"])
-    return """
-    <section class="pb-proofline">
-      <div class="pb-inner">
-        <p class="eyebrow">%s</p>
-        <blockquote>&ldquo;%s&rdquo;</blockquote>
-        <p class="pb-who"><b>%s</b>%s</p>
-        <div class="pb-nums">%s</div>
-        <a class="pb-read" href="%s">%s &rarr;</a>
-      </div>
-    </section>""" % (esc(p["eyebrow"]), esc(p["quote"]), esc(p["who"]),
-                     esc(p["role"]), nums, p["href"], esc(p["link"]))
+def section_proof(d, lang):
+    """THE homepage testimonial widget, not a copy of it.
 
+    This used to be a bespoke `.pb-proofline` block: same content, hand-rebuilt
+    in this file's own CSS. Two implementations of one component is how a design
+    system rots - the homepage gets a fix and the playbook quietly keeps the old
+    look. Now it renders proof.py's markup, inherits footer.css, and any change
+    to the widget lands on both surfaces at once.
+    """
+    return proof_inline_html(lang)
 
 def section_cta(d, lang):
     c = d["cta"]
@@ -394,9 +355,8 @@ def hreflang(slug, lang):
 def build(lang, slug, d):
     cfg = LANGS[lang]
     tpl = template(lang)
-    sections = "".join([section_blocks(d), section_mid(d, lang),
-                        section_steps(d), section_workflows(d),
-                        section_proof(d), section_faq(d),
+    sections = "".join([section_blocks(d), section_workflows(d),
+                        section_proof(d, lang), section_faq(d),
                         section_cta(d, lang)])
     page = (tpl
             .replace("{{TITLE}}", html.escape(d["title"]))

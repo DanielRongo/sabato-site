@@ -24,13 +24,16 @@ So the rules for this file:
 ORDER = ["peak-season"]
 
 # --------------------------------------------------------------------------
-# Hero: fourteen day cells. The sale is one day; the calls are the week after.
-# The page's whole argument, said in a picture before any copy runs.
+# Hero: fourteen days of December. The cut-off is one day; the calls are the
+# week after it - and still before Christmas, which is the whole point. Dec 11
+# 2026 is a real Friday and the week that follows really does end on the 18th,
+# because a calendar graphic that does not survive someone checking it is worse
+# than no calendar at all.
 # --------------------------------------------------------------------------
 HERO_SVG = """
-<svg viewBox="0 0 560 330" role="img" aria-label="A two-week calendar. One day is the sale; the calls peak across the following week.">
+<svg viewBox="0 0 560 330" role="img" aria-label="Two weeks of December. One day is the last order date; the calls peak across the following week, still before Christmas.">
   <rect x="0" y="0" width="560" height="330" rx="24" fill="rgb(249,250,253)"/>
-  <text x="40" y="52" font-size="13" font-weight="700" letter-spacing="2.2" fill="rgb(69,65,64)">TWO WEEKS IN NOVEMBER</text>
+  <text x="40" y="52" font-size="13" font-weight="700" letter-spacing="2.2" fill="rgb(69,65,64)">TWO WEEKS IN DECEMBER</text>
 
   <g font-size="12" fill="rgb(140,138,137)" font-weight="500">
     <text x="52" y="86">M</text><text x="118" y="86">T</text><text x="184" y="86">W</text>
@@ -44,11 +47,11 @@ HERO_SVG = """
     <rect x="172" y="96" width="52" height="52" rx="12" fill="#fff" stroke="rgb(227,226,226)"/>
     <rect x="238" y="96" width="52" height="52" rx="12" fill="#fff" stroke="rgb(227,226,226)"/>
     <rect x="304" y="96" width="52" height="52" rx="12" fill="rgb(0,0,0)"/>
-    <text x="330" y="128" font-size="15" font-weight="700" fill="#fff" text-anchor="middle">29</text>
+    <text x="330" y="128" font-size="15" font-weight="700" fill="#fff" text-anchor="middle">11</text>
     <rect x="370" y="96" width="52" height="52" rx="12" fill="#fff" stroke="rgb(227,226,226)"/>
     <rect x="436" y="96" width="52" height="52" rx="12" fill="#fff" stroke="rgb(227,226,226)"/>
   </g>
-  <text x="330" y="172" font-size="13" font-weight="700" fill="rgb(18,10,11)" text-anchor="middle">the sale</text>
+  <text x="330" y="172" font-size="13" font-weight="700" fill="rgb(18,10,11)" text-anchor="middle">last order date</text>
 
   <g>
     <rect x="40" y="196" width="52" height="52" rx="12" fill="#fff" stroke="rgb(227,226,226)"/>
@@ -140,31 +143,6 @@ PLAYBOOKS = {
             },
         ],
 
-        "midcta": "Live in two weeks. Four weeks before your sale is the last "
-                  "comfortable start.",
-
-        "steps": {
-            "h2": "Live in three steps",
-            "lede": "No hiring plan, no training calendar, no rota.",
-            "rows": [
-                ("Step 1", "day one",
-                 "Connect",
-                 ["We plug into your store and carriers. Your catalogue, your "
-                  "orders, your policies - the agent answers from your data, not "
-                  "a script."]),
-                ("Step 2", "week two",
-                 "Go live",
-                 ["Real calls, on your number, in your brand's voice. You listen "
-                  "to the recordings, we tune. Before launch it passes "
-                  '<a href="/blog/voice-agent-acceptance-test">the twenty-call '
-                  "acceptance test</a>."]),
-                ("Step 3", "peak week",
-                 "Absorb the surge",
-                 ["The agent takes order status, returns and stock calls - the "
-                  "volume that buries a team. Yours handles the calls that need "
-                  "a person, with full context handed over."]),
-            ],
-        },
 
         "workflows": {
             "h2": "What it takes off your team",

@@ -80,7 +80,8 @@ def _data(lang):
     return d
 
 
-def proof_html(lang="en"):
+def proof_card(lang="en"):
+    """The head + card markup shared by both placements."""
     if lang not in COPY:
         raise ValueError(f"proof.py: unknown language {lang!r}")
     c, d = COPY[lang], _data(lang)
@@ -109,7 +110,6 @@ def proof_html(lang="en"):
             f'loading="lazy" decoding="async">'
             if d.get("logo_white") else "")
     return (
-      f'<section class="sb-proof" data-lang="{lang}" hidden>'
         f'<div class="sb-proof-head">'
           f'<h2>{c["h2"]}</h2><p>{c["sub"]}</p>'
         f'</div>'
@@ -130,10 +130,38 @@ def proof_html(lang="en"):
           f'<div class="sb-proof-stats">{stats}</div>'
           f'<a class="sb-proof-cta" href="{c["base"]}{SLUG}">{c["link"]}'
           f'<span aria-hidden="true"> &rarr;</span></a>'
-        f'</div>'
-      f'</section>'
-      f'{MOVE_SCRIPT}'
-    )
+        f'</div>')
+
+
+def proof_html(lang="en"):
+    """Homepage placement: emitted at end of <body>, moved before the FAQ."""
+    return (f'<section class="sb-proof" data-lang="{lang}" hidden>{proof_card(lang)}</section>'
+            f'{MOVE_SCRIPT}')
+
+
+def proof_inline_html(lang="en"):
+    """The SAME widget, for a page that owns its own layout.
+
+    Byte-identical card markup to the homepage version - same head, same card,
+    same classes, so it inherits every rule in footer.css and cannot drift into
+    a lookalike. Two differences, both structural rather than visual:
+
+      * `sb-proof-inline` in the class list, and no `data-lang="x" hidden`.
+        tools/apply_footer.py strips `<section class="sb-proof"` - an exact
+        match including the closing quote - so a second class in that attribute
+        is what keeps this copy from being deleted on the next build. It is a
+        load-bearing class name, not decoration.
+      * No move script. There is no Framer FAQ to slide in front of on an
+        authored page; the section is already exactly where it belongs.
+
+    The logo still has to be aligned to the end of the quote, so that one piece
+    of the script comes along under its own marker.
+    """
+    c, d = COPY[lang], _data(lang)
+    _ = c, d                     # validation side effects: unknown lang, approval
+    card = proof_card(lang)
+    return (f'<section class="sb-proof sb-proof-inline" data-lang="{lang}">{card}</section>'
+            f'{INLINE_FIT_SCRIPT}')
 
 
 # Moves the widget in front of the FAQ section AFTER hydration. Runs on `load`,
@@ -185,3 +213,25 @@ def main():
 
 if __name__ == "__main__":
     sys.exit(main())
+
+
+# Aligns the logo to the end of the quote's longest rendered line - the same
+# measurement the homepage widget does, minus the moving. Its own attribute,
+# because apply_footer strips `<script data-sb-proof>` exactly.
+INLINE_FIT_SCRIPT = (
+    "<script data-sb-proof-inline>(function(){"
+    "function fit(){"
+    "var w=document.querySelector('section.sb-proof-inline');if(!w)return;"
+    "var q=w.querySelector('blockquote'),by=w.querySelector('.sb-proof-by');"
+    "if(!q||!by)return;by.style.width='';"
+    "if(innerWidth<768)return;"
+    "var r=document.createRange();r.selectNodeContents(q);"
+    "var rects=r.getClientRects(),m=0,i;"
+    "for(i=0;i<rects.length;i++){if(rects[i].width>1&&rects[i].right>m)m=rects[i].right;}"
+    "var l=q.getBoundingClientRect().left;"
+    "if(m>l+40)by.style.width=Math.ceil(m-l)+'px';}"
+    "if(document.readyState!=='loading')fit();"
+    "else document.addEventListener('DOMContentLoaded',fit);"
+    "addEventListener('load',fit);addEventListener('resize',fit);"
+    "if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);"
+    "})();</script>")

@@ -221,8 +221,21 @@
     .queue-band .qcopy .qbody { color: rgba(248, 244, 241, .82); font-size: 17.5px;
       line-height: 1.75; margin: 0; }
     .queue-band .qbody + .qbody { margin-top: 16px; }
-    /* A block with no picture gets a reading measure instead of the full 1060px. */
-    .pb-wide { max-width: 760px; }
+    /* A block with no picture gets a reading measure instead of the full 1060px,
+       and is centred and sized up: it is a statement, not a caption. */
+    .pb-wide { max-width: 820px; }
+    .pb-statement { margin: 0 auto; text-align: center; }
+    .queue-band .pb-statement .qbody,
+    .pb-light .pb-statement .qbody { font-size: 22px; line-height: 1.6; }
+    .pb-statement .qbody + .qbody { margin-top: 22px; }
+    .queue-band:has(.pb-statement) .eyebrow,
+    .queue-band:has(.pb-statement) h2,
+    .pb-light:has(.pb-statement) .eyebrow,
+    .pb-light:has(.pb-statement) h2 { text-align: center; }
+    @media (max-width: 809px) {
+      .queue-band .pb-statement .qbody,
+      .pb-light .pb-statement .qbody { font-size: 18.5px; }
+    }
     .queue-viz .fine a, .pb-light .fine a { color: inherit; text-decoration: underline;
       text-underline-offset: 2px; }
     @media (max-width: 809px) {
@@ -289,26 +302,6 @@
     .pb-card .pb-go { display: inline-block; margin-top: 14px; font-size: 15px;
       font-weight: 700; color: var(--blue); }
 
-    /* ============ Playbook: the proof strip ============ */
-    .pb-proofline { max-width: 1200px; margin: 96px auto 0; padding: 0 40px; }
-    .pb-proofline .pb-inner { background: var(--black); border-radius: var(--radius);
-      padding: 56px 56px 52px; color: #fff; }
-    .pb-proofline .eyebrow { color: var(--lime); font-size: 13px; font-weight: 700;
-      letter-spacing: 2.5px; margin: 0 0 18px; }
-    .pb-proofline blockquote { font-size: 24px; line-height: 1.45; font-weight: 500;
-      letter-spacing: -.4px; margin: 0 0 20px; max-width: 900px; }
-    .pb-proofline .pb-who { font-size: 15px; line-height: 1.5;
-      color: rgba(248, 244, 241, .6); }
-    .pb-proofline .pb-who b { color: #fff; display: block; font-weight: 700; }
-    .pb-proofline .pb-nums { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 28px; margin-top: 34px; padding-top: 30px;
-      border-top: 1px solid rgba(248, 244, 241, .16); }
-    .pb-proofline .pb-n { display: block; font-size: 40px; font-weight: 900;
-      letter-spacing: -1.2px; color: var(--lime); font-variant-numeric: tabular-nums; }
-    .pb-proofline .pb-l { display: block; margin-top: 8px; font-size: 14px;
-      line-height: 1.45; color: rgba(248, 244, 241, .66); }
-    .pb-proofline .pb-read { display: inline-block; margin-top: 28px; font-size: 15px;
-      font-weight: 700; color: var(--lime); }
 
     @media (max-width: 809px) {
       .pb-steps { padding: 72px 22px 0; }
@@ -353,9 +346,9 @@
       </div>
       <div class="hero-visual" aria-hidden="true">
 
-<svg viewBox="0 0 560 330" role="img" aria-label="Due settimane di calendario. Un giorno è la promo; le chiamate arrivano la settimana dopo.">
+<svg viewBox="0 0 560 330" role="img" aria-label="Due settimane di dicembre. Un giorno è l'ultimo giorno utile per ordinare; le chiamate arrivano la settimana dopo, ancora prima di Natale.">
   <rect x="0" y="0" width="560" height="330" rx="24" fill="rgb(249,250,253)"/>
-  <text x="40" y="52" font-size="13" font-weight="700" letter-spacing="2.2" fill="rgb(69,65,64)">DUE SETTIMANE DI NOVEMBRE</text>
+  <text x="40" y="52" font-size="13" font-weight="700" letter-spacing="2.2" fill="rgb(69,65,64)">DUE SETTIMANE DI DICEMBRE</text>
 
   <g font-size="12" fill="rgb(140,138,137)" font-weight="500">
     <text x="52" y="86">L</text><text x="118" y="86">M</text><text x="184" y="86">M</text>
@@ -369,11 +362,11 @@
     <rect x="172" y="96" width="52" height="52" rx="12" fill="#fff" stroke="rgb(227,226,226)"/>
     <rect x="238" y="96" width="52" height="52" rx="12" fill="#fff" stroke="rgb(227,226,226)"/>
     <rect x="304" y="96" width="52" height="52" rx="12" fill="rgb(0,0,0)"/>
-    <text x="330" y="128" font-size="15" font-weight="700" fill="#fff" text-anchor="middle">29</text>
+    <text x="330" y="128" font-size="15" font-weight="700" fill="#fff" text-anchor="middle">11</text>
     <rect x="370" y="96" width="52" height="52" rx="12" fill="#fff" stroke="rgb(227,226,226)"/>
     <rect x="436" y="96" width="52" height="52" rx="12" fill="#fff" stroke="rgb(227,226,226)"/>
   </g>
-  <text x="330" y="172" font-size="13" font-weight="700" fill="rgb(18,10,11)" text-anchor="middle">la promo</text>
+  <text x="330" y="172" font-size="13" font-weight="700" fill="rgb(18,10,11)" text-anchor="middle">ultimo giorno utile</text>
 
   <g>
     <rect x="40" y="196" width="52" height="52" rx="12" fill="#fff" stroke="rgb(227,226,226)"/>
@@ -397,7 +390,7 @@
       <div class="queue-inner">
         <p class="eyebrow">PERCHÉ IL PIANO ASSUNZIONI FALLISCE</p>
         <h2>Assumere stagionali è una trappola.</h2>
-        <div class="qcopy pb-wide"><p class="qbody">Cerchi personale nel mercato del lavoro più stretto dell'anno - contro ogni magazzino, negozio e corriere che vuole le stesse persone nelle stesse otto settimane.</p><p class="qbody">Formi per settimane persone che a gennaio se ne vanno. Su un contratto da dieci settimane, la formazione non si ripaga mai.</p><p class="qbody">E i somministrati non sono l'opzione economica: il margine dell'agenzia sta sopra la paga piena. Paghi di più all'ora per meno esperienza.</p></div>
+        <div class="qcopy pb-wide pb-statement"><p class="qbody">Cerchi personale nel mercato del lavoro più stretto dell'anno - contro ogni magazzino, negozio e corriere che vuole le stesse persone nelle stesse otto settimane.</p><p class="qbody">Formi per settimane persone che a gennaio se ne vanno. Su un contratto da dieci settimane, la formazione non si ripaga mai.</p><p class="qbody">E i somministrati non sono l'opzione economica: il margine dell'agenzia sta sopra la paga piena. Paghi di più all'ora per meno esperienza.</p></div>
       </div>
     </section>
     <section class="pb-light">
@@ -424,29 +417,11 @@
 <p class="fine">Curve illustrative. Resi: <a href="https://www.evri.com/press/return-to-sender-four-million-gifts-to-be-sent-back-in-january-2025" rel="nofollow noopener" target="_blank">rete Evri</a>, 3,9 mln di pacchi nelle quattro settimane dopo Natale 2023, oltre il doppio dei volumi tipici.</p></div></div>
       </div>
     </section>
-    <section class="pb-mid">
-      <p>Online in due settimane. Quattro settimane prima della promo è l'ultimo momento comodo per partire.</p>
-      <a class="btn-pill" href="https://cal.com/sabatoai/intro" target="_blank" rel="noopener">Inizia il Pilota Gratuito</a>
-    </section>
-    <section class="pb-steps">
-      <h2>Online in tre passi</h2>
-      <p class="pb-lede">Niente piano assunzioni, niente calendario di formazione, niente turni.</p>
-      <div class="pb-step"><div class="pb-when">Passo 1<span>giorno uno</span></div><div><h3>Collega</h3><p>Ci colleghiamo a store e corrieri. Il tuo catalogo, i tuoi ordini, le tue policy: l'agente risponde dai tuoi dati, non da un copione.</p></div></div><div class="pb-step"><div class="pb-when">Passo 2<span>settimana due</span></div><div><h3>Vai in linea</h3><p>Chiamate vere, sul tuo numero, con la voce del tuo brand. Tu ascolti le registrazioni, noi tariamo. Prima del lancio passa <a href="/it/blog/voice-agent-acceptance-test">il test delle venti chiamate</a>.</p></div></div><div class="pb-step"><div class="pb-when">Passo 3<span>settimana di picco</span></div><div><h3>Assorbi l'ondata</h3><p>L'agente prende stato ordine, resi e disponibilità: il volume che seppellisce un team. Il tuo gestisce le chiamate che servono a una persona, con tutto il contesto passato.</p></div></div>
-    </section>
     <section class="pb-wf">
       <h2>Cosa toglie al tuo team</h2>
       <p class="pb-lede">Il picco è quattro problemi ordinari che arrivano insieme. Ognuno è un flusso che l'agente già gestisce.</p>
       <div class="pb-wf-grid"><a class="pb-card" href="/it/casi-duso/dove-e-il-mio-ordine"><h3>Dov'è il mio ordine</h3><p>La chiamata che definisce la settimana. Stato letto in tempo reale, confermato via messaggio.</p><span class="pb-go">Vedi il flusso &rarr;</span></a><a class="pb-card" href="/it/casi-duso/gestione-resi"><h3>Gestione resi</h3><p>Il picco di gennaio. Prenotato al telefono nel momento in cui il portale dice no.</p><span class="pb-go">Vedi il flusso &rarr;</span></a><a class="pb-card" href="/it/casi-duso/notifica-ritorno-in-stock"><h3>Notifica ritorno in stock</h3><p>L'altra faccia del picco è finire le scorte. Chi chiama viene avvisato appena torna.</p><span class="pb-go">Vedi il flusso &rarr;</span></a><a class="pb-card" href="/it/casi-duso/recupero-carrelli-abbandonati"><h3>Recupero carrelli abbandonati</h3><p>In picco i carrelli si bloccano su date e disponibilità. Una chiamata da un minuto risolve entrambe.</p><span class="pb-go">Vedi il flusso &rarr;</span></a></div>
-    </section>
-    <section class="pb-proofline">
-      <div class="pb-inner">
-        <p class="eyebrow">LA PROVA</p>
-        <blockquote>&ldquo;Elena gestisce le nostre chiamate più ripetitive - stato ordine, spedizioni, resi - in linea con il brand e all'istante. Il nostro team ora si concentra sui casi che hanno davvero bisogno di una persona.&rdquo;</blockquote>
-        <p class="pb-who"><b>Marco Logreco</b>Head of E-Commerce, Creative Cables</p>
-        <div class="pb-nums"><div><span class="pb-n">39%</span><span class="pb-l">Chiamate risolte dall'inizio alla fine</span></div><div><span class="pb-n">57%</span><span class="pb-l">Delle richieste stato ordine automatizzate</span></div><div><span class="pb-n">55s</span><span class="pb-l">Durata media della chiamata</span></div></div>
-        <a class="pb-read" href="/it/clienti/creative-cables">Leggi il caso studio completo &rarr;</a>
-      </div>
-    </section>
+    </section><section class="sb-proof sb-proof-inline" data-lang="it"><div class="sb-proof-head"><h2>Storie di successo</h2><p>Cosa è successo nel primo mese sulla linea - misurato su chiamate vere, non stimato.</p></div><div class="sb-proof-card"><div class="sb-proof-quote"><img class="sb-proof-face" src="/customers/assets/marco-logreco.jpg" width="260" height="260" alt="Marco Logreco, Head of E-Commerce at Creative Cables" loading="lazy" decoding="async"><div class="sb-proof-said"><blockquote>&ldquo;Elena gestisce le nostre chiamate più ripetitive - stato ordine, spedizioni, resi - in linea con il brand e all'istante. Il nostro team ora si concentra sui casi che hanno davvero bisogno di una persona.&rdquo;</blockquote><div class="sb-proof-by"><p class="sb-proof-who"><b>Marco Logreco</b><span>Head of E-Commerce, Creative Cables</span></p><img class="sb-proof-logo" src="/customers/assets/creative-cables-logo-white.png" alt="Creative Cables" width="110" height="34" loading="lazy" decoding="async"></div></div></div><div class="sb-proof-stats"><div class="sb-proof-stat"><span class="sb-proof-num">39%</span><span class="sb-proof-lab">Chiamate risolte dall'inizio alla fine</span></div><div class="sb-proof-stat"><span class="sb-proof-num">57%</span><span class="sb-proof-lab">Delle richieste stato ordine automatizzate</span></div><div class="sb-proof-stat"><span class="sb-proof-num">55s</span><span class="sb-proof-lab">Durata media della chiamata</span></div></div><a class="sb-proof-cta" href="/it/clienti/creative-cables">Leggi il caso studio completo<span aria-hidden="true"> &rarr;</span></a></div></section><script data-sb-proof-inline>(function(){function fit(){var w=document.querySelector('section.sb-proof-inline');if(!w)return;var q=w.querySelector('blockquote'),by=w.querySelector('.sb-proof-by');if(!q||!by)return;by.style.width='';if(innerWidth<768)return;var r=document.createRange();r.selectNodeContents(q);var rects=r.getClientRects(),m=0,i;for(i=0;i<rects.length;i++){if(rects[i].width>1&&rects[i].right>m)m=rects[i].right;}var l=q.getBoundingClientRect().left;if(m>l+40)by.style.width=Math.ceil(m-l)+'px';}if(document.readyState!=='loading')fit();else document.addEventListener('DOMContentLoaded',fit);addEventListener('load',fit);addEventListener('resize',fit);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);})();</script>
     <section class="pb-faqs">
       <h2>Le domande che fanno gli operatori</h2>
       <div class="pb-faq-grid"><div class="pb-qa"><h3>Quanto in fretta possiamo essere online prima del picco?</h3><p>Due settimane dal kickoff. Quattro settimane prima della promo è l'ultimo momento comodo: lascia quindici giorni di chiamate vere per tarare prima che arrivi il volume.</p></div><div class="pb-qa"><h3>Sostituisce il mio team di supporto?</h3><p>No. Assorbe il volume ripetitivo - lo stato ordine su tutto - così le tue persone passano la settimana di picco sulle chiamate che richiedono giudizio. I casi delicati passano a un umano con tutto il contesto.</p></div><div class="pb-qa"><h3>Cosa succede dopo il picco?</h3><p>Niente esuberi. La capacità scende con le chiamate, e lo stesso agente gestisce l'ondata di resi di gennaio che gli stagionali avrebbero mancato.</p></div><div class="pb-qa"><h3>E se non sa la risposta?</h3><p>Lo dice e passa la chiamata al tuo team con dati e intento del cliente allegati: il cliente non ricomincia mai da capo.</p></div></div>

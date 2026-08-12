@@ -18,16 +18,16 @@ def _it(svg, pairs):
 
 
 HERO_SVG_IT = _it(HERO_SVG, [
-    ("TWO WEEKS IN NOVEMBER", "DUE SETTIMANE DI NOVEMBRE"),
-    (">the sale<", ">la promo<"),
+    ("TWO WEEKS IN DECEMBER", "DUE SETTIMANE DI DICEMBRE"),
+    (">last order date<", ">ultimo giorno utile<"),
     (">the phone calls<", ">le telefonate<"),
     ('>M</text><text x="118" y="86">T</text><text x="184" y="86">W</text>',
      '>L</text><text x="118" y="86">M</text><text x="184" y="86">M</text>'),
     ('x="250" y="86">T</text><text x="316" y="86">F</text><text x="382" y="86">S</text>',
      'x="250" y="86">G</text><text x="316" y="86">V</text><text x="382" y="86">S</text>'),
     ('x="448" y="86">S<', 'x="448" y="86">D<'),
-    ('aria-label="A two-week calendar. One day is the sale; the calls peak across the following week."',
-     'aria-label="Due settimane di calendario. Un giorno è la promo; le chiamate arrivano la settimana dopo."'),
+    ('aria-label="Two weeks of December. One day is the last order date; the calls peak across the following week, still before Christmas."',
+     'aria-label="Due settimane di dicembre. Un giorno è l\'ultimo giorno utile per ordinare; le chiamate arrivano la settimana dopo, ancora prima di Natale."'),
 ])
 
 BAND_SVG_IT = _it(BAND_SVG, [
@@ -100,32 +100,6 @@ PLAYBOOKS_IT = {
             },
         ],
 
-        "midcta": "Online in due settimane. Quattro settimane prima della promo "
-                  "è l'ultimo momento comodo per partire.",
-
-        "steps": {
-            "h2": "Online in tre passi",
-            "lede": "Niente piano assunzioni, niente calendario di formazione, "
-                    "niente turni.",
-            "rows": [
-                ("Passo 1", "giorno uno",
-                 "Collega",
-                 ["Ci colleghiamo a store e corrieri. Il tuo catalogo, i tuoi "
-                  "ordini, le tue policy: l'agente risponde dai tuoi dati, non "
-                  "da un copione."]),
-                ("Passo 2", "settimana due",
-                 "Vai in linea",
-                 ["Chiamate vere, sul tuo numero, con la voce del tuo brand. Tu "
-                  "ascolti le registrazioni, noi tariamo. Prima del lancio passa "
-                  '<a href="/it/blog/voice-agent-acceptance-test">il test delle '
-                  "venti chiamate</a>."]),
-                ("Passo 3", "settimana di picco",
-                 "Assorbi l'ondata",
-                 ["L'agente prende stato ordine, resi e disponibilità: il volume "
-                  "che seppellisce un team. Il tuo gestisce le chiamate che "
-                  "servono a una persona, con tutto il contesto passato."]),
-            ],
-        },
 
         "workflows": {
             "h2": "Cosa toglie al tuo team",

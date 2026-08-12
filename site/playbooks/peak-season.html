@@ -221,8 +221,21 @@
     .queue-band .qcopy .qbody { color: rgba(248, 244, 241, .82); font-size: 17.5px;
       line-height: 1.75; margin: 0; }
     .queue-band .qbody + .qbody { margin-top: 16px; }
-    /* A block with no picture gets a reading measure instead of the full 1060px. */
-    .pb-wide { max-width: 760px; }
+    /* A block with no picture gets a reading measure instead of the full 1060px,
+       and is centred and sized up: it is a statement, not a caption. */
+    .pb-wide { max-width: 820px; }
+    .pb-statement { margin: 0 auto; text-align: center; }
+    .queue-band .pb-statement .qbody,
+    .pb-light .pb-statement .qbody { font-size: 22px; line-height: 1.6; }
+    .pb-statement .qbody + .qbody { margin-top: 22px; }
+    .queue-band:has(.pb-statement) .eyebrow,
+    .queue-band:has(.pb-statement) h2,
+    .pb-light:has(.pb-statement) .eyebrow,
+    .pb-light:has(.pb-statement) h2 { text-align: center; }
+    @media (max-width: 809px) {
+      .queue-band .pb-statement .qbody,
+      .pb-light .pb-statement .qbody { font-size: 18.5px; }
+    }
     .queue-viz .fine a, .pb-light .fine a { color: inherit; text-decoration: underline;
       text-underline-offset: 2px; }
     @media (max-width: 809px) {
@@ -289,26 +302,6 @@
     .pb-card .pb-go { display: inline-block; margin-top: 14px; font-size: 15px;
       font-weight: 700; color: var(--blue); }
 
-    /* ============ Playbook: the proof strip ============ */
-    .pb-proofline { max-width: 1200px; margin: 96px auto 0; padding: 0 40px; }
-    .pb-proofline .pb-inner { background: var(--black); border-radius: var(--radius);
-      padding: 56px 56px 52px; color: #fff; }
-    .pb-proofline .eyebrow { color: var(--lime); font-size: 13px; font-weight: 700;
-      letter-spacing: 2.5px; margin: 0 0 18px; }
-    .pb-proofline blockquote { font-size: 24px; line-height: 1.45; font-weight: 500;
-      letter-spacing: -.4px; margin: 0 0 20px; max-width: 900px; }
-    .pb-proofline .pb-who { font-size: 15px; line-height: 1.5;
-      color: rgba(248, 244, 241, .6); }
-    .pb-proofline .pb-who b { color: #fff; display: block; font-weight: 700; }
-    .pb-proofline .pb-nums { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 28px; margin-top: 34px; padding-top: 30px;
-      border-top: 1px solid rgba(248, 244, 241, .16); }
-    .pb-proofline .pb-n { display: block; font-size: 40px; font-weight: 900;
-      letter-spacing: -1.2px; color: var(--lime); font-variant-numeric: tabular-nums; }
-    .pb-proofline .pb-l { display: block; margin-top: 8px; font-size: 14px;
-      line-height: 1.45; color: rgba(248, 244, 241, .66); }
-    .pb-proofline .pb-read { display: inline-block; margin-top: 28px; font-size: 15px;
-      font-weight: 700; color: var(--lime); }
 
     @media (max-width: 809px) {
       .pb-steps { padding: 72px 22px 0; }
@@ -353,9 +346,9 @@
       </div>
       <div class="hero-visual" aria-hidden="true">
 
-<svg viewBox="0 0 560 330" role="img" aria-label="A two-week calendar. One day is the sale; the calls peak across the following week.">
+<svg viewBox="0 0 560 330" role="img" aria-label="Two weeks of December. One day is the last order date; the calls peak across the following week, still before Christmas.">
   <rect x="0" y="0" width="560" height="330" rx="24" fill="rgb(249,250,253)"/>
-  <text x="40" y="52" font-size="13" font-weight="700" letter-spacing="2.2" fill="rgb(69,65,64)">TWO WEEKS IN NOVEMBER</text>
+  <text x="40" y="52" font-size="13" font-weight="700" letter-spacing="2.2" fill="rgb(69,65,64)">TWO WEEKS IN DECEMBER</text>
 
   <g font-size="12" fill="rgb(140,138,137)" font-weight="500">
     <text x="52" y="86">M</text><text x="118" y="86">T</text><text x="184" y="86">W</text>
@@ -369,11 +362,11 @@
     <rect x="172" y="96" width="52" height="52" rx="12" fill="#fff" stroke="rgb(227,226,226)"/>
     <rect x="238" y="96" width="52" height="52" rx="12" fill="#fff" stroke="rgb(227,226,226)"/>
     <rect x="304" y="96" width="52" height="52" rx="12" fill="rgb(0,0,0)"/>
-    <text x="330" y="128" font-size="15" font-weight="700" fill="#fff" text-anchor="middle">29</text>
+    <text x="330" y="128" font-size="15" font-weight="700" fill="#fff" text-anchor="middle">11</text>
     <rect x="370" y="96" width="52" height="52" rx="12" fill="#fff" stroke="rgb(227,226,226)"/>
     <rect x="436" y="96" width="52" height="52" rx="12" fill="#fff" stroke="rgb(227,226,226)"/>
   </g>
-  <text x="330" y="172" font-size="13" font-weight="700" fill="rgb(18,10,11)" text-anchor="middle">the sale</text>
+  <text x="330" y="172" font-size="13" font-weight="700" fill="rgb(18,10,11)" text-anchor="middle">last order date</text>
 
   <g>
     <rect x="40" y="196" width="52" height="52" rx="12" fill="#fff" stroke="rgb(227,226,226)"/>
@@ -397,7 +390,7 @@
       <div class="queue-inner">
         <p class="eyebrow">WHY THE HIRING PLAN FAILS</p>
         <h2>Seasonal hiring is a trap.</h2>
-        <div class="qcopy pb-wide"><p class="qbody">You recruit in the tightest labour market of the year - against every warehouse, store and courier chasing the same people in the same eight weeks.</p><p class="qbody">You train for weeks so people can leave in January. On a ten-week contract, the training never pays itself back.</p><p class="qbody">And temps are not the cheap option: agency margin sits on top of full wages. You pay more per hour for less experience.</p></div>
+        <div class="qcopy pb-wide pb-statement"><p class="qbody">You recruit in the tightest labour market of the year - against every warehouse, store and courier chasing the same people in the same eight weeks.</p><p class="qbody">You train for weeks so people can leave in January. On a ten-week contract, the training never pays itself back.</p><p class="qbody">And temps are not the cheap option: agency margin sits on top of full wages. You pay more per hour for less experience.</p></div>
       </div>
     </section>
     <section class="pb-light">
@@ -424,29 +417,11 @@
 <p class="fine">Curves illustrative. Returns: <a href="https://www.evri.com/press/return-to-sender-four-million-gifts-to-be-sent-back-in-january-2025" rel="nofollow noopener" target="_blank">Evri network data</a>, 3.9m parcels in the four weeks after Christmas 2023, over double typical volumes.</p></div></div>
       </div>
     </section>
-    <section class="pb-mid">
-      <p>Live in two weeks. Four weeks before your sale is the last comfortable start.</p>
-      <a class="btn-pill" href="https://cal.com/sabatoai/intro" target="_blank" rel="noopener">Start Free Pilot</a>
-    </section>
-    <section class="pb-steps">
-      <h2>Live in three steps</h2>
-      <p class="pb-lede">No hiring plan, no training calendar, no rota.</p>
-      <div class="pb-step"><div class="pb-when">Step 1<span>day one</span></div><div><h3>Connect</h3><p>We plug into your store and carriers. Your catalogue, your orders, your policies - the agent answers from your data, not a script.</p></div></div><div class="pb-step"><div class="pb-when">Step 2<span>week two</span></div><div><h3>Go live</h3><p>Real calls, on your number, in your brand's voice. You listen to the recordings, we tune. Before launch it passes <a href="/blog/voice-agent-acceptance-test">the twenty-call acceptance test</a>.</p></div></div><div class="pb-step"><div class="pb-when">Step 3<span>peak week</span></div><div><h3>Absorb the surge</h3><p>The agent takes order status, returns and stock calls - the volume that buries a team. Yours handles the calls that need a person, with full context handed over.</p></div></div>
-    </section>
     <section class="pb-wf">
       <h2>What it takes off your team</h2>
       <p class="pb-lede">Peak is four ordinary problems arriving at once. Each one is a workflow the agent already runs.</p>
       <div class="pb-wf-grid"><a class="pb-card" href="/use-cases/where-is-my-order"><h3>Where Is My Order</h3><p>The call that defines the week. Status read live from your store, confirmed by text.</p><span class="pb-go">See the workflow &rarr;</span></a><a class="pb-card" href="/use-cases/managing-returns"><h3>Managing Returns</h3><p>January's peak. Booked on the phone the moment the portal says no.</p><span class="pb-go">See the workflow &rarr;</span></a><a class="pb-card" href="/use-cases/back-in-stock-notification"><h3>Back-in-Stock Notification</h3><p>Sellouts are peak's other face. Callers get notified the moment it's back.</p><span class="pb-go">See the workflow &rarr;</span></a><a class="pb-card" href="/use-cases/cart-abandonment-recovery"><h3>Cart Abandonment Recovery</h3><p>Peak carts stall on delivery dates and stock. One sixty-second call answers both.</p><span class="pb-go">See the workflow &rarr;</span></a></div>
-    </section>
-    <section class="pb-proofline">
-      <div class="pb-inner">
-        <p class="eyebrow">PROOF</p>
-        <blockquote>&ldquo;Elena handles our most repetitive calls - order status, shipping, returns - on-brand and instantly. Our team now focuses on the cases that actually need a person.&rdquo;</blockquote>
-        <p class="pb-who"><b>Marco Logreco</b>Head of E-Commerce, Creative Cables</p>
-        <div class="pb-nums"><div><span class="pb-n">39%</span><span class="pb-l">Calls resolved end to end</span></div><div><span class="pb-n">57%</span><span class="pb-l">Of order-status calls automated</span></div><div><span class="pb-n">55s</span><span class="pb-l">Average handle time</span></div></div>
-        <a class="pb-read" href="/customers/creative-cables">Read the full case study &rarr;</a>
-      </div>
-    </section>
+    </section><section class="sb-proof sb-proof-inline" data-lang="en"><div class="sb-proof-head"><h2>Success stories</h2><p>What happened in the first month on the line - measured on real calls, not modelled.</p></div><div class="sb-proof-card"><div class="sb-proof-quote"><img class="sb-proof-face" src="/customers/assets/marco-logreco.jpg" width="260" height="260" alt="Marco Logreco, Head of E-Commerce at Creative Cables" loading="lazy" decoding="async"><div class="sb-proof-said"><blockquote>&ldquo;Elena handles our most repetitive calls - order status, shipping, returns - on-brand and instantly. Our team now focuses on the cases that actually need a person.&rdquo;</blockquote><div class="sb-proof-by"><p class="sb-proof-who"><b>Marco Logreco</b><span>Head of E-Commerce, Creative Cables</span></p><img class="sb-proof-logo" src="/customers/assets/creative-cables-logo-white.png" alt="Creative Cables" width="110" height="34" loading="lazy" decoding="async"></div></div></div><div class="sb-proof-stats"><div class="sb-proof-stat"><span class="sb-proof-num">39%</span><span class="sb-proof-lab">Calls resolved end to end</span></div><div class="sb-proof-stat"><span class="sb-proof-num">57%</span><span class="sb-proof-lab">Of order-status calls automated</span></div><div class="sb-proof-stat"><span class="sb-proof-num">55s</span><span class="sb-proof-lab">Average handle time</span></div></div><a class="sb-proof-cta" href="/customers/creative-cables">Read the full case study<span aria-hidden="true"> &rarr;</span></a></div></section><script data-sb-proof-inline>(function(){function fit(){var w=document.querySelector('section.sb-proof-inline');if(!w)return;var q=w.querySelector('blockquote'),by=w.querySelector('.sb-proof-by');if(!q||!by)return;by.style.width='';if(innerWidth<768)return;var r=document.createRange();r.selectNodeContents(q);var rects=r.getClientRects(),m=0,i;for(i=0;i<rects.length;i++){if(rects[i].width>1&&rects[i].right>m)m=rects[i].right;}var l=q.getBoundingClientRect().left;if(m>l+40)by.style.width=Math.ceil(m-l)+'px';}if(document.readyState!=='loading')fit();else document.addEventListener('DOMContentLoaded',fit);addEventListener('load',fit);addEventListener('resize',fit);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);})();</script>
     <section class="pb-faqs">
       <h2>Questions operators ask</h2>
       <div class="pb-faq-grid"><div class="pb-qa"><h3>How fast can we be live before peak?</h3><p>Two weeks from kickoff. Four weeks before your sale is the last comfortable start - it leaves a fortnight of real calls to tune on before the volume arrives.</p></div><div class="pb-qa"><h3>Does it replace my support team?</h3><p>No. It absorbs the repetitive volume - order status above all - so your people spend peak week on the calls that need judgement. Anything sensitive escalates to a human with full context.</p></div><div class="pb-qa"><h3>What happens after peak?</h3><p>Nothing to lay off. Capacity scales down with the calls, and the same agent handles the January returns wave your temps would have missed.</p></div><div class="pb-qa"><h3>What if it doesn't know the answer?</h3><p>It says so and hands the call to your team with the caller's details and intent attached - the customer never starts over.</p></div></div>
