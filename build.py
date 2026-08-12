@@ -17,9 +17,10 @@ That is not hypothetical. On 6 Aug 2026 the order was
 publish -> industries -> customers, and customers.py silently wiped nine footer
 links from every customer page. It shipped to production that way.
 
-inject_ga.py deliberately is NOT here: it must be the last thing to touch any
-HTML, and tools/verify.sh already runs it as part of the gate. Running it here
-too would only invite someone to run a generator afterwards and strip the tag.
+inject_ga.py and inject_reb2b.py deliberately are NOT here: they must be the
+last things to touch any HTML, and tools/verify.sh already runs both as part of
+the gate. Running them here too would only invite someone to run a generator
+afterwards and strip the tags.
 """
 import subprocess
 import sys

@@ -127,6 +127,14 @@ with sync_playwright() as p:
                         a => Array.from(a || [])[0] === 'config').map(a => a[1]);
                       return loaders === 1 && cfg.length === 1 && cfg[0] === id;
                     }""", "G-BSK4KH9JJF"),
+                    "reb2b_tag_once": pg.evaluate("""(key) => {
+                      // The inline loader sets window.reb2b synchronously, before
+                      // the remote script is fetched - so this is a real assertion
+                      // even in a container that cannot reach cloudfront.
+                      const inline = [...document.querySelectorAll('script')]
+                        .filter(s => !s.src && (s.textContent || '').includes(key)).length;
+                      return inline === 1 && !!(window.reb2b && window.reb2b.loaded);
+                    }""", "5NRP9H3Q9YO1"),
                 }
                 failed = {k: v for k, v in checks.items() if not v}
                 if failed:
@@ -163,6 +171,14 @@ with sync_playwright() as p:
                     a => Array.from(a || [])[0] === 'config').map(a => a[1]);
                   return loaders === 1 && cfg.length === 1 && cfg[0] === id;
                 }""", "G-BSK4KH9JJF"),
+                "reb2b_tag_once": pg.evaluate("""(key) => {
+                  // The inline loader sets window.reb2b synchronously, before
+                  // the remote script is fetched - so this is a real assertion
+                  // even in a container that cannot reach cloudfront.
+                  const inline = [...document.querySelectorAll('script')]
+                    .filter(s => !s.src && (s.textContent || '').includes(key)).length;
+                  return inline === 1 && !!(window.reb2b && window.reb2b.loaded);
+                }""", "5NRP9H3Q9YO1"),
             }
             if not it and path in ("/", "/pricing", "/about", "/contact"):
                 checks["dropdown_present"] = pg.evaluate("!!document.querySelector('[data-uc-dropdown]')")

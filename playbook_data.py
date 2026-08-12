@@ -132,37 +132,34 @@ INTL_HERO_SVG = """
 </svg>
 """
 
-# Two bars, drawn for a LIGHT block: black fill on grey track, lime numerals
-# inside the fill. Lime on near-white is unreadable, which is why the peak-season
-# chart recolours itself for the light band rather than reusing the dark palette.
-# Widths are the percentages: 560 * .60 = 336, 560 * .75 = 420. If a figure ever
-# changes, the bar changes with it - nobody has to remember to redraw it.
+# The two bars, in HTML - deliberately NOT an SVG.
 #
-# TYPE SIZE IS NOT A TASTE DECISION HERE. An SVG scales to its container, so the
-# font-size in this file is not the size anybody reads. The viz column is ~498px
-# on desktop and ~346px on a 390px phone, so everything below is multiplied by
-# 0.89 and 0.62 respectively. The first draft set these labels at 15px, which is
-# a comfortable 13px on desktop and an unreadable 9.3px on a phone - measured,
-# not guessed, and invisible to every automated check in this gate because the
-# contrast audit does not look inside SVGs. 21px is the floor that clears ~13px
-# on a phone; the ceiling is ~19px, above which desktop overtakes the 17.5px body
-# copy next to it. That leaves almost no room, which is why the labels are also
-# cut short enough to fit two lines at that size.
-INTL_BARS_SVG = """
-<svg viewBox="0 0 560 286" role="img" aria-label="Two bars. Sixty per cent of the shoppers most confident reading English still want customer care in their own language; seventy-five per cent are more likely to buy the brand again when they get it.">
-  <text x="0" y="24" font-size="21" font-weight="700" fill="rgb(18,10,11)">Confident English readers who still</text>
-  <text x="0" y="52" font-size="21" font-weight="700" fill="rgb(18,10,11)">want care in their own language</text>
-  <rect x="0" y="70" width="560" height="52" rx="14" fill="rgb(233,232,232)"/>
-  <rect x="0" y="70" width="336" height="52" rx="14" fill="rgb(18,10,11)"/>
-  <text x="318" y="106" font-size="30" font-weight="700" fill="rgb(204,255,0)" text-anchor="end">60%</text>
+# They were an SVG first, and the labels never lined up with the body copy in
+# the column beside them. Daniel: "why the graphic and the text on the left are
+# not on the same line??" The grid was top-aligned and the first lines measured
+# 1.7px apart, so nothing was "broken" - but SVG text carries its own type
+# system. A 21px label scaled by 0.889 has a different size, weight and leading
+# from 17.5px/1.75 body copy, so line two, three and four drift further apart
+# and the two columns visibly stop sharing a baseline.
+#
+# In HTML the labels ARE body copy - same font-size, same line-height, same
+# rhythm - so the columns line up by construction at every width instead of by
+# a measurement that only holds for the first line. It also drops this graphic
+# out of the SVG-scaling trap entirely: real text reflows and obeys the phone
+# breakpoint, so there is no viewBox multiplier to get wrong.
+def _bar(label, pct):
+    """One labelled bar. Width IS the percentage - the number and the geometry
+    cannot disagree, because they are the same value."""
+    return ('<div class="pb-bar"><p class="pb-bar-l">%s</p>'
+            '<div class="pb-bar-track"><div class="pb-bar-fill" style="width:%d%%">'
+            '<span>%d%%</span></div></div></div>' % (label, pct, pct))
 
-  <text x="0" y="178" font-size="21" font-weight="700" fill="rgb(18,10,11)">More likely to buy the brand again</text>
-  <text x="0" y="206" font-size="21" font-weight="700" fill="rgb(18,10,11)">when care is in their language</text>
-  <rect x="0" y="224" width="560" height="52" rx="14" fill="rgb(233,232,232)"/>
-  <rect x="0" y="224" width="420" height="52" rx="14" fill="rgb(18,10,11)"/>
-  <text x="402" y="260" font-size="30" font-weight="700" fill="rgb(204,255,0)" text-anchor="end">75%</text>
-</svg>
-"""
+
+INTL_BARS = (
+    '<div class="pb-bars">'
+    + _bar("Confident English readers who still want care in their own language", 60)
+    + _bar("More likely to buy the brand again when care is in their language", 75)
+    + '</div>')
 
 _EVRI = "https://www.evri.com/press/return-to-sender-four-million-gifts-to-be-sent-back-in-january-2025"
 
@@ -354,7 +351,7 @@ PLAYBOOKS = {
                     "and 75% say they are more likely to buy the brand again "
                     "when they get it.",
                 ],
-                "viz": INTL_BARS_SVG,
+                "viz": INTL_BARS,
                 "fine": ('<a href="' + _CSA + '" rel="nofollow noopener" '
                          'target="_blank">CSA Research, &ldquo;Can&rsquo;t Read, '
                          'Won&rsquo;t Buy &ndash; B2C&rdquo;</a>, 2020 &ndash; '

@@ -115,6 +115,30 @@ EXTRA_CSS = """
     }
     .queue-viz .fine a, .pb-light .fine a { color: inherit; text-decoration: underline;
       text-underline-offset: 2px; }
+
+    /* ============ Playbook: HTML bar chart ============ */
+    /* The label is typed EXACTLY like .qbody in the column beside it - same
+       size, same line-height - because that is the whole point of building this
+       in HTML rather than SVG. Change one and change the other, or the two
+       columns stop sharing a baseline and the block looks broken again. */
+    .pb-bars { margin: 0; }
+    .pb-bar-l { font-size: 17.5px; line-height: 1.75; font-weight: 700;
+      color: var(--ink); margin: 0 0 12px; }
+    .pb-bar-track { background: rgb(233,232,232); border-radius: 14px; height: 52px; }
+    /* width is set inline from the same number the label quotes, so the bar
+       cannot drift out of sync with the figure it is drawing. */
+    .pb-bar-fill { background: var(--black); border-radius: 14px; height: 52px;
+      display: flex; align-items: center; justify-content: flex-end;
+      padding-right: 18px; box-sizing: border-box; }
+    .pb-bar-fill span { color: var(--lime); font-size: 30px; font-weight: 700;
+      letter-spacing: -.5px; line-height: 1; }
+    .pb-bar + .pb-bar { margin-top: 30px; }
+    @media (max-width: 809px) {
+      .pb-bar-l { font-size: 16.5px; margin-bottom: 10px; }
+      .pb-bar-track, .pb-bar-fill { height: 46px; }
+      .pb-bar-fill span { font-size: 25px; }
+      .pb-bar + .pb-bar { margin-top: 24px; }
+    }
     @media (max-width: 809px) {
       .pb-light { padding: 64px 22px 0; }
       .pb-light h2 { font-size: 29px; letter-spacing: -.9px; }

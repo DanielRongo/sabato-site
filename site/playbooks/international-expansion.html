@@ -250,6 +250,30 @@
     }
     .queue-viz .fine a, .pb-light .fine a { color: inherit; text-decoration: underline;
       text-underline-offset: 2px; }
+
+    /* ============ Playbook: HTML bar chart ============ */
+    /* The label is typed EXACTLY like .qbody in the column beside it - same
+       size, same line-height - because that is the whole point of building this
+       in HTML rather than SVG. Change one and change the other, or the two
+       columns stop sharing a baseline and the block looks broken again. */
+    .pb-bars { margin: 0; }
+    .pb-bar-l { font-size: 17.5px; line-height: 1.75; font-weight: 700;
+      color: var(--ink); margin: 0 0 12px; }
+    .pb-bar-track { background: rgb(233,232,232); border-radius: 14px; height: 52px; }
+    /* width is set inline from the same number the label quotes, so the bar
+       cannot drift out of sync with the figure it is drawing. */
+    .pb-bar-fill { background: var(--black); border-radius: 14px; height: 52px;
+      display: flex; align-items: center; justify-content: flex-end;
+      padding-right: 18px; box-sizing: border-box; }
+    .pb-bar-fill span { color: var(--lime); font-size: 30px; font-weight: 700;
+      letter-spacing: -.5px; line-height: 1; }
+    .pb-bar + .pb-bar { margin-top: 30px; }
+    @media (max-width: 809px) {
+      .pb-bar-l { font-size: 16.5px; margin-bottom: 10px; }
+      .pb-bar-track, .pb-bar-fill { height: 46px; }
+      .pb-bar-fill span { font-size: 25px; }
+      .pb-bar + .pb-bar { margin-top: 24px; }
+    }
     @media (max-width: 809px) {
       .pb-light { padding: 64px 22px 0; }
       .pb-light h2 { font-size: 29px; letter-spacing: -.9px; }
@@ -346,6 +370,9 @@
   gtag('config', 'G-BSK4KH9JJF');
 </script>
 <!-- /GA4 -->
+<!-- RB2B (Sabato) -->
+<script>!function(key) {if (window.reb2b) return;window.reb2b = {loaded: true};var s = document.createElement("script");s.async = true;s.src = "https://ddwl4m2hdecbv.cloudfront.net/b/" + key + "/" + key + ".js.gz";document.getElementsByTagName("script")[0].parentNode.insertBefore(s, document.getElementsByTagName("script")[0]);}("5NRP9H3Q9YO1");</script>
+<!-- /RB2B -->
 </head>
 <body>
 <header class="sb-header" data-lang="en"><div class="sb-hdr-shell"><a class="sb-hdr-logo" href="/" aria-label="Sabato AI - Home"><img src="/fuc/images/UTATYXc6NipXQRoxyaGHHfHSyA4-f2557e25.png" alt="Sabato AI" width="2080" height="278"></a><nav class="sb-hdr-nav" aria-label="Main"><span class="sb-nav-item"><a href="/use-cases" aria-haspopup="true">Use Cases</a><span class="sb-dd sb-dd-2col" data-uc-dropdown="uc"><span class="sb-dd-col"><span class="sb-dd-head">Workflows</span><a href="/use-cases/pre-sales-consultation">Pre-Sales Consultation</a><a href="/use-cases/cart-abandonment-recovery">Cart Abandonment Recovery</a><a href="/use-cases/where-is-my-order">Where Is My Order</a><a href="/use-cases/qualify-and-collect-for-quote">Qualify &amp; Collect for Quote</a><a href="/use-cases/open-a-complaint">Open a Complaint</a><a href="/use-cases/checkout-summary-via-text">Checkout Summary via Text</a><a href="/use-cases/managing-returns">Managing Returns</a><a href="/use-cases/post-delivery-feedback">Post-Delivery Feedback</a><a href="/use-cases/back-in-stock-notification">Back-in-Stock Notification</a><a class="sb-dd-all" href="/use-cases">All workflows</a></span><span class="sb-dd-col"><span class="sb-dd-head">Playbooks</span><a href="/playbooks/peak-season">Handle Peak Season</a><a href="/playbooks/international-expansion">Expand Into New Countries</a></span></span></span><span class="sb-nav-item"><a href="/industries" aria-haspopup="true">Industries</a><span class="sb-dd" data-uc-dropdown="ind"><a href="/industries/home-improvement">Home Improvement</a><a href="/industries/automotive-parts">Automotive &amp; Parts</a><a href="/industries/electronics-tech">Electronics &amp; Tech</a><a href="/industries/furniture-home">Furniture &amp; Home</a><a href="/industries/outdoor-garden">Outdoor &amp; Garden</a><a href="/industries/fashion-apparel">Fashion &amp; Apparel</a><a href="/industries/health-wellness">Health &amp; Wellness</a><a href="/industries/sports-fitness">Sports &amp; Fitness</a><a href="/industries/industrial-b2b">Industrial &amp; B2B</a><a class="sb-dd-all" href="/industries">All industries</a></span></span><a href="/pricing">Pricing</a><a href="/about">About</a><a href="/contact">Contact</a><a class="sb-hdr-flag" href="/it" data-lang-switch aria-label="Italiano">🇮🇹</a></nav><a class="sb-hdr-btn" href="https://cal.com/sabatoai/intro" target="_blank" rel="noopener">Start Free Pilot</a><button class="sb-burger" type="button" aria-expanded="false" aria-controls="sb-menu" aria-label="Open menu"><span></span><span></span></button></div><div class="sb-panel" id="sb-menu"><div class="sb-panel-inner"><a href="/use-cases">Use Cases</a><a href="/industries">Industries</a><a href="/pricing">Pricing</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/playbooks/peak-season">Handle Peak Season</a><a href="/playbooks/international-expansion">Expand Into New Countries</a><a href="https://cal.com/sabatoai/intro" target="_blank" rel="noopener">Book a Demo</a><a class="sb-hdr-flag" href="/it" data-lang-switch>🇮🇹</a></div></div></header><script>(function(){var h=document.querySelector(".sb-header");if(!h)return;var b=h.querySelector(".sb-burger"),p=h.querySelector(".sb-panel");if(!b||!p)return;function set(o){h.classList.toggle("sb-open",o);b.setAttribute("aria-expanded",o?"true":"false");document.documentElement.style.overflow=o?"hidden":"";}b.addEventListener("click",function(e){e.preventDefault();set(!h.classList.contains("sb-open"));});p.addEventListener("click",function(e){if(e.target.closest("a"))set(false);});document.addEventListener("keydown",function(e){if(e.key==="Escape")set(false);});addEventListener("resize",function(){if(innerWidth>=1024)set(false);});})();</script>
@@ -417,21 +444,7 @@
       <div class="queue-inner">
         <p class="eyebrow">AND ENGLISH DOESN'T CLOSE THE GAP</p>
         <h2>They read English.<br>They still won't call in it.</h2>
-        <div class="queue-grid"><div class="qcopy"><p class="qbody">Reading a product page in a second language is easy. Explaining a delivery problem down a phone line in one is not.</p><p class="qbody">Even among the shoppers most confident reading English, <b>60% still want customer care in their own language</b> - and 75% say they are more likely to buy the brand again when they get it.</p></div><div class="queue-viz">
-<svg viewBox="0 0 560 286" role="img" aria-label="Two bars. Sixty per cent of the shoppers most confident reading English still want customer care in their own language; seventy-five per cent are more likely to buy the brand again when they get it.">
-  <text x="0" y="24" font-size="21" font-weight="700" fill="rgb(18,10,11)">Confident English readers who still</text>
-  <text x="0" y="52" font-size="21" font-weight="700" fill="rgb(18,10,11)">want care in their own language</text>
-  <rect x="0" y="70" width="560" height="52" rx="14" fill="rgb(233,232,232)"/>
-  <rect x="0" y="70" width="336" height="52" rx="14" fill="rgb(18,10,11)"/>
-  <text x="318" y="106" font-size="30" font-weight="700" fill="rgb(204,255,0)" text-anchor="end">60%</text>
-
-  <text x="0" y="178" font-size="21" font-weight="700" fill="rgb(18,10,11)">More likely to buy the brand again</text>
-  <text x="0" y="206" font-size="21" font-weight="700" fill="rgb(18,10,11)">when care is in their language</text>
-  <rect x="0" y="224" width="560" height="52" rx="14" fill="rgb(233,232,232)"/>
-  <rect x="0" y="224" width="420" height="52" rx="14" fill="rgb(18,10,11)"/>
-  <text x="402" y="260" font-size="30" font-weight="700" fill="rgb(204,255,0)" text-anchor="end">75%</text>
-</svg>
-<p class="fine"><a href="https://csa-research.com/l/media/Consumers-Prefer-their-Own-Language" rel="nofollow noopener" target="_blank">CSA Research, &ldquo;Can&rsquo;t Read, Won&rsquo;t Buy &ndash; B2C&rdquo;</a>, 2020 &ndash; 8,709 consumers in 29 countries.</p></div></div>
+        <div class="queue-grid"><div class="qcopy"><p class="qbody">Reading a product page in a second language is easy. Explaining a delivery problem down a phone line in one is not.</p><p class="qbody">Even among the shoppers most confident reading English, <b>60% still want customer care in their own language</b> - and 75% say they are more likely to buy the brand again when they get it.</p></div><div class="queue-viz"><div class="pb-bars"><div class="pb-bar"><p class="pb-bar-l">Confident English readers who still want care in their own language</p><div class="pb-bar-track"><div class="pb-bar-fill" style="width:60%"><span>60%</span></div></div></div><div class="pb-bar"><p class="pb-bar-l">More likely to buy the brand again when care is in their language</p><div class="pb-bar-track"><div class="pb-bar-fill" style="width:75%"><span>75%</span></div></div></div></div><p class="fine"><a href="https://csa-research.com/l/media/Consumers-Prefer-their-Own-Language" rel="nofollow noopener" target="_blank">CSA Research, &ldquo;Can&rsquo;t Read, Won&rsquo;t Buy &ndash; B2C&rdquo;</a>, 2020 &ndash; 8,709 consumers in 29 countries.</p></div></div>
       </div>
     </section>
     <section class="queue-band">

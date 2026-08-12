@@ -6,7 +6,7 @@ jurisdiction-specific. See playbook_data.py for the full brief.
 SVGs are imported and relabelled, never copied: the coordinates are identical
 in both languages and a translator has no business editing path data.
 """
-from playbook_data import HERO_SVG, BAND_SVG, INTL_HERO_SVG, INTL_BARS_SVG
+from playbook_data import HERO_SVG, BAND_SVG, INTL_HERO_SVG, _bar
 
 ORDER_IT = ["picchi-stagionali", "espansione-internazionale"]
 
@@ -49,20 +49,15 @@ INTL_HERO_SVG_IT = _it(INTL_HERO_SVG, [
      'aria-label="Cinque numeri locali in cinque lingue diverse, tutti gestiti da un solo agente vocale."'),
 ])
 
-INTL_BARS_SVG_IT = _it(INTL_BARS_SVG, [
-    # Same length discipline as the English: at 21px in a 560 viewBox a line
-    # runs out of room past ~36 characters, and Italian is the longer language.
-    ("Confident English readers who still",
-     "Chi legge bene l’inglese e vuole"),
-    ("want care in their own language",
-     "assistenza nella propria lingua"),
-    ("More likely to buy the brand again",
-     "Più propensi a ricomprare quando"),
-    ("when care is in their language",
-     "l’assistenza è nella loro lingua"),
-    ('aria-label="Two bars. Sixty per cent of the shoppers most confident reading English still want customer care in their own language; seventy-five per cent are more likely to buy the brand again when they get it."',
-     'aria-label="Due barre. Il sessanta per cento di chi legge l\'inglese con più sicurezza vuole comunque assistenza nella propria lingua; il settantacinque per cento è più propenso a ricomprare dal marchio quando la ottiene."'),
-])
+# Stesse barre in HTML: le etichette sono copy, non testo SVG, quindi seguono
+# la stessa griglia tipografica della colonna di sinistra. Vedi playbook_data.py.
+INTL_BARS_IT = (
+    '<div class="pb-bars">'
+    + _bar("Chi legge bene l\u2019inglese e vuole comunque "
+           "assistenza nella propria lingua", 60)
+    + _bar("Pi\u00f9 propensi a ricomprare dal marchio quando "
+           "l\u2019assistenza \u00e8 nella loro lingua", 75)
+    + '</div>')
 
 _EVRI = "https://www.evri.com/press/return-to-sender-four-million-gifts-to-be-sent-back-in-january-2025"
 _CSA = "https://csa-research.com/l/media/Consumers-Prefer-their-Own-Language"
@@ -244,7 +239,7 @@ PLAYBOOKS_IT = {
                     "75% dice di essere più propenso a ricomprare dal marchio "
                     "che gliela dà.",
                 ],
-                "viz": INTL_BARS_SVG_IT,
+                "viz": INTL_BARS_IT,
                 "fine": ('<a href="' + _CSA + '" rel="nofollow noopener" '
                          'target="_blank">CSA Research, &ldquo;Can&rsquo;t Read, '
                          'Won&rsquo;t Buy &ndash; B2C&rdquo;</a>, 2020 &ndash; '

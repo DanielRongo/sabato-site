@@ -45,8 +45,11 @@ if ! python3 tools/apply_footer.py --check; then
 fi
 
 echo
-echo "==> 2/5  inject GA4 (must be the last thing that touches HTML)"
+echo "==> 2/5  inject GA4 + RB2B (must be the last things that touch HTML)"
 python3 tools/inject_ga.py
+# RB2B goes second so it lands after the GA block in <head>. Both are
+# marker-fenced and self-verify their own count, so re-runs are no-ops.
+python3 tools/inject_reb2b.py
 
 echo
 echo "==> 3/5  serve the built site the way Netlify would"
