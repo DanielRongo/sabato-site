@@ -7,6 +7,7 @@
 
 
 
+
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" href="/fuc/images/hWFOqN6Okd1QgfKhizqgIF1s.png" media="(prefers-color-scheme: light)">
@@ -334,10 +335,10 @@
   gtag('config', 'G-BSK4KH9JJF');
 </script>
 <!-- /GA4 -->
-<!-- RB2B (Sabato) -->
+<!-- Marketing tag (Sabato) -->
 <script>window.sbReb2b=function(){!function(key) {if (window.reb2b) return;window.reb2b = {loaded: true};var s = document.createElement("script");s.async = true;s.src = "https://ddwl4m2hdecbv.cloudfront.net/b/" + key + "/" + key + ".js.gz";document.getElementsByTagName("script")[0].parentNode.insertBefore(s, document.getElementsByTagName("script")[0]);}("5NRP9H3Q9YO1");};
 (function(){try{var c=JSON.parse(localStorage.getItem("sb-consent")||"null");if(c&&c.v===1&&c.marketing&&(Date.now()-Date.parse(c.ts))<180*864e5)window.sbReb2b();}catch(e){}})();</script>
-<!-- /RB2B -->
+<!-- /Marketing tag -->
 </head>
 <body>
 <main class="lg-wrap">
@@ -357,7 +358,7 @@ oscillate and --check never settles. And do not write the closing body tag
 inside a comment either - the installer searches for the first occurrence of
 it, so a mention in prose swallows the whole footer into this comment. Both
 of those were real, in that order. --><!-- Consent (Sabato) -->
-<div class="sb-consent" id="sb-consent" role="dialog" aria-label="Cookies" aria-describedby="sb-consent-body" data-lang="en" hidden><div class="sb-c-card"><div class="sb-c-bar"><p id="sb-consent-body">We use cookies for analytics and to see which companies visit. Nothing runs until you choose. <a href="/privacy-policy">Privacy and Cookies</a></p><div class="sb-c-btns"><button type="button" class="sb-c-btn sb-c-primary" data-sb-c="accept">Accept all</button><button type="button" class="sb-c-btn sb-c-ghost" data-sb-c="reject">Reject all</button><button type="button" class="sb-c-btn sb-c-text" data-sb-c="prefs">Preferences</button><button type="button" class="sb-c-btn sb-c-primary" data-sb-c="save" hidden>Save choices</button></div></div><div class="sb-c-prefs" hidden><label class="sb-c-row"><span class="sb-c-rt"><b>Strictly necessary</b><i>Page delivery, security, and remembering this choice. Always on.</i></span><input type="checkbox" checked disabled></label><label class="sb-c-row"><span class="sb-c-rt"><b>Analytics</b><i>Google Analytics 4. Which pages get read and how people arrive, in aggregate.</i></span><input type="checkbox" data-sb-cat="analytics"></label><label class="sb-c-row"><span class="sb-c-rt"><b>Marketing</b><i>RB2B. Identifies visiting companies so we can follow up. Resolves US visitors only.</i></span><input type="checkbox" data-sb-cat="marketing"></label></div></div></div><script data-sb-consent>(function(){
+<div class="sb-consent" id="sb-consent" role="dialog" aria-label="Cookies" aria-describedby="sb-consent-body" data-lang="en" hidden><div class="sb-c-card"><div class="sb-c-bar"><p id="sb-consent-body">We use cookies to understand how this site is used. Nothing runs until you choose. <a href="/privacy-policy">Privacy and Cookies</a></p><div class="sb-c-btns"><button type="button" class="sb-c-btn sb-c-primary" data-sb-c="accept">Accept all</button><button type="button" class="sb-c-btn sb-c-ghost" data-sb-c="reject">Reject all</button><button type="button" class="sb-c-btn sb-c-text" data-sb-c="prefs">Preferences</button><button type="button" class="sb-c-btn sb-c-primary" data-sb-c="save" hidden>Save choices</button></div></div><div class="sb-c-prefs" hidden><label class="sb-c-row"><span class="sb-c-rt"><b>Strictly necessary</b><i>Page delivery, security, and remembering this choice. Always on.</i></span><input type="checkbox" checked disabled></label><label class="sb-c-row"><span class="sb-c-rt"><b>Analytics</b><i>Google Analytics 4. Which pages get read and how people arrive, in aggregate.</i></span><input type="checkbox" data-sb-cat="analytics"></label><label class="sb-c-row"><span class="sb-c-rt"><b>Marketing</b><i>Company-level tracking, so we can follow up with businesses that show interest.</i></span><input type="checkbox" data-sb-cat="marketing"></label></div></div></div><script data-sb-consent>(function(){
 var K="sb-consent",V=1,MAXMS=180*864e5;
 function read(){try{var o=JSON.parse(localStorage.getItem(K)||"null");
 if(!o||o.v!==V)return null;
@@ -370,8 +371,7 @@ function apply(a,m){
 if(window.gtag)window.gtag("consent","update",{
 ad_storage:m?"granted":"denied",ad_user_data:m?"granted":"denied",
 ad_personalization:m?"granted":"denied",analytics_storage:a?"granted":"denied"});
-// RB2B is not loaded at all until marketing is granted - see inject_reb2b.py,
-// which defines the loader without calling it.
+// The marketing loader is defined but never called until this point.
 if(m&&window.sbReb2b)window.sbReb2b();}
 var el=null;
 function box(){return el||(el=document.getElementById("sb-consent"));}

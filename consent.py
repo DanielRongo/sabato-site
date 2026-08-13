@@ -30,6 +30,21 @@ guidelines (8 July 2021), which is the regime that actually applies to us:
     commonly enforced violation. There isn't one - you choose or the bar stays.
   * GRANULAR. Analytics and marketing are separate switches, because they are
     separate purposes.
+  * LAYERED WORDING. The strip stays generic - "to understand how this site is
+    used" - and the specifics live one layer down, on the switches, and in full
+    in the privacy policy. Daniel, 12 Aug: naming visitor identification on the
+    first line "freaks people out". That is a real conversion cost for no legal
+    gain: what the law requires is that consent be informed at the point it is
+    GIVEN, which is the switch, not that the strip recite every vendor. Do not
+    let this drift the other way either - softening it past the point where a
+    reader can tell WHAT they are agreeing to is where generic stops being
+    layered and starts being misleading.
+
+    The switches name the purpose and the category, not the vendor: "company-
+    level tracking" rather than "RB2B", and no geography. Naming the processor
+    is a privacy-policy job, and it is done there in full - including the
+    US-only scope - because that is the document the law points at and the one
+    a regulator reads. Do NOT strip it from the policy to match the banner.
   * WITHDRAWABLE. A footer link reopens this at any time, which is the half
     most implementations forget.
   * RE-ASK. A stored choice expires after 180 days, so consent stays current
@@ -52,8 +67,8 @@ COPY = {
         # ONE LINE. At 13.5px the strip leaves roughly 90 characters beside
         # the buttons on a 1200px card; past that it wraps and stops being a
         # slim bar. Keep any edit under that, and check it at 1280px.
-        body="We use cookies for analytics and to see which companies visit. "
-             "Nothing runs until you choose.",
+        body="We use cookies to understand how this site is used. Nothing "
+             "runs until you choose.",
         policy="Privacy and Cookies", policy_href="/privacy-policy",
         accept="Accept all", reject="Reject all",
         prefs="Preferences", save="Save choices",
@@ -64,15 +79,15 @@ COPY = {
              "Google Analytics 4. Which pages get read and how people arrive, "
              "in aggregate."),
             ("marketing", "Marketing",
-             "RB2B. Identifies visiting companies so we can follow up. Resolves "
-             "US visitors only."),
+             "Company-level tracking, so we can follow up with businesses that "
+             "show interest."),
         ],
     ),
     "it": dict(
         title="Cookie",
         # Italian runs ~15% longer than English; trimmed to match.
-        body="Usiamo cookie per statistiche e identificazione aziendale. "
-             "Niente parte senza il tuo consenso.",
+        body="Usiamo cookie per capire come viene usato il sito. Niente parte "
+             "senza il tuo consenso.",
         policy="Privacy e Cookie", policy_href="/it/privacy-e-cookie",
         accept="Accetta tutti", reject="Rifiuta tutti",
         prefs="Preferenze", save="Salva le scelte",
@@ -84,8 +99,8 @@ COPY = {
              "Google Analytics 4. Quali pagine vengono lette e come arrivano le "
              "persone, in forma aggregata."),
             ("marketing", "Marketing",
-             "RB2B. Identifica le aziende che visitano il sito. Riconosce solo "
-             "visitatori dagli Stati Uniti."),
+             "Tracciamento a livello aziendale, per dare seguito alle aziende "
+             "che mostrano interesse."),
         ],
     ),
 }
@@ -146,8 +161,7 @@ function apply(a,m){
 if(window.gtag)window.gtag("consent","update",{
 ad_storage:m?"granted":"denied",ad_user_data:m?"granted":"denied",
 ad_personalization:m?"granted":"denied",analytics_storage:a?"granted":"denied"});
-// RB2B is not loaded at all until marketing is granted - see inject_reb2b.py,
-// which defines the loader without calling it.
+// The marketing loader is defined but never called until this point.
 if(m&&window.sbReb2b)window.sbReb2b();}
 var el=null;
 function box(){return el||(el=document.getElementById("sb-consent"));}

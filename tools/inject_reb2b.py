@@ -38,9 +38,15 @@ from consent import STORAGE_KEY, VERSION, MAX_AGE_DAYS  # noqa: E402
 
 KEY = "5NRP9H3Q9YO1"
 
-MARK_OPEN = "<!-- RB2B (Sabato) -->"
-MARK_CLOSE = "<!-- /RB2B -->"
+MARK_OPEN = "<!-- Marketing tag (Sabato) -->"
+MARK_CLOSE = "<!-- /Marketing tag -->"
 
+# The HTML markers say "Marketing tag", not the vendor's name. Nothing is being
+# hidden - the loader URL is right there in the source - but there is no reason
+# for view-source to advertise which identification vendor we buy from, and
+# Daniel asked for the visitor-facing side to stay generic. This file, and the
+# privacy policy, name them in full.
+#
 # DEFINED, NOT CALLED.
 #
 # RB2B identifies individual visitors, so it is marketing under any reading and
@@ -71,10 +77,24 @@ SNIPPET = (
 BLOCK_RX = re.compile(re.escape(MARK_OPEN) + r".*?" + re.escape(MARK_CLOSE) + r"\n?",
                       re.DOTALL)
 
+# LEGACY MARKERS, and why this list can only ever grow.
+#
+# Renaming MARK_OPEN on 12 Aug 2026 left the previous block on all 98 pages:
+# the new regex could not see the old fence, so every page ended up with the
+# tag twice. The self-check caught it - which is the entire reason it exists -
+# but the lesson is that an idempotent injector's strip pattern is a contract
+# with every copy it has ever written. Change the fence, keep the old one here
+# forever, or the next rename does the same thing again.
+LEGACY_RX = [
+    re.compile(r"<!-- RB2B \(Sabato\) -->.*?<!-- /RB2B -->\n?", re.DOTALL),
+]
+
 
 def process(path):
     src = open(path, encoding="utf-8").read()
     out = BLOCK_RX.sub("", src)          # drop any previous copy, re-add fresh
+    for rx in LEGACY_RX:                 # ...including copies under an old fence
+        out = rx.sub("", out)
     if "</head>" not in out:
         return ("no-head", False)
     # AFTER the GA block, which inject_ga.py has already placed before </head>.
