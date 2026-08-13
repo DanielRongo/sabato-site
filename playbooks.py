@@ -157,11 +157,17 @@ EXTRA_CSS = """
     .pb-bar-fill span { color: var(--lime); font-size: 30px; font-weight: 700;
       letter-spacing: -.5px; line-height: 1; }
     .pb-bar + .pb-bar { margin-top: 30px; }
+    /* Caveat line under a bar - the things the source does NOT count. Same
+       role as .fine but inside the graphic, so it reads as part of the chart
+       rather than as its citation. */
+    .pb-note { font-size: 14.5px; line-height: 1.6; color: var(--gray);
+      margin: 18px 0 0; }
     @media (max-width: 809px) {
       .pb-bar-l { font-size: 16.5px; margin-bottom: 10px; }
       .pb-bar-track, .pb-bar-fill { height: 46px; }
       .pb-bar-fill span { font-size: 25px; }
       .pb-bar + .pb-bar { margin-top: 24px; }
+      .pb-note { font-size: 14px; margin-top: 14px; }
     }
     @media (max-width: 809px) {
       .pb-light { padding: 64px 22px 0; }

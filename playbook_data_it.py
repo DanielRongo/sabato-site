@@ -7,9 +7,10 @@ SVGs are imported and relabelled, never copied: the coordinates are identical
 in both languages and a translator has no business editing path data.
 """
 from playbook_data import (HERO_SVG, BAND_SVG, INTL_HERO_SVG, _bar,
-                           MISSED_HERO_SVG, MISSED_BAND_SVG)
+                           MISSED_HERO_SVG, MISSED_BAND_SVG, TEAM_HERO_SVG)
 
-ORDER_IT = ["picchi-stagionali", "espansione-internazionale", "chiamate-perse"]
+ORDER_IT = ["picchi-stagionali", "espansione-internazionale", "chiamate-perse",
+             "costi-assistenza"]
 
 
 def _it(svg, pairs):
@@ -76,6 +77,28 @@ MISSED_BAND_SVG_IT = _it(MISSED_BAND_SVG, [
     ('aria-label="Call abandonment at UK contact centres sat between four and six per cent from 2004 to 2019, then rose to over eight per cent after 2020 and stayed there."',
      'aria-label="Nei contact centre britannici le chiamate abbandonate sono rimaste tra il quattro e il sei per cento dal 2004 al 2019, poi sono salite oltre l\'otto per cento dopo il 2020 e non sono piu\' scese."'),
 ])
+
+TEAM_HERO_SVG_IT = _it(TEAM_HERO_SVG, [
+    ("WHAT THE QUEUE NEEDS", "QUANTO SERVE ALLA CODA"),
+    (">three people, and a bit<", ">tre persone e mezza, quasi<"),
+    ("WHAT YOU CAN HIRE", "QUANTO PUOI ASSUMERE"),
+    ('aria-label="The queue needs three people and a bit. Headcount is only sold whole, so you hire four and pay for four."',
+     'aria-label="Alla coda servono tre persone e mezza. Le persone si assumono intere: ne assumi quattro e ne paghi quattro."'),
+])
+
+TEAM_BARS_IT = (
+    '<div class="pb-bars">'
+    + _bar("Quota del costo di una persona che non arriva mai nella sua "
+           "busta paga, media UE", 24.5, "24,5%")
+    + '<p class="pb-note">E questo prima della postazione, delle licenze, della '
+      'ricerca del candidato e della copertura per le settimane in cui quella '
+      'persona non c&rsquo;&egrave; &ndash; nessuna delle quali Eurostat conta.</p>'
+    + '</div>')
+
+_EUROSTAT = "https://ec.europa.eu/eurostat/databrowser/view/lc_lci_lev/default/table"
+_GARTNER = ("https://www.gartner.com/en/newsroom/press-releases/"
+            "2024-08-19-gartner-survey-finds-only-14-percent-of-customer-service-"
+            "issues-are-fully-resolved-in-self-service")
 
 _CB = "https://www.contactbabel.com/the-uk-contact-centre-decision-makers-guide/"
 
@@ -452,6 +475,130 @@ PLAYBOOKS_IT = {
         "cta": {
             "hand": "prima che squilli a vuoto di nuovo",
             "h2": "La chiamata che perdi stasera[br]è l'ordine di qualcun altro.",
+            "sub": "Lo costruiamo noi, lo gestiamo noi, tu vedi i numeri. Online "
+                   "in due settimane.",
+        },
+    },
+
+    # Gemella di /playbooks/support-costs. Vedi la nota nel file inglese per le
+    # cifre verificate e per quelle scartate.
+    "costi-assistenza": {
+        "en": "support-costs",
+        "nav": "Libera il tuo team",
+        "chip": "Playbook",
+        "title": "Ridurre il costo per contatto senza tagliare il team | Sabato AI",
+        # 160 caratteri è il limite: la prima stesura ne aveva 161.
+        "description": "La capacità si compra a persone intere: o sei sotto "
+                       "organico o paghi troppo. Un agente vocale assorbe il "
+                       "volume ripetitivo e ti restituisce le ore.",
+        "h1": "Non puoi assumere[br]un terzo di persona.",
+        "sub": "La capacità di assistenza si compra a persone intere: o sei "
+               "sotto organico o paghi capacità che nessuno usa. Un agente "
+               "vocale assorbe il volume ripetitivo e ti restituisce le ore: "
+               "online in due settimane.",
+        "hero_visual": TEAM_HERO_SVG_IT,
+
+        "blocks": [
+            {
+                "tone": "dark",
+                "eyebrow": "PERCHÉ IL CONTO NON TORNA MAI",
+                "h2": "La capacità si compra a persone intere.",
+                "body": [
+                    "Non puoi comprare il venti per cento di copertura in più. "
+                    "Compri una persona, quindi il team è sempre o indietro o "
+                    "sovradimensionato.",
+                    "È per questo che la coda peggiora a scatti invece che "
+                    "gradualmente, e che nessuno sa indicare il momento in cui "
+                    "si è rotta.",
+                ],
+            },
+            {
+                "tone": "light",
+                "h2_in_col": True,
+                "eyebrow": "E QUEL BLOCCO COSTA PIÙ DI QUANTO SEMBRI",
+                "h2": "Un quarto del costo[br]non è sulla busta paga.",
+                "body": [
+                    # Vedi la nota sull'aritmetica in playbook_data.py: 24,5% è
+                    # la quota sul costo TOTALE, non un'aggiunta sopra la paga.
+                    "In Europa circa <b>un quarto di quello che una persona costa "
+                    "all'azienda non arriva mai nella sua busta paga</b> - e la "
+                    "quota va dal 17% in Polonia al 28% in Francia.",
+                    "I team si dimensionano sugli stipendi. L'unità di cui non "
+                    "puoi comprare una frazione costa circa un terzo in più del "
+                    "numero che c'è nel piano.",
+                ],
+                "viz": TEAM_BARS_IT,
+                "fine": ('<a href="' + _EUROSTAT + '" rel="nofollow noopener" '
+                         'target="_blank">Eurostat, costo del lavoro per attività '
+                         'NACE Rev.&nbsp;2</a>, 2024 &ndash; Sezione N, il settore '
+                         'che comprende i call centre. È un valore di settore, non '
+                         'specifico dei contact centre.'),
+            },
+            {
+                "tone": "dark",
+                "eyebrow": "E LA SOLUZIONE ECONOMICA NON SVUOTA LA CODA",
+                "h2": "Il self-service te li rimanda indietro.",
+                "body": [
+                    "Solo il 14% dei problemi di assistenza si risolve "
+                    "completamente in self-service - e tra quelli che i clienti "
+                    "stessi hanno definito molto semplici, appena il 36%.",
+                    "Quindi il centro assistenza non toglie il contatto. Lo "
+                    "rimanda, e te lo restituisce con una persona più "
+                    "innervosita.",
+                ],
+                "fine": ('<a href="' + _GARTNER + '" rel="nofollow noopener" '
+                         'target="_blank">Gartner</a>, indagine su 5.728 clienti, '
+                         'dicembre 2023.'),
+            },
+        ],
+
+        "workflows": {
+            "h2": "Cosa Sabato può togliere al tuo team",
+            "lede": "Decidi a cosa serviranno le ore liberate prima di "
+                    "liberarle, o avrai un team più silenzioso e nessun numero "
+                    "che si muove.",
+            "go": "Vedi il flusso",
+            "items": [
+                ("Dov'è il mio ordine", "/it/casi-duso/dove-e-il-mio-ordine",
+                 "Il blocco più grosso di volume ripetitivo. Stato letto in "
+                 "tempo reale, confermato per iscritto.", "wismo"),
+                ("Gestione resi", "/it/casi-duso/gestione-resi",
+                 "Prenotato al telefono appena il portale dice no, senza una "
+                 "persona in mezzo.", "returns"),
+                ("Notifica ritorno in stock",
+                 "/it/casi-duso/notifica-ritorno-in-stock",
+                 "Oggi è pura burocrazia. Gestita senza che nessuno tenga una "
+                 "lista.", "restock"),
+                ("Consulenza pre-vendita", "/it/casi-duso/consulenza-pre-vendita",
+                 "Quella su cui vuoi le tue persone - una volta che non sono "
+                 "sepolte dalle altre tre.", "presales"),
+            ],
+        },
+
+        "faq_h2": "Le domande che fanno gli operatori",
+        "faq": [
+            ("Significa che tagliamo il team?",
+             "No, e i conti non ne hanno bisogno. Toglie il volume ripetitivo "
+             "così le persone che hai già coprono di più senza crescere - che è "
+             "la versione che sopravvive al confronto con il tuo staff."),
+            ("Come facciamo a sapere quali contatti sono ripetitivi?",
+             "Etichettane due settimane. Quasi tutti i team sanno già la "
+             "risposta prima di finire - sono sempre le stesse domande - ma è il "
+             "conteggio che convince chi deve firmare."),
+            ("A cosa dovrebbero servire davvero le ore liberate?",
+             "Decidilo prima di partire. Di solito la risposta è la pre-vendita "
+             "e i clienti importanti che nessuno ha tempo di richiamare: se non "
+             "sai dirlo in anticipo, il risparmio non comparirà da nessuna "
+             "parte."),
+            ("E se non riesce a gestire la chiamata?",
+             "Passa la mano con i dati e l'intento di chi chiama già allegati, "
+             "così la tua persona riparte da dove si è fermato l'agente e non da "
+             "zero."),
+        ],
+
+        "cta": {
+            "hand": "prima di pubblicare l'annuncio",
+            "h2": "Restituisci le ore[br]al lavoro che richiede una persona.",
             "sub": "Lo costruiamo noi, lo gestiamo noi, tu vedi i numeri. Online "
                    "in due settimane.",
         },

@@ -21,7 +21,7 @@ So the rules for this file:
     structural - true by how the world works, not by somebody's survey.
 """
 
-ORDER = ["peak-season", "international-expansion", "missed-calls"]
+ORDER = ["peak-season", "international-expansion", "missed-calls", "support-costs"]
 
 # --------------------------------------------------------------------------
 # Hero: fourteen days of December. The cut-off is one day; the calls are the
@@ -147,12 +147,14 @@ INTL_HERO_SVG = """
 # a measurement that only holds for the first line. It also drops this graphic
 # out of the SVG-scaling trap entirely: real text reflows and obeys the phone
 # breakpoint, so there is no viewBox multiplier to get wrong.
-def _bar(label, pct):
+def _bar(label, pct, shown=None):
     """One labelled bar. Width IS the percentage - the number and the geometry
-    cannot disagree, because they are the same value."""
+    cannot disagree, because they are the same value. `shown` overrides only the
+    printed text, never the width, so the two still cannot drift apart."""
     return ('<div class="pb-bar"><p class="pb-bar-l">%s</p>'
-            '<div class="pb-bar-track"><div class="pb-bar-fill" style="width:%d%%">'
-            '<span>%d%%</span></div></div></div>' % (label, pct, pct))
+            '<div class="pb-bar-track"><div class="pb-bar-fill" style="width:%s%%">'
+            '<span>%s</span></div></div></div>'
+            % (label, pct, shown if shown is not None else ("%g%%" % pct)))
 
 
 INTL_BARS = (
@@ -219,6 +221,52 @@ MISSED_BAND_SVG = """
 # (~8% voice abandonment, 300+ centres) which lands in the same place from a
 # different continent and a different methodology.
 _CB = "https://www.contactbabel.com/the-uk-contact-centre-decision-makers-guide/"
+
+# --------------------------------------------------------------------------
+# Free up your team. The hero is the whole economic argument: support capacity
+# is sold in whole people, so a team is permanently either short or padded.
+# --------------------------------------------------------------------------
+TEAM_HERO_SVG = """
+<svg viewBox="0 0 560 300" role="img" aria-label="The queue needs three people and a bit. Headcount is only sold whole, so you hire four and pay for four.">
+  <rect x="0" y="0" width="560" height="300" rx="24" fill="rgb(249,250,253)"/>
+
+  <text x="40" y="48" font-size="19" font-weight="700" letter-spacing="2.2" fill="rgb(69,65,64)">WHAT THE QUEUE NEEDS</text>
+  <g>
+    <rect x="40" y="66" width="104" height="52" rx="13" fill="rgb(18,10,11)"/>
+    <rect x="156" y="66" width="104" height="52" rx="13" fill="rgb(18,10,11)"/>
+    <rect x="272" y="66" width="104" height="52" rx="13" fill="rgb(18,10,11)"/>
+    <rect x="388" y="66" width="44" height="52" rx="13" fill="rgb(204,255,0)"/>
+  </g>
+  <text x="40" y="150" font-size="19" font-weight="500" fill="rgb(100,98,97)">three people, and a bit</text>
+
+  <text x="40" y="204" font-size="19" font-weight="700" letter-spacing="2.2" fill="rgb(69,65,64)">WHAT YOU CAN HIRE</text>
+  <g>
+    <rect x="40" y="222" width="104" height="52" rx="13" fill="rgb(18,10,11)"/>
+    <rect x="156" y="222" width="104" height="52" rx="13" fill="rgb(18,10,11)"/>
+    <rect x="272" y="222" width="104" height="52" rx="13" fill="rgb(18,10,11)"/>
+    <rect x="388" y="222" width="104" height="52" rx="13" fill="rgb(18,10,11)"/>
+  </g>
+</svg>
+"""
+
+# Eurostat lc_lci_lev, reference year 2024, NACE Rev.2 Section N - the section
+# that contains 82.20, activities of call centres. Pulled from the Eurostat
+# dissemination series itself, not a summary. It is a SECTOR proxy, not a
+# call-centre-specific figure, and it excludes desk, licences, recruitment and
+# cover - both of which the page says out loud rather than hiding.
+TEAM_BARS = (
+    '<div class="pb-bars">'
+    + _bar("Share of what a hire costs that never reaches their pay, "
+           "EU average", 24.5, "24.5%")
+    + '<p class="pb-note">And that is before the desk, the licences, the '
+      'recruiter&rsquo;s fee, or cover for the weeks that person is away &ndash; '
+      'none of which Eurostat counts either.</p>'
+    + '</div>')
+
+_EUROSTAT = "https://ec.europa.eu/eurostat/databrowser/view/lc_lci_lev/default/table"
+_GARTNER = ("https://www.gartner.com/en/newsroom/press-releases/"
+            "2024-08-19-gartner-survey-finds-only-14-percent-of-customer-service-"
+            "issues-are-fully-resolved-in-self-service")
 
 _EVRI = "https://www.evri.com/press/return-to-sender-four-million-gifts-to-be-sent-back-in-january-2025"
 
@@ -625,6 +673,152 @@ PLAYBOOKS = {
         "cta": {
             "hand": "before the next one rings out",
             "h2": "The call you miss tonight[br]is somebody else's order.",
+            "sub": "We build it, we run it, you see the numbers. Live in two "
+                   "weeks.",
+        },
+    },
+
+    # ----------------------------------------------------------------------
+    # THE COMMODITISED ONE. Every vendor in the category says "cut your support
+    # costs", so this page only earns its place if it says something the others
+    # do not. Three things it says that they mostly do not:
+    #   1. Capacity is sold in whole people - the lump, not the price, is the
+    #      problem. Structural, needs no source.
+    #   2. A quarter of what that person costs never appears on their payslip.
+    #      Eurostat, primary, European, current.
+    #   3. The cheap alternative - a help centre - fails on the easy contacts
+    #      too. Gartner, primary, with a stated sample.
+    #
+    # It merges Daniel's trigger #3 (upskill the team) and #5 (optimise care
+    # costs): they are one buyer conversation and two pages would have been
+    # near-duplicates.
+    #
+    # REJECTED for this page, do not let them back:
+    #   "WISMO is 30-40% of contacts"   - vendor-origin, every instance, no
+    #       primary study exists in any geography.
+    #   "agents take ~6 months to ramp" - no primary source exists; the two main
+    #       UK benchmarking studies do not even collect the metric.
+    #   "attrition is 30-40%"           - the real ContactBabel figure is US-only
+    #       and is a MEAN of 31% against a MEDIAN of 24%, with a quarter of
+    #       centres at 10% or below. The roundups quote the mean, drop the
+    #       median and drop the geography.
+    # ----------------------------------------------------------------------
+    "support-costs": {
+        "it": "costi-assistenza",
+        "nav": "Free Up Your Team",
+        "chip": "Playbook",
+        "title": "Cut Cost Per Contact Without Cutting the Team | Sabato AI",
+        "description": "Support capacity is sold in whole people, so you are "
+                       "always short or overpaying. A voice agent takes the "
+                       "repetitive volume and gives the hours back.",
+        "h1": "You can't hire[br]a third of a person.",
+        "sub": "Support capacity comes in whole people, so you are either "
+               "short-staffed or paying for headroom nobody uses. A voice agent "
+               "absorbs the repetitive volume and hands the hours back - live in "
+               "two weeks.",
+        "hero_visual": TEAM_HERO_SVG,
+
+        "blocks": [
+            {
+                "tone": "dark",
+                "eyebrow": "WHY THE PLAN NEVER BALANCES",
+                "h2": "Capacity is sold in whole people.",
+                "body": [
+                    "You cannot buy twenty per cent more coverage. You buy a "
+                    "person, so the team is permanently either behind or padded.",
+                    "That is why the queue gets worse in steps rather than "
+                    "smoothly, and why nobody can point to the moment it broke.",
+                ],
+            },
+            {
+                "tone": "light",
+                "h2_in_col": True,
+                "eyebrow": "AND THE LUMP COSTS MORE THAN IT LOOKS",
+                "h2": "A quarter of the cost[br]is not on the payslip.",
+                "body": [
+                    # CAREFUL WITH THIS ARITHMETIC. Eurostat's 24.5% is the
+                    # non-wage share OF TOTAL cost, not an amount added on top
+                    # of pay. On top of pay it is 24.5/75.5 = ~32%. The first
+                    # draft said "a quarter on top of what the person is paid",
+                    # which is a different and wrong number. Both framings appear
+                    # below and they have to stay consistent: a quarter of the
+                    # total, which is about a third more than the salary.
+                    "Across the EU, roughly <b>a quarter of what a person costs "
+                    "an employer never reaches their pay</b> - and the share runs "
+                    "from 17% in Poland to 28% in France.",
+                    "Teams get sized off salaries. The unit you cannot buy a "
+                    "fraction of costs about a third more than the number in the "
+                    "plan.",
+                ],
+                "viz": TEAM_BARS,
+                "fine": ('<a href="' + _EUROSTAT + '" rel="nofollow noopener" '
+                         'target="_blank">Eurostat, labour cost levels by NACE '
+                         'Rev.&nbsp;2 activity</a>, 2024 &ndash; Section N, the '
+                         'sector containing call centres. A sector proxy, not a '
+                         'contact-centre-specific figure.'),
+            },
+            {
+                "tone": "dark",
+                "eyebrow": "AND THE CHEAP FIX DOESN'T CLEAR THE QUEUE",
+                "h2": "Self-service sends them back.",
+                "body": [
+                    "Only 14% of service issues are fully resolved in "
+                    "self-service - and of the ones customers themselves rated "
+                    "very simple, still only 36%.",
+                    "So the help centre does not remove the contact. It delays "
+                    "it, and returns it with a more annoyed person attached.",
+                ],
+                "fine": ('<a href="' + _GARTNER + '" rel="nofollow noopener" '
+                         'target="_blank">Gartner</a>, survey of 5,728 '
+                         'customers, December 2023.'),
+            },
+        ],
+
+        "workflows": {
+            "h2": "What Sabato can take off your team",
+            # The honest bit most automation projects skip.
+            "lede": "Decide what the freed hours are for before you free them, "
+                    "or you get a quieter team and no number that moved.",
+            "go": "See the workflow",
+            "items": [
+                ("Where Is My Order", "/use-cases/where-is-my-order",
+                 "The single biggest block of repeat volume. Status read live "
+                 "from your store, confirmed in writing.", "wismo"),
+                ("Managing Returns", "/use-cases/managing-returns",
+                 "Booked on the phone the moment the portal says no, without a "
+                 "person in the middle.", "returns"),
+                ("Back-in-Stock Notification", "/use-cases/back-in-stock-notification",
+                 "The call that is pure admin today. Handled without anyone "
+                 "keeping a list.", "restock"),
+                ("Pre-Sales Consultation", "/use-cases/pre-sales-consultation",
+                 "The one you want your people on - once they are not buried in "
+                 "the other three.", "presales"),
+            ],
+        },
+
+        "faq_h2": "Questions operators ask",
+        "faq": [
+            ("Does this mean we cut the team?",
+             "No, and the maths does not need you to. It removes the repetitive "
+             "volume so the people you already have cover more without growing - "
+             "which is the version that survives contact with your own staff."),
+            ("How do we know which contacts are repetitive?",
+             "Tag two weeks of them. Most teams already know the answer before "
+             "they finish - it is the same handful of questions - but the tally "
+             "is what makes the case to whoever signs off."),
+            ("What should the freed hours actually go to?",
+             "Decide before you start. The usual answer is pre-sales and the "
+             "high-value accounts nobody has time to call back, and if you cannot "
+             "name it in advance the saving will not show up anywhere."),
+            ("What if it cannot handle the call?",
+             "It hands over with the caller's details and intent attached, so "
+             "your person starts where the agent stopped rather than from "
+             "scratch."),
+        ],
+
+        "cta": {
+            "hand": "before you post the job ad",
+            "h2": "Give the hours back[br]to the work that needs a person.",
             "sub": "We build it, we run it, you see the numbers. Live in two "
                    "weeks.",
         },
