@@ -271,6 +271,61 @@ so bring three short options, not one long page.
 
 ---
 
+## TRIGGERS / PLAYBOOKS - state of the set (13 Aug)
+
+LIVE (six):
+  Handle Peak Season          /playbooks/peak-season
+  Expand Into New Countries   /playbooks/international-expansion
+  Answer Every Call           /playbooks/missed-calls
+  Cut Support Costs           /playbooks/support-costs
+  Free Up Your Team           /playbooks/high-value-work      <- SEE NAMING BELOW
+  Support Every Language      /playbooks/multilingual-support
+
+TWO NEW ONES DANIEL ADDED, 13 Aug:
+
+  1. OFFER MULTILINGUAL SUPPORT - BUILT (multilingual-support).
+     The line against international-expansion is the buyer's STATE, and it must
+     be held or the two become one page twice:
+       Expand    - you do NOT sell there yet. Trigger is a launch decision.
+       Multiling - you ALREADY sell there. Trigger is customers you are
+                   underserving today; the orders already exist.
+
+  2. UPSCALE YOUR CS REPS - NOT BUILT, and it needs a naming decision first.
+     Daniel, 13 Aug, verbatim: "I mean that if you re-allocate them to do
+     something higher value (e.g. launch a new initiative) they'll be better.
+     Free up your team I see it more as alleviating workload from stressed out
+     customer service reps."
+
+     So these are TWO different pages, and the one already built is the wrong
+     one for its label:
+
+       /playbooks/high-value-work  - currently labelled "Free Up Your Team", but
+           its content is B2B channel + VIP concierge + "the phone is eating
+           your best people". That is the RE-ALLOCATION page, i.e. UPSCALE.
+           It should probably be relabelled.
+
+       STILL TO BUILD - the actual "Free Up Your Team": workload relief for
+           reps who are stressed and buried. Distinct from Cut Support Costs,
+           which is the same team seen from the CFO's side. Three angles on one
+           team, and they are genuinely different buyers:
+             Cut Support Costs  - it costs too much            (CFO)
+             Free Up Your Team  - they are drowning, burning out (people/ops)
+             Upscale the reps   - redeploy them to grow something (growth)
+
+     DO NOT collapse these again. I merged upskill into costs on 13 Aug on the
+     argument that they were one buyer conversation; Daniel corrected it, and he
+     was right. Cost is defensive, relief is human, upscale is offensive.
+
+STILL UNBUILT from the earlier list: replacing an outsourced BPO (sharpest
+commercially - a renewal date is a real deadline with an incumbent to displace),
+out-of-hours coverage, and call intelligence.
+
+CAUTION THAT STILL APPLIES: these pages get almost no organic traffic. Nobody
+googles "replace my BPO". They are sales and positioning assets, and framing an
+LLM can quote - do not judge them on sessions.
+
+---
+
 ## Still open from earlier sessions
 
 1. **Cookie consent.** GA4 sets `_ga` before any consent and there is no banner.

@@ -22,7 +22,7 @@ So the rules for this file:
 """
 
 ORDER = ["peak-season", "international-expansion", "missed-calls",
-         "support-costs", "high-value-work"]
+         "support-costs", "high-value-work", "multilingual-support"]
 
 # --------------------------------------------------------------------------
 # Hero: fourteen days of December. The cut-off is one day; the calls are the
@@ -315,6 +315,50 @@ HIVAL_HERO_SVG = """
   </g>
 </svg>
 """
+
+# --------------------------------------------------------------------------
+# Multilingual support. The hero IS the argument: everything on the journey is
+# already in the customer's language except the one step with a human in it.
+# --------------------------------------------------------------------------
+MULTI_HERO_SVG = """
+<svg viewBox="0 0 560 300" role="img" aria-label="A German customer gets ads, checkout, prices and delivery in German - and support in English only.">
+  <rect x="0" y="0" width="560" height="300" rx="24" fill="rgb(249,250,253)"/>
+  <text x="40" y="46" font-size="19" font-weight="700" letter-spacing="2.2" fill="rgb(69,65,64)">WHAT YOUR GERMAN BUYER GETS</text>
+
+  <g fill="none" stroke="rgb(122,153,0)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M44 84 l5 6 l11 -13"/>
+    <path d="M44 126 l5 6 l11 -13"/>
+    <path d="M44 168 l5 6 l11 -13"/>
+    <path d="M44 210 l5 6 l11 -13"/>
+  </g>
+  <g font-size="19" font-weight="500" fill="rgb(100,98,97)">
+    <text x="80" y="90">ads in German</text>
+    <text x="80" y="132">checkout in German</text>
+    <text x="80" y="174">prices in euros</text>
+    <text x="80" y="216">delivery in two days</text>
+  </g>
+
+  <rect x="40" y="234" width="330" height="44" rx="12" fill="rgb(18,10,11)"/>
+  <g fill="none" stroke="rgb(204,255,0)" stroke-width="3" stroke-linecap="round">
+    <path d="M62 249 l14 14 M76 249 l-14 14"/>
+  </g>
+  <text x="92" y="262" font-size="19" font-weight="700" fill="rgb(204,255,0)">support in English only</text>
+</svg>
+"""
+
+# Two columns, HTML rather than SVG so the labels share the copy column's type
+# scale. Writing a second language and speaking it are not the same skill, and
+# this is the whole reason a multilingual INBOX hides a monolingual PHONE LINE.
+MULTI_FORK = (
+    '<div class="pb-fork">'
+    '<div class="pb-fork-row"><span class="pb-fork-in">The same customer, '
+    'two channels</span></div>'
+    '<div class="pb-fork-out">'
+    '<div class="pb-fork-a"><b>Writing you an email</b><i>A dictionary, a '
+    'translator tab, and as long as they need to get it right.</i></div>'
+    '<div class="pb-fork-b"><b>Phoning you</b><i>None of those, in real time, '
+    'while trying to describe a problem.</i></div>'
+    '</div></div>')
 
 _EVRI = "https://www.evri.com/press/return-to-sender-four-million-gifts-to-be-sent-back-in-january-2025"
 
@@ -997,6 +1041,140 @@ PLAYBOOKS = {
         "cta": {
             "hand": "before you hire a B2B rep",
             "h2": "The team that knows your product[br]could be selling it.",
+            "sub": "We build it, we run it, you see the numbers. Live in two "
+                   "weeks.",
+        },
+    },
+
+    # ----------------------------------------------------------------------
+    # NOT the same page as international-expansion, and the line between them
+    # is the buyer's state, not the topic:
+    #
+    #   Expand Into New Countries  - you do NOT sell there yet. The trigger is
+    #                                a launch decision, and the argument is
+    #                                launch economics: a new market cannot pay
+    #                                for its own phone line.
+    #   Support Every Language     - you ALREADY sell there. The orders exist,
+    #                                the customers exist, and you answer them in
+    #                                a language they did not choose. The trigger
+    #                                is customers you are underserving today.
+    #
+    # Daniel confirmed that split on 13 Aug. Keep the two arguments apart or
+    # they become one page twice: this one must NOT re-run "one hire per
+    # language is a single point of failure" (that is the expansion page's), and
+    # it deliberately does not reuse the CSA language figures that page carries.
+    #
+    # The insight this page owns, and the reason it is about VOICE specifically:
+    # writing a second language and speaking it are different skills. An inbox
+    # full of tidy English emails is not evidence that your customers are
+    # comfortable in English - it is evidence that writing gives them a
+    # dictionary and time. The phone gives them neither.
+    # ----------------------------------------------------------------------
+    "multilingual-support": {
+        "it": "assistenza-multilingue",
+        # "...You Sell In" was 34 characters against a 25-character menu.
+        # Same construction as "Answer Every Call"; the rest is implied.
+        "nav": "Support Every Language",
+        "chip": "Playbook",
+        "title": "Multilingual Support Without Multilingual Hires | Sabato AI",
+        "description": "You already sell in six countries and answer the phone "
+                       "in one language. A voice agent takes the call in "
+                       "whichever one the customer opens with.",
+        "h1": "Localised everything[br]but the conversation.",
+        "sub": "The ads, the checkout, the currency and the delivery promise all "
+               "speak their language. Then a human picks up and it is English. A "
+               "voice agent answers in whichever language they open with - live "
+               "in two weeks.",
+        "hero_visual": MULTI_HERO_SVG,
+
+        "blocks": [
+            {
+                "tone": "dark",
+                "eyebrow": "THE ONE STEP YOU DIDN'T TRANSLATE",
+                "h2": "Everything is localised until a person answers.",
+                "body": [
+                    "You already pay to reach these customers in their own "
+                    "language - the campaign, the product page, the checkout, the "
+                    "returns policy.",
+                    "The only step still in English is the one with a human in "
+                    "it, and it is the step that decides whether they order "
+                    "again.",
+                ],
+            },
+            {
+                "tone": "light",
+                "h2_in_col": True,
+                "eyebrow": "AND THE INBOX IS MISLEADING YOU",
+                "h2": "Writing English is not[br]the same as speaking it.",
+                "body": [
+                    "Your helpdesk is full of clear English from customers all "
+                    "over Europe, and everyone concludes the language question is "
+                    "handled.",
+                    "Typing gives them a dictionary, a translator tab and as long "
+                    "as they need. A phone call gives them none of it, so the "
+                    "ones who would have called simply do not.",
+                ],
+                "viz": MULTI_FORK,
+            },
+            {
+                "tone": "dark",
+                "eyebrow": "WHICH IS WHY NOBODY FLAGS IT",
+                "h2": "Nothing in your dashboard says \u201cwrong language\u201d.",
+                "body": [
+                    "There is no ticket type for it and no survey question about "
+                    "it, because the customer who was not comfortable calling "
+                    "never became a contact.",
+                    "What you see instead is a market that emails more than it "
+                    "phones, and a repeat rate slightly below home - neither of "
+                    "which looks like a language problem.",
+                ],
+            },
+        ],
+
+        "workflows": {
+            "h2": "What Sabato can take off your team",
+            "lede": "The calls your existing customers already make, answered in "
+                    "the language they made them in.",
+            "go": "See the workflow",
+            "items": [
+                ("Where Is My Order", "/use-cases/where-is-my-order",
+                 "The most common call in every market you sell to. Answered in "
+                 "theirs, confirmed in writing.", "wismo"),
+                ("Managing Returns", "/use-cases/managing-returns",
+                 "The conversation people least want to have in a second "
+                 "language. Booked on the call.", "returns"),
+                ("Pre-Sales Consultation", "/use-cases/pre-sales-consultation",
+                 "The question that decides the order, answered without either "
+                 "side guessing at vocabulary.", "presales"),
+                ("Post-Delivery Feedback", "/use-cases/post-delivery-feedback",
+                 "Ask how it went in their language and you get an answer. Ask in "
+                 "English and you get silence.", "feedback"),
+            ],
+        },
+
+        "faq_h2": "Questions operators ask",
+        "faq": [
+            ("How do we know this is costing us anything?",
+             "Compare repeat-purchase rate by country against your home market, "
+             "then compare the ratio of emails to calls. A market that emails far "
+             "more than it phones is usually a market that cannot phone you."),
+            ("Do we need a separate number per country?",
+             "No. One line can detect the language on the first sentence and stay "
+             "in it - a local number is worth having as a trust signal, but it is "
+             "a separate decision from language."),
+            ("What about the languages we barely sell in?",
+             "Those are the ones this is cheapest for. A market too small to "
+             "justify a person is exactly the market that has never had cover, "
+             "and the agent does not care how many calls a language gets."),
+            ("Does it hand over to our team?",
+             "Yes, with the transcript and the caller's intent attached. If the "
+             "handover lands on someone who does not speak the language, the "
+             "summary they get is in yours."),
+        ],
+
+        "cta": {
+            "hand": "for the customers you already have",
+            "h2": "They already buy from you.[br]Answer them in their language.",
             "sub": "We build it, we run it, you see the numbers. Live in two "
                    "weeks.",
         },

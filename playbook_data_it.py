@@ -8,10 +8,11 @@ in both languages and a translator has no business editing path data.
 """
 from playbook_data import (HERO_SVG, BAND_SVG, INTL_HERO_SVG, _bar,
                            MISSED_HERO_SVG, MISSED_BAND_SVG, TEAM_HERO_SVG,
-                           HIVAL_HERO_SVG)
+                           HIVAL_HERO_SVG, MULTI_HERO_SVG)
 
 ORDER_IT = ["picchi-stagionali", "espansione-internazionale", "chiamate-perse",
-             "costi-assistenza", "attivita-di-valore"]
+             "costi-assistenza", "attivita-di-valore",
+             "assistenza-multilingue"]
 
 
 def _it(svg, pairs):
@@ -118,6 +119,28 @@ HIVAL_SPLIT_IT = (
     'Non &egrave; di nessuno.</i></div>'
     '<div class="pb-fork-b"><b>Risponde una persona che ha tempo</b><i>Preventivo, '
     'richiamo, diventa un cliente.</i></div>'
+    '</div></div>')
+
+MULTI_HERO_SVG_IT = _it(MULTI_HERO_SVG, [
+    ("WHAT YOUR GERMAN BUYER GETS", "COSA RICEVE IL TUO CLIENTE TEDESCO"),
+    (">ads in German<", ">annunci in tedesco<"),
+    (">checkout in German<", ">checkout in tedesco<"),
+    (">prices in euros<", ">prezzi in euro<"),
+    (">delivery in two days<", ">consegna in due giorni<"),
+    (">support in English only<", ">assistenza solo in inglese<"),
+    ('aria-label="A German customer gets ads, checkout, prices and delivery in German - and support in English only."',
+     'aria-label="Un cliente tedesco riceve annunci, checkout, prezzi e consegna in tedesco, e l\'assistenza solo in inglese."'),
+])
+
+MULTI_FORK_IT = (
+    '<div class="pb-fork">'
+    '<div class="pb-fork-row"><span class="pb-fork-in">Lo stesso cliente, '
+    'due canali</span></div>'
+    '<div class="pb-fork-out">'
+    '<div class="pb-fork-a"><b>Ti scrive un&rsquo;email</b><i>Un dizionario, una '
+    'scheda col traduttore e tutto il tempo che gli serve.</i></div>'
+    '<div class="pb-fork-b"><b>Ti telefona</b><i>Niente di tutto questo, in tempo '
+    'reale, mentre prova a spiegare un problema.</i></div>'
     '</div></div>')
 
 _EUROSTAT = "https://ec.europa.eu/eurostat/databrowser/view/lc_lci_lev/default/table"
@@ -734,6 +757,119 @@ PLAYBOOKS_IT = {
         "cta": {
             "hand": "prima di assumere un commerciale B2B",
             "h2": "Il team che conosce il tuo prodotto[br]potrebbe venderlo.",
+            "sub": "Lo costruiamo noi, lo gestiamo noi, tu vedi i numeri. Online "
+                   "in due settimane.",
+        },
+    },
+
+    # Gemella di /playbooks/multilingual-support. NON è la pagina
+    # dell'espansione: là non vendi ancora in quel Paese, qui ci vendi già.
+    # Vedi la nota nel file inglese.
+    "assistenza-multilingue": {
+        "en": "multilingual-support",
+        "nav": "Assisti in ogni lingua",
+        "chip": "Playbook",
+        "title": "Assistenza multilingue senza assumere madrelingua | Sabato AI",
+        "description": "Vendi già in sei Paesi e rispondi al telefono in una "
+                       "lingua sola. Un agente vocale prende la chiamata in "
+                       "quella con cui il cliente apre.",
+        "h1": "Localizzato tutto[br]tranne chi risponde.",
+        "sub": "Gli annunci, il checkout, la valuta e la promessa di consegna "
+               "parlano la loro lingua. Poi risponde una persona, ed è inglese. "
+               "Un agente vocale risponde nella lingua con cui aprono: online in "
+               "due settimane.",
+        "hero_visual": MULTI_HERO_SVG_IT,
+
+        "blocks": [
+            {
+                "tone": "dark",
+                "eyebrow": "L'UNICO PASSAGGIO CHE NON HAI TRADOTTO",
+                "h2": "È tutto localizzato finché non risponde una persona.",
+                "body": [
+                    "Paghi già per raggiungere questi clienti nella loro lingua: "
+                    "la campagna, la scheda prodotto, il checkout, le condizioni "
+                    "di reso.",
+                    "L'unico passaggio ancora in inglese è quello con dentro una "
+                    "persona, ed è il passaggio che decide se ricomprano.",
+                ],
+            },
+            {
+                "tone": "light",
+                "h2_in_col": True,
+                "eyebrow": "E LA CASELLA EMAIL TI INGANNA",
+                "h2": "Scrivere in inglese[br]non è parlarlo.",
+                "body": [
+                    "Il tuo helpdesk è pieno di inglese pulito scritto da clienti "
+                    "di tutta Europa, e tutti concludono che la questione lingua "
+                    "è risolta.",
+                    "Scrivere gli dà un dizionario, una scheda col traduttore e "
+                    "tutto il tempo che vuole. Una telefonata non gli dà niente "
+                    "di tutto questo: così chi avrebbe chiamato semplicemente non "
+                    "chiama.",
+                ],
+                "viz": MULTI_FORK_IT,
+            },
+            {
+                "tone": "dark",
+                "eyebrow": "ED È PER QUESTO CHE NESSUNO LO SEGNALA",
+                "h2": "Nessuna dashboard dice \u00ablingua sbagliata\u00bb.",
+                "body": [
+                    "Non esiste una categoria di ticket né una domanda di "
+                    "sondaggio, perché il cliente che non se la sentiva di "
+                    "chiamare non è mai diventato un contatto.",
+                    "Quello che vedi è un mercato che scrive più di quanto "
+                    "telefoni e un tasso di riacquisto un filo sotto casa - e "
+                    "nessuno dei due sembra un problema di lingua.",
+                ],
+            },
+        ],
+
+        "workflows": {
+            "h2": "Cosa Sabato può togliere al tuo team",
+            "lede": "Le chiamate che i tuoi clienti già fanno, gestite nella "
+                    "lingua in cui le hanno fatte.",
+            "go": "Vedi il flusso",
+            "items": [
+                ("Dov'è il mio ordine", "/it/casi-duso/dove-e-il-mio-ordine",
+                 "La chiamata più frequente in ogni mercato in cui vendi. "
+                 "Risposta nella sua lingua, confermata per iscritto.", "wismo"),
+                ("Gestione resi", "/it/casi-duso/gestione-resi",
+                 "La conversazione che meno si vuole fare in una seconda lingua. "
+                 "Chiusa durante la chiamata.", "returns"),
+                ("Consulenza pre-vendita", "/it/casi-duso/consulenza-pre-vendita",
+                 "La domanda che decide l'ordine, senza che nessuno dei due tiri "
+                 "a indovinare sul vocabolario.", "presales"),
+                ("Feedback post-consegna", "/it/casi-duso/feedback-post-consegna",
+                 "Chiedi com'è andata nella sua lingua e ottieni una risposta. "
+                 "Chiedilo in inglese e ottieni silenzio.", "feedback"),
+            ],
+        },
+
+        "faq_h2": "Le domande che fanno gli operatori",
+        "faq": [
+            ("Come facciamo a sapere quanto ci sta costando?",
+             "Confronta il tasso di riacquisto per Paese con quello del mercato "
+             "di casa, poi il rapporto tra email e chiamate. Un mercato che "
+             "scrive molto più di quanto telefoni di solito è un mercato che non "
+             "riesce a telefonarti."),
+            ("Serve un numero diverso per ogni Paese?",
+             "No. Una sola linea riconosce la lingua dalla prima frase e ci "
+             "resta: un numero locale vale come segnale di fiducia, ma è una "
+             "decisione separata dalla lingua."),
+            ("E le lingue in cui vendiamo pochissimo?",
+             "Sono quelle su cui conviene di più. Un mercato troppo piccolo per "
+             "giustificare una persona è esattamente il mercato che non ha mai "
+             "avuto copertura, e all'agente non importa quante chiamate faccia "
+             "una lingua."),
+            ("Passa la mano al nostro team?",
+             "Sì, con la trascrizione e l'intento del chiamante allegati. Se "
+             "arriva a qualcuno che non parla quella lingua, il riepilogo che "
+             "riceve è nella tua."),
+        ],
+
+        "cta": {
+            "hand": "per i clienti che hai già",
+            "h2": "Comprano già da te.[br]Rispondi nella loro lingua.",
             "sub": "Lo costruiamo noi, lo gestiamo noi, tu vedi i numeri. Online "
                    "in due settimane.",
         },
