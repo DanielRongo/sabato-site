@@ -191,8 +191,14 @@ MISSED_HERO_SVG = """
 # The one external figure on this page. Mean series, because that is what the
 # published longitudinal chart plots; the median sits lower and is quoted in the
 # source line so the skew is disclosed rather than hidden.
+#
+# viewBox STARTS AT y=26, not 0. The first ink is the "8.4%" callout whose cap
+# sits at y~29, so a 0-origin box put 26 units of dead space above the chart -
+# the graphic's box lined up with the eyebrow beside it while the thing a reader
+# actually sees started 25px lower. Cropping the empty band is the fix; padding
+# the other column is not.
 MISSED_BAND_SVG = """
-<svg viewBox="0 0 560 330" role="img" aria-label="Call abandonment at UK contact centres sat between four and six per cent from 2004 to 2019, then rose to over eight per cent after 2020 and stayed there.">
+<svg viewBox="0 26 560 304" role="img" aria-label="Call abandonment at UK contact centres sat between four and six per cent from 2004 to 2019, then rose to over eight per cent after 2020 and stayed there.">
   <line x1="40" y1="262" x2="540" y2="262" stroke="rgb(227,226,226)"/>
   <path d="M60 150 L181 170 L302 139 L423 130 L447 117 L471 80 L496 60 L520 75"
         fill="none" stroke="rgb(122,153,0)" stroke-width="3.5"
@@ -504,9 +510,13 @@ PLAYBOOKS = {
     # ----------------------------------------------------------------------
     "missed-calls": {
         "it": "chiamate-perse",
-        "nav": "Stop Losing Orders on the Phone",
+        # Neutral and operational, to sit as a set with "Handle Peak Season"
+        # and "Expand Into New Countries". Daniel, 13 Aug: the previous label
+        # "looks salesy and doesn't align with the other two". The page still
+        # makes the revenue argument - a nav label does not have to sell.
+        "nav": "Answer Every Call",
         "chip": "Playbook",
-        "title": "Stop Losing Orders on the Phone | Sabato AI",
+        "title": "Answer Every Call Without Adding Headcount | Sabato AI",
         # 137 chars. The limit is 160 and a 208-char description shipped on this
         # site last week, so count them.
         "description": "A missed call is an abandoned cart with a phone number "

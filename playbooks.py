@@ -121,6 +121,7 @@ EXTRA_CSS = """
        on the same line. .pb-light h2 already styles it - only the margins
        change, because it is now the first thing in a grid cell rather than a
        block sitting above one. */
+    .pb-light .pb-h2col .qcopy .eyebrow { margin: 0 0 18px; }
     .pb-light .pb-h2col .qcopy h2 { margin: 0 0 24px; }
     /* Optical, not mechanical. Both cells start at the same y, but half-leading
        scales with font-size: a 38px headline at line-height 1.15 sits ~2.9px
@@ -128,7 +129,10 @@ EXTRA_CSS = """
        alone, the label's cap-top lands ~5px lower than the headline's and the
        two first lines read as not-quite-level - which is exactly the complaint.
        Measured, not eyeballed: see the h2InkTop/labelInkTop probe in the notes. */
-    .pb-light .pb-h2col .queue-viz { margin-top: -5px; }
+    /* Retuned when the eyebrow moved into the column: the graphic now aligns
+       against 13px letterspaced type, not a 38px headline, so there is almost
+       no half-leading left to cancel. */
+    .pb-light .pb-h2col .queue-viz { margin-top: -1px; }
     @media (max-width: 809px) {
       /* Single column - the graphic sits under the copy, so there is nothing
          to align to and the negative margin would just eat the gap. */
@@ -330,6 +334,7 @@ def section_blocks(d):
         fine = '<p class="fine">%s</p>' % b["fine"] if b.get("fine") else ""
         h2 = "<h2>%s</h2>" % nb(esc(b["h2"]))
         head_h2 = h2                      # full-width above the grid, by default
+        head_eyebrow = '<p class="eyebrow">%s</p>' % esc(b["eyebrow"])
         if b.get("viz"):
             # h2_in_col: the headline moves INSIDE the left column, so the
             # graphic starts level with it instead of below it.
@@ -350,11 +355,18 @@ def section_blocks(d):
             # would silently rewrap there. Blocks declare this when their
             # headline is short enough to survive the narrower column.
             if b.get("h2_in_col"):
+                # The EYEBROW moves into the column too, not just the headline.
+                # Daniel, 13 Aug: "align the graphic on the right with the top
+                # text on the left (AND IT GOT WORSE EVERYWHERE)". With the
+                # eyebrow spanning the full width above, the graphic could only
+                # start level with the headline beneath it - still a step down
+                # from the block's actual first line.
                 head_h2 = ""
+                head_eyebrow = ""
                 grid = ('<div class="queue-grid pb-h2col">'
-                        '<div class="qcopy">%s%s</div>'
+                        '<div class="qcopy"><p class="eyebrow">%s</p>%s%s</div>'
                         '<div class="queue-viz">%s%s</div></div>'
-                        % (h2, body, b["viz"], fine))
+                        % (esc(b["eyebrow"]), h2, body, b["viz"], fine))
             else:
                 grid = ('<div class="queue-grid"><div class="qcopy">%s</div>'
                         '<div class="queue-viz">%s%s</div></div>'
@@ -372,11 +384,11 @@ def section_blocks(d):
         out.append("""
     <section class="%s">
       <div class="queue-inner">
-        <p class="eyebrow">%s</p>
+        %s
         %s
         %s
       </div>
-    </section>""" % (cls, esc(b["eyebrow"]), head_h2, grid))
+    </section>""" % (cls, head_eyebrow, head_h2, grid))
     return "".join(out)
 
 

@@ -336,9 +336,9 @@ PLAYBOOKS_IT = {
     # cifra esterna.
     "chiamate-perse": {
         "en": "missed-calls",
-        "nav": "Non perdere ordini al telefono",
+        "nav": "Rispondi a ogni chiamata",
         "chip": "Playbook",
-        "title": "Smetti di perdere ordini al telefono | Sabato AI",
+        "title": "Rispondi a ogni chiamata senza assumere | Sabato AI",
         "description": "Una chiamata persa è un carrello abbandonato con un "
                        "numero di telefono - e non la registra nessuno. Un "
                        "agente vocale risponde sempre, giorno e notte.",
