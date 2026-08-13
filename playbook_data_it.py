@@ -7,10 +7,11 @@ SVGs are imported and relabelled, never copied: the coordinates are identical
 in both languages and a translator has no business editing path data.
 """
 from playbook_data import (HERO_SVG, BAND_SVG, INTL_HERO_SVG, _bar,
-                           MISSED_HERO_SVG, MISSED_BAND_SVG, TEAM_HERO_SVG)
+                           MISSED_HERO_SVG, MISSED_BAND_SVG, TEAM_HERO_SVG,
+                           HIVAL_HERO_SVG)
 
 ORDER_IT = ["picchi-stagionali", "espansione-internazionale", "chiamate-perse",
-             "costi-assistenza"]
+             "costi-assistenza", "attivita-di-valore"]
 
 
 def _it(svg, pairs):
@@ -94,6 +95,30 @@ TEAM_BARS_IT = (
       'ricerca del candidato e della copertura per le settimane in cui quella '
       'persona non c&rsquo;&egrave; &ndash; nessuna delle quali Eurostat conta.</p>'
     + '</div>')
+
+HIVAL_HERO_SVG_IT = _it(HIVAL_HERO_SVG, [
+    ("THE SAME EIGHT HOURS", "LE STESSE OTTO ORE"),
+    (">Today<", ">Oggi<"), (">Instead<", ">Invece<"),
+    (">order status<", ">stato dell&#8217;ordine<"),
+    (">where is my refund<", ">dov&#8217;&#232; il rimborso<"),
+    (">back in stock?<", ">&#232; tornato in stock?<"),
+    (">wholesale enquiries<", ">richieste all&#8217;ingrosso<"),
+    (">VIP concierge<", ">servizio VIP<"),
+    (">win-back calls<", ">chiamate di recupero<"),
+    ('aria-label="The same eight hours. Today: order status, refund chasing, back-in-stock questions. Instead: wholesale enquiries, VIP concierge, win-back calls."',
+     'aria-label="Le stesse otto ore. Oggi: stato ordine, rimborsi, richieste di riassortimento. Invece: richieste all\'ingrosso, servizio VIP, chiamate di recupero."'),
+])
+
+HIVAL_SPLIT_IT = (
+    '<div class="pb-fork">'
+    '<div class="pb-fork-row"><span class="pb-fork-in">Chiama una richiesta '
+    'all&rsquo;ingrosso</span></div>'
+    '<div class="pb-fork-out">'
+    '<div class="pb-fork-a"><b>Risponde una coda</b><i>Registrata, evasa, chiusa. '
+    'Non &egrave; di nessuno.</i></div>'
+    '<div class="pb-fork-b"><b>Risponde una persona che ha tempo</b><i>Preventivo, '
+    'richiamo, diventa un cliente.</i></div>'
+    '</div></div>')
 
 _EUROSTAT = "https://ec.europa.eu/eurostat/databrowser/view/lc_lci_lev/default/table"
 _GARTNER = ("https://www.gartner.com/en/newsroom/press-releases/"
@@ -484,7 +509,7 @@ PLAYBOOKS_IT = {
     # cifre verificate e per quelle scartate.
     "costi-assistenza": {
         "en": "support-costs",
-        "nav": "Libera il tuo team",
+        "nav": "Riduci i costi di assistenza",
         "chip": "Playbook",
         "title": "Ridurre il costo per contatto senza tagliare il team | Sabato AI",
         # 160 caratteri è il limite: la prima stesura ne aveva 161.
@@ -599,6 +624,116 @@ PLAYBOOKS_IT = {
         "cta": {
             "hand": "prima di pubblicare l'annuncio",
             "h2": "Restituisci le ore[br]al lavoro che richiede una persona.",
+            "sub": "Lo costruiamo noi, lo gestiamo noi, tu vedi i numeri. Online "
+                   "in due settimane.",
+        },
+    },
+
+    # Gemella di /playbooks/high-value-work. Nessuna statistica esterna: la
+    # pagina regge interamente sulla struttura. Vedi la nota nel file inglese.
+    "attivita-di-valore": {
+        "en": "high-value-work",
+        "nav": "Libera il tuo team",
+        "chip": "Playbook",
+        "title": "Lancia il B2B e il servizio VIP senza assumere | Sabato AI",
+        "description": "Il tuo team assistenza conosce catalogo e clienti meglio "
+                       "di chiunque assumerai. Togligli le chiamate ripetitive e "
+                       "mettilo a generare fatturato.",
+        "h1": "Il telefono ti ruba[br]le persone migliori.",
+        "sub": "Le persone che conoscono meglio il tuo catalogo e i tuoi clienti "
+               "passano la giornata a leggere numeri di tracking. Toglilo dal "
+               "loro tavolo e lo stesso team può seguire l'ingrosso e un servizio "
+               "VIP: online in due settimane.",
+        "hero_visual": HIVAL_HERO_SVG_IT,
+
+        "blocks": [
+            {
+                "tone": "dark",
+                "eyebrow": "LA PERSONA CHE STAVI PER ASSUMERE",
+                "h2": "Lavora già per te.",
+                "body": [
+                    "Il tuo team assistenza conosce il catalogo, le obiezioni e i "
+                    "clienti difficili meglio di qualsiasi neoassunto per almeno "
+                    "un anno.",
+                    "Ed è l'unico gruppo in azienda che parla con chi compra "
+                    "tutti i giorni - e lo passa a confermare date di consegna.",
+                ],
+            },
+            {
+                "tone": "light",
+                "h2_in_col": True,
+                "eyebrow": "E IL LAVORO STA GIÀ ARRIVANDO",
+                "h2": "Stai chiudendo ticket[br]che erano clienti.",
+                "body": [
+                    "La richiesta all'ingrosso, il buyer che sta specificando un "
+                    "ordine grosso, il cliente al suo undicesimo acquisto: ti "
+                    "chiamano già tutti.",
+                    "Se risponde una coda diventano ticket, e si chiudono. Se "
+                    "risponde qualcuno che ha tempo diventano clienti, e si "
+                    "richiamano.",
+                ],
+                "viz": HIVAL_SPLIT_IT,
+            },
+            {
+                "tone": "dark",
+                "eyebrow": "PERCHÉ \u00abCI TROVIAMO IL TEMPO\u00bb NON FUNZIONA MAI",
+                "h2": "Il lavoro strategico[br]non si mette in coda.",
+                "body": [
+                    "\u00abIl venerdì lo dedichiamo ai clienti VIP\u00bb non "
+                    "sopravvive a un martedì pieno, perché il telefono sta "
+                    "squillando adesso e il richiamo no.",
+                    "La capacità va tolta per davvero, non chiesta gentilmente. "
+                    "Altrimenti l'urgente batte l'importante ogni settimana, per "
+                    "sempre.",
+                ],
+            },
+        ],
+
+        "workflows": {
+            "h2": "Cosa Sabato può togliere al tuo team",
+            "lede": "Tre di questi liberano la giornata. Il primo è la giornata "
+                    "che ti torna indietro.",
+            "go": "Vedi il flusso",
+            "items": [
+                ("Preventivi automatici", "/it/casi-duso/preventivi-automatici",
+                 "La richiesta all'ingrosso, raccolta come si deve invece di "
+                 "finire nella coda dei ticket.", "quote"),
+                ("Dov'è il mio ordine", "/it/casi-duso/dove-e-il-mio-ordine",
+                 "Il blocco più grosso della settimana, sparito.", "wismo"),
+                ("Gestione resi", "/it/casi-duso/gestione-resi",
+                 "Prenotato al telefono senza una persona in mezzo.", "returns"),
+                ("Notifica ritorno in stock",
+                 "/it/casi-duso/notifica-ritorno-in-stock",
+                 "Oggi è pura burocrazia. Gestita senza che nessuno tenga una "
+                 "lista.", "restock"),
+            ],
+        },
+
+        "faq_h2": "Le domande che fanno gli operatori",
+        "faq": [
+            ("Le nostre persone dell'assistenza non sono venditori.",
+             "Non devono esserlo. Sono le persone di cui chi compra si fida già, "
+             "e una richiesta all'ingrosso o un richiamo a un cliente VIP è una "
+             "conversazione di servizio con un ordine più grande attaccato, non "
+             "una chiamata a freddo."),
+            ("Da cosa dovrebbero partire?",
+             "Dalle richieste che oggi trasformi in ticket. L'ingrosso è la "
+             "risposta più frequente: sono pochi contatti, con ordini grandi, e "
+             "in questo momento non sono di nessuno."),
+            ("Come capiamo se ha funzionato?",
+             "Scegli il numero prima di partire: preventivi emessi, tasso di "
+             "riacquisto sui clienti migliori, fatturato dai richiami. Se non lo "
+             "definisci prima, il guadagno resterà invisibile anche se c'è "
+             "stato."),
+            ("Il servizio peggiora mentre fanno questo?",
+             "No, perché il volume viene tolto, non spostato. Le chiamate "
+             "ripetitive le prende l'agente: non restano a squillare mentre il "
+             "team fa altro."),
+        ],
+
+        "cta": {
+            "hand": "prima di assumere un commerciale B2B",
+            "h2": "Il team che conosce il tuo prodotto[br]potrebbe venderlo.",
             "sub": "Lo costruiamo noi, lo gestiamo noi, tu vedi i numeri. Online "
                    "in due settimane.",
         },

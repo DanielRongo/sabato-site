@@ -177,6 +177,31 @@ EXTRA_CSS = """
       .pb-light + .queue-band { margin-top: 64px; }
     }
 
+    /* ============ Playbook: the fork ============ */
+    /* One inbound enquiry, two endings. HTML, not SVG, so the labels share the
+       copy column's type scale instead of being scaled by a viewBox. */
+    .pb-fork-in { display: inline-block; font-size: 15px; font-weight: 700;
+      letter-spacing: .3px; text-transform: uppercase; color: var(--gray);
+      background: var(--off); border-radius: 100px; padding: 9px 18px; }
+    .pb-fork-out { display: grid; gap: 14px; margin-top: 16px; }
+    .pb-fork-a, .pb-fork-b { border-radius: var(--radius); padding: 22px 24px;
+      border: 1px solid var(--line); }
+    .pb-fork-b { background: var(--black); border-color: var(--black); }
+    .pb-fork-a b, .pb-fork-b b { display: block; font-size: 17.5px;
+      font-weight: 700; line-height: 1.4; }
+    .pb-fork-a b { color: var(--gray); }
+    .pb-fork-b b { color: rgb(204,255,0); }
+    .pb-fork-a i, .pb-fork-b i { display: block; margin-top: 6px;
+      font-style: normal; font-size: 16px; line-height: 1.6; }
+    .pb-fork-a i { color: rgb(120,118,117); }
+    .pb-fork-b i { color: rgba(248,244,241,.82); }
+    @media (max-width: 809px) {
+      .pb-fork-in { font-size: 13.5px; padding: 8px 15px; }
+      .pb-fork-a, .pb-fork-b { padding: 18px 20px; border-radius: 18px; }
+      .pb-fork-a b, .pb-fork-b b { font-size: 16.5px; }
+      .pb-fork-a i, .pb-fork-b i { font-size: 15px; }
+    }
+
     /* ============ Playbook: slim mid-page CTA ============ */
     .pb-mid { max-width: 1200px; margin: 0 auto; padding: 76px 40px 0; text-align: center; }
     .pb-mid p { font-size: 21px; font-weight: 700; letter-spacing: -.4px; color: var(--ink);
@@ -278,6 +303,10 @@ ICONS = {
     # bell
     "restock": _ICW % ('<path d="M18 9.5a6 6 0 1 0-12 0c0 5.5-2.2 6.8-2.2 6.8h16.4S18 15 18 9.5z"/>'
                        '<path d="M13.8 19.6a2.1 2.1 0 0 1-3.6 0"/>'),
+    # clipboard with a line of figures: a quote being put together
+    "quote": _ICW % ('<path d="M8 4.5H6.5a1.5 1.5 0 0 0-1.5 1.5v13a1.5 1.5 0 0 0 1.5 1.5h11a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H16"/>'
+                     '<rect x="8" y="2.6" width="8" height="3.8" rx="1.2"/>'
+                     '<path d="M8.5 12h7"/><path d="M8.5 15.6h4.5"/>'),
     # a document with a tick: the order, confirmed in writing
     "checkout": _ICW % ('<path d="M6 3h7l5 5v12a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/>'
                         '<path d="M13 3v5h5"/><path d="M8.6 14.4l2.2 2.2 4.4-4.4"/>'),

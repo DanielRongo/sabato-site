@@ -21,7 +21,8 @@ So the rules for this file:
     structural - true by how the world works, not by somebody's survey.
 """
 
-ORDER = ["peak-season", "international-expansion", "missed-calls", "support-costs"]
+ORDER = ["peak-season", "international-expansion", "missed-calls",
+         "support-costs", "high-value-work"]
 
 # --------------------------------------------------------------------------
 # Hero: fourteen days of December. The cut-off is one day; the calls are the
@@ -263,10 +264,57 @@ TEAM_BARS = (
       'none of which Eurostat counts either.</p>'
     + '</div>')
 
+# Two outcomes for one inbound enquiry, in HTML rather than SVG so the labels
+# sit on the same typographic grid as the copy beside them - the lesson from the
+# international bar chart.
+HIVAL_SPLIT = (
+    '<div class="pb-fork">'
+    '<div class="pb-fork-row"><span class="pb-fork-in">A wholesale enquiry calls</span></div>'
+    '<div class="pb-fork-out">'
+    '<div class="pb-fork-a"><b>Answered by a queue</b><i>Logged, answered, closed. '
+    'Nobody owns it.</i></div>'
+    '<div class="pb-fork-b"><b>Answered by a person with time</b><i>Quoted, called '
+    'back, becomes an account.</i></div>'
+    '</div></div>')
+
 _EUROSTAT = "https://ec.europa.eu/eurostat/databrowser/view/lc_lci_lev/default/table"
 _GARTNER = ("https://www.gartner.com/en/newsroom/press-releases/"
             "2024-08-19-gartner-survey-finds-only-14-percent-of-customer-service-"
             "issues-are-fully-resolved-in-self-service")
+
+# --------------------------------------------------------------------------
+# High-value work. The same eight hours, spent on two very different lists.
+# --------------------------------------------------------------------------
+HIVAL_HERO_SVG = """
+<svg viewBox="0 0 560 300" role="img" aria-label="The same eight hours. Today: order status, refund chasing, back-in-stock questions. Instead: wholesale enquiries, VIP concierge, win-back calls.">
+  <rect x="0" y="0" width="560" height="300" rx="24" fill="rgb(249,250,253)"/>
+  <text x="40" y="46" font-size="19" font-weight="700" letter-spacing="2.2" fill="rgb(69,65,64)">THE SAME EIGHT HOURS</text>
+
+  <text x="40" y="84" font-size="19" font-weight="700" fill="rgb(120,118,117)">Today</text>
+  <g>
+    <rect x="40" y="98" width="212" height="44" rx="12" fill="#fff" stroke="rgb(227,226,226)"/>
+    <text x="60" y="126" font-size="19" font-weight="500" fill="rgb(100,98,97)">order status</text>
+    <rect x="40" y="150" width="212" height="44" rx="12" fill="#fff" stroke="rgb(227,226,226)"/>
+    <text x="60" y="178" font-size="19" font-weight="500" fill="rgb(100,98,97)">where is my refund</text>
+    <rect x="40" y="202" width="212" height="44" rx="12" fill="#fff" stroke="rgb(227,226,226)"/>
+    <text x="60" y="230" font-size="19" font-weight="500" fill="rgb(100,98,97)">back in stock?</text>
+  </g>
+
+  <path d="M266 172 L294 172" stroke="rgb(18,10,11)" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M286 164 L294 172 L286 180" fill="none" stroke="rgb(18,10,11)" stroke-width="2.5"
+        stroke-linecap="round" stroke-linejoin="round"/>
+
+  <text x="308" y="84" font-size="19" font-weight="700" fill="rgb(18,10,11)">Instead</text>
+  <g>
+    <rect x="308" y="98" width="212" height="44" rx="12" fill="rgb(18,10,11)"/>
+    <text x="328" y="126" font-size="19" font-weight="700" fill="rgb(204,255,0)">wholesale enquiries</text>
+    <rect x="308" y="150" width="212" height="44" rx="12" fill="rgb(18,10,11)"/>
+    <text x="328" y="178" font-size="19" font-weight="700" fill="rgb(204,255,0)">VIP concierge</text>
+    <rect x="308" y="202" width="212" height="44" rx="12" fill="rgb(18,10,11)"/>
+    <text x="328" y="230" font-size="19" font-weight="700" fill="rgb(204,255,0)">win-back calls</text>
+  </g>
+</svg>
+"""
 
 _EVRI = "https://www.evri.com/press/return-to-sender-four-million-gifts-to-be-sent-back-in-january-2025"
 
@@ -705,7 +753,15 @@ PLAYBOOKS = {
     # ----------------------------------------------------------------------
     "support-costs": {
         "it": "costi-assistenza",
-        "nav": "Free Up Your Team",
+        # RENAMED 13 Aug. This page was briefly called "Free Up Your Team",
+        # which was a mistake of mine: I merged Daniel's trigger #3 (upskill the
+        # team) into #5 (care costs) on the argument that they were one buyer
+        # conversation. They are not. Cost is defensive and CFO-shaped; freeing
+        # the team to do high-value work is offensive and growth-shaped - a
+        # different buyer in a different mood. "Free Up Your Team" now belongs to
+        # its own page (/playbooks/high-value-work) and this one says what it
+        # actually argues. The slug and <title> were already right.
+        "nav": "Cut Support Costs",
         "chip": "Playbook",
         "title": "Cut Cost Per Contact Without Cutting the Team | Sabato AI",
         "description": "Support capacity is sold in whole people, so you are "
@@ -819,6 +875,128 @@ PLAYBOOKS = {
         "cta": {
             "hand": "before you post the job ad",
             "h2": "Give the hours back[br]to the work that needs a person.",
+            "sub": "We build it, we run it, you see the numbers. Live in two "
+                   "weeks.",
+        },
+    },
+
+    # ----------------------------------------------------------------------
+    # THE GROWTH ONE. Daniel's trigger #3, restored to its own page after I
+    # wrongly folded it into #5. The distinction he drew is the right one:
+    # Cut Support Costs is defensive and CFO-shaped; this is offensive and
+    # growth-shaped. Same team, opposite conversation - one is about spending
+    # less on them, this is about what they could be worth.
+    #
+    # NO EXTERNAL STATISTICS, on purpose. The research for the cost page
+    # established that the share-of-repetitive-contacts data does not exist in
+    # any geography, and there is nothing credible on support-to-revenue
+    # conversion either. This page is structural end to end, and its central
+    # claim - that strategic work cannot be scheduled into a queue-driven team -
+    # is true by how the world works, not by anybody's survey.
+    # ----------------------------------------------------------------------
+    "high-value-work": {
+        "it": "attivita-di-valore",
+        "nav": "Free Up Your Team",
+        "chip": "Playbook",
+        "title": "Launch B2B and VIP Service Without New Hires | Sabato AI",
+        "description": "Your support team knows the catalogue and the customers "
+                       "better than any new hire will. Take the repetitive calls "
+                       "off them and put that on revenue instead.",
+        # ~19 characters a line at 54px in the 549/497px hero column.
+        # "are answering the phone." measured 588 and became a third line.
+        "h1": "The phone is eating[br]your best people.",
+        "sub": "The people who know your catalogue and your customers best spend "
+               "their day reading tracking numbers aloud. Take that off them and "
+               "the same team can run wholesale enquiries and a VIP desk - live "
+               "in two weeks.",
+        "hero_visual": HIVAL_HERO_SVG,
+
+        "blocks": [
+            {
+                "tone": "dark",
+                "eyebrow": "THE HIRE YOU WERE GOING TO MAKE",
+                "h2": "They already work for you.",
+                "body": [
+                    "Your support team knows the catalogue, the objections and "
+                    "the awkward customers better than any new hire will for a "
+                    "year.",
+                    "They are also the only people in the company who speak to "
+                    "buyers every single day - and they spend it confirming "
+                    "delivery dates.",
+                ],
+            },
+            {
+                "tone": "light",
+                "h2_in_col": True,
+                "eyebrow": "AND THE WORK IS ALREADY ARRIVING",
+                "h2": "You are closing tickets[br]that were accounts.",
+                "body": [
+                    "The wholesale enquiry, the buyer specifying a big order, the "
+                    "customer on their eleventh purchase - they all already call "
+                    "you.",
+                    "Answered by a queue they become tickets, and get closed. "
+                    "Answered by somebody with time they become accounts, and get "
+                    "called back.",
+                ],
+                "viz": HIVAL_SPLIT,
+            },
+            {
+                "tone": "dark",
+                "eyebrow": "WHY \u201cWE\u2019LL MAKE TIME\u201d NEVER WORKS",
+                "h2": "You can't schedule strategic work[br]into a queue.",
+                "body": [
+                    "\u201cFridays are for VIP outreach\u201d does not survive a "
+                    "busy Tuesday, because the phone is ringing now and the "
+                    "outreach is not.",
+                    "The capacity has to be structurally removed, not politely "
+                    "asked for. Otherwise the urgent keeps beating the valuable, "
+                    "every week, forever.",
+                ],
+            },
+        ],
+
+        "workflows": {
+            "h2": "What Sabato can take off your team",
+            "lede": "Three of these clear the day. The first one is the day you "
+                    "get back.",
+            "go": "See the workflow",
+            "items": [
+                ("Qualify & Collect for Quote", "/use-cases/qualify-and-collect-for-quote",
+                 "The wholesale enquiry, captured properly instead of dropped "
+                 "into the ticket queue.", "quote"),
+                ("Where Is My Order", "/use-cases/where-is-my-order",
+                 "The single biggest block of the week, gone.", "wismo"),
+                ("Managing Returns", "/use-cases/managing-returns",
+                 "Booked on the phone without a person in the middle.", "returns"),
+                ("Back-in-Stock Notification", "/use-cases/back-in-stock-notification",
+                 "Pure admin today. Handled without anyone keeping a list.",
+                 "restock"),
+            ],
+        },
+
+        "faq_h2": "Questions operators ask",
+        "faq": [
+            ("Our support people aren't salespeople.",
+             "They don't have to be. They are the people your buyers already "
+             "trust, and a wholesale enquiry or a VIP callback is a service "
+             "conversation with a bigger order attached - not a cold call."),
+            ("What should they take on first?",
+             "The enquiries you are already turning into tickets. Wholesale and "
+             "trade requests are the usual answer because the volume is small, "
+             "the orders are large, and nobody currently owns them."),
+            ("How do we know it worked?",
+             "Pick the number before you start - quotes issued, repeat rate on "
+             "top accounts, revenue from callbacks. If nothing was named in "
+             "advance, the gain will be invisible even if it happened."),
+            ("Does service get worse while they do this?",
+             "No, because the volume is removed rather than reassigned. The "
+             "repetitive calls are answered by the agent, not left ringing while "
+             "your team does something else."),
+        ],
+
+        "cta": {
+            "hand": "before you hire a B2B rep",
+            "h2": "The team that knows your product[br]could be selling it.",
             "sub": "We build it, we run it, you see the numbers. Live in two "
                    "weeks.",
         },

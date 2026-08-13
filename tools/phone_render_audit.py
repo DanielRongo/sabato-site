@@ -49,6 +49,7 @@ PAGES = [
     "/playbooks/international-expansion", "/it/playbook/espansione-internazionale",
     "/playbooks/missed-calls", "/it/playbook/chiamate-perse",
     "/playbooks/support-costs", "/it/playbook/costi-assistenza",
+    "/playbooks/high-value-work", "/it/playbook/attivita-di-valore",
     "/customers/creative-cables", "/it/clienti/creative-cables",
     "/blog/multilingual-phone-support-eu-expansion",
     "/it/blog/multilingual-phone-support-eu-expansion",
