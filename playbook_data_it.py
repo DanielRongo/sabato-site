@@ -6,9 +6,10 @@ jurisdiction-specific. See playbook_data.py for the full brief.
 SVGs are imported and relabelled, never copied: the coordinates are identical
 in both languages and a translator has no business editing path data.
 """
-from playbook_data import HERO_SVG, BAND_SVG, INTL_HERO_SVG, _bar
+from playbook_data import (HERO_SVG, BAND_SVG, INTL_HERO_SVG, _bar,
+                           MISSED_HERO_SVG, MISSED_BAND_SVG)
 
-ORDER_IT = ["picchi-stagionali", "espansione-internazionale"]
+ORDER_IT = ["picchi-stagionali", "espansione-internazionale", "chiamate-perse"]
 
 
 def _it(svg, pairs):
@@ -58,6 +59,25 @@ INTL_BARS_IT = (
     + _bar("Pi\u00f9 propensi a ricomprare dal marchio quando "
            "l\u2019assistenza \u00e8 nella loro lingua", 75)
     + '</div>')
+
+MISSED_HERO_SVG_IT = _it(MISSED_HERO_SVG, [
+    ("TWO WAYS TO LOSE ONE ORDER", "DUE MODI DI PERDERE UN ORDINE"),
+    (">Abandoned online<", ">Carrello abbandonato<"),
+    (">session<", ">sessione<"), (">email<", ">email<"),
+    (">retargeting<", ">retargeting<"),
+    (">Call rings out<", ">Telefono che squilla a vuoto<"),
+    (">no record at all<", ">nessuna traccia<"),
+    ('aria-label="An abandoned online cart leaves a session, an email and a retargeting audience. A call that rings out leaves no record of any kind."',
+     'aria-label="Un carrello abbandonato lascia una sessione, un\'email e un pubblico di retargeting. Una telefonata che squilla a vuoto non lascia alcuna traccia."'),
+])
+
+MISSED_BAND_SVG_IT = _it(MISSED_BAND_SVG, [
+    ("4-6% for fifteen years", "4-6% per quindici anni"),
+    ('aria-label="Call abandonment at UK contact centres sat between four and six per cent from 2004 to 2019, then rose to over eight per cent after 2020 and stayed there."',
+     'aria-label="Nei contact centre britannici le chiamate abbandonate sono rimaste tra il quattro e il sei per cento dal 2004 al 2019, poi sono salite oltre l\'otto per cento dopo il 2020 e non sono piu\' scese."'),
+])
+
+_CB = "https://www.contactbabel.com/the-uk-contact-centre-decision-makers-guide/"
 
 _EVRI = "https://www.evri.com/press/return-to-sender-four-million-gifts-to-be-sent-back-in-january-2025"
 _CSA = "https://csa-research.com/l/media/Consumers-Prefer-their-Own-Language"
@@ -203,7 +223,7 @@ PLAYBOOKS_IT = {
                        "all'estero, nessuna agenzia, nessun volume minimo.",
         # [br], non [nb]: vedi la nota in playbook_data.py - un [nb] su questa
         # frase fa scorrere la pagina in orizzontale su uno schermo da 390px.
-        "h1": "Vendi in cinque Paesi.[br]Rispondi in cinque lingue.",
+        "h1": "Apri cinque Paesi.[br]Nella loro lingua.",
         "sub": "Aprire un mercato richiede un pomeriggio. Coprirne il telefono "
                "richiede una persona che ai volumi di lancio non puoi "
                "giustificare. Un agente vocale risponde nella lingua di chi "
@@ -305,6 +325,133 @@ PLAYBOOKS_IT = {
         "cta": {
             "hand": "prima di archiviare il mercato",
             "h2": "Apri il Paese. [nb]La linea apre con lui.[/nb]",
+            "sub": "Lo costruiamo noi, lo gestiamo noi, tu vedi i numeri. Online "
+                   "in due settimane.",
+        },
+    },
+
+    # Gemella di /playbooks/missed-calls. Vedi la nota di ricerca nel file
+    # inglese: quasi tutte le statistiche in circolazione su questo tema sono
+    # state verificate e SCARTATE. La pagina regge sulla struttura, con una sola
+    # cifra esterna.
+    "chiamate-perse": {
+        "en": "missed-calls",
+        "nav": "Non perdere ordini al telefono",
+        "chip": "Playbook",
+        "title": "Smetti di perdere ordini al telefono | Sabato AI",
+        "description": "Una chiamata persa è un carrello abbandonato con un "
+                       "numero di telefono - e non la registra nessuno. Un "
+                       "agente vocale risponde sempre, giorno e notte.",
+        # Non una traduzione: l'italiano è più lungo e non entra nella
+        # colonna. Questa versione dice la tesi della pagina in meno battute.
+        "h1": "La chiamata persa[br]non lascia traccia.",
+        "sub": "Qualcuno ha chiamato per un ordine che era pronto a fare, non "
+               "ha ricevuto risposta e ha comprato altrove. Nelle tue "
+               "analytics non comparirà mai. Un agente vocale risponde a ogni "
+               "chiamata, giorno e notte: online in due settimane.",
+        "hero_visual": MISSED_HERO_SVG_IT,
+
+        "blocks": [
+            {
+                "tone": "dark",
+                "eyebrow": "PERCHÉ QUESTO NUMERO NON L'HAI MAI VISTO",
+                "h2": "L'unica perdita senza una dashboard.",
+                "body": [
+                    "Un carrello abbandonato online lascia una sessione, "
+                    "un'email e un pubblico di retargeting: tre modi per "
+                    "andarselo a riprendere.",
+                    "Una telefonata che squilla a vuoto non lascia niente: "
+                    "nessun ticket, perché non c'è stata conversazione, e "
+                    "nessun follow-up, perché non hai mai avuto il suo "
+                    "contatto.",
+                    "Così non compare in nessun report che possiedi - e una "
+                    "perdita che nessuno misura è una perdita che nessuno mette "
+                    "in agenda.",
+                ],
+            },
+            {
+                "tone": "light",
+                "h2_in_col": True,
+                "eyebrow": "ED È PEGGIORATO OVUNQUE",
+                "h2": "Chi riattacca prima di parlare[br]è raddoppiato dal 2009.",
+                "body": [
+                    "Nei contact centre britannici chi rinuncia prima che "
+                    "qualcuno risponda è passato da circa il <b>4% a oltre "
+                    "l'8%</b> dopo il 2020, e non è più tornato indietro.",
+                    "E sono aziende che presidiano una coda e la misurano. Un "
+                    "team di tre persone su una linea condivisa non sta facendo "
+                    "meglio: semplicemente non ha un numero da guardare.",
+                ],
+                "viz": MISSED_BAND_SVG_IT,
+                "fine": ('Chiamate abbandonate, valore medio. <a href="' + _CB +
+                         '" rel="nofollow noopener" target="_blank">ContactBabel, '
+                         'UK Contact Centre Decision-Makers&rsquo; Guide '
+                         '2024</a> &ndash; 225 contact centre britannici, '
+                         'rilevazione ott&ndash;nov 2023; mediana 6,0%. Dati del '
+                         'settore contact centre, non e-commerce.'),
+            },
+            {
+                "tone": "dark",
+                "eyebrow": "IL CONTO CHE NON FA NESSUNO",
+                "h2": "Il tuo scontrino medio lo conosci già.",
+                "body": [
+                    "Moltiplicalo per le chiamate senza risposta del mese "
+                    "scorso: quelle fuori orario, quelle durante il turno di "
+                    "pranzo, quelle mentre erano occupate entrambe le linee.",
+                    "Nessuno strumento di analytics ti darà quel numero. Il tuo "
+                    "centralino ce l'ha già.",
+                ],
+            },
+        ],
+
+        "workflows": {
+            "h2": "Cosa Sabato può togliere al tuo team",
+            "lede": "La chiamata che non puoi permetterti di perdere è in coda "
+                    "dietro a quelle che potrebbero rispondersi da sole.",
+            "go": "Vedi il flusso",
+            "items": [
+                ("Consulenza pre-vendita", "/it/casi-duso/consulenza-pre-vendita",
+                 "La chiamata che è l'ordine. Risposta in diretta, con il tuo "
+                 "catalogo dietro.", "presales"),
+                ("Riepilogo checkout via messaggio",
+                 "/it/casi-duso/riepilogo-checkout-via-messaggio",
+                 "L'ordine riletto e mandato per iscritto, così si chiude "
+                 "durante la chiamata invece che con un \u00abci penso\u00bb.",
+                 "checkout"),
+                ("Notifica ritorno in stock",
+                 "/it/casi-duso/notifica-ritorno-in-stock",
+                 "Un esaurito non deve diventare un cliente perso. Chi ha "
+                 "chiamato lo sa appena rientra.", "restock"),
+                ("Dov'è il mio ordine", "/it/casi-duso/dove-e-il-mio-ordine",
+                 "Il motivo per cui nessuno risponde quando chiama chi vuole "
+                 "comprare. Si gestisce da sola.", "wismo"),
+            ],
+        },
+
+        "faq_h2": "Le domande che fanno gli operatori",
+        "faq": [
+            ("Come faccio a sapere quante chiamate stiamo perdendo?",
+             "Il tuo centralino lo sa già. Esporta il registro chiamate del mese "
+             "scorso e conta quelle senza risposta e fuori orario: quasi tutti i "
+             "gestori e i cruscotti VoIP lo fanno in due clic, ed è di solito la "
+             "prima volta che qualcuno ci guarda."),
+            ("Prende l'ordine o lascia solo un messaggio?",
+             "Prende l'ordine. Legge il catalogo in tempo reale, risponde alla "
+             "domanda che bloccava l'acquisto e manda il riepilogo per iscritto "
+             "prima di qualsiasi addebito."),
+            ("E fuori orario?",
+             "Risponde. È fuori orario che si concentra la perdita invisibile, "
+             "perché quei clienti non raggiungono nessuno e non compaiono da "
+             "nessuna parte."),
+            ("E se chi chiama vuole una persona?",
+             "La ottiene, con il contesto della chiamata già passato. Tutto ciò "
+             "che l'agente non può chiudere viene inoltrato, non lasciato "
+             "cadere."),
+        ],
+
+        "cta": {
+            "hand": "prima che squilli a vuoto di nuovo",
+            "h2": "La chiamata che perdi stasera[br]è l'ordine di qualcun altro.",
             "sub": "Lo costruiamo noi, lo gestiamo noi, tu vedi i numeri. Online "
                    "in due settimane.",
         },

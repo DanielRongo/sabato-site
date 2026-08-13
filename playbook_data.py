@@ -21,7 +21,7 @@ So the rules for this file:
     structural - true by how the world works, not by somebody's survey.
 """
 
-ORDER = ["peak-season", "international-expansion"]
+ORDER = ["peak-season", "international-expansion", "missed-calls"]
 
 # --------------------------------------------------------------------------
 # Hero: fourteen days of December. The cut-off is one day; the calls are the
@@ -160,6 +160,59 @@ INTL_BARS = (
     + _bar("Confident English readers who still want care in their own language", 60)
     + _bar("More likely to buy the brand again when care is in their language", 75)
     + '</div>')
+
+# --------------------------------------------------------------------------
+# Missed calls. The hero IS the argument: the same lost order, recorded in one
+# channel and invisible in the other.
+# --------------------------------------------------------------------------
+MISSED_HERO_SVG = """
+<svg viewBox="0 0 560 330" role="img" aria-label="An abandoned online cart leaves a session, an email and a retargeting audience. A call that rings out leaves no record of any kind.">
+  <rect x="0" y="0" width="560" height="330" rx="24" fill="rgb(249,250,253)"/>
+  <text x="40" y="48" font-size="19" font-weight="700" letter-spacing="2.2" fill="rgb(69,65,64)">TWO WAYS TO LOSE ONE ORDER</text>
+
+  <text x="40" y="108" font-size="21" font-weight="700" fill="rgb(18,10,11)">Abandoned online</text>
+  <g>
+    <rect x="40" y="124" width="134" height="42" rx="12" fill="#fff" stroke="rgb(227,226,226)"/>
+    <text x="107" y="151" font-size="19" font-weight="500" fill="rgb(69,65,64)" text-anchor="middle">session</text>
+    <rect x="186" y="124" width="118" height="42" rx="12" fill="#fff" stroke="rgb(227,226,226)"/>
+    <text x="245" y="151" font-size="19" font-weight="500" fill="rgb(69,65,64)" text-anchor="middle">email</text>
+    <rect x="316" y="124" width="178" height="42" rx="12" fill="#fff" stroke="rgb(227,226,226)"/>
+    <text x="405" y="151" font-size="19" font-weight="500" fill="rgb(69,65,64)" text-anchor="middle">retargeting</text>
+  </g>
+
+  <line x1="40" y1="200" x2="520" y2="200" stroke="rgb(227,226,226)"/>
+
+  <text x="40" y="244" font-size="21" font-weight="700" fill="rgb(18,10,11)">Call rings out</text>
+  <rect x="40" y="260" width="228" height="42" rx="12" fill="rgb(18,10,11)"/>
+  <text x="154" y="287" font-size="19" font-weight="700" fill="rgb(204,255,0)" text-anchor="middle">no record at all</text>
+</svg>
+"""
+
+# The one external figure on this page. Mean series, because that is what the
+# published longitudinal chart plots; the median sits lower and is quoted in the
+# source line so the skew is disclosed rather than hidden.
+MISSED_BAND_SVG = """
+<svg viewBox="0 0 560 330" role="img" aria-label="Call abandonment at UK contact centres sat between four and six per cent from 2004 to 2019, then rose to over eight per cent after 2020 and stayed there.">
+  <line x1="40" y1="262" x2="540" y2="262" stroke="rgb(227,226,226)"/>
+  <path d="M60 150 L181 170 L302 139 L423 130 L447 117 L471 80 L496 60 L520 75"
+        fill="none" stroke="rgb(122,153,0)" stroke-width="3.5"
+        stroke-linejoin="round" stroke-linecap="round"/>
+  <circle cx="520" cy="75" r="7" fill="rgb(122,153,0)"/>
+  <text x="520" y="48" font-size="26" font-weight="700" fill="rgb(122,153,0)" text-anchor="end">8.4%</text>
+  <text x="150" y="212" font-size="19" font-weight="700" fill="rgb(110,108,107)">4-6% for fifteen years</text>
+  <g font-size="19" font-weight="500" fill="rgb(110,108,107)">
+    <text x="40" y="292">2004</text>
+    <text x="540" y="292" text-anchor="end">2023</text>
+  </g>
+</svg>
+"""
+
+# ContactBabel, "The UK Contact Centre Decision-Makers' Guide 2024" - 225 UK
+# contact centre managers, fieldwork Oct-Nov 2023. Read from the PDF directly,
+# not from a summary, and cross-checked against ACXPA's Australian benchmark
+# (~8% voice abandonment, 300+ centres) which lands in the same place from a
+# different continent and a different methodology.
+_CB = "https://www.contactbabel.com/the-uk-contact-centre-decision-makers-guide/"
 
 _EVRI = "https://www.evri.com/press/return-to-sender-four-million-gifts-to-be-sent-back-in-january-2025"
 
@@ -314,7 +367,7 @@ PLAYBOOKS = {
         # 430px wide at the 37px phone h1 size, which made the whole page scroll
         # sideways on a 390px screen. [nb] is only safe on a phrase short enough
         # to survive the narrowest column it will ever sit in.
-        "h1": "Sell in five countries.[br]Answer in five languages.",
+        "h1": "Sell in five countries.[br]Speak all five.",
         "sub": "Opening a market takes an afternoon. Covering its phone line "
                "takes a headcount you cannot justify at launch volume. A voice "
                "agent answers in the caller's language from day one - live in "
@@ -415,6 +468,153 @@ PLAYBOOKS = {
         "cta": {
             "hand": "before you write the market off",
             "h2": "Open the country. [nb]The line opens with it.[/nb]",
+            "sub": "We build it, we run it, you see the numbers. Live in two "
+                   "weeks.",
+        },
+    },
+
+    # ----------------------------------------------------------------------
+    # THE ONLY TRIGGER THAT SAYS "YOU ARE LOSING MONEY TODAY".
+    #
+    # The other playbooks are cost, capacity or coverage - all of which wait
+    # for a budget cycle. This one is revenue already walking out, which is the
+    # framing that gets a yes without one.
+    #
+    # RESEARCH NOTE, 13 Aug 2026. This is the most contaminated stats topic
+    # encountered on this site. Every figure below was traced to its origin and
+    # REJECTED - do not let any of them back on the page:
+    #   "62% of business calls go unanswered"  - 411 Locals, 2016, a marketing
+    #       agency monitoring 85 businesses. Not ecommerce, no methodology.
+    #       Every page repeating it is downstream of this one study.
+    #   "85% of callers will not call back"    - no source exists anywhere.
+    #   "62% immediately call a competitor"    - vendor blog, no research.
+    #   "$75bn/year lost to missed calls"      - misattributed; the cited survey
+    #       measured broad service failures, not missed calls.
+    #   "80% do not leave voicemail"           - chain ends at a 2009 newspaper
+    #       lifestyle piece with no data.
+    #   "phone converts 10-15x web forms"      - BIA/Kelsey 2015, primary
+    #       document not locatable, pre-2018.
+    # There is also NO defensible figure for phone-order AOV vs web AOV in
+    # considered-purchase categories - it was searched for specifically and does
+    # not exist publicly.
+    #
+    # So the page runs on structure, with exactly ONE external number, and the
+    # thesis is the absence itself: nobody has measured this because the loss is
+    # invisible by construction. That is more ownable than any borrowed stat.
+    # ----------------------------------------------------------------------
+    "missed-calls": {
+        "it": "chiamate-perse",
+        "nav": "Stop Losing Orders on the Phone",
+        "chip": "Playbook",
+        "title": "Stop Losing Orders on the Phone | Sabato AI",
+        # 137 chars. The limit is 160 and a 208-char description shipped on this
+        # site last week, so count them.
+        "description": "A missed call is an abandoned cart with a phone number "
+                       "attached - and nothing records it. A voice agent answers "
+                       "every call, day or night.",
+        # The hero column is 549px at 1440 and 497px at 1100, with a 54px
+        # h1 - about 22 characters a line. "you never see abandon." measured
+        # 555px and silently became a third line. Measure, do not estimate.
+        "h1": "A missed call is[br]a cart you never see.",
+        "sub": "Someone rang about an order they were ready to place, got no "
+               "answer, and bought elsewhere. Nothing in your analytics will "
+               "ever show that it happened. A voice agent answers every call, "
+               "day or night - live in two weeks.",
+        "hero_visual": MISSED_HERO_SVG,
+
+        "blocks": [
+            {
+                "tone": "dark",
+                "eyebrow": "WHY YOU HAVE NEVER SEEN THIS NUMBER",
+                "h2": "The only leak with no dashboard.",
+                "body": [
+                    "An abandoned online cart leaves a session, an email and a "
+                    "retargeting audience - three ways to go after it.",
+                    "A call that rings out leaves nothing: no ticket, because no "
+                    "conversation happened, and no follow-up, because you never "
+                    "had their address.",
+                    "So it never appears in a report you own - and a loss nobody "
+                    "can measure is a loss nobody schedules time to fix.",
+                ],
+            },
+            {
+                "tone": "light",
+                "h2_in_col": True,
+                "eyebrow": "AND IT GOT WORSE EVERYWHERE",
+                "h2": "The share who hang up[br]has doubled since 2009.",
+                "body": [
+                    "Across UK contact centres the callers who give up before "
+                    "anyone answers went from about <b>4% to over 8%</b> after "
+                    "2020, and it has not come back down.",
+                    "Those are businesses that staff a queue and measure it. A "
+                    "team of three sharing a line is not doing better than that "
+                    "- they just have no number to look at.",
+                ],
+                "viz": MISSED_BAND_SVG,
+                "fine": ('Mean call abandonment. <a href="' + _CB + '" '
+                         'rel="nofollow noopener" target="_blank">ContactBabel, '
+                         'UK Contact Centre Decision-Makers&rsquo; Guide '
+                         '2024</a> &ndash; 225 UK contact centres, fieldwork '
+                         'Oct&ndash;Nov 2023; median 6.0%. Contact-centre '
+                         'industry data, not e-commerce.'),
+            },
+            {
+                "tone": "dark",
+                "eyebrow": "THE ARITHMETIC NOBODY DOES",
+                "h2": "You already know your average order value.",
+                "body": [
+                    "Multiply it by last month's unanswered calls - the ones "
+                    "after hours, the ones during the lunch rota, the ones while "
+                    "both lines were busy.",
+                    "No analytics tool will hand you that count. Your phone "
+                    "system already has it.",
+                ],
+            },
+        ],
+
+        "workflows": {
+            "h2": "What Sabato can take off your team",
+            "lede": "The call you cannot afford to miss is queued behind the "
+                    "calls that could answer themselves.",
+            "go": "See the workflow",
+            "items": [
+                ("Pre-Sales Consultation", "/use-cases/pre-sales-consultation",
+                 "The call that is the order. Answered live, with your "
+                 "catalogue behind it.", "presales"),
+                ("Checkout Summary via Text", "/use-cases/checkout-summary-via-text",
+                 "The order read back and sent in writing, so it closes on the "
+                 "call instead of \u2018I\u2019ll think about it\u2019.", "checkout"),
+                ("Back-in-Stock Notification", "/use-cases/back-in-stock-notification",
+                 "A sellout does not have to be a lost customer. The caller "
+                 "hears the moment it is back.", "restock"),
+                ("Where Is My Order", "/use-cases/where-is-my-order",
+                 "The reason nobody picks up when a buyer calls. It answers "
+                 "itself.", "wismo"),
+            ],
+        },
+
+        "faq_h2": "Questions operators ask",
+        "faq": [
+            ("How do I find out how many calls we are actually missing?",
+             "Your phone system already knows. Export last month's call log and "
+             "count the unanswered and out-of-hours calls - most carriers and "
+             "VoIP dashboards do it in a couple of clicks, and it is usually the "
+             "first time anyone has looked."),
+            ("Does it take the order, or just take a message?",
+             "It takes the order. It reads your catalogue live, answers the "
+             "question that was blocking the purchase, and sends the summary in "
+             "writing before anything is charged."),
+            ("What happens outside opening hours?",
+             "It answers. Out-of-hours is where most of the invisible loss sits, "
+             "because those callers never reach anyone and never appear anywhere."),
+            ("What if the caller wants a person?",
+             "They get one, with the call's context attached. Anything the agent "
+             "cannot close escalates rather than dead-ends."),
+        ],
+
+        "cta": {
+            "hand": "before the next one rings out",
+            "h2": "The call you miss tonight[br]is somebody else's order.",
             "sub": "We build it, we run it, you see the numbers. Live in two "
                    "weeks.",
         },

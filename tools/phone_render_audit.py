@@ -47,6 +47,7 @@ PAGES = [
     "/", "/it",
     "/playbooks/peak-season", "/it/playbook/picchi-stagionali",
     "/playbooks/international-expansion", "/it/playbook/espansione-internazionale",
+    "/playbooks/missed-calls", "/it/playbook/chiamate-perse",
     "/customers/creative-cables", "/it/clienti/creative-cables",
     "/blog/multilingual-phone-support-eu-expansion",
     "/it/blog/multilingual-phone-support-eu-expansion",

@@ -202,6 +202,75 @@ a band on the /use-cases hub, promoted into the nav only if it earns it.
 
 ---
 
+## TASK (12 Aug, Daniel): rework the homepage messaging around the TEAM
+
+Daniel, verbatim: "rework the messaging in the homepage making it about powering
+up customer service staff with the use of AI, or add an AI powered super
+customer service agent to your team. I mean something that is not too technical
+and that E-Commerce CEOs can understand and relate to."
+
+WHERE IT IS TODAY
+
+  EN h1     "The voice layer your e-commerce is missing."
+  IT h1     "Il tuo e-commerce ha tutto. Tranne la voce."
+  band h1   "We handle the AI. You handle your store."
+  title     "Voice AI Agent Platform for E-Commerce | Sabato AI"
+  desc      "Managed voice AI that guides buyers through complex product
+             decisions - sizing, compatibility, specs. We build it, we run it."
+
+All of it is infrastructure framing. "Voice layer", "platform", "agent" describe
+the thing we built, not what changes for the person buying it. A CEO does not
+have a voice-layer problem; they have a team that is drowning in repetitive
+calls and a headcount they cannot grow.
+
+THE SHIFT
+
+  FROM  a voice layer / platform you install
+  TO    a customer service teammate you add, who takes the repetitive volume so
+        your people move onto the work that needs a human
+
+The proof already says this - Marco's quote is literally "our team now focuses
+on the cases that actually need a person." The homepage is the only surface
+still talking like a product spec.
+
+FOUR THINGS TO GET RIGHT, and they are the traps
+
+  1. AUGMENTATION MUST NOT KILL THE ROI STORY. "Powers up your team" is warmer
+     and it defuses the layoff objection, which is real - no CEO wants to
+     announce they replaced support with a robot. But if it implies you still
+     need the same headcount, the business case evaporates. The honest
+     resolution is the one the case study already makes: the agent absorbs the
+     repetitive volume, so the same team covers more without growing. That IS
+     the cost story, told from the team's side instead of the P&L's.
+
+  2. DO NOT LOSE THE SEARCH TERM IN THE REWRITE. The <title> and description
+     carry "voice AI" / "e-commerce", which is what the page is actually found
+     for, and Search Console work is mid-flight. Human language belongs in the
+     H1 and the subhead; the keyword stays in the title tag and the meta. These
+     are two different audiences reading two different surfaces - do not
+     sacrifice the crawler's copy to fix the human's.
+
+  3. "SUPER AGENT" IS CROWDED. The phrase is becoming generic across the AI
+     tooling market in 2026. Check it does not put us in a category we do not
+     want before it goes in an H1. "Teammate", "the person who never misses a
+     call", or naming the agent (Elena, as in the Creative Cables story) are
+     warmer and more ownable than a category noun.
+
+  4. THREE <h1> TAGS. site/index.html renders the same H1 three times (Framer's
+     responsive variants). Whatever the new copy is, this is the moment to fix
+     that rather than triplicate the new one.
+
+SCOPE: EN and IT together - a homepage rewritten in one language only is a
+half-rewrite, same rule as the blog. IT is not a translation of EN here; "Il tuo
+e-commerce ha tutto. Tranne la voce." is its own line and the Italian will need
+its own idea, not a rendering of the English one.
+
+NOT STARTED. Needs Daniel's copy direction first, or a draft to react to -
+the last two landing-page rewrites were rejected for reading like blog posts,
+so bring three short options, not one long page.
+
+---
+
 ## Still open from earlier sessions
 
 1. **Cookie consent.** GA4 sets `_ga` before any consent and there is no banner.
