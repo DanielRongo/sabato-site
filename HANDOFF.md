@@ -326,6 +326,40 @@ LLM can quote - do not judge them on sessions.
 
 ---
 
+## TASK (13 Aug, Daniel): split the Product section into four
+
+Daniel, verbatim: "add to the things to do the product section split into:
+Voice Agent Builder, Visual Agentic Workflow Builder (to be renamed), Called
+Data Intelligence, Calls Evaluation Tool (to be renamed)".
+
+  1. Voice Agent Builder
+  2. Visual Agentic Workflow Builder      <- NAME NOT FINAL
+  3. Call Data Intelligence               <- Daniel typed "Called"; confirm
+  4. Calls Evaluation Tool                <- NAME NOT FINAL
+  5. Integrations & Webhooks              (added 13 Aug)
+
+Note on 5: it is a different KIND of item from 1-4. Those are things the
+customer uses; integrations are how the thing connects to what they already
+run. On most sites that argues for it sitting slightly apart - last in the
+section, or as a page the other four link into - rather than as a peer tile.
+Worth deciding when the section is laid out, not after.
+
+TWO NAMES ARE EXPLICITLY PROVISIONAL. Do not build nav labels, slugs or a hub
+around 2 and 4 until Daniel has settled them - a slug is the one thing on this
+site that is expensive to change once indexed, which is exactly why the
+/use-cases URL space was never renamed when the menu was reorganised.
+
+THIS IS A THIRD TAXONOMY. The header already carries Use Cases (what the agent
+does), Industries (who it is for) and now Playbooks (why you are looking).
+Product (what you actually buy) is a fourth axis and the menu is already at its
+limit - Daniel's own words on 13 Aug were that it is "overcrowding". Decide
+where Product lives BEFORE building the pages: most likely its own top-level
+nav item rather than a fourth column in an existing dropdown.
+
+NOT STARTED. Needs the two names first, then a nav decision, then pages.
+
+---
+
 ## Still open from earlier sessions
 
 1. **Cookie consent.** GA4 sets `_ga` before any consent and there is no banner.

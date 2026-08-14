@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
 <!-- Consent Mode (Sabato) -->
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}(function(){var a="denied",m="denied";try{var c=JSON.parse(localStorage.getItem("sb-consent")||"null");if(c&&c.v===1&&(Date.now()-Date.parse(c.ts))<180*864e5){a=c.analytics?"granted":"denied";m=c.marketing?"granted":"denied";}}catch(e){}gtag("consent","default",{ad_storage:m,ad_user_data:m,ad_personalization:m,analytics_storage:a,functionality_storage:"granted",security_storage:"granted",wait_for_update:500});})();</script>
@@ -28,6 +28,14 @@
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Playbook Voice AI per l'e-commerce | Sabato AI</title>
+  <meta name="description" content="Sei situazioni che portano chi gestisce un e-commerce a cercare una voice AI: alta stagione, nuovi mercati, chiamate perse, costi. E cosa fare per ciascuna.">
+  <link rel="canonical" href="https://www.sabato.ai/it/playbook/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Playbook Voice AI per l'e-commerce | Sabato AI">
+  <meta property="og:description" content="Sei situazioni che portano chi gestisce un e-commerce a cercare una voice AI: alta stagione, nuovi mercati, chiamate perse, costi. E cosa fare per ciascuna.">
+  <meta property="og:url" content="https://www.sabato.ai/it/playbook/">
+  <meta property="og:image" content="https://www.sabato.ai/fuc/assets/8Q4ofjOgRTqsr8FpanTJF9nzLwU.png">
   <link rel="icon" href="/fuc/images/hWFOqN6Okd1QgfKhizqgIF1s.png" media="(prefers-color-scheme: light)">
   <link rel="icon" href="/fuc/images/dEcuqc3xAQ3JJoX4xQDYrMQefA.png" media="(prefers-color-scheme: dark)">
   <style>
@@ -45,7 +53,12 @@
       --black: rgb(0, 0, 0);           /* dark bands */
       --ink: rgb(18, 10, 11);          /* primary text */
       --gray: rgb(69, 65, 64);         /* body/secondary text */
-      --off: rgb(248, 244, 241);       /* light card background */
+      /* Grey, not cream. This was rgb(248, 244, 241) - a warm off-white that
+         read as yellow against the black bands and the white page. Now the
+         same value as --mist on the case-study pages, so the two families
+         match. Every use of --off in this file is a background; there is no
+         text or border keyed on it. */
+      --off: rgb(249, 250, 253);       /* light grey card background */
       --line: rgb(227, 226, 226);      /* hairlines */
       --blue: rgb(0, 102, 204);        /* text links - 5.6:1 on white, AA at any size */
       --font: "Satoshi", "Inter", -apple-system, "Helvetica Neue", sans-serif;
@@ -306,44 +319,6 @@
     }
 
   </style>
-  <title>Terms of Service | Sabato AI</title>
-  <meta name="description" content="The terms governing use of Sabato AI's managed voice agents: service levels, data handling, subscriptions and cancellation.">
-  <link rel="canonical" href="https://www.sabato.ai/terms">
-  <link rel="alternate" hreflang="en" href="https://www.sabato.ai/terms">
-  <link rel="alternate" hreflang="it" href="https://www.sabato.ai/it/termini-e-condizioni">
-  <link rel="alternate" hreflang="x-default" href="https://www.sabato.ai/terms">
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Terms of Service | Sabato AI">
-  <meta property="og:description" content="The terms governing use of Sabato AI's managed voice agents: service levels, data handling, subscriptions and cancellation.">
-  <meta property="og:url" content="https://www.sabato.ai/terms">
-  <meta property="og:locale" content="en_US">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="robots" content="index,follow">
-  <style>
-    /* Legal pages: one column, generous measure. Long documents only need to be
-       readable - no grid, no cards. */
-    .lg-wrap { max-width: 820px; margin: 0 auto; padding: 0 24px; }
-    .lg-head { padding: 72px 0 40px; border-bottom: 1px solid var(--line); margin-bottom: 44px; }
-    .lg-eyebrow { font-family: var(--hand); font-weight: 700; font-size: 19px; color: var(--gray); }
-    .lg-wrap h1 { font-size: 52px; line-height: 1.1; letter-spacing: -1.6px; margin: 14px 0 18px; }
-    .lg-dates { color: var(--gray); font-size: 16px; line-height: 1.7; }
-    .lg-body h2 { font-size: 26px; line-height: 1.25; letter-spacing: -.6px; margin: 44px 0 14px; }
-    .lg-body h3 { font-size: 19px; line-height: 1.35; margin: 28px 0 10px; }
-    .lg-body p { color: var(--gray); font-size: 17px; line-height: 1.75; margin: 0 0 16px; }
-    .lg-body ul { margin: 0 0 18px; padding-left: 22px; }
-    .lg-body li { color: var(--gray); font-size: 17px; line-height: 1.75; margin-bottom: 9px; }
-    .lg-body a { color: var(--blue); }
-    .lg-body strong { color: var(--ink); font-weight: 700; }
-    .lg-foot-note { margin: 52px 0 96px; padding: 20px 22px; background: var(--off);
-                    border-radius: 16px; color: var(--gray); font-size: 15px; line-height: 1.7; }
-    @media (max-width: 809px) {
-      .lg-wrap { padding: 0 20px; }
-      .lg-head { padding: 48px 0 28px; margin-bottom: 32px; }
-      .lg-wrap h1 { font-size: 34px; letter-spacing: -1px; }
-      .lg-body h2 { font-size: 22px; margin: 34px 0 12px; }
-      .lg-body p, .lg-body li { font-size: 16px; }
-    }
-  </style>
   <link rel="stylesheet" href="/css/footer.css">
 <!-- GA4 (Sabato) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-BSK4KH9JJF"></script>
@@ -360,106 +335,23 @@
 <!-- /Marketing tag -->
 </head>
 <body>
-<header class="sb-header" data-lang="en"><div class="sb-hdr-shell"><a class="sb-hdr-logo" href="/" aria-label="Sabato AI - Home"><img src="/fuc/images/UTATYXc6NipXQRoxyaGHHfHSyA4-f2557e25.png" alt="Sabato AI" width="2080" height="278"></a><nav class="sb-hdr-nav" aria-label="Main"><span class="sb-nav-item"><a href="/use-cases" aria-haspopup="true">Use Cases</a><span class="sb-dd sb-dd-2col" data-uc-dropdown="uc"><span class="sb-dd-col"><span class="sb-dd-head">Playbooks</span><a href="/playbooks/peak-season">Handle Peak Season</a><a href="/playbooks/international-expansion">Expand Into New Countries</a><a href="/playbooks/missed-calls">Answer Every Call</a><a href="/playbooks/support-costs">Cut Support Costs</a><a href="/playbooks/high-value-work">Free Up Your Team</a><a href="/playbooks/multilingual-support">Support Every Language</a><a class="sb-dd-all" href="/playbooks">All playbooks</a></span><span class="sb-dd-col"><span class="sb-dd-head">Workflows</span><a href="/use-cases/pre-sales-consultation">Pre-Sales Consultation</a><a href="/use-cases/where-is-my-order">Where Is My Order</a><a href="/use-cases/qualify-and-collect-for-quote">Qualify &amp; Collect for Quote</a><a href="/use-cases/open-a-complaint">Open a Complaint</a><a href="/use-cases/managing-returns">Managing Returns</a><a href="/use-cases/back-in-stock-notification">Back-in-Stock Notification</a><a class="sb-dd-all" href="/use-cases">All workflows</a></span></span></span><span class="sb-nav-item"><a href="/industries" aria-haspopup="true">Industries</a><span class="sb-dd" data-uc-dropdown="ind"><a href="/industries/home-improvement">Home Improvement</a><a href="/industries/automotive-parts">Automotive &amp; Parts</a><a href="/industries/electronics-tech">Electronics &amp; Tech</a><a href="/industries/furniture-home">Furniture &amp; Home</a><a href="/industries/outdoor-garden">Outdoor &amp; Garden</a><a href="/industries/fashion-apparel">Fashion &amp; Apparel</a><a href="/industries/health-wellness">Health &amp; Wellness</a><a href="/industries/sports-fitness">Sports &amp; Fitness</a><a href="/industries/industrial-b2b">Industrial &amp; B2B</a><a class="sb-dd-all" href="/industries">All industries</a></span></span><a href="/pricing">Pricing</a><a href="/about">About</a><a href="/contact">Contact</a><a class="sb-hdr-flag" href="/it" data-lang-switch aria-label="Italiano">🇮🇹</a></nav><a class="sb-hdr-btn" href="https://cal.com/sabatoai/intro" target="_blank" rel="noopener">Start Free Pilot</a><button class="sb-burger" type="button" aria-expanded="false" aria-controls="sb-menu" aria-label="Open menu"><span></span><span></span></button></div><div class="sb-panel" id="sb-menu"><div class="sb-panel-inner"><a href="/use-cases">Use Cases</a><a href="/industries">Industries</a><a href="/pricing">Pricing</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/playbooks/peak-season">Handle Peak Season</a><a href="/playbooks/international-expansion">Expand Into New Countries</a><a href="/playbooks/missed-calls">Answer Every Call</a><a href="/playbooks/support-costs">Cut Support Costs</a><a href="/playbooks/high-value-work">Free Up Your Team</a><a href="/playbooks/multilingual-support">Support Every Language</a><a href="https://cal.com/sabatoai/intro" target="_blank" rel="noopener">Book a Demo</a><a class="sb-hdr-flag" href="/it" data-lang-switch>🇮🇹</a></div></div></header><script>(function(){var h=document.querySelector(".sb-header");if(!h)return;var b=h.querySelector(".sb-burger"),p=h.querySelector(".sb-panel");if(!b||!p)return;function set(o){h.classList.toggle("sb-open",o);b.setAttribute("aria-expanded",o?"true":"false");document.documentElement.style.overflow=o?"hidden":"";}b.addEventListener("click",function(e){e.preventDefault();set(!h.classList.contains("sb-open"));});p.addEventListener("click",function(e){if(e.target.closest("a"))set(false);});document.addEventListener("keydown",function(e){if(e.key==="Escape")set(false);});addEventListener("resize",function(){if(innerWidth>=1024)set(false);});})();</script>
-<main class="lg-wrap">
-  <div class="lg-head">
-    <span class="lg-eyebrow">Legal</span>
-    <h1>Terms &amp; Conditions</h1>
-    <p class="lg-dates">Last updated: 22 June 2026</p>
-  </div>
-  <div class="lg-body">
-    <h2>General Terms and Conditions</h2>
-    <p>These General Terms and Conditions ("General Terms") govern all Order Forms between Sabato Ltd, a company registered in England and Wales under company number 17294448, with its registered office at 71-75 Shelton Street, Covent Garden, London, WC2H 9JQ, United Kingdom ("Sabato"), and the legal entity or individual identified as the Customer in the Order Form. Sabato offers a Voice AI agent and catalog search engine for e-commerce merchants. Sabato is an automation tool. While we strive for accuracy, Sabato is not responsible for discrepancies between the AI's spoken responses and the actual inventory or pricing on your store.</p>
-    <p>Sabato and the Customer are collectively referred to as the "Parties" and individually as a "Party."</p>
-    <p>The Customer's own general terms and conditions are not applicable and are expressly excluded.</p>
-    <p>Specific service terms, product details, and/or subscription conditions will be outlined in each applicable Order Form. Each Order Form becomes binding on the Parties upon execution and is subject to these General Terms and any documents referenced within them.</p>
-    <p>Each Order Form is governed by the following documents, in order of precedence (collectively referred to as the "Agreement"):</p>
-    <ul>
-      <li>The Order Form;</li>
-      <li>The Data Processing Agreement (if applicable);</li>
-      <li>These General Terms.</li>
-    </ul>
-    <p>In the event of a conflict, the order of precedence is as set out above.</p>
-    <h2>Modifications to Terms</h2>
-    <p>Sabato reserves the right to unilaterally modify these General Terms at any time, provided it gives prior written notice of such changes to the Customer (including, without limitation, via e-mail) (the "Notice"). If the Customer does not agree with the changes, they may terminate this Agreement within fifteen (15) days of receiving the Notice by providing written notification to Sabato. If the Customer does not notify Sabato of their intent to terminate, the new terms will become effective as of the date specified in the Notice.</p>
-    <h2>Scope of Agreement</h2>
-    <p>This Agreement governs:</p>
-    <ul>
-      <li>The Customer's subscription to the SaaS Solution described in the Order Form, made available to the Customer in accordance with the terms of this Agreement; and/or</li>
-      <li>The Customer's subscription to or purchase of additional Services as outlined in the Order Form.</li>
-    </ul>
-    <h2>Definitions</h2>
-    <p><strong>"Affiliate"</strong> means, in relation to a Party, any entity that directly or indirectly controls, is controlled by, or is under common control with that Party, where "control" has the meaning given in sections 1159 and 1162 of the Companies Act 2006.</p>
-    <p><strong>"Credits"</strong> refers to non-refundable electronic tokens purchased by the Customer or provided by Sabato under the relevant subscription terms, which may be used by the Customer to access and use certain features or services of the SaaS Solution.</p>
-    <p><strong>"Documentation"</strong> refers to any documentation provided by Sabato related to the use of the SaaS Solution.</p>
-    <p><strong>"DPA"</strong> refers to the applicable Data Processing Agreement of Sabato, if applicable.</p>
-    <p><strong>"Effective Date"</strong> is the date when the Customer signs the relevant Order Form.</p>
-    <p><strong>"End User"</strong> refers to any individual authorized by the Customer to use the Software on their behalf.</p>
-    <p><strong>"Integration Date"</strong> is the date on which the Customer's store repository is integrated with the Licensed Software.</p>
-    <p><strong>"Intellectual Property Rights"</strong> refers to any and all rights associated with works of authorship, trademarks, patents, trade secrets, and other proprietary rights, whether registered or unregistered, in any jurisdiction worldwide.</p>
-    <p><strong>"Order Form"</strong> refers to any quote or ordering document issued in accordance with these General Terms that references these General Terms.</p>
-    <p><strong>"Order Term"</strong> refers to the Subscription Term and any subsequent renewal terms as defined in the Order Form.</p>
-    <p><strong>"SaaS Solution"</strong> refers to the Sabato Voice Agent platform, including the Shopify Connector and web-based dashboard.</p>
-    <p><strong>"Subscription Term"</strong> refers to the period from the start date to the end date specified in each Order Form.</p>
-    <p><strong>"Support Services"</strong> refers to maintenance and other support services related to the Software being subscribed to.</p>
-    <h2>Access, Use, and Restrictions</h2>
-    <p>During the Subscription Term, Sabato grants the Customer and its Affiliates a limited, non-exclusive, non-transferable, non-sublicensable, worldwide right to:</p>
-    <ul>
-      <li>Access and use the SaaS Solution in accordance with the Documentation, solely for the internal business purposes of the Customer and subject to the terms of this Agreement and any additional license parameters or restrictions identified in the Order Form; and</li>
-      <li>Use and make a reasonable number of copies of the Documentation for authorized use of the SaaS Solution.</li>
-    </ul>
-    <p>By installing the Sabato App on your store (ie Shopify), the Customer grants Sabato permission to access, read, and cache their Shopify Product Catalog, Inventory Levels, and Location data ("Shopify Data"). This data is synchronized to Sabato servers to enable low-latency Voice Search responses. Sabato agrees to refresh this data at reasonable intervals to ensure accuracy, but strictly disclaims liability for temporary data mismatches (e.g., selling out of stock items via voice).</p>
-    <p>The Customer acknowledges that access to and use of the SaaS Solution is subject to the number of End Users specified in the Order Form. Any increase or decrease in the number of End Users must be requested in writing and confirmed by Sabato through an updated Order Form.</p>
-    <h2>Obligations of the Customer</h2>
-    <p>The Customer agrees to:</p>
-    <ul>
-      <li>Provide all necessary information, documentation, and cooperation reasonably requested by Sabato to fulfill its obligations under this Agreement;</li>
-      <li>Use the SaaS Solution in compliance with all applicable laws and regulations;</li>
-      <li>Maintain its network connections and telecommunication links to access the SaaS Solution; and</li>
-      <li>Take reasonable precautions to prevent the introduction of viruses or harmful software into the SaaS Solution.</li>
-    </ul>
-    <h2>Intellectual Property Rights</h2>
-    <p>All intellectual property rights existing before the Agreement will remain with the Party that owns them. Sabato retains all intellectual property rights related to the SaaS Solution, including any modifications, enhancements, or derivative works.</p>
-    <h2>Consent for Data Usage and Model Training</h2>
-    <p>The Customer acknowledges and agrees that, by using the SaaS Solution, Sabato may collect, store data, and analyze documents, voice interactions, and other data submitted through the platform ("Usage Data") for the purposes of:</p>
-    <ul>
-      <li>Improving the accuracy, performance, and capabilities of the Sabato platform and underlying models;</li>
-      <li>Training and refining AI algorithms and machine learning systems;</li>
-      <li>Detecting misuse, system errors, or anomalies;</li>
-      <li>Enhancing overall user experience and product development.</li>
-    </ul>
-    <p>Where such data contains personal data, Sabato shall process it in accordance with applicable data protection laws, including the UK General Data Protection Regulation (UK GDPR) and the Data Protection Act 2018, and, where applicable to processing of personal data of individuals in the European Union, the General Data Protection Regulation (EU) 2016/679 ("EU GDPR"). Where required, a separate Data Processing Agreement (DPA) will govern the scope and nature of such processing.</p>
-    <p>The Customer represents that it has all necessary rights, consents, and legal basis to allow such use of the data submitted through the SaaS Solution, including any data uploaded by End Users.</p>
-    <p>If the Customer wishes to opt out of such usage for training or development purposes, they may do so by notifying Sabato in writing. However, such an opt-out may limit the functionality or performance of the SaaS Solution.</p>
-    <h2>Publicity and Anonymized Use</h2>
-    <p>Unless otherwise agreed in writing, Sabato may reference the Customer's use of the SaaS Solution for marketing, promotional, or case study purposes. This may include:</p>
-    <ul>
-      <li>Listing the Customer's name and logo on the Sabato website or marketing materials;</li>
-      <li>Referencing anonymized use cases or data patterns to demonstrate product features or performance improvements;</li>
-      <li>Publishing high-level outcomes or impact summaries (e.g., efficiency gains, review speed) without disclosing confidential or identifying information.</li>
-    </ul>
-    <p>The Customer grants Sabato a non-exclusive, royalty-free license to use its name, logo, and brand assets strictly for these purposes. If the Customer wishes to revoke this license at any time, they may do so with thirty (30) days' written notice.</p>
-    <h2>Indemnity and Liability</h2>
-    <p>Sabato will indemnify the Customer against any claims that the SaaS Solution infringes on third-party intellectual property rights, provided the Customer promptly notifies Sabato of the claim and allows Sabato to control the defense.</p>
-    <p><strong>Disclaimer:</strong> The Customer acknowledges that the SaaS Solution utilizes Artificial Intelligence and Large Language Models (LLMs) to generate voice responses. While Sabato implements safeguards, the AI may occasionally generate incorrect or "hallucinated" responses regarding product availability, pricing, or details. The Customer agrees that Sabato is not liable for refunds, lost sales, or customer disputes arising from AI-generated errors.</p>
-    <p>In no event will Sabato be liable for special, incidental, punitive, indirect, or consequential damages, including lost profits or data. Sabato's total liability is limited to the amount paid by the Customer in the twelve (12) months prior to the event giving rise to the claim.</p>
-    <h2>Cancellation Policy</h2>
-    <p>The Customer may terminate this Agreement at any time by uninstalling the Sabato App from their Store. Upon uninstallation, Sabato will cease syncing data. However, the Customer acknowledges that they must also cancel any active subscriptions in the external Sabato Dashboard to stop billing. Uninstallation of the store ("Shopify") App does not automatically cancel external billing agreements. Following uninstallation, Sabato will delete the Customer's Shopify Data in accordance with Shopify's mandatory GDPR webhooks (Erasure Requests) and our Data Retention Policy.</p>
-    <h2>Confidentiality</h2>
-    <p>Both Parties agree to maintain the confidentiality of all proprietary and confidential information disclosed during the Subscription Term. The confidentiality obligation survives for five (5) years after the termination of the Agreement.</p>
-    <h2>Governing Law and Jurisdiction</h2>
-    <p>This Agreement is governed by the laws of England and Wales. Any disputes arising from or in connection with this Agreement will be subject to the exclusive jurisdiction of the courts of England and Wales.</p>
-  </div>
-  <p class="lg-foot-note">This page is the English original. La versione italiana è disponibile su <a href="/it/termini-e-condizioni" data-lang-switch>Termini e Condizioni</a>. In the event of any discrepancy between the two versions, the English text prevails.</p>
-</main><!-- The footer is inserted right here by apply_footer.py. Do NOT put a
-newline before the closing body tag: the installer's strip eats leading
-whitespace but restores exactly one newline, so a stray one makes the output
-oscillate and --check never settles. And do not write the closing body tag
-inside a comment either - the installer searches for the first occurrence of
-it, so a mention in prose swallows the whole footer into this comment. Both
-of those were real, in that order. --><footer class="sb-footer" data-lang="en"><div class="sb-shell"><div class="sb-grid"><div class="sb-brand"><a href="/" aria-label="Sabato AI - Home"><img class="sb-logo" src="/fuc/images/KY1UqOX7zKeKJdbxTotIopeeZIU-f2557e25.png" alt="Sabato AI logo" width="2080" height="278" loading="lazy"></a><p class="sb-tagline">The #1 managed Voice AI <br>for <span class="sb-nb">E-Commerce</span>.</p><p class="sb-backed">Backed by</p><img class="sb-backed-img" src="/fuc/images/V9nq776DtkEODcun83ayNz0liCU-28058054.webp" alt="ElevenLabs Grants" width="1496" height="132" loading="lazy"></div><div class="sb-col sb-col-static"><span class="sb-h4">Company</span><ul><li><a href="/">Home</a></li><li><a href="/pricing">Pricing</a></li><li><a href="/about">About</a></li><li><a href="/contact">Contact us</a></li><li><a href="/blog">Blog</a></li><li><a href="https://cal.com/sabatoai/intro" target="_blank" rel="noopener">Book a Demo</a></li></ul></div><details class="sb-col sb-acc" open><summary><span class="sb-h4">Use Cases</span></summary><ul><li><a href="/use-cases/pre-sales-consultation">Pre-Sales Consultation</a></li><li><a href="/use-cases/cart-abandonment-recovery">Cart Abandonment Recovery</a></li><li><a href="/use-cases/where-is-my-order">Where Is My Order</a></li><li><a href="/use-cases/qualify-and-collect-for-quote">Qualify &amp; Collect for Quote</a></li><li><a href="/use-cases/open-a-complaint">Open a Complaint</a></li><li><a href="/use-cases/checkout-summary-via-text">Checkout Summary via Text</a></li><li><a href="/use-cases/managing-returns">Managing Returns</a></li><li><a href="/use-cases/post-delivery-feedback">Post-Delivery Feedback</a></li><li><a href="/use-cases/back-in-stock-notification">Back-in-Stock Notification</a></li></ul></details><details class="sb-col sb-acc" open><summary><span class="sb-h4">Industries</span></summary><ul><li><a href="/industries/home-improvement">Home Improvement</a></li><li><a href="/industries/automotive-parts">Automotive &amp; Parts</a></li><li><a href="/industries/electronics-tech">Electronics &amp; Tech</a></li><li><a href="/industries/furniture-home">Furniture &amp; Home</a></li><li><a href="/industries/outdoor-garden">Outdoor &amp; Garden</a></li><li><a href="/industries/fashion-apparel">Fashion &amp; Apparel</a></li><li><a href="/industries/health-wellness">Health &amp; Wellness</a></li><li><a href="/industries/sports-fitness">Sports &amp; Fitness</a></li><li><a href="/industries/industrial-b2b">Industrial &amp; B2B</a></li></ul></details></div><div class="sb-bottom"><p class="sb-copy">&copy; 2026 Sabato LTD - 71-75, Shelton Street, Covent Garden, London (UK) - All rights reserved.</p><div class="sb-legal"><a href="/terms">Terms and Conditions</a><a href="/privacy-policy">Privacy and Cookies</a><a href="#" data-sb-consent-open>Cookie preferences</a><a href="/it" data-lang-switch>Italiano</a><a href="https://www.linkedin.com/company/sabato-ai" target="_blank" rel="noopener" aria-label="Sabato AI on LinkedIn"><img src="/fuc/images/3vdzRTYV1XV6UUX6QKcsDIfU-e464e3f1.svg" alt="LinkedIn" width="20" height="20" loading="lazy"></a></div></div></div></footer><script>(function(){try{var mq=window.matchMedia&&window.matchMedia("(max-width: 809px)");var d=document.querySelectorAll(".sb-footer details.sb-acc");var i;if(mq&&mq.matches)for(i=0;i<d.length;i++)d[i].removeAttribute("open");for(i=0;i<d.length;i++)(function(el){var s=el.querySelector("summary");if(!s)return;s.addEventListener("click",function(e){if(!mq||!mq.matches)e.preventDefault();});})(d[i]);window.addEventListener("resize",function(){if(mq&&mq.matches)return;for(var j=0;j<d.length;j++)d[j].setAttribute("open","");});}catch(e){}})();</script>
+<header class="sb-header" data-lang="it"><div class="sb-hdr-shell"><a class="sb-hdr-logo" href="/it" aria-label="Sabato AI - Home"><img src="/fuc/images/UTATYXc6NipXQRoxyaGHHfHSyA4-f2557e25.png" alt="Sabato AI" width="2080" height="278"></a><nav class="sb-hdr-nav" aria-label="Main"><span class="sb-nav-item"><a href="/it/casi-duso" aria-haspopup="true">Casi d'uso</a><span class="sb-dd sb-dd-2col" data-uc-dropdown="uc"><span class="sb-dd-col"><span class="sb-dd-head">Playbook</span><a href="/it/playbook/picchi-stagionali">Gestisci l'alta stagione</a><a href="/it/playbook/espansione-internazionale">Espandi in nuovi Paesi</a><a href="/it/playbook/chiamate-perse">Rispondi a ogni chiamata</a><a href="/it/playbook/costi-assistenza">Riduci i costi di assistenza</a><a href="/it/playbook/attivita-di-valore">Libera il tuo team</a><a href="/it/playbook/assistenza-multilingue">Assisti in ogni lingua</a><a class="sb-dd-all" href="/it/playbook">Tutti i playbook</a></span><span class="sb-dd-col"><span class="sb-dd-head">Flussi</span><a href="/it/casi-duso/consulenza-pre-vendita">Consulenza Pre-Vendita</a><a href="/it/casi-duso/dove-e-il-mio-ordine">Dov'è il Mio Ordine</a><a href="/it/casi-duso/preventivi-automatici">Preventivi Automatici</a><a href="/it/casi-duso/apertura-reclamo">Apertura Reclamo</a><a href="/it/casi-duso/gestione-resi">Gestione Resi</a><a href="/it/casi-duso/notifica-ritorno-in-stock">Notifica Ritorno in Stock</a><a class="sb-dd-all" href="/it/casi-duso">Tutti i flussi</a></span></span></span><span class="sb-nav-item"><a href="/it/settori" aria-haspopup="true">Settori</a><span class="sb-dd" data-uc-dropdown="ind"><a href="/it/settori/clima-e-riscaldamento">Clima e Riscaldamento</a><a href="/it/settori/ricambi-auto">Automotive e Ricambi</a><a href="/it/settori/elettronica">Elettronica e Tech</a><a href="/it/settori/arredamento">Arredamento e Casa</a><a href="/it/settori/industria-b2b">Industria e B2B</a><a href="/it/settori/giardino-outdoor">Outdoor e Giardino</a><a href="/it/settori/moda-abbigliamento">Fashion e Abbigliamento</a><a href="/it/settori/salute-benessere">Salute e Benessere</a><a href="/it/settori/sport-fitness">Sport e Fitness</a><a class="sb-dd-all" href="/it/settori">Tutti i settori</a></span></span><a href="/it/prezzi">Prezzi</a><a href="/it/chi-siamo">Chi Siamo</a><a href="/it/contatti">Contatti</a><a class="sb-hdr-flag" href="/" data-lang-switch aria-label="English">🇬🇧</a></nav><a class="sb-hdr-btn" href="https://cal.com/sabatoai/intro" target="_blank" rel="noopener">Inizia il Pilota Gratuito</a><button class="sb-burger" type="button" aria-expanded="false" aria-controls="sb-menu" aria-label="Apri il menu"><span></span><span></span></button></div><div class="sb-panel" id="sb-menu"><div class="sb-panel-inner"><a href="/it/casi-duso">Casi d'uso</a><a href="/it/settori">Settori</a><a href="/it/prezzi">Prezzi</a><a href="/it/chi-siamo">Chi Siamo</a><a href="/it/contatti">Contatti</a><a href="/it/playbook/picchi-stagionali">Gestisci l'alta stagione</a><a href="/it/playbook/espansione-internazionale">Espandi in nuovi Paesi</a><a href="/it/playbook/chiamate-perse">Rispondi a ogni chiamata</a><a href="/it/playbook/costi-assistenza">Riduci i costi di assistenza</a><a href="/it/playbook/attivita-di-valore">Libera il tuo team</a><a href="/it/playbook/assistenza-multilingue">Assisti in ogni lingua</a><a href="https://cal.com/sabatoai/intro" target="_blank" rel="noopener">Prenota una Demo</a><a class="sb-hdr-flag" href="/" data-lang-switch>🇬🇧</a></div></div></header><script>(function(){var h=document.querySelector(".sb-header");if(!h)return;var b=h.querySelector(".sb-burger"),p=h.querySelector(".sb-panel");if(!b||!p)return;function set(o){h.classList.toggle("sb-open",o);b.setAttribute("aria-expanded",o?"true":"false");document.documentElement.style.overflow=o?"hidden":"";}b.addEventListener("click",function(e){e.preventDefault();set(!h.classList.contains("sb-open"));});p.addEventListener("click",function(e){if(e.target.closest("a"))set(false);});document.addEventListener("keydown",function(e){if(e.key==="Escape")set(false);});addEventListener("resize",function(){if(innerWidth>=1024)set(false);});})();</script>
+<section class="ix-hero"><div class="shell">
+  <h1>Sei motivi per cui ci si mette a cercare.</h1>
+  <p>Nessuno si sveglia volendo un agente vocale. Ci si sveglia con un problema: una coda che non si smaltisce, un mercato a cui non sai rispondere, un telefono che nessuno alza. Ogni playbook qui sotto è una di quelle situazioni, e cosa faremmo davvero.</p>
+</div></section>
+<div class="shell"><div class="ix-grid"><a class="ix-card" href="/it/playbook/picchi-stagionali"><h3>Gestisci l'alta stagione</h3><p class="ix-lead">Picco gestito. Zero stagionali.</p></a><a class="ix-card" href="/it/playbook/espansione-internazionale"><h3>Espandi in nuovi Paesi</h3><p class="ix-lead">Apri cinque Paesi. Nella loro lingua.</p></a><a class="ix-card" href="/it/playbook/chiamate-perse"><h3>Rispondi a ogni chiamata</h3><p class="ix-lead">La chiamata persa non lascia traccia.</p></a><a class="ix-card" href="/it/playbook/costi-assistenza"><h3>Riduci i costi di assistenza</h3><p class="ix-lead">Non puoi assumere un terzo di persona.</p></a><a class="ix-card" href="/it/playbook/attivita-di-valore"><h3>Libera il tuo team</h3><p class="ix-lead">Il telefono ti ruba le persone migliori.</p></a><a class="ix-card" href="/it/playbook/assistenza-multilingue"><h3>Assisti in ogni lingua</h3><p class="ix-lead">Localizzato tutto tranne chi risponde.</p></a></div></div>
+<section class="cta-band"><div class="shell">
+  <span class="hand">venti minuti, senza slide</span>
+  <h2>Non sai in quale ti trovi?</h2>
+  <p>Quasi tutti se ne riconoscono due insieme. Porta il tuo log chiamate alla call e ti diciamo quale ti sta costando di più.</p>
+  <a class="btn-pill" href="https://cal.com/sabatoai/intro" target="_blank" rel="noopener">Inizia Pilot Gratuito</a>
+</div></section>
+  <!-- footer: rendered by tools/apply_footer.py from footer.py - do not paste one here -->
+<script src="/js/enhance.js?v=a6a1e75602"></script>
+<footer class="sb-footer" data-lang="it"><div class="sb-shell"><div class="sb-grid"><div class="sb-brand"><a href="/it" aria-label="Sabato AI - Home"><img class="sb-logo" src="/fuc/images/KY1UqOX7zKeKJdbxTotIopeeZIU-f2557e25.png" alt="Sabato AI logo" width="2080" height="278" loading="lazy"></a><p class="sb-tagline">La prima voice AI dedicata <br>esclusivamente all&rsquo;E-Commerce.</p><p class="sb-backed">Supportato da</p><img class="sb-backed-img" src="/fuc/images/V9nq776DtkEODcun83ayNz0liCU-28058054.webp" alt="ElevenLabs Grants" width="1496" height="132" loading="lazy"></div><div class="sb-col sb-col-static"><span class="sb-h4">Azienda</span><ul><li><a href="/it">Home</a></li><li><a href="/it/prezzi">Prezzi</a></li><li><a href="/it/chi-siamo">Chi Siamo</a></li><li><a href="/it/contatti">Contattaci</a></li><li><a href="/it/blog">Blog</a></li><li><a href="https://cal.com/sabatoai/intro" target="_blank" rel="noopener">Prenota una Demo</a></li></ul></div><details class="sb-col sb-acc" open><summary><span class="sb-h4">Casi d&rsquo;uso</span></summary><ul><li><a href="/it/casi-duso/consulenza-pre-vendita">Consulenza Pre-Vendita</a></li><li><a href="/it/casi-duso/recupero-carrelli-abbandonati">Recupero Carrelli Abbandonati</a></li><li><a href="/it/casi-duso/dove-e-il-mio-ordine">Dov'è il Mio Ordine</a></li><li><a href="/it/casi-duso/preventivi-automatici">Preventivi Automatici</a></li><li><a href="/it/casi-duso/apertura-reclamo">Apertura Reclamo</a></li><li><a href="/it/casi-duso/riepilogo-checkout-via-messaggio">Riepilogo Checkout via Messaggio</a></li><li><a href="/it/casi-duso/gestione-resi">Gestione Resi</a></li><li><a href="/it/casi-duso/feedback-post-consegna">Feedback Post-Consegna</a></li><li><a href="/it/casi-duso/notifica-ritorno-in-stock">Notifica Ritorno in Stock</a></li></ul></details><details class="sb-col sb-acc" open><summary><span class="sb-h4">Settori</span></summary><ul><li><a href="/it/settori/clima-e-riscaldamento">Clima e Riscaldamento</a></li><li><a href="/it/settori/ricambi-auto">Automotive e Ricambi</a></li><li><a href="/it/settori/elettronica">Elettronica e Tech</a></li><li><a href="/it/settori/arredamento">Arredamento e Casa</a></li><li><a href="/it/settori/industria-b2b">Industria e B2B</a></li><li><a href="/it/settori/giardino-outdoor">Outdoor e Giardino</a></li><li><a href="/it/settori/moda-abbigliamento">Fashion e Abbigliamento</a></li><li><a href="/it/settori/salute-benessere">Salute e Benessere</a></li><li><a href="/it/settori/sport-fitness">Sport e Fitness</a></li></ul></details></div><div class="sb-bottom"><p class="sb-copy">&copy; 2026 Sabato LTD - 71-75, Shelton Street, Covent Garden, London (UK) - All rights reserved.</p><div class="sb-legal"><a href="/it/termini-e-condizioni">Termini e Condizioni</a><a href="/it/privacy-e-cookie">Privacy e Cookie</a><a href="#" data-sb-consent-open>Preferenze cookie</a><a href="/" data-lang-switch>English</a><a href="https://www.linkedin.com/company/sabato-ai" target="_blank" rel="noopener" aria-label="Sabato AI on LinkedIn"><img src="/fuc/images/3vdzRTYV1XV6UUX6QKcsDIfU-e464e3f1.svg" alt="LinkedIn" width="20" height="20" loading="lazy"></a></div></div></div></footer><script>(function(){try{var mq=window.matchMedia&&window.matchMedia("(max-width: 809px)");var d=document.querySelectorAll(".sb-footer details.sb-acc");var i;if(mq&&mq.matches)for(i=0;i<d.length;i++)d[i].removeAttribute("open");for(i=0;i<d.length;i++)(function(el){var s=el.querySelector("summary");if(!s)return;s.addEventListener("click",function(e){if(!mq||!mq.matches)e.preventDefault();});})(d[i]);window.addEventListener("resize",function(){if(mq&&mq.matches)return;for(var j=0;j<d.length;j++)d[j].setAttribute("open","");});}catch(e){}})();</script>
 <!-- Consent (Sabato) -->
-<div class="sb-consent" id="sb-consent" role="dialog" aria-label="Cookies" aria-describedby="sb-consent-body" data-lang="en" hidden><div class="sb-c-card"><div class="sb-c-bar"><p id="sb-consent-body">We use cookies to understand how this site is used. Nothing runs until you choose. <a href="/privacy-policy">Privacy and Cookies</a></p><div class="sb-c-btns"><button type="button" class="sb-c-btn sb-c-primary" data-sb-c="accept">Accept all</button><button type="button" class="sb-c-btn sb-c-ghost" data-sb-c="reject">Reject all</button><button type="button" class="sb-c-btn sb-c-text" data-sb-c="prefs">Preferences</button><button type="button" class="sb-c-btn sb-c-primary" data-sb-c="save" hidden>Save choices</button></div></div><div class="sb-c-prefs" hidden><label class="sb-c-row"><span class="sb-c-rt"><b>Strictly necessary</b><i>Page delivery, security, and remembering this choice. Always on.</i></span><input type="checkbox" checked disabled></label><label class="sb-c-row"><span class="sb-c-rt"><b>Analytics</b><i>Google Analytics 4. Which pages get read and how people arrive, in aggregate.</i></span><input type="checkbox" data-sb-cat="analytics"></label><label class="sb-c-row"><span class="sb-c-rt"><b>Marketing</b><i>Company-level tracking, so we can follow up with businesses that show interest.</i></span><input type="checkbox" data-sb-cat="marketing"></label></div></div></div><script data-sb-consent>(function(){
+<div class="sb-consent" id="sb-consent" role="dialog" aria-label="Cookie" aria-describedby="sb-consent-body" data-lang="it" hidden><div class="sb-c-card"><div class="sb-c-bar"><p id="sb-consent-body">Usiamo cookie per capire come viene usato il sito. Niente parte senza il tuo consenso. <a href="/it/privacy-e-cookie">Privacy e Cookie</a></p><div class="sb-c-btns"><button type="button" class="sb-c-btn sb-c-primary" data-sb-c="accept">Accetta tutti</button><button type="button" class="sb-c-btn sb-c-ghost" data-sb-c="reject">Rifiuta tutti</button><button type="button" class="sb-c-btn sb-c-text" data-sb-c="prefs">Preferenze</button><button type="button" class="sb-c-btn sb-c-primary" data-sb-c="save" hidden>Salva le scelte</button></div></div><div class="sb-c-prefs" hidden><label class="sb-c-row"><span class="sb-c-rt"><b>Tecnici necessari</b><i>Consegna delle pagine, sicurezza e memoria di questa scelta. Sempre attivi.</i></span><input type="checkbox" checked disabled></label><label class="sb-c-row"><span class="sb-c-rt"><b>Analisi</b><i>Google Analytics 4. Quali pagine vengono lette e come arrivano le persone, in forma aggregata.</i></span><input type="checkbox" data-sb-cat="analytics"></label><label class="sb-c-row"><span class="sb-c-rt"><b>Marketing</b><i>Tracciamento a livello aziendale, per dare seguito alle aziende che mostrano interesse.</i></span><input type="checkbox" data-sb-cat="marketing"></label></div></div></div><script data-sb-consent>(function(){
 var K="sb-consent",V=1,MAXMS=180*864e5;
 function read(){try{var o=JSON.parse(localStorage.getItem(K)||"null");
 if(!o||o.v!==V)return null;

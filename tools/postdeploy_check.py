@@ -30,6 +30,7 @@ PAGES = ["/", "/it", "/pricing", "/about", "/contact", "/blog", "/it/blog",
          # widget landed on them. Two more page loads, one more blind spot gone.
          "/it/prezzi", "/it/chi-siamo",
          "/use-cases", "/it/casi-duso",
+         "/playbooks", "/it/playbook",
          "/blog/reduce-bracketing-returns", "/it/blog/reduce-bracketing-returns",
          "/blog/multilingual-phone-support-eu-expansion",
          "/it/blog/multilingual-phone-support-eu-expansion",

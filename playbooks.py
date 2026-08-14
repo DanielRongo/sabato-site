@@ -558,6 +558,119 @@ def build(lang, slug, d):
     return "https://www.sabato.ai" + (cfg["base"] % slug)
 
 
+# ---------------------------------------------------------------------------
+# THE HUB: /playbooks and /it/playbook
+# ---------------------------------------------------------------------------
+HUB = {
+    "en": dict(
+        tpl="use-case-index.html",
+        out=os.path.join(SITE, "playbooks", "index.html"),
+        url="https://www.sabato.ai/playbooks/",
+        old_url="https://www.sabato.ai/use-cases/",
+        title="Voice AI Playbooks for E-Commerce | Sabato AI",
+        old_title="Voice AI Use Cases for E-Commerce | Sabato AI",
+        description="Six situations that send e-commerce operators looking for "
+                    "voice AI - peak season, new markets, missed calls, support "
+                    "costs - and what to do about each.",
+        h1="Six reasons operators come looking.",
+        intro="Nobody wakes up wanting a voice agent. They wake up with a "
+              "problem: a queue that will not clear, a market they cannot "
+              "answer, a phone nobody picks up. Each playbook below is one of "
+              "those situations, and what we would actually do about it.",
+        # The inherited band asks "which one to START with" and talks about
+        # queues - correct for the workflow hub, wrong here. A playbook is a
+        # situation you are already in, not an option you pick.
+        cta_h2="Not sure which one you are in?",
+        old_cta_h2="Not sure which one to start with?",
+        cta_p="Most operators recognise two of these at once. Bring your call "
+              "log to the intro call and we will tell you which one is costing "
+              "you most.",
+        old_cta_p="Most stores start with one and add a second inside a month. "
+                  "Bring your call log to the intro call and we&rsquo;ll tell "
+                  "you which queue is costing you most.",
+    ),
+    "it": dict(
+        tpl="use-case-index-it.html",
+        out=os.path.join(SITE, "it", "playbook", "index.html"),
+        url="https://www.sabato.ai/it/playbook/",
+        old_url="https://www.sabato.ai/it/casi-duso/",
+        title="Playbook Voice AI per l'e-commerce | Sabato AI",
+        old_title="Casi d'uso Voice AI per l'e-commerce | Sabato AI",
+        description="Sei situazioni che portano chi gestisce un e-commerce a "
+                    "cercare una voice AI: alta stagione, nuovi mercati, "
+                    "chiamate perse, costi. E cosa fare per ciascuna.",
+        h1="Sei motivi per cui ci si mette a cercare.",
+        intro="Nessuno si sveglia volendo un agente vocale. Ci si sveglia con "
+              "un problema: una coda che non si smaltisce, un mercato a cui non "
+              "sai rispondere, un telefono che nessuno alza. Ogni playbook qui "
+              "sotto è una di quelle situazioni, e cosa faremmo davvero.",
+        cta_h2="Non sai in quale ti trovi?",
+        old_cta_h2="Non sai da quale partire?",
+        cta_p="Quasi tutti se ne riconoscono due insieme. Porta il tuo log "
+              "chiamate alla call e ti diciamo quale ti sta costando di più.",
+        old_cta_p="Quasi tutti iniziano da uno e aggiungono il secondo entro un "
+                  "mese. Porta il tuo log chiamate alla call e ti diciamo quale "
+                  "coda ti sta costando di più.",
+    ),
+}
+
+HERO_RX = re.compile(
+    r'(<section class="ix-hero"><div class="shell">\s*<h1>).*?(</h1>\s*<p>).*?(</p>)',
+    re.S)
+
+
+def _card_lead(d):
+    """The playbook's own h1, with the layout tokens removed.
+
+    Same principle as the use-case hub, which uses each page's <h1> as its card
+    line: those headlines are the most worked-over copy on the site and there is
+    no reason to write a second version that can drift from the first.
+    """
+    return re.sub(r"\[/?nb\]", "", d["h1"].replace("[br]", " ")).strip()
+
+
+def build_hub(lang):
+    cfg = HUB[lang]
+    src, order, base = ((PLAYBOOKS, ORDER, LANGS["en"]["base"]) if lang == "en"
+                        else (PLAYBOOKS_IT, ORDER_IT, LANGS["it"]["base"]))
+    cards = "".join(
+        '<a class="ix-card" href="%s"><h3>%s</h3>'
+        '<p class="ix-lead">%s</p></a>'
+        % (base % s, esc(src[s]["nav"]), esc(_card_lead(src[s])))
+        for s in order)
+
+    # DERIVED from the use-case index at build time, never copied - the same
+    # rule the playbook pages follow. A snapshot of a template is a bug with a
+    # delay on it: the Italian customer template was learned that way.
+    t = open(os.path.join(ROOT, "templates", cfg["tpl"]), encoding="utf-8").read()
+    t = t.replace(cfg["old_url"], cfg["url"])
+    t = t.replace(cfg["old_title"], cfg["title"])
+    t = re.sub(r'(<meta name="description" content=")[^"]*(")',
+               lambda m: m.group(1) + html.escape(cfg["description"]) + m.group(2), t, count=1)
+    t = re.sub(r'(<meta property="og:description" content=")[^"]*(")',
+               lambda m: m.group(1) + html.escape(cfg["description"]) + m.group(2), t, count=1)
+    new_hero = HERO_RX.sub(
+        lambda m: m.group(1) + esc(cfg["h1"]) + m.group(2) + esc(cfg["intro"]) + m.group(3),
+        t, count=1)
+    if new_hero == t:
+        sys.exit("playbook hub: the ix-hero block did not match - template changed?")
+    t = new_hero
+    for k in ("cta_h2", "cta_p"):
+        before = cfg["old_" + k]
+        if before not in t:
+            sys.exit("playbook hub: CTA text %r not found - template changed?" % k)
+        t = t.replace(before, esc(cfg[k]), 1)
+    t = t.replace("{{CARDS}}", cards).replace("{{CAL}}", CAL)
+    os.makedirs(os.path.dirname(cfg["out"]), exist_ok=True)
+    open(cfg["out"], "w", encoding="utf-8").write(t)
+    print("  wrote %s  (%d cards)" % (cfg["out"], len(order)))
+    # WITH the trailing slash. The canonical this page carries is
+    # .../playbooks/ and both existing hubs (/use-cases/, /industries/) are
+    # listed that way, so stripping it here would have put a URL in the sitemap
+    # that disagrees with the canonical on the page it points at.
+    return cfg["url"]
+
+
 def sitemap_add(urls):
     path = os.path.join(SITE, "sitemap.xml")
     if not os.path.exists(path):
@@ -578,6 +691,8 @@ def main():
         urls.append(build("en", slug, PLAYBOOKS[slug]))
     for slug in ORDER_IT:
         urls.append(build("it", slug, PLAYBOOKS_IT[slug]))
+    for lang in ("en", "it"):
+        urls.append(build_hub(lang))
     print("  sitemap: %d new URL(s) added" % sitemap_add(urls))
     return 0
 

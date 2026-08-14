@@ -60,8 +60,14 @@ NAV = {
            ("Prezzi", "/it/prezzi", None), ("Chi Siamo", "/it/chi-siamo", None),
            ("Contatti", "/it/contatti", None)],
 }
-ALL_LABEL = {"en": {"uc": "All workflows", "ind": "All industries"},
-             "it": {"uc": "Tutti i flussi", "ind": "Tutti i settori"}}
+ALL_LABEL = {"en": {"uc": "All workflows", "ind": "All industries",
+                    "pb": "All playbooks"},
+             "it": {"uc": "Tutti i flussi", "ind": "Tutti i settori",
+                    "pb": "Tutti i playbook"}}
+# The playbook column needs its own "all" link now that a hub exists - without
+# it /playbooks is reachable only from the sitemap, which is how the use-case
+# hub went unbuilt for months.
+PB_HUB = {"en": "/playbooks", "it": "/it/playbook"}
 # Two taxonomies, one menu. The left column is what the agent DOES on a call;
 # the right column is WHY someone is looking in the first place. Same buyer, two
 # different moments, so they have to be visible at the same time rather than one
@@ -69,6 +75,28 @@ ALL_LABEL = {"en": {"uc": "All workflows", "ind": "All industries"},
 COL_HEAD = {"en": {"uc": "Workflows", "pb": "Playbooks"},
             "it": {"uc": "Flussi", "pb": "Playbook"}}
 PB_BASE = {"en": "/playbooks/", "it": "/it/playbook/"}
+
+# HIDDEN FROM THE DESKTOP DROPDOWN ONLY. Daniel, 13 Aug: the menu was
+# overcrowded once the playbook column arrived, so three workflows come out of
+# it - but the PAGES stay, and so do their links in the footer, on the
+# /use-cases hub, on every industry page and in the sitemap. This is a menu
+# decision, not a deprecation.
+#
+# Keyed on the URL's last segment, in BOTH languages, rather than on the label:
+# labels are editorial and get rewritten, slugs are the identity of the page.
+# Filtering by English label would have silently left all three in the Italian
+# menu, which is precisely the sort of half-applied change this repo keeps
+# catching after the fact.
+MENU_HIDE = {
+    "cart-abandonment-recovery", "recupero-carrelli-abbandonati",
+    "checkout-summary-via-text", "riepilogo-checkout-via-messaggio",
+    "post-delivery-feedback", "feedback-post-consegna",
+}
+
+
+def _menu_visible(items):
+    return [(l, h) for l, h in items
+            if h.rstrip("/").rsplit("/", 1)[-1] not in MENU_HIDE]
 
 
 def playbook_items(lang):
@@ -148,7 +176,7 @@ def _desktop_nav(lang):
         if not kind:
             out.append(f'<a href="{href}">{esc}</a>')
             continue
-        items = ucs if kind == "uc" else inds
+        items = _menu_visible(ucs) if kind == "uc" else inds
         lis = "".join(f'<a href="{h}">{html.escape(l, quote=False)}</a>'
                       for l, h in items)
         lis += (f'<a class="sb-dd-all" href="{href}">'
@@ -159,12 +187,18 @@ def _desktop_nav(lang):
             # the check green while quietly changing what it guards.
             pb = "".join(f'<a href="{h}">{html.escape(l, quote=False)}</a>'
                          for l, h in playbook_items(lang))
+            pb += (f'<a class="sb-dd-all" href="{PB_HUB[lang]}">'
+                   f'{html.escape(ALL_LABEL[lang]["pb"], quote=False)}</a>')
+            # PLAYBOOKS FIRST. The left column is now WHY someone is looking
+            # (peak season, expansion, cost); the right is WHAT the agent does
+            # on a call. Reading order follows the buyer's order - they arrive
+            # with a situation, not with a workflow in mind.
             body = (f'<span class="sb-dd-col">'
-                    f'<span class="sb-dd-head">{html.escape(COL_HEAD[lang]["uc"], quote=False)}</span>'
-                    f'{lis}</span>'
-                    f'<span class="sb-dd-col">'
                     f'<span class="sb-dd-head">{html.escape(COL_HEAD[lang]["pb"], quote=False)}</span>'
-                    f'{pb}</span>')
+                    f'{pb}</span>'
+                    f'<span class="sb-dd-col">'
+                    f'<span class="sb-dd-head">{html.escape(COL_HEAD[lang]["uc"], quote=False)}</span>'
+                    f'{lis}</span>')
             dd = f'<span class="sb-dd sb-dd-2col" data-uc-dropdown="{kind}">{body}</span>'
         else:
             dd = f'<span class="sb-dd" data-uc-dropdown="{kind}">{lis}</span>'
