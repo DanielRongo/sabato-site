@@ -23,6 +23,29 @@ If the folder is not connected, Claude can `git clone
 https://github.com/DanielRongo/sabato-site.git` - public, no credentials - but
 then it can only hand files back, not write into the working copy.
 
+**STANDING RULE from 14 Aug: staging only.** Daniel ships every verified batch
+to staging and pushes live himself, all at once, when he is happy with the
+accumulated set. So the hand-back for any change is ONE command now:
+
+```
+./tools/ship.sh staging "what changed"
+```
+
+Do not hand back `./tools/ship.sh live` with it, and do not ask whether he wants
+to go live - he decides that on his own clock. `ship.sh live` is already built
+for this: it is a `--ff-only` merge of staging into main, so any number of
+staging commits fast-forward in one go with no extra tooling.
+
+Two things this changes that are easy to miss:
+
+1. **Staging is noindexed** (`netlify.toml` contexts). Nothing new accrues any
+   search value until he pushes live. On a site whose last month of work was
+   about getting Google to index it, a fortnight of batching is a fortnight of
+   nothing happening - say so once when a batch contains new URLs, then drop it.
+2. **The receipt has to still match when he eventually runs `live`.** It will,
+   as long as nothing touches `site/` between the last staging push and that
+   moment. If anything does - even a rebuild - re-verify before he goes live.
+
 **Deploying is a defined procedure now.** See `DEPLOY.md`. Claude verifies in its
 container (`bash tools/verify.sh`), which writes `.deploy-receipt.json`; Daniel
 pushes from his own Terminal (`./tools/ship.sh staging "msg"`, then `./tools/ship.sh
@@ -199,237 +222,6 @@ TWO CAUTIONS BEFORE BUILDING ANY OF IT:
 Nav risk: this would make three taxonomies - Use Cases (what), Industries
 (who), Triggers (why). That is a lot for one header. Cheapest first version is
 a band on the /use-cases hub, promoted into the nav only if it earns it.
-
----
-
-## TASK (12 Aug, Daniel): rework the homepage messaging around the TEAM
-
-Daniel, verbatim: "rework the messaging in the homepage making it about powering
-up customer service staff with the use of AI, or add an AI powered super
-customer service agent to your team. I mean something that is not too technical
-and that E-Commerce CEOs can understand and relate to."
-
-WHERE IT IS TODAY
-
-  EN h1     "The voice layer your e-commerce is missing."
-  IT h1     "Il tuo e-commerce ha tutto. Tranne la voce."
-  band h1   "We handle the AI. You handle your store."
-  title     "Voice AI Agent Platform for E-Commerce | Sabato AI"
-  desc      "Managed voice AI that guides buyers through complex product
-             decisions - sizing, compatibility, specs. We build it, we run it."
-
-All of it is infrastructure framing. "Voice layer", "platform", "agent" describe
-the thing we built, not what changes for the person buying it. A CEO does not
-have a voice-layer problem; they have a team that is drowning in repetitive
-calls and a headcount they cannot grow.
-
-THE SHIFT
-
-  FROM  a voice layer / platform you install
-  TO    a customer service teammate you add, who takes the repetitive volume so
-        your people move onto the work that needs a human
-
-The proof already says this - Marco's quote is literally "our team now focuses
-on the cases that actually need a person." The homepage is the only surface
-still talking like a product spec.
-
-FOUR THINGS TO GET RIGHT, and they are the traps
-
-  1. AUGMENTATION MUST NOT KILL THE ROI STORY. "Powers up your team" is warmer
-     and it defuses the layoff objection, which is real - no CEO wants to
-     announce they replaced support with a robot. But if it implies you still
-     need the same headcount, the business case evaporates. The honest
-     resolution is the one the case study already makes: the agent absorbs the
-     repetitive volume, so the same team covers more without growing. That IS
-     the cost story, told from the team's side instead of the P&L's.
-
-  2. DO NOT LOSE THE SEARCH TERM IN THE REWRITE. The <title> and description
-     carry "voice AI" / "e-commerce", which is what the page is actually found
-     for, and Search Console work is mid-flight. Human language belongs in the
-     H1 and the subhead; the keyword stays in the title tag and the meta. These
-     are two different audiences reading two different surfaces - do not
-     sacrifice the crawler's copy to fix the human's.
-
-  3. "SUPER AGENT" IS CROWDED. The phrase is becoming generic across the AI
-     tooling market in 2026. Check it does not put us in a category we do not
-     want before it goes in an H1. "Teammate", "the person who never misses a
-     call", or naming the agent (Elena, as in the Creative Cables story) are
-     warmer and more ownable than a category noun.
-
-  4. THREE <h1> TAGS. site/index.html renders the same H1 three times (Framer's
-     responsive variants). Whatever the new copy is, this is the moment to fix
-     that rather than triplicate the new one.
-
-SCOPE: EN and IT together - a homepage rewritten in one language only is a
-half-rewrite, same rule as the blog. IT is not a translation of EN here; "Il tuo
-e-commerce ha tutto. Tranne la voce." is its own line and the Italian will need
-its own idea, not a rendering of the English one.
-
-NOT STARTED. Needs Daniel's copy direction first, or a draft to react to -
-the last two landing-page rewrites were rejected for reading like blog posts,
-so bring three short options, not one long page.
-
----
-
-## TRIGGERS / PLAYBOOKS - state of the set (13 Aug)
-
-LIVE (six):
-  Handle Peak Season          /playbooks/peak-season
-  Expand Into New Countries   /playbooks/international-expansion
-  Answer Every Call           /playbooks/missed-calls
-  Cut Support Costs           /playbooks/support-costs
-  Free Up Your Team           /playbooks/high-value-work      <- SEE NAMING BELOW
-  Support Every Language      /playbooks/multilingual-support
-
-TWO NEW ONES DANIEL ADDED, 13 Aug:
-
-  1. OFFER MULTILINGUAL SUPPORT - BUILT (multilingual-support).
-     The line against international-expansion is the buyer's STATE, and it must
-     be held or the two become one page twice:
-       Expand    - you do NOT sell there yet. Trigger is a launch decision.
-       Multiling - you ALREADY sell there. Trigger is customers you are
-                   underserving today; the orders already exist.
-
-  2. UPSCALE YOUR CS REPS - NOT BUILT, and it needs a naming decision first.
-     Daniel, 13 Aug, verbatim: "I mean that if you re-allocate them to do
-     something higher value (e.g. launch a new initiative) they'll be better.
-     Free up your team I see it more as alleviating workload from stressed out
-     customer service reps."
-
-     So these are TWO different pages, and the one already built is the wrong
-     one for its label:
-
-       /playbooks/high-value-work  - currently labelled "Free Up Your Team", but
-           its content is B2B channel + VIP concierge + "the phone is eating
-           your best people". That is the RE-ALLOCATION page, i.e. UPSCALE.
-           It should probably be relabelled.
-
-       STILL TO BUILD - the actual "Free Up Your Team": workload relief for
-           reps who are stressed and buried. Distinct from Cut Support Costs,
-           which is the same team seen from the CFO's side. Three angles on one
-           team, and they are genuinely different buyers:
-             Cut Support Costs  - it costs too much            (CFO)
-             Free Up Your Team  - they are drowning, burning out (people/ops)
-             Upscale the reps   - redeploy them to grow something (growth)
-
-     DO NOT collapse these again. I merged upskill into costs on 13 Aug on the
-     argument that they were one buyer conversation; Daniel corrected it, and he
-     was right. Cost is defensive, relief is human, upscale is offensive.
-
-STILL UNBUILT from the earlier list: replacing an outsourced BPO (sharpest
-commercially - a renewal date is a real deadline with an incumbent to displace),
-out-of-hours coverage, and call intelligence.
-
-CAUTION THAT STILL APPLIES: these pages get almost no organic traffic. Nobody
-googles "replace my BPO". They are sales and positioning assets, and framing an
-LLM can quote - do not judge them on sessions.
-
----
-
-## TASK (13 Aug, Daniel): split the Product section into four
-
-Daniel, verbatim: "add to the things to do the product section split into:
-Voice Agent Builder, Visual Agentic Workflow Builder (to be renamed), Called
-Data Intelligence, Calls Evaluation Tool (to be renamed)".
-
-  1. Voice Agent Builder
-  2. Visual Agentic Workflow Builder      <- NAME NOT FINAL
-  3. Call Data Intelligence               <- Daniel typed "Called"; confirm
-  4. Calls Evaluation Tool                <- NAME NOT FINAL
-  5. Integrations & Webhooks              (added 13 Aug)
-
-Note on 5: it is a different KIND of item from 1-4. Those are things the
-customer uses; integrations are how the thing connects to what they already
-run. On most sites that argues for it sitting slightly apart - last in the
-section, or as a page the other four link into - rather than as a peer tile.
-Worth deciding when the section is laid out, not after.
-
-TWO NAMES ARE EXPLICITLY PROVISIONAL. Do not build nav labels, slugs or a hub
-around 2 and 4 until Daniel has settled them - a slug is the one thing on this
-site that is expensive to change once indexed, which is exactly why the
-/use-cases URL space was never renamed when the menu was reorganised.
-
-THIS IS A THIRD TAXONOMY. The header already carries Use Cases (what the agent
-does), Industries (who it is for) and now Playbooks (why you are looking).
-Product (what you actually buy) is a fourth axis and the menu is already at its
-limit - Daniel's own words on 13 Aug were that it is "overcrowding". Decide
-where Product lives BEFORE building the pages: most likely its own top-level
-nav item rather than a fourth column in an existing dropdown.
-
-NOT STARTED. Needs the two names first, then a nav decision, then pages.
-
----
-
-## 14 Aug: SITE-INVENTORY.md, and the three bugs writing it exposed
-
-`tools/site_inventory.py` generates `SITE-INVENTORY.md` from the **built** site -
-every page, its H1, lede, title, meta, section headlines, plus one table of every
-cited figure on the site. Written so the homepage and pricing rewrites cannot
-contradict the ninety-odd pages already live. Re-run it after any build; never
-hand-edit the output, edit the tool.
-
-Reading its first output found three things nobody had seen:
-
-1. **`/it` homepage: the WISMO card was still in English on phones.** Framer's
-   phone breakpoint carries its own copy of the text, and that copy was never
-   translated. Now reads the Italian line the desktop variant uses.
-2. **`/it/contatti`: the subtitle was still in English on phones.** Same cause.
-3. **`/it` homepage: an English `<h1>`** ("We handle the AI. You handle your
-   store.") in the static HTML. React replaces it at hydration so no human ever
-   saw it - but a crawler reading raw HTML does.
-
-**Where these actually live, and why this will happen again.** Fixing the HTML
-was not enough: Framer re-renders from a content-hashed `.mjs` bundle under
-`site/fuc/`, so the English text came straight back. The real fix was patching
-the two IT-only chunks and running `tools/rehash_edited_assets.py origin/main`.
-Check `site/fuc/*.mjs`, not just the HTML, for any Framer-page copy change - and
-confirm the chunk is IT-only first (`grep` the basename against `index.html` and
-`it.html`); the shared chunks carry both languages.
-
-**No automated check covers this class of bug.** It was found by rendering the
-seven Framer Italian pages at 1440/810/390 and flagging visible text that scored
-English-heavy. Worth turning into a gate step if a fourth one turns up.
-
-### Also fixed: the injectors were leaking a blank line per run
-
-`inject_ga.py` inserted its Consent Mode block as `"\n" + BLOCK` but stripped it
-with a pattern that did not eat the leading newline. Every gate run therefore
-added one blank line to all 108 files, forever, and produced a 108-file diff even
-when nothing had changed - which is exactly the noise that hides a real change.
-The strip pattern now eats it. Verified: running the three injectors twice in a
-row now yields an identical site digest, i.e. a stable fixed point.
-
-### Delivering a batch over the bridge - the two commands that do NOT work
-
-Both of these were learned the hard way on 14 Aug, and both fail in ways that
-look like something else.
-
-1. **`tar --overwrite` does not exist on macOS.** BSD tar rejects the flag
-   outright and extracts nothing - but the shell keeps going, so the next
-   command in the block runs against an untouched repo and its error is the one
-   you end up debugging.
-2. **`tar` cannot replace an existing file on the bridge mount at all.** The
-   mount refuses `unlink`, and tar's overwrite path is unlink-then-create, so
-   every existing file fails with `Cannot open: File exists` while every NEW
-   file extracts fine. That half-applied state is the dangerous one: the repo
-   ends up holding new asset hashes with old HTML referencing the old ones.
-
-**What does work:** truncate-and-write in place. Extract to a scratch dir, then
-copy byte-for-byte over the destinations:
-
-```python
-with open(dst, "wb") as f:      # truncate: permitted
-    f.write(open(src, "rb").read())
-```
-
-`os.remove` / `shutil.move` onto an existing path still fail. `_to_delete/` is
-gitignored for exactly this reason - the bridge cannot delete, so scratch lands
-there and Daniel removes the folder by hand.
-
-**Also:** `.git/index.lock` has to be moved aside after most bridge git calls,
-and `.deploy-receipt.json` is gitignored, so it only reaches the Mac if it is in
-the delivery payload. If it is missing, `ship.sh` refuses with "site/ does not
-match" even though the site is fine.
 
 ---
 

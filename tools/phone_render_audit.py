@@ -41,9 +41,17 @@ from playwright.sync_api import sync_playwright
 
 BASE = sys.argv[1].rstrip("/") if len(sys.argv) > 1 else "http://127.0.0.1:8909"
 
+# Optional "start:end" page slice, same contract as postdeploy_check.py and
+# audit_links.py. Every full run renders ~28 pages at ~18s each, which crossed
+# the Cowork container's 10-minute command ceiling the moment the two product
+# pages were added. The BACKLOG pages are always appended so the known-debt
+# warning is never silently dropped by slicing.
+SLICE = sys.argv[2] if len(sys.argv) > 2 else ""
+
 # Our hand-written markup, both languages, one of each page type. Framer's own
 # sections are covered incidentally - they appear on every page here.
 PAGES = [
+    "/product/voice-agent-builder", "/it/prodotto/voice-agent-builder",
     "/", "/it",
     "/playbooks/peak-season", "/it/playbook/picchi-stagionali",
     "/playbooks/international-expansion", "/it/playbook/espansione-internazionale",
@@ -133,7 +141,15 @@ with sync_playwright() as p:
     b = p.chromium.launch(executable_path="/opt/pw-browsers/chromium",
                           args=["--no-sandbox"])
     ctx = b.new_context(viewport={"width": WIDTH, "height": 900})
-    for path in PAGES + BACKLOG:
+    todo = PAGES
+    if SLICE:
+        # NOT `a, _, b` - `b` is the browser handle in this scope, and
+        # rebinding it to a string made b.close() blow up at the end of a
+        # run that had otherwise passed.
+        _s, _, _e = SLICE.partition(":")
+        todo = PAGES[int(_s or 0):int(_e) if _e else None]
+        print("slice %s -> %d page(s)" % (SLICE, len(todo)))
+    for path in todo + BACKLOG:
         known = path in BACKLOG
         pg = ctx.new_page()
         bad = []

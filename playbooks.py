@@ -69,7 +69,16 @@ EXTRA_CSS = """
     }
     .pb-light .qcopy .qbody b { color: var(--ink); }
     /* 16px lost against a 1.75 line-height on 17.5px copy - the paragraph gap
-       came out the same as the line gap, so two paragraphs read as one. */
+       came out the same as the line gap, so two paragraphs read as one.
+       SPECIFICITY, 14 Aug: this rule is 0,3,0 and the `margin: 0` two rules
+       above it is 0,4,0 (.pb-light .queue-grid .qcopy .qbody), so inside a
+       light block WITH a visual the gap silently lost and never applied. Five
+       pages were live in that state in both languages - measured gap 0px on
+       international-expansion, support-costs, multilingual-support and their
+       Italian siblings. Exactly the same failure mode as the white-on-white
+       note above: match the specificity, do not reach for !important. */
+    .pb-light .queue-grid .qcopy .qbody + .qbody,
+    .pb-light .qcopy .qbody + .qbody,
     .pb-light .qbody + .qbody { margin-top: 24px; }
     /* TOP-aligned, not centred. The use-case stylesheet centres .queue-grid,
        which is right for a short caption beside a tall drawing. It is wrong for

@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<style>
+  :root{
+    --side:#141416; --side-txt:#8f8d94; --side-hi:#cfeb4d;
+    --bg:#faf9f8; --line:#eae7e3; --line-2:#f3f1ee;
+    --ink:#15131a; --mut:#77726e; --mut-2:#a8a39e;
+    --sage:#8bb99f; --grn:#5fbb74;
+    --amb:#e8981f; --amb-bg:#fdf1d9; --amb-2:#f2ab2e;
+    --lime:#d4ee56; --lime-soft:#eef7cd;
+    --md-h:#d9862a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{width:1560px;height:796px;overflow:hidden}
+  body{background:var(--bg);
+       font:13.5px/1.45 Inter,-apple-system,sans-serif;color:var(--ink);
+       -webkit-font-smoothing:antialiased;display:flex}
+
+  /* ---------------- SIDEBAR ---------------- */
+  .side{width:222px;flex:0 0 222px;background:var(--side);color:#fff;
+        display:flex;flex-direction:column;padding:12px 0 12px}
+
+  .ws{display:flex;align-items:center;gap:10px;margin:0 10px 18px;padding:8px 9px;
+      border-radius:11px;background:#1e1e21;border:1px solid #2a2a2e}
+  .logo{width:30px;height:30px;flex:0 0 30px;border-radius:9px;background:#fff;
+        display:flex;align-items:center;justify-content:center}
+  .logo svg{width:19px;height:19px}
+  .ws .t{flex:1;min-width:0}
+  .ws .t b{display:block;font:600 13px/1.25 "Inter Display",Inter;letter-spacing:-.01em;
+           white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .ws .t s{display:block;text-decoration:none;font:500 9.5px/1.3 Inter;color:#77747c;
+           letter-spacing:.09em}
+  .ws .cv{width:13px;color:#6b6874;flex:0 0 13px}
+
+  .mlbl{font:600 9.5px/1 Inter;letter-spacing:.14em;color:#5a575f;padding:0 20px 9px}
+  .nav{display:flex;flex-direction:column;gap:1px;flex:1}
+  .nv{display:flex;align-items:center;gap:11px;margin:0 10px;padding:7.5px 10px;
+      border-radius:9px;color:var(--side-txt);font:500 13px/1 Inter;position:relative}
+  .nv svg{width:16px;height:16px;flex:0 0 16px;stroke:currentColor;fill:none;
+          stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+  .nv.on{color:#101211;background:var(--side-hi);font-weight:600}
+
+  .user{display:flex;align-items:center;gap:9px;padding:11px 10px 0;
+        margin:0 10px;border-top:1px solid #26262a}
+  .av{width:28px;height:28px;flex:0 0 28px;border-radius:99px;background:#2e2e35;
+      color:#e6e3ea;display:flex;align-items:center;justify-content:center;
+      font:600 12px Inter}
+  .user .t{flex:1;min-width:0}
+  .user .t i{display:block;font-style:normal;font:500 11.5px/1.35 Inter;color:#e9e6ec;
+             white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .user .t s{display:block;text-decoration:none;font:400 10.5px/1.35 Inter;color:#726f79}
+  .chev{width:13px;color:#66636e}
+
+  /* ---------------- MAIN ---------------- */
+  .main{flex:1;display:flex;flex-direction:column;min-width:0;padding:12px 14px 14px 0}
+  .top{display:flex;align-items:center;gap:9px;padding:0 2px 12px 16px}
+  .pane-ico{width:17px;height:17px;stroke:var(--mut-2);fill:none;stroke-width:1.7;
+            margin-right:4px}
+  .path{flex:1;display:flex;align-items:center;gap:7px;font:500 13px/1 Inter;color:var(--mut)}
+  .path b{color:var(--ink);font-weight:600}
+  .path .sep{color:#d0cbc6}
+  .badge{margin-left:4px;font:600 9.5px/1 Inter;letter-spacing:.08em;color:#6d7a34;
+         background:var(--lime-soft);border-radius:5px;padding:4px 7px}
+  .btn{height:33px;border-radius:9px;display:flex;align-items:center;padding:0 14px;
+       font:600 12.6px/1 Inter}
+  .btn.ghost{background:#fff;border:1px solid var(--line);color:var(--ink)}
+  .btn.pub{background:var(--sage);color:#fff;box-shadow:0 1px 2px rgba(60,90,72,.2)}
+  .btn.dots{background:#fff;border:1px solid var(--line);color:var(--mut-2);padding:0 11px}
+
+  .cols{flex:1;display:flex;gap:13px;min-height:0;padding-left:6px}
+
+  .sub{width:172px;flex:0 0 172px;padding:8px 0 0 8px}
+  .sb{padding:8px 11px;border-radius:8px;font:500 12.8px/1 Inter;color:var(--mut);
+      margin-bottom:2px;border:1px solid transparent}
+  .sb.on{background:#fff;color:var(--ink);font-weight:600;
+         box-shadow:0 1px 2px rgba(20,15,10,.06);border-color:var(--line)}
+
+  .canvas{flex:1;min-width:0;background:#fdfcfb;border:1px solid var(--line);
+          border-radius:14px;position:relative;overflow:hidden;
+          background-image:radial-gradient(#e6e2dd 1px,transparent 1px);
+          background-size:16px 16px;background-position:5px 5px}
+  .zoom{position:absolute;left:13px;top:13px;background:#fff;border:1px solid var(--line);
+        border-radius:9px;box-shadow:0 1px 3px rgba(20,15,10,.06);overflow:hidden}
+  .zb{width:30px;height:29px;display:flex;align-items:center;justify-content:center;
+      border-bottom:1px solid var(--line-2);color:#635e5a}
+  .zb:last-child{border-bottom:0}
+  .zb svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.8;
+          stroke-linecap:round;stroke-linejoin:round}
+  .addbtn{position:absolute;right:13px;top:13px;height:31px;background:var(--lime);
+          border-radius:9px;display:flex;align-items:center;gap:7px;padding:0 12px;
+          font:600 12px/1 Inter;color:#2f3a09;
+          box-shadow:0 1px 3px rgba(90,110,20,.22)}
+  .addbtn svg{width:14px;height:14px;stroke:#2f3a09;fill:none;stroke-width:2;
+              stroke-linecap:round;stroke-linejoin:round}
+
+  .stage{position:absolute;left:50%;top:78px;transform:translateX(-50%);width:520px}
+  .stage .node{margin:0 auto}
+
+  .node{width:318px;background:#fff;border:1px solid #e6e2dd;border-radius:12px;
+        box-shadow:0 5px 16px rgba(28,22,14,.06),0 1px 2px rgba(28,22,14,.045);
+        padding:11px 12px 10px;position:relative}
+  .node.sel{border-color:#d3dda9;box-shadow:0 0 0 2.5px rgba(212,238,86,.34),
+             0 7px 20px rgba(28,22,14,.08)}
+  .nh{display:flex;align-items:center;gap:9px}
+  .nic{width:28px;height:28px;border-radius:8px;background:var(--amb-bg);
+       display:flex;align-items:center;justify-content:center}
+  .nic svg{width:16px;height:16px;stroke:var(--amb);fill:none;stroke-width:1.8;
+           stroke-linecap:round;stroke-linejoin:round}
+  .nt{flex:1;min-width:0}
+  .nt s{display:block;text-decoration:none;font:600 9px/1 Inter;letter-spacing:.11em;
+        color:var(--mut-2);margin-bottom:3.5px}
+  .nt b{font:600 13.6px/1.2 Inter;letter-spacing:-.012em}
+  .star{color:var(--amb-2);font-size:14px;line-height:1}
+  .prev{margin-top:9px;background:#f8f7f5;border-radius:7px;padding:8px 9px;
+        font:400 10px/1.5 "JetBrains Mono",monospace;color:#827d78;
+        display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;
+        overflow:hidden}
+  .chips{display:flex;gap:6px;margin-top:9px}
+  .chip{display:flex;align-items:center;gap:4.5px;border:1px solid var(--line);
+        border-radius:6px;padding:2.5px 7px;font:500 10.5px/1 Inter;color:var(--mut)}
+  .chip svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:1.8}
+  .port{position:absolute;left:50%;transform:translateX(-50%);width:8px;height:8px;
+        border-radius:99px;background:#fff;border:2px solid #ccc7c1}
+  .port.t{top:-4.5px} .port.b{bottom:-4.5px}
+
+  .wires{display:block;width:520px;height:50px}
+  .kids{display:flex;gap:20px;justify-content:center}
+  .kid{width:154px;background:#fff;border:1px solid #e8e4df;border-radius:10px;
+       box-shadow:0 2px 8px rgba(28,22,14,.05);padding:10px;position:relative}
+  .kid .kic{width:24px;height:24px;border-radius:7px;display:flex;
+            align-items:center;justify-content:center;margin-bottom:8px}
+  .kid .kic svg{width:13px;height:13px;stroke-width:1.8;fill:none;
+                stroke-linecap:round;stroke-linejoin:round}
+  .kid s{display:block;text-decoration:none;font:600 8.5px/1 Inter;letter-spacing:.11em;
+         color:var(--mut-2);margin-bottom:3.5px}
+  .kid b{font:600 12.2px/1.25 Inter;display:block;letter-spacing:-.008em}
+  .kid p{font:400 10.2px/1.4 Inter;color:var(--mut);margin-top:4px}
+
+  .panel{width:452px;flex:0 0 452px;background:#fff;border:1px solid var(--line);
+         border-radius:14px;padding:16px 18px;overflow:hidden;
+         display:flex;flex-direction:column;
+         box-shadow:0 1px 2px rgba(20,15,10,.035)}
+  .ph{display:flex;align-items:flex-start;gap:9px;margin-bottom:14px}
+  .ph .t{flex:1}
+  .ph h2{font:600 15.5px/1.25 "Inter Display",Inter;letter-spacing:-.018em}
+  .ph p{font:400 11.8px/1.4 Inter;color:var(--mut);margin-top:2px}
+  .ph .dots{color:var(--mut-2);font-size:14px;letter-spacing:.05em}
+
+  .rowbox{border:1px solid var(--line);border-radius:10px;padding:10px 12px;
+          display:flex;align-items:center;gap:9px;background:#fffdf7}
+  .rowbox b{flex:1;font:600 12.8px/1 Inter}
+  .hint{font:400 11.5px/1.4 Inter;color:var(--mut);margin:6px 2px 14px}
+
+  .tog{width:34px;height:20px;border-radius:99px;background:#e5e1dc;position:relative;
+       flex:0 0 34px}
+  .tog i{position:absolute;top:2.5px;left:2.5px;width:15px;height:15px;border-radius:99px;
+         background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.16)}
+  .tog.on{background:var(--grn)}
+  .tog.on i{left:16.5px}
+
+  label.f{display:block;font:600 12.2px/1 Inter;margin-bottom:6px}
+  .inp{height:37px;border:1px solid var(--line);border-radius:9px;display:flex;
+       align-items:center;padding:0 12px;font:400 13px/1 Inter;margin-bottom:14px}
+  .fr{display:flex;align-items:center;gap:11px;margin-bottom:4px}
+  .fr b{flex:1;font:600 12.2px/1 Inter}
+
+  .divider{height:1px;background:var(--line-2);margin:13px 0 10px}
+  .hist{display:flex;align-items:center;justify-content:flex-end;gap:6px;
+        font:500 11.8px/1 Inter;color:var(--mut);margin-bottom:11px}
+  .hist svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:1.7}
+
+  .smh{display:flex;align-items:center;margin-bottom:7px}
+  .smh b{flex:1;font:600 12.8px/1 Inter}
+  .smh span{font:500 11.6px/1 Inter;color:var(--mut);display:flex;align-items:center;gap:5px}
+  .smh svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:1.7}
+  .code{border:1px solid var(--line);border-radius:10px;background:#fdfcfa;
+        padding:12px 13px;flex:1;min-height:0;overflow:hidden;position:relative;
+        font:400 10.8px/1.7 "JetBrains Mono",monospace;color:#4e4a45;white-space:pre-wrap}
+  .code .h{color:var(--md-h)}
+  .code .b{color:#15131a;font-weight:700}
+  .code .d{color:#bcb7b1}
+  .code::after{content:"";position:absolute;left:0;right:0;bottom:0;height:50px;
+               background:linear-gradient(transparent,#fdfcfa)}
+  .scrollbar{position:absolute;right:4px;top:9px;width:3.5px;height:54px;
+             border-radius:99px;background:#dcd7d1}
+</style>
+</head>
+<body>
+
+<aside class="side">
+  <div class="ws">
+    <span class="logo">
+      <svg viewBox="0 0 32 32" fill="none">
+        <path d="M4 15.2 16 5.6l12 9.6" stroke="#1d4c3c" stroke-width="2.8"
+              stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M10.5 19.6c1.6-1.5 3.4-1.5 5 0s3.4 1.5 5 0" stroke="#4fa87e"
+              stroke-width="2.4" stroke-linecap="round"/>
+        <path d="M11.5 24.6c1.4-1.3 3-1.3 4.5 0s3.1 1.3 4.5 0" stroke="#a6d8bf"
+              stroke-width="2.2" stroke-linecap="round"/>
+      </svg>
+    </span>
+    <span class="t"><b>Northaven Home</b><s>WORKSPACE</s></span>
+    <svg class="cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+         stroke-linecap="round"><path d="M8 9l4-4 4 4M8 15l4 4 4-4"/></svg>
+  </div>
+
+  <div class="mlbl">MENU</div>
+  <nav class="nav">
+    <div class="nv"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>Dashboard</div>
+    <div class="nv"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9 9 0 0 1-3.9-.9L3 21l1.9-5A8.4 8.4 0 0 1 4 11.5a8.5 8.5 0 0 1 17 0z"/></svg>Conversations</div>
+    <div class="nv"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9.5" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9"/></svg>Leads</div>
+    <div class="nv"><svg viewBox="0 0 24 24"><path d="M12 2.7 21 7.5v9L12 21.3 3 16.5v-9z"/><path d="M3 7.5 12 12.3 21 7.5M12 12.3v9"/></svg>Collections</div>
+    <div class="nv on"><svg viewBox="0 0 24 24"><rect x="4" y="8" width="16" height="12" rx="3"/><path d="M12 8V4.5M9.5 14h.01M14.5 14h.01M2 13v3M22 13v3"/></svg>Agents</div>
+    <div class="nv"><svg viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>Phone Numbers</div>
+    <div class="nv"><svg viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V4s-1 1-4 1-5-2-8-2-4 1-4 1zM4 22v-7"/></svg>Issues</div>
+  </nav>
+  <div class="user">
+    <span class="av">E</span>
+    <span class="t"><i>elena@northaven.com</i><s>Elena Marchi</s></span>
+    <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+         stroke-linecap="round"><path d="M8 9l4-4 4 4M8 15l4 4 4-4"/></svg>
+  </div>
+</aside>
+
+<main class="main">
+  <div class="top">
+    <svg class="pane-ico" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M9.5 4v16"/></svg>
+    <div class="path">
+      Home <span class="sep">›</span> Teams <span class="sep">›</span>
+      <b>EN — Pre-Sales Advisor</b>
+      <span class="badge">DRAFT</span>
+    </div>
+    <div class="btn ghost">Test Draft</div>
+    <div class="btn pub">Publish</div>
+    <div class="btn dots">•••</div>
+  </div>
+
+  <div class="cols">
+    <div class="sub">
+      <div class="sb">Dashboard</div>
+      <div class="sb">Conversations</div>
+      <div class="sb">Settings</div>
+      <div class="sb">Opening Hours</div>
+      <div class="sb on">Design</div>
+      <div class="sb">Post Call — Workflow</div>
+      <div class="sb">Staged Changes</div>
+    </div>
+
+    <div class="canvas">
+      <div class="zoom">
+        <div class="zb"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></div>
+        <div class="zb"><svg viewBox="0 0 24 24"><path d="M5 12h14"/></svg></div>
+        <div class="zb"><svg viewBox="0 0 24 24"><path d="M8 3H3v5M16 3h5v5M8 21H3v-5M16 21h5v-5"/></svg></div>
+        <div class="zb"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7.5a4 4 0 0 1 8 0V11"/></svg></div>
+      </div>
+      <div class="addbtn">
+        <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Add agent
+      </div>
+
+      <div class="stage">
+        <div class="node sel">
+          <span class="port t"></span>
+          <div class="nh">
+            <span class="nic"><svg viewBox="0 0 24 24"><rect x="4" y="8" width="16" height="12" rx="3"/><path d="M12 8V4.5M9.5 14h.01M14.5 14h.01M2 13v3M22 13v3"/></svg></span>
+            <span class="nt"><s>ENTRY AGENT</s><b>Root agent</b></span>
+            <span class="star">★</span>
+          </div>
+          <div class="prev">### System Instructions — PRE-SALES ADVISOR (Sizing &amp; Fit) — Northaven Home --- ## 1. Who You Are and What…</div>
+          <div class="chips">
+            <span class="chip"><svg viewBox="0 0 24 24" stroke-linecap="round"><path d="M14.7 6.3a4 4 0 0 1-5.4 5.4L4 17v3h3l5.3-5.3a4 4 0 0 1 5.4-5.4z"/></svg>3 tools</span>
+            <span class="chip"><svg viewBox="0 0 24 24" stroke-linecap="round"><path d="M4 4h11l5 5v11H4z"/><path d="M15 4v5h5"/></svg>0 issues</span>
+          </div>
+          <span class="port b"></span>
+        </div>
+
+        <svg class="wires" viewBox="0 0 520 50">
+          <g stroke="#cfcac4" stroke-width="1.5" fill="none" stroke-linecap="round">
+            <path d="M260 0 V14 Q260 25 249 25 H98 Q87 25 87 36 V50"/>
+            <path d="M260 0 V50"/>
+            <path d="M260 0 V14 Q260 25 271 25 H422 Q433 25 433 36 V50"/>
+          </g>
+        </svg>
+
+        <div class="kids">
+          <div class="kid">
+            <span class="port t"></span>
+            <span class="kic" style="background:#e9f1fa"><svg viewBox="0 0 24 24" stroke="#3d81c9"><path d="M3 7h18M7 3v4M3 7v13h18V7"/><path d="M8 12h8M8 16h5"/></svg></span>
+            <s>HANDOFF</s><b>Sizing &amp; Fit</b>
+            <p>Room size, output rating</p>
+          </div>
+          <div class="kid">
+            <span class="port t"></span>
+            <span class="kic" style="background:#e8f4ec"><svg viewBox="0 0 24 24" stroke="#3f9a63"><path d="M3 8h13v9H3zM16 11h3.5L21 14v3h-5"/><circle cx="7" cy="18.5" r="1.8"/><circle cx="18" cy="18.5" r="1.8"/></svg></span>
+            <s>HANDOFF</s><b>Order Status</b>
+            <p>Tracking, delivery slot</p>
+          </div>
+          <div class="kid">
+            <span class="port t"></span>
+            <span class="kic" style="background:#f7ebf1"><svg viewBox="0 0 24 24" stroke="#b2557f"><path d="M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="10" cy="7" r="3.6"/><path d="M20 8v6M23 11h-6"/></svg></span>
+            <s>HANDOFF</s><b>Human Handover</b>
+            <p>Warm transfer to the team</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="ph">
+        <span class="t"><h2>Root agent</h2><p>Per-agent runtime config.</p></span>
+        <span class="dots">•••</span>
+      </div>
+
+      <div class="rowbox">
+        <span class="star">★</span><b>Entry agent</b>
+        <span class="tog on"><i></i></span>
+      </div>
+      <div class="hint">This agent answers when a call comes in.</div>
+
+      <label class="f">Name</label>
+      <div class="inp">Root agent</div>
+
+      <div class="fr"><b>Enabled</b><span class="tog on"><i></i></span></div>
+      <div class="hint">Disabled agents won’t be reachable from handoffs.</div>
+
+      <div class="divider"></div>
+      <div class="hist">
+        <svg viewBox="0 0 24 24" stroke-linecap="round"><path d="M3 12a9 9 0 1 0 3-6.7M3 4v4h4"/><path d="M12 8v4l3 2"/></svg>
+        History
+      </div>
+
+      <div class="smh">
+        <b>System message</b>
+        <span><svg viewBox="0 0 24 24" stroke-linecap="round"><path d="M9 21H3v-6M15 3h6v6M21 3l-8 8M3 21l8-8"/></svg>Expand</span>
+      </div>
+      <div class="code"><span class="scrollbar"></span><span class="h">### System Instructions — PRE-SALES ADVISOR (Sizing &amp; Fit) — Northaven Home</span>
+
+<span class="d">---</span>
+
+<span class="h">## 1. Who You Are and What Your Role Is</span>
+
+You are <span class="b">**Ava**</span> from <span class="b">**Northaven Home**</span>, an online store
+selling heating and cooling for the home. You are a
+phone consultant, not a switchboard.
+
+This is the <span class="b">**Free Configuration Consultation**</span> channel.
+The caller reached you by pressing <span class="b">**2**</span> in the menu.
+Your job is to run a short consultation about the
+space they want to heat or cool, and
+<span class="b">**recommend the right configuration**</span>: how many units
+they need and at what output rating.</div>
+    </div>
+  </div>
+</main>
+
+</body>
+</html>

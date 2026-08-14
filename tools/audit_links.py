@@ -40,6 +40,7 @@ WIDTHS = [(390, "phone"), (1440, "desktop")]
 # blocks, so they are where the bugs live. Our generated pages use absolute
 # hrefs from a template and are uniform - a sample of them is enough.
 PAGES = [
+    "/product/voice-agent-builder", "/it/prodotto/voice-agent-builder",
     "/", "/it", "/pricing", "/it/prezzi", "/about", "/it/chi-siamo",
     "/contact", "/it/contatti", "/blog", "/it/blog", "/terms",
     "/privacy-policy", "/use-cases", "/it/casi-duso", "/industries",

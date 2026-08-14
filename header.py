@@ -52,11 +52,25 @@ CAL = "https://cal.com/sabatoai/intro"
 LOGO = "/fuc/images/UTATYXc6NipXQRoxyaGHHfHSyA4-f2557e25.png"
 
 # (label, href, dropdown) - dropdown is "uc", "ind" or None.
+#
+# PRODUCT, added 14 Aug. Daniel's call: its own top-level item rather than a
+# fifth column in a dropdown he had already called overcrowded. It is a fourth
+# taxonomy - Use Cases is what the agent DOES, Industries is WHO it is for,
+# Playbooks is WHY you are looking, Product is WHAT YOU BUY - and a fourth axis
+# does not fit inside a menu built for two.
+#
+# It points at the one product page that exists. When the second lands it needs
+# a /product hub and a dropdown, exactly like the other two: a top-level label
+# reading "Product" that opens a single deep page is honest at one page and
+# misleading at three. Do not add the other four to this menu without building
+# the hub first - that is how the /use-cases hub went unbuilt for months.
 NAV = {
     "en": [("Use Cases", "/use-cases", "uc"), ("Industries", "/industries", "ind"),
+           ("Product", "/product/voice-agent-builder", None),
            ("Pricing", "/pricing", None), ("About", "/about", None),
            ("Contact", "/contact", None)],
     "it": [("Casi d'uso", "/it/casi-duso", "uc"), ("Settori", "/it/settori", "ind"),
+           ("Prodotto", "/it/prodotto/voice-agent-builder", None),
            ("Prezzi", "/it/prezzi", None), ("Chi Siamo", "/it/chi-siamo", None),
            ("Contatti", "/it/contatti", None)],
 }

@@ -35,6 +35,10 @@ STEPS = [
     ("customers.py", "case studies, from customer_data*.py - MUST precede industries.py"),
     ("use_cases.py", "use-case hubs, reads the built use-case pages"),
     ("playbooks.py", "playbook (trigger) pages - derives its template from use-case.html"),
+    # AFTER playbooks.py, always: product.py imports it for the stylesheet, the
+    # section renderers and the proof widget, so the playbook template has to be
+    # the current one when this runs.
+    ("product.py",   "product pages - reuses the playbook modules wholesale"),
     ("industries.py", "industry pages + indexes, THEN relinks footers site-wide - runs last"),
     ("legal.py",     "terms + privacy, EN and IT, from legal/*.md"),
     ("tools/set_page_meta.py", "metadata for static pages that no generator owns"),
