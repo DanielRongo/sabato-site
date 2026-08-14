@@ -360,6 +360,79 @@ NOT STARTED. Needs the two names first, then a nav decision, then pages.
 
 ---
 
+## 14 Aug: SITE-INVENTORY.md, and the three bugs writing it exposed
+
+`tools/site_inventory.py` generates `SITE-INVENTORY.md` from the **built** site -
+every page, its H1, lede, title, meta, section headlines, plus one table of every
+cited figure on the site. Written so the homepage and pricing rewrites cannot
+contradict the ninety-odd pages already live. Re-run it after any build; never
+hand-edit the output, edit the tool.
+
+Reading its first output found three things nobody had seen:
+
+1. **`/it` homepage: the WISMO card was still in English on phones.** Framer's
+   phone breakpoint carries its own copy of the text, and that copy was never
+   translated. Now reads the Italian line the desktop variant uses.
+2. **`/it/contatti`: the subtitle was still in English on phones.** Same cause.
+3. **`/it` homepage: an English `<h1>`** ("We handle the AI. You handle your
+   store.") in the static HTML. React replaces it at hydration so no human ever
+   saw it - but a crawler reading raw HTML does.
+
+**Where these actually live, and why this will happen again.** Fixing the HTML
+was not enough: Framer re-renders from a content-hashed `.mjs` bundle under
+`site/fuc/`, so the English text came straight back. The real fix was patching
+the two IT-only chunks and running `tools/rehash_edited_assets.py origin/main`.
+Check `site/fuc/*.mjs`, not just the HTML, for any Framer-page copy change - and
+confirm the chunk is IT-only first (`grep` the basename against `index.html` and
+`it.html`); the shared chunks carry both languages.
+
+**No automated check covers this class of bug.** It was found by rendering the
+seven Framer Italian pages at 1440/810/390 and flagging visible text that scored
+English-heavy. Worth turning into a gate step if a fourth one turns up.
+
+### Also fixed: the injectors were leaking a blank line per run
+
+`inject_ga.py` inserted its Consent Mode block as `"\n" + BLOCK` but stripped it
+with a pattern that did not eat the leading newline. Every gate run therefore
+added one blank line to all 108 files, forever, and produced a 108-file diff even
+when nothing had changed - which is exactly the noise that hides a real change.
+The strip pattern now eats it. Verified: running the three injectors twice in a
+row now yields an identical site digest, i.e. a stable fixed point.
+
+### Delivering a batch over the bridge - the two commands that do NOT work
+
+Both of these were learned the hard way on 14 Aug, and both fail in ways that
+look like something else.
+
+1. **`tar --overwrite` does not exist on macOS.** BSD tar rejects the flag
+   outright and extracts nothing - but the shell keeps going, so the next
+   command in the block runs against an untouched repo and its error is the one
+   you end up debugging.
+2. **`tar` cannot replace an existing file on the bridge mount at all.** The
+   mount refuses `unlink`, and tar's overwrite path is unlink-then-create, so
+   every existing file fails with `Cannot open: File exists` while every NEW
+   file extracts fine. That half-applied state is the dangerous one: the repo
+   ends up holding new asset hashes with old HTML referencing the old ones.
+
+**What does work:** truncate-and-write in place. Extract to a scratch dir, then
+copy byte-for-byte over the destinations:
+
+```python
+with open(dst, "wb") as f:      # truncate: permitted
+    f.write(open(src, "rb").read())
+```
+
+`os.remove` / `shutil.move` onto an existing path still fail. `_to_delete/` is
+gitignored for exactly this reason - the bridge cannot delete, so scratch lands
+there and Daniel removes the folder by hand.
+
+**Also:** `.git/index.lock` has to be moved aside after most bridge git calls,
+and `.deploy-receipt.json` is gitignored, so it only reaches the Mac if it is in
+the delivery payload. If it is missing, `ship.sh` refuses with "site/ does not
+match" even though the site is fine.
+
+---
+
 ## Still open from earlier sessions
 
 1. **Cookie consent.** GA4 sets `_ga` before any consent and there is no banner.

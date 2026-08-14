@@ -69,7 +69,13 @@ CONSENT_DEFAULT = (
     'security_storage:"granted",wait_for_update:500});})();</script>\n'
     + CM_CLOSE + "\n"
 )
-CM_RX = re.compile(re.escape(CM_OPEN) + r".*?" + re.escape(CM_CLOSE) + r"\n?", re.DOTALL)
+# The leading \n? matters. The block is inserted as "\n" + CONSENT_DEFAULT, so a
+# strip pattern that does not also eat that newline leaves one behind on every
+# run - a blank line per file per gate, growing forever, and a 108-file diff
+# every time even when nothing changed. Caught 14 Aug by reading a diff that
+# should have been empty.
+CM_RX = re.compile(r"\n?" + re.escape(CM_OPEN) + r".*?" + re.escape(CM_CLOSE) + r"\n?",
+                   re.DOTALL)
 HEAD_OPEN_RX = re.compile(r"<head\b[^>]*>", re.IGNORECASE)
 
 MARK_OPEN = "<!-- GA4 (Sabato) -->"
