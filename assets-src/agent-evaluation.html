@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<style>
+  /* Agent Evaluation: the Issues board, MASTER-DETAIL.
+     ---------------------------------------------------------------------
+     Rebuilt 15 Aug, twice. Daniel: "it looks low quality and not uniform to
+     the voice agent builder in terms of design and fonts."
+
+     The cause was structural, not typographic. The first version was a
+     seven-column table across the full width: flat, no hierarchy, and 12px
+     cells that shrink to about 9px once the shot sits in a 1120px column. The
+     agent designer does not read denser because of its fonts - it reads that
+     way because a selected item is open in a panel beside the canvas. So:
+     fewer columns, bigger type, and the selected issue open on the right.
+
+     Also, the canvas is 1560x796 because product.py declares the <img> at
+     those dimensions. Export at any other height and the browser squashes it.
+
+     Deliberately shared with assets-src/voice-agent-builder.html: the 222px
+     dark sidebar and workspace switcher, Inter / Inter Display / JetBrains
+     Mono, 14px card radius, the same lime, the same borders.
+
+     TWO CONTENT RULES:
+       - NO SENTIMENT ANYWHERE. Every label is a fact about the call.
+       - every issue is a GAP IN WHAT THE BUSINESS TOLD US, never an agent
+         defect. Daniel: "gave a return window that doesn't match the policy
+         screams that our agents are shit... they should be things that can
+         genuinely happen, not structural issue of halucinations." So: missing
+         KB entries, product data that contradicts itself, a policy in two
+         versions, a config nobody flagged. */
+  :root{
+    --side:#141416; --side-txt:#8f8d94; --side-hi:#cfeb4d;
+    --bg:#faf9f8; --line:#eae7e3; --line-2:#f3f1ee;
+    --ink:#15131a; --mut:#77726e; --mut-2:#a8a39e; --lime:#d4ee56;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{width:1560px;height:796px;overflow:hidden}
+  body{background:var(--bg);font:13.5px/1.45 Inter,-apple-system,sans-serif;
+       color:var(--ink);-webkit-font-smoothing:antialiased;display:flex}
+
+  .side{width:222px;flex:0 0 222px;background:var(--side);color:#fff;
+        display:flex;flex-direction:column;padding:12px 0}
+  .ws{display:flex;align-items:center;gap:10px;margin:0 10px 18px;padding:8px 9px;
+      border-radius:11px;background:#1e1e21;border:1px solid #2a2a2e}
+  .logo{width:30px;height:30px;flex:0 0 30px;border-radius:9px;background:#fff;
+        display:flex;align-items:center;justify-content:center}
+  .logo svg{width:19px;height:19px}
+  .ws .t{flex:1;min-width:0}
+  .ws .t b{display:block;font:600 13px/1.25 "Inter Display",Inter;letter-spacing:-.01em}
+  .ws .t s{display:block;text-decoration:none;font:500 9.5px/1.3 Inter;color:#77747c;letter-spacing:.09em}
+  .ws .cv{width:13px;color:#6b6874;flex:0 0 13px}
+  .mlbl{font:600 9.5px/1 Inter;letter-spacing:.14em;color:#5a575f;padding:0 20px 9px}
+  .nav{display:flex;flex-direction:column;gap:1px;flex:1}
+  .nv{display:flex;align-items:center;gap:11px;margin:0 10px;padding:7.5px 10px;
+      border-radius:9px;color:var(--side-txt);font:500 13px/1 Inter}
+  .nv svg{width:16px;height:16px;flex:0 0 16px;stroke:currentColor;fill:none;
+          stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+  .nv.on{color:#101211;background:var(--side-hi);font-weight:600}
+  .user{display:flex;align-items:center;gap:9px;padding:11px 10px 0;margin:0 10px;
+        border-top:1px solid #26262a}
+  .av{width:28px;height:28px;flex:0 0 28px;border-radius:99px;background:#2e2e35;
+      color:#e6e3ea;display:flex;align-items:center;justify-content:center;font:600 12px Inter}
+  .user .t{flex:1;min-width:0}
+  .user .t i{display:block;font-style:normal;font:500 11.5px/1.35 Inter;color:#e9e6ec}
+  .user .t s{display:block;text-decoration:none;font:400 10.5px/1.35 Inter;color:#726f79}
+
+  .main{flex:1;display:flex;flex-direction:column;min-width:0;padding:12px 16px 14px 0}
+  .top{display:flex;align-items:center;gap:9px;padding:0 2px 13px 16px}
+  .pane-ico{width:17px;height:17px;stroke:var(--mut-2);fill:none;stroke-width:1.7;margin-right:4px}
+  .path{flex:1;display:flex;align-items:center;gap:7px;font:500 13px/1 Inter;color:var(--mut)}
+  .path b{color:var(--ink);font-weight:600}
+  .path .sep{color:#d0cbc6}
+  .btn{height:32px;border-radius:9px;display:flex;align-items:center;gap:7px;
+       padding:0 13px;font:600 12.4px/1 Inter;background:#fff;
+       border:1px solid var(--line);color:var(--ink)}
+  .btn svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:1.9;
+           stroke-linecap:round;stroke-linejoin:round}
+
+  .cols{flex:1;display:flex;gap:14px;min-height:0;padding-left:16px}
+  .list{flex:1;min-width:0;background:#fff;border:1px solid var(--line);
+        border-radius:14px;padding:15px 16px;display:flex;flex-direction:column;
+        box-shadow:0 1px 2px rgba(20,15,10,.035)}
+  .panel{width:454px;flex:0 0 454px;background:#fff;border:1px solid var(--line);
+         border-radius:14px;padding:17px 19px;display:flex;flex-direction:column;
+         overflow:hidden;box-shadow:0 1px 2px rgba(20,15,10,.035)}
+
+  .plbl{font:600 10.5px/1 Inter;letter-spacing:1.5px;color:var(--mut-2);margin-bottom:12px}
+  .counts{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+  .ct{border:1px solid var(--line);border-radius:999px;padding:6px 10px;
+      font:500 11.8px/1 Inter;color:var(--mut);display:flex;align-items:center;gap:6px}
+  .ct b{color:var(--ink);font-weight:700}
+  .ct i{width:6px;height:6px;border-radius:999px;background:#c9c4be;font-style:normal}
+  .ct.on{background:rgb(238,247,205);border-color:#c9de8f;color:#3d4a12}
+  .ct.on b{color:#2c360b} .ct.on i{background:#6f8a25}
+  .ct .hi{background:#e0873a} .ct .me{background:#dcb43f} .ct .lo{background:#b9b4ae}
+
+  .row{display:flex;align-items:flex-start;gap:12px;padding:12px 11px;
+       border-radius:10px;border:1px solid transparent}
+  .row + .row{margin-top:2px}
+  .row.sel{background:#fbfdf4;border-color:#d8e6ac;
+           box-shadow:0 0 0 2.5px rgba(212,238,86,.30)}
+  .row .body{flex:1;min-width:0}
+  .row .ti{font:600 14px/1.35 Inter;color:var(--ink);letter-spacing:-.1px}
+  .row .mt{display:block;font:500 11.5px/1.3 Inter;color:var(--mut-2);margin-top:5px;
+           font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+  .st{flex:0 0 84px;font:700 10.5px/1 Inter;padding:6px 0;border-radius:6px;
+      text-align:center;margin-top:1px}
+  .st-op{background:#fdeee0;color:#8a4c14} .st-pr{background:#e5eefa;color:#28588c}
+  .st-rs{background:#e4f1ea;color:#2f6b47}
+  .right{display:flex;align-items:center;gap:14px;flex:0 0 auto;margin-top:1px}
+  .sev{display:inline-flex;align-items:center;gap:6px;font:700 11.5px/1 Inter;
+       padding:6px 9px;border-radius:6px}
+  .sev i{width:6px;height:6px;border-radius:999px;font-style:normal}
+  .sv-h{background:#fdeee0;color:#8a4c14} .sv-h i{background:#e0873a}
+  .sv-m{background:#fbf3d9;color:#7a5c10} .sv-m i{background:#dcb43f}
+  /* one line, not a number stacked over a caption: the stacked version gave
+     every row a second baseline */
+  .occ{width:74px;text-align:right;font:600 12.5px/1 "JetBrains Mono",monospace;
+       color:var(--mut);white-space:nowrap}
+  .occ s{text-decoration:none;font:500 11.5px/1 Inter;color:var(--mut-2);margin-left:4px}
+
+  .ph h2{font:600 16.5px/1.3 "Inter Display",Inter;letter-spacing:-.02em;margin-bottom:11px}
+  .chips{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-bottom:13px}
+  .cp{font:700 10.5px/1 Inter;padding:5px 9px;border-radius:6px}
+  .cp-res{background:#e4f1ea;color:#2f6b47} .cp-high{background:#fdeee0;color:#8a4c14}
+  .cp-id{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:600;
+         color:var(--mut-2);background:#f4f2f0}
+  .cp-ver{background:#fbf3d9;color:#7a5c10;
+          font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+  .meta{display:flex;flex-wrap:wrap;gap:8px 16px;padding-bottom:14px;
+        border-bottom:1px solid var(--line-2);margin-bottom:14px;
+        font:500 11.8px/1 Inter;color:var(--mut)}
+  .meta span{display:flex;align-items:center;gap:6px}
+  .meta svg{width:13px;height:13px;stroke:var(--mut-2);fill:none;stroke-width:1.8;
+            stroke-linecap:round;stroke-linejoin:round}
+  .sect{font:600 10.5px/1 Inter;letter-spacing:1.5px;color:var(--mut-2);margin-bottom:10px}
+  .fix{display:flex;align-items:center;gap:9px;border:1px solid var(--line);
+       border-radius:10px;padding:11px 12px;margin-bottom:16px}
+  .fix code{font:600 12.5px/1 "JetBrains Mono",monospace;color:var(--ink)}
+  .fix .pub{font:700 10px/1 Inter;background:#e4f1ea;color:#2f6b47;
+            padding:4px 7px;border-radius:5px}
+  .fix em{margin-left:auto;font-style:normal;font:500 11px/1 Inter;color:var(--mut-2)}
+  .cmt{border:1px solid var(--line);border-radius:10px;padding:12px 13px;
+       background:rgb(250,249,247)}
+  .cmt p{font:400 13px/1.55 Inter;color:rgb(70,66,62);margin:0}
+  .cmt b{color:var(--ink)}
+  .cmt .who{display:flex;align-items:center;gap:7px;margin-bottom:8px;
+            font:600 11px/1 Inter;color:var(--mut)}
+  .cmt .who em{margin-left:auto;font-style:normal;font-weight:500;color:var(--mut-2)}
+  .trail{margin-top:13px;padding-top:12px;border-top:1px solid var(--line-2)}
+  .trail div{display:flex;gap:10px;font:500 11.8px/1.5 Inter;color:var(--mut);padding:3px 0}
+  .trail i{font-style:normal;flex:0 0 42px;color:var(--mut-2);
+           font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px}
+
+  /* the prompt as a living element: every change kept, dated, attributable */
+  .vhead{display:flex;align-items:baseline;margin:auto 0 10px}
+  .vhead em{margin-left:auto;font-style:normal;font:500 11px/1 Inter;color:var(--mut-2)}
+  .vh{border-top:1px solid var(--line-2);padding-top:11px}
+  .vh div{display:flex;gap:10px;align-items:baseline;padding:4px 0;
+          font:500 11.8px/1.45 Inter;color:var(--mut)}
+  .vh b{flex:0 0 30px;font:600 11px/1.45 "JetBrains Mono",monospace;color:var(--ink)}
+  .vh u{flex:0 0 52px;text-decoration:none;color:var(--mut-2);font:500 11px/1.45 Inter}
+  .vh span{flex:1;min-width:0}
+  .vh .now{color:#3d6b46;font-weight:600}
+
+  /* phone gets its own picture: five cards, no detail panel */
+  @media (max-width: 600px) {
+    html,body{width:430px;height:auto;overflow:visible;display:block}
+    .side,.btn,.panel{display:none}
+    .main{padding:16px}
+    .top{padding:0 0 12px}
+    .cols{display:block;padding-left:0}
+    .list{padding:14px 15px}
+    .row{display:block;border:1px solid var(--line);border-radius:11px;
+         padding:12px;margin-bottom:9px}
+    .row + .row{margin-top:0}
+    .row.sel{box-shadow:none}
+    .st{display:inline-block;flex:none;width:auto;padding:5px 9px;margin-bottom:9px}
+    .row .body{display:block}
+    .row .ti{display:block}
+    .right{margin-top:10px}
+    .occ{width:auto;text-align:left;margin-left:auto}
+    .list > .row:nth-child(n+8){display:none}
+  }
+</style>
+</head>
+<body>
+
+<aside class="side">
+  <div class="ws">
+    <span class="logo"><svg viewBox="0 0 32 32" fill="none">
+      <path d="M4 15.2 16 5.6l12 9.6" stroke="#1d4c3c" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M10.5 19.6c1.6-1.5 3.4-1.5 5 0s3.4 1.5 5 0" stroke="#4fa87e" stroke-width="2.4" stroke-linecap="round"/>
+      <path d="M11.5 24.6c1.4-1.3 3-1.3 4.5 0s3.1 1.3 4.5 0" stroke="#a6d8bf" stroke-width="2.2" stroke-linecap="round"/>
+    </svg></span>
+    <span class="t"><b>Northaven Home</b><s>WORKSPACE</s></span>
+    <svg class="cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M8 9l4-4 4 4M8 15l4 4 4-4"/></svg>
+  </div>
+  <div class="mlbl">MENU</div>
+  <nav class="nav">
+    <div class="nv"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>Dashboard</div>
+    <div class="nv"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9 9 0 0 1-3.9-.9L3 21l1.9-5A8.4 8.4 0 0 1 4 11.5a8.5 8.5 0 0 1 17 0z"/></svg>Conversations</div>
+    <div class="nv"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9.5" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9"/></svg>Leads</div>
+    <div class="nv"><svg viewBox="0 0 24 24"><path d="M12 2.7 21 7.5v9L12 21.3 3 16.5v-9z"/><path d="M3 7.5 12 12.3 21 7.5M12 12.3v9"/></svg>Collections</div>
+    <div class="nv"><svg viewBox="0 0 24 24"><rect x="4" y="8" width="16" height="12" rx="3"/><path d="M12 8V4.5M9.5 14h.01M14.5 14h.01M2 13v3M22 13v3"/></svg>Agents</div>
+    <div class="nv"><svg viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>Phone Numbers</div>
+    <div class="nv on"><svg viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V4s-1 1-4 1-5-2-8-2-4 1-4 1zM4 22v-7"/></svg>Issues</div>
+  </nav>
+  <div class="user"><span class="av">E</span>
+    <span class="t"><i>elena@northaven.com</i><s>Elena Marchi</s></span></div>
+</aside>
+
+<main class="main">
+  <div class="top">
+    <svg class="pane-ico" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M9.5 4v16"/></svg>
+    <div class="path">Home <span class="sep">›</span> <b>Issues</b>
+      <span class="sep">›</span> EN — Pre-Sales Advisor</div>
+    <div class="btn"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7M3 4v4h4"/></svg>Refresh</div>
+    <div class="btn"><svg viewBox="0 0 24 24"><path d="M4 6h16M7 12h10M10 18h4"/></svg>View</div>
+  </div>
+
+  <div class="cols">
+    <div class="list">
+      <p class="plbl">ISSUES · THIS WEEK</p>
+      <div class="counts">
+        <span class="ct on"><i></i>Total <b>23</b></span>
+        <span class="ct"><i></i>Open <b>8</b></span>
+        <span class="ct"><i></i>In progress <b>4</b></span>
+        <span class="ct"><i></i>Resolved <b>11</b></span>
+        <span class="ct"><i class="hi"></i>High <b>5</b></span>
+        <span class="ct"><i class="me"></i>Medium <b>11</b></span>
+        <span class="ct"><i class="lo"></i>Low <b>7</b></span>
+      </div>
+
+      <div class="row sel">
+        <span class="st st-rs">Resolved</span>
+        <span class="body"><span class="ti">No sizing rule for rooms over 25 m²</span>
+          <span class="mt">ISS-1039 · Knowledge gap</span></span>
+        <span class="right"><span class="sev sv-h"><i></i>High</span>
+          <span class="occ">12<s>calls</s></span></span>
+      </div>
+
+      <div class="row">
+        <span class="st st-op">Open</span>
+        <span class="body"><span class="ti">Delivery times for the islands are not in the knowledge base</span>
+          <span class="mt">ISS-1042 · Knowledge gap</span></span>
+        <span class="right"><span class="sev sv-h"><i></i>High</span>
+          <span class="occ">7<s>calls</s></span></span>
+      </div>
+
+      <div class="row">
+        <span class="st st-pr">In progress</span>
+        <span class="body"><span class="ti">Two products in the catalogue share the same name</span>
+          <span class="mt">ISS-1041 · Product data</span></span>
+        <span class="right"><span class="sev sv-h"><i></i>High</span>
+          <span class="occ">5<s>calls</s></span></span>
+      </div>
+
+      <div class="row">
+        <span class="st st-op">Open</span>
+        <span class="body"><span class="ti">The site and the policy doc give different return windows</span>
+          <span class="mt">ISS-1036 · Policy</span></span>
+        <span class="right"><span class="sev sv-m"><i></i>Medium</span>
+          <span class="occ">9<s>calls</s></span></span>
+      </div>
+
+      <div class="row">
+        <span class="st st-pr">In progress</span>
+        <span class="body"><span class="ti">The installation service is not described anywhere</span>
+          <span class="mt">ISS-1033 · Knowledge gap</span></span>
+        <span class="right"><span class="sev sv-m"><i></i>Medium</span>
+          <span class="occ">9<s>calls</s></span></span>
+      </div>
+
+      <div class="row">
+        <span class="st st-rs">Resolved</span>
+        <span class="body"><span class="ti">The trade price list is not marked as trade only</span>
+          <span class="mt">ISS-1030 · Configuration</span></span>
+        <span class="right"><span class="sev sv-m"><i></i>Medium</span>
+          <span class="occ">3<s>calls</s></span></span>
+      </div>
+
+      <div class="row">
+        <span class="st st-op">Open</span>
+        <span class="body"><span class="ti">No rule for who takes the call out of hours</span>
+          <span class="mt">ISS-1028 · Escalation</span></span>
+        <span class="right"><span class="sev sv-m"><i></i>Medium</span>
+          <span class="occ">6<s>calls</s></span></span>
+      </div>
+
+      <div class="row">
+        <span class="st st-rs">Resolved</span>
+        <span class="body"><span class="ti">Bundle codes in the feed do not match the catalogue names</span>
+          <span class="mt">ISS-1025 · Product data</span></span>
+        <span class="right"><span class="sev sv-m"><i></i>Medium</span>
+          <span class="occ">5<s>calls</s></span></span>
+      </div>
+
+      <div class="row">
+        <span class="st st-pr">In progress</span>
+        <span class="body"><span class="ti">Nothing on the extended warranty the ads mention</span>
+          <span class="mt">ISS-1021 · Knowledge gap</span></span>
+        <span class="right"><span class="sev sv-m"><i></i>Medium</span>
+          <span class="occ">8<s>calls</s></span></span>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="ph"><h2>No sizing rule for rooms<br>over 25 m&sup2;</h2></div>
+      <div class="chips">
+        <span class="cp cp-res">Resolved</span><span class="cp cp-high">High</span>
+        <span class="cp cp-id">ISS-1039</span>
+        <span class="cp cp-ver">KB · Sizing v6 → v7</span>
+      </div>
+      <div class="meta">
+        <span><svg viewBox="0 0 24 24"><rect x="4" y="8" width="16" height="12" rx="3"/><path d="M12 8V4.5"/></svg>AI · Review</span>
+        <span><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.4"/><path d="M5 20a7 7 0 0 1 14 0"/></svg>E. Marchi</span>
+        <span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Closed Aug 14, 09:52</span>
+      </div>
+
+      <p class="sect">FIX</p>
+      <div class="fix">
+        <code>sizing_rules</code><span class="pub">Published</span>
+        <em>Aug 14, 09:52</em>
+      </div>
+
+      <p class="sect">WHAT THE REVIEW FOUND</p>
+      <div class="cmt">
+        <span class="who">AI · Review<em>Aug 14, 09:12</em></span>
+        <p>Twelve callers this week described a room bigger than anything
+          the product data covers. The catalogue gives a <b>BTU rating</b> but
+          <b>no coverage in square metres</b>, so there was no rule to apply.
+          Northaven sent the coverage table the same morning.</p>
+      </div>
+
+      <div class="trail">
+        <div><i>09:12</i>Found in review — 12 calls, same question</div>
+        <div><i>09:20</i>Coverage table requested from Northaven</div>
+        <div><i>09:41</i>Table added to the knowledge base</div>
+        <div><i>09:52</i>Published — issue closed</div>
+      </div>
+
+      <div class="vhead"><p class="sect">PROMPT HISTORY · SIZING &amp; FIT</p>
+        <em>12 versions this month</em></div>
+      <div class="vh">
+        <div><b>v7</b><u>Aug 14</u><span class="now">Size from the coverage table in m&sup2;, never from the description</span></div>
+        <div><b>v6</b><u>Aug 12</u><span>Multi-split: ask how many rooms before quoting</span></div>
+        <div><b>v5</b><u>Aug 9</u><span>North-facing or two external walls: one size up</span></div>
+      </div>
+    </div>
+  </div>
+</main>
+
+</body>
+</html>

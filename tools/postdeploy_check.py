@@ -28,7 +28,9 @@ SLICE = sys.argv[2] if len(sys.argv) > 2 else ""
 PAGES = [
     "/product/voice-agent-builder", "/it/prodotto/voice-agent-builder",
     "/product/workflow-builder", "/it/prodotto/workflow-builder",
-    "/product/call-data-intelligence", "/it/prodotto/call-data-intelligence","/", "/it", "/pricing", "/about", "/contact", "/blog", "/it/blog",
+    "/product/call-data-intelligence", "/it/prodotto/call-data-intelligence",
+    "/product/agent-evaluation", "/it/prodotto/agent-evaluation",
+    "/product/integrations-webhooks", "/it/prodotto/integrations-webhooks","/", "/it", "/pricing", "/about", "/contact", "/blog", "/it/blog",
          # The Italian pricing and about pages were never swept until the proof
          # widget landed on them. Two more page loads, one more blind spot gone.
          "/it/prezzi", "/it/chi-siamo",
@@ -65,7 +67,18 @@ PAGES = [
          "/customers/clima-convenienza", "/it/clienti/clima-convenienza",
          "/customers/creative-cables", "/it/clienti/creative-cables"]
 
-if SLICE:
+if SLICE.startswith("only:"):
+    # only:/a,/b - check exactly these pages. Added so a single page can be
+    # checked in two minutes instead of forty; it never writes a receipt, so
+    # it cannot be mistaken for the full sweep.
+    want = [x.strip() for x in SLICE[5:].split(",") if x.strip()]
+    unknown = [w for w in want if w not in PAGES]
+    if unknown:
+        print("only: unknown page(s) %s - add them to PAGES first" % unknown)
+        sys.exit(1)
+    PAGES = want
+    print("only -> %d page(s): %s" % (len(PAGES), ", ".join(PAGES)))
+elif SLICE:
     _a, _b = (SLICE.split(":") + [""])[:2]
     PAGES = PAGES[int(_a or 0):int(_b) if _b else None]
     print("slice %s -> %d page(s)" % (SLICE, len(PAGES)))
@@ -348,7 +361,8 @@ with sync_playwright() as p:
 
 # click-through test: an href alone is not proof - Framer's router can intercept
 # Skipped on a leading slice so it runs exactly once per full gate, not twice.
-CLICKS = not SLICE or SLICE.split(":")[1:] == [""] or SLICE.endswith(":")
+CLICKS = not SLICE or (not SLICE.startswith("only:")
+          and (SLICE.split(":")[1:] == [""] or SLICE.endswith(":")))
 print("\nclick-through checks:" if CLICKS else "\nclick-through: deferred to final slice")
 with sync_playwright() as p:
     b = p.chromium.launch(executable_path="/opt/pw-browsers/chromium", args=["--no-sandbox"])

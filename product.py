@@ -344,6 +344,61 @@ PRODUCT_CSS = """
     .cv-ask { background: #efe9fb; color: #5c46a0; }
     .cv-vip { background: #e7f5c8; color: #4a5c15; }
     .cv-ok  { background: #e6f2ea; color: #2f6b47; }
+    /* the review pair: an issue on the left, the prompt diff that closed it
+       on the right. Rebuilt 15 Aug after the container reset took the first
+       version with it. */
+    .iss-h { display: flex; align-items: center; gap: 7px; margin-bottom: 12px; }
+    .iss-b { font-size: 10.5px; font-weight: 700; padding: 5px 9px; border-radius: 6px; }
+    .iss-res { background: rgb(228,241,234); color: rgb(47,107,71); }
+    .iss-high { background: rgb(253,238,224); color: rgb(138,76,20); }
+    .iss-id { font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 11px; font-weight: 600; color: rgb(150,146,142);
+      background: rgb(244,242,240); padding: 5px 8px; border-radius: 6px; }
+    .iss-q { font-size: 13.5px; line-height: 1.6; color: rgb(70,66,62); margin: 10px 0 0; }
+    .iss-q b { color: var(--ink); }
+    .iss-log { margin-top: 16px; padding-top: 14px;
+      border-top: 1px solid rgba(18,10,11,.09); }
+    .iss-log div { display: flex; gap: 12px; padding: 4px 0; font-size: 12.5px;
+      color: rgb(120,118,117); }
+    .iss-log i { font-style: normal; flex: 0 0 44px; font-family: ui-monospace,
+      SFMono-Regular, Menlo, monospace; font-size: 11.5px; color: rgb(150,146,142); }
+    .df-ver { display: inline-flex; margin-bottom: 11px; }
+    .df-ver b { font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 11.5px; font-weight: 600; background: rgb(251,243,217);
+      color: rgb(122,92,16); padding: 5px 9px; border-radius: 6px; }
+    .df { border-radius: 9px; overflow: hidden; border: 1px solid rgba(18,10,11,.1); }
+    .df div { display: flex; gap: 9px; padding: 9px 11px; font-family: ui-monospace,
+      SFMono-Regular, Menlo, monospace; font-size: 11.5px; line-height: 1.55; }
+    .df div + div { border-top: 1px solid rgba(18,10,11,.06); }
+    .df .rm { background: rgb(253,237,234); color: rgb(133,60,42); }
+    .df .ad { background: rgb(235,246,238); color: rgb(41,92,58); }
+    .df .sgn { flex: 0 0 9px; font-weight: 700; }
+
+    /* the connect pair: a record read mid-call, and the writes after it.
+       The retry row is the only part of an integrations page a technical
+       buyer believes, so it gets a colour of its own. */
+    .cn-heard { display: flex; align-items: center; gap: 9px; font-size: 13px;
+      color: rgb(120,118,117); margin-bottom: 12px; }
+    .cn-heard b { color: var(--ink); font-family: ui-monospace, SFMono-Regular,
+      Menlo, monospace; font-size: 13px; }
+    .cn-wave { display: inline-flex; align-items: flex-end; gap: 2px; height: 13px; }
+    .cn-wave i { width: 2px; border-radius: 2px; background: rgb(139,185,159);
+      font-style: normal; }
+    .cn-t { display: flex; align-items: center; gap: 8px; margin-top: 14px;
+      font-size: 12.5px; color: rgb(120,118,117); }
+    .cn-t b { font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      color: var(--ink); font-size: 12.5px; }
+    .cn-t span { margin-left: auto; }
+    .cn-log { border: 1px solid rgba(18,10,11,.13); border-radius: 9px; overflow: hidden; }
+    .cn-log div { display: flex; align-items: center; gap: 10px; padding: 9px 12px;
+      font-size: 12.8px; color: rgb(70,66,62); }
+    .cn-log div + div { border-top: 1px solid rgba(18,10,11,.07); }
+    .cn-log em { margin-left: auto; font-style: normal; font-size: 10.5px;
+      font-weight: 700; padding: 4px 7px; border-radius: 5px;
+      background: rgb(228,241,234); color: rgb(47,107,71); }
+    .cn-log em.bad { background: rgb(251,230,226); color: rgb(149,54,31); }
+    .cn-log em.rty { background: rgb(251,243,217); color: rgb(122,92,16); }
+
     .cv-note { margin-top: 14px; padding-top: 13px;
       border-top: 1px solid rgba(18,10,11,.10); font-size: 13.5px; line-height: 1.5;
       color: rgb(120,116,112); }
@@ -420,7 +475,22 @@ PRODUCT_CSS = """
       letter-spacing: .5px; display: block; margin-bottom: 8px; }
     .pr-step h3 { color: var(--ink); font-size: 18px; font-weight: 700;
       letter-spacing: -.3px; line-height: 1.25; margin: 0 0 10px; }
-    .pr-step p { color: var(--gray); font-size: 15px; line-height: 1.6; margin: 0; }
+    .pr-step p { color: var(--gray); font-size: 15px; line-height: 1.6; margin: 0;
+      text-wrap: pretty; }
+
+    /* Hover puts any tile into the same black as step one. Pointer devices
+       only: on a touch screen :hover sticks after a tap. */
+    @media (hover: hover) {
+      .pr-step, .pr-step h3, .pr-step p, .pr-step-n, .pr-step-ic, .pr-step-ic svg {
+        transition: background-color .18s ease, border-color .18s ease,
+                    color .18s ease, stroke .18s ease; }
+      .pr-step:hover { background: rgb(18,10,11); border-color: rgb(18,10,11); }
+      .pr-step:hover .pr-step-ic { background: rgb(200,240,74); }
+      .pr-step:hover .pr-step-ic svg { stroke: rgb(18,10,11); }
+      .pr-step:hover h3 { color: rgb(248,244,241); }
+      .pr-step:hover p { color: rgba(248,244,241,.72); }
+      .pr-step:hover .pr-step-n { color: rgb(200,240,74); }
+    }
 
     @media (max-width: 1100px) {
       .pr-hands-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
@@ -565,7 +635,8 @@ def brief_viz(lang):
 # 01 - the labels put on a conversation.
 #
 # NO SENTIMENT. Daniel, 15 Aug: emotion inference is a fight nobody needs under
-# the AI Act, so it is gone from this page entirely - the canvas, the run log
+# a judgement we do not want a business decision built on, so it is gone
+# from this page entirely - the canvas, the run log
 # and the webhook body too. Everything here is a FACT about the call or the
 # customer, not a guess about how they felt.
 LABELS_TEXT = {
@@ -667,6 +738,129 @@ def actions_viz(lang):
     return '<div class="rf rf-dests">%s</div>' % "".join(parts)
 
 
+REVIEW_TEXT = {
+    "en": dict(title="This week\u2019s review", chip="EVERY CALL",
+               rows=[("Calls reviewed", "2,914"), ("Issues raised", "23"),
+                     ("Fixes published", "9"), ("Prompt versions", "v14"),
+                     ("Calls sampled instead", "0")],
+               foot="No sampling. Reviewing is not the expensive part anymore."),
+    "it": dict(title="La revisione di questa settimana", chip="OGNI CHIAMATA",
+               rows=[("Chiamate riviste", "2.914"), ("Problemi aperti", "23"),
+                     ("Correzioni pubblicate", "9"), ("Versioni del prompt", "v14"),
+                     ("Chiamate a campione", "0")],
+               foot="Nessun campione. Ascoltare non \u00e8 pi\u00f9 la parte cara."),
+}
+
+
+def review_viz(lang):
+    t = REVIEW_TEXT[lang]
+    rows = "".join('<div class="bf-row"><span class="bf-n">%s</span>'
+                   '<p style="margin-left:auto;color:rgb(200,240,74)">%s</p></div>'
+                   % (esc(k), esc(v)) for k, v in t["rows"])
+    return ('<div class="bf"><div class="bf-h"><b>%s</b><span>%s</span></div>%s'
+            '<div class="bf-foot"><span class="bf-dot"></span>%s</div></div>'
+            % (esc(t["title"]), esc(t["chip"]), rows, esc(t["foot"])))
+
+
+LIVING_TEXT = {
+    "en": [("Day one", "The prompt is our best guess, written from your rules."),
+           ("Every day after", "Real calls find what the guess missed."),
+           ("Every fix", "Written, versioned, traced back to the call that caused it."),
+           ("Six months in", "It is nothing like day one. That is the point.", True)],
+    "it": [("Il primo giorno", "Il prompt \u00e8 la nostra ipotesi migliore, scritta dalle tue regole."),
+           ("Ogni giorno dopo", "Le chiamate vere trovano quello che l\u2019ipotesi non aveva previsto."),
+           ("Ogni correzione", "Scritta, versionata, collegata alla chiamata che l\u2019ha causata."),
+           ("Dopo sei mesi", "Non somiglia pi\u00f9 al primo giorno. \u00c8 esattamente il punto.", True)],
+}
+
+
+def living_viz(lang):
+    parts = []
+    for row in LIVING_TEXT[lang]:
+        hot = len(row) > 2 and row[2]
+        parts.append('<div class="rf-step%s"><span class="rf-dest">%s</span>'
+                     '<span class="rf-txt">%s</span></div>'
+                     % (" is-live" if hot else "", esc(row[0]), esc(row[1])))
+    return '<div class="rf rf-dests">%s</div>' % "".join(parts)
+
+
+READS_TEXT = {
+    "en": dict(title="Read while the caller is talking", chip="ORDER SYSTEM",
+               rows=[("order.status", "Packed"), ("order.carrier", "BRT"),
+                     ("order.tracking", "0A47…8812"),
+                     ("order.promised_date", "Thu 21 Aug")],
+               foot="Read at 11:04:22, said out loud at 11:04:23."),
+    "it": dict(title="Letto mentre il cliente sta parlando", chip="GESTIONALE ORDINI",
+               rows=[("order.status", "Imballato"), ("order.carrier", "BRT"),
+                     ("order.tracking", "0A47…8812"),
+                     ("order.promised_date", "gio 21 ago")],
+               foot="Letto alle 11:04:22, detto ad alta voce alle 11:04:23."),
+}
+
+
+def reads_viz(lang):
+    t = READS_TEXT[lang]
+    rows = "".join('<div class="bf-row"><span class="bf-n">%s</span>'
+                   '<p style="margin-left:auto;color:rgb(200,240,74)">%s</p></div>'
+                   % (esc(k), esc(v)) for k, v in t["rows"])
+    return ('<div class="bf"><div class="bf-h"><b>%s</b><span>%s</span></div>%s'
+            '<div class="bf-foot"><span class="bf-dot"></span>%s</div></div>'
+            % (esc(t["title"]), esc(t["chip"]), rows, esc(t["foot"])))
+
+
+WRITES_TEXT = {
+    "en": [("Your CRM", "The lead, with what was actually said on the call.", True),
+           ("Your helpdesk", "A ticket, with the order number already on it."),
+           ("The customer", "The tracking link by SMS, before they hang up."),
+           ("Your endpoint", "call.completed, signed, with the transcript and the outcome.")],
+    "it": [("Il tuo CRM", "Il lead, con quello che si sono davvero detti.", True),
+           ("Il tuo helpdesk", "Un ticket, con il numero d’ordine già dentro."),
+           ("Il cliente", "Il link di tracking via SMS, prima che riattacchi."),
+           ("Il tuo endpoint", "call.completed, firmato, con trascrizione ed esito.")],
+}
+
+
+def writes_viz(lang):
+    parts = []
+    for row in WRITES_TEXT[lang]:
+        hot = len(row) > 2 and row[2]
+        parts.append('<div class="rf-step%s"><span class="rf-dest">%s</span>'
+                     '<span class="rf-txt">%s</span></div>'
+                     % (" is-live" if hot else "", esc(row[0]), esc(row[1])))
+    return '<div class="rf rf-dests">%s</div>' % "".join(parts)
+
+
+CONNECT_TEXT = {
+    "en": dict(title="What it pushes to", chip="AFTER EVERY CALL",
+               native=[("Shopify", "native")],
+               via=[("Zendesk", "via Zapier"), ("Salesforce", "via Zapier"),
+                    ("HubSpot", "via Zapier"), ("Klaviyo", "via Zapier"),
+                    ("Slack", "via Zapier"), ("Anything else", "webhook")],
+               foot="8,500+ apps in the Zapier directory. Anything not in it is "
+                    "a webhook, and that is an afternoon."),
+    "it": dict(title="Dove spinge i dati", chip="DOPO OGNI CHIAMATA",
+               native=[("Shopify", "nativo")],
+               via=[("Zendesk", "via Zapier"), ("Salesforce", "via Zapier"),
+                    ("HubSpot", "via Zapier"), ("Klaviyo", "via Zapier"),
+                    ("Slack", "via Zapier"), ("Qualsiasi altra cosa", "webhook")],
+               foot="8.500+ app nella directory di Zapier. Quello che non c’è "
+                    "è un webhook, ed è un pomeriggio di lavoro."),
+}
+
+
+def connect_viz(lang):
+    t = CONNECT_TEXT[lang]
+    rows = "".join('<div class="bf-row"><span class="bf-n">%s</span>'
+                   '<p style="margin-left:auto;color:rgb(200,240,74)">%s</p></div>'
+                   % (esc(k), esc(v)) for k, v in t["native"])
+    rows += "".join('<div class="bf-row"><span class="bf-n">%s</span>'
+                    '<p style="margin-left:auto;color:rgba(248,244,241,.62)">%s</p></div>'
+                    % (esc(k), esc(v)) for k, v in t["via"])
+    return ('<div class="bf"><div class="bf-h"><b>%s</b><span>%s</span></div>%s'
+            '<div class="bf-foot"><span class="bf-dot"></span>%s</div></div>'
+            % (esc(t["title"]), esc(t["chip"]), rows, esc(t["foot"])))
+
+
 def release_flow(lang):
     parts = []
     for i, (title, line, live) in enumerate(RELEASE_FLOW_TEXT[lang]):
@@ -740,6 +934,124 @@ PAIR_TEXT = {
   # ---- the CALL DATA INTELLIGENCE pair -----------------------------------
   # Left: the count. Right: one of the calls behind it. A number on its own is
   # a claim; the number beside the sentence somebody actually said is evidence.
+  # ---- the AGENT EVALUATION pair -----------------------------------------
+  # The gap and the fix, side by side. Daniel, 15 Aug: the prompt is a living
+  # element that gets better every day - and the only way to show that rather
+  # than claim it is to put a real version diff on the page. The issue is a
+  # GAP IN WHAT THE BUSINESS TOLD US, never an agent defect: "otherwise it
+  # looks that our agent is buggy".
+  "review": {
+    "en": dict(
+        typed="",
+        iss_t="No sizing rule for rooms over 25 m²",
+        iss_id="ISS-1039", iss_state="Resolved", iss_sev="High",
+        iss_q="Twelve callers described a room bigger than anything the product "
+              "data covers. The catalogue gives a BTU rating but <b>no coverage "
+              "in square metres</b>, so there was no rule for the agent to "
+              "apply and it went with the customer’s own description of the "
+              "room. Northaven sent the coverage table the same morning.",
+        iss_log=[("09:12", "Found in review — 12 calls, same question"),
+                 ("09:20", "Coverage table requested from Northaven"),
+                 ("09:41", "Table added to the knowledge base"),
+                 ("09:52", "Published — issue closed")],
+        df_t="What the fix changed", df_s="Prompt version history",
+        df_v="Sizing & Fit v6 → v7",
+        df=[("rm", "Recommend the unit that matches what the customer says they "
+                   "need and the budget they give you."),
+            ("ad", "Size from the coverage table in square metres. Ask for the "
+                   "floor area; if they do not know it, ask for length and "
+                   "width and work it out with them."),
+            ("ad", "North-facing, or more than one external wall: go one size "
+                   "up and say why."),
+            ("ad", "If the room is bigger than the largest coverage in the "
+                   "table, hand over to the team rather than guess.")],
+        df_note="Every version is kept, every fix points back at the calls that "
+                "caused it, and any version can be restored."),
+    "it": dict(
+        typed="",
+        iss_t="Nessuna regola di taglia per stanze oltre i 25 m²",
+        iss_id="ISS-1039", iss_state="Risolta", iss_sev="Alta",
+        iss_q="Dodici clienti hanno descritto una stanza più grande di "
+              "qualsiasi cosa ci fosse nei dati prodotto. A catalogo c’è il "
+              "valore in BTU ma <b>non la copertura in metri quadri</b>: nessuna "
+              "regola da applicare, e l’agente è andato dietro alla "
+              "descrizione del cliente. Northaven ci ha mandato la tabella di "
+              "copertura la mattina stessa.",
+        iss_log=[("09:12", "Trovato in revisione — 12 chiamate, stessa domanda"),
+                 ("09:20", "Tabella di copertura chiesta a Northaven"),
+                 ("09:41", "Tabella inserita nella knowledge base"),
+                 ("09:52", "Pubblicata — problema chiuso")],
+        df_t="Cosa ha cambiato la correzione", df_s="Storico delle versioni",
+        df_v="Taglia e potenza v6 → v7",
+        df=[("rm", "Consiglia il modello che corrisponde a quello che il cliente "
+                   "dice di volere e al budget che ti dà."),
+            ("ad", "Dimensiona dalla tabella di copertura in metri quadri. "
+                   "Chiedi i metri quadri; se non li sanno, fatti dire "
+                   "lunghezza e larghezza e calcolateli insieme."),
+            ("ad", "Stanza esposta a nord, o con più di una parete esterna: "
+                   "sali di una misura e spiega perché."),
+            ("ad", "Se la stanza supera la copertura più alta in tabella, "
+                   "passa al team invece di tirare a indovinare.")],
+        df_note="Ogni versione resta, ogni correzione punta alle chiamate che "
+                "l’hanno causata, e qualsiasi versione si può ripristinare."),
+  },
+
+  # ---- the INTEGRATIONS & WEBHOOKS pair ----------------------------------
+  # Left: a record being read WHILE the caller is on the line, with the order
+  # number typing in and the fields arriving. Right: what happened after the
+  # call, including a delivery that failed and was retried. The failure is
+  # deliberate - a page that only shows the happy path is a brochure.
+  "connect": {
+    "en": dict(
+        typed="84120",
+        read_t="Order lookup", read_s="while the caller is on the line",
+        heard_l="Heard", heard="“…where my order is, it’s 84120”",
+        find_l="LOOKING IT UP IN YOUR ORDER SYSTEM",
+        db_l="READS FROM YOUR ORDER SYSTEM",
+        db=[("order.status", "Packed"), ("order.carrier", "BRT"),
+            ("order.tracking", "0A47…8812"),
+            ("order.promised_date", "Thu 21 Aug")],
+        msg_l="WHAT THE CALLER HEARS WHILE IT LOOKS",
+        msg="“Let me have a look, one second.”",
+        t_l="Read and answered in", t_v="412 ms", t_note="live record, not an export",
+        w_t="After the call", w_s="four writes, one retry",
+        w_l="WRITES BACK, WHERE THE WORK LIVES",
+        w=[("crm.lead_updated", "CRM"), ("helpdesk.ticket_opened", "Helpdesk"),
+           ("sms.tracking_link_sent", "Customer"),
+           ("webhook.call_completed", "Your endpoint")],
+        log_l="DELIVERY",
+        log=[("Attempt 1 · your endpoint", "503", "bad"),
+             ("Retried after 30s", "delivered", "rty"),
+             ("Signed, and logged against the call", "ok", "")],
+        w_note="Nothing is queued into a black hole. Every attempt is visible, "
+               "and a delivery that never succeeds is raised as an issue with "
+               "the call attached."),
+    "it": dict(
+        typed="84120",
+        read_t="Ricerca ordine", read_s="mentre il cliente è in linea",
+        heard_l="Sentito", heard="“…dov’è il mio ordine, è il 84120”",
+        find_l="LO CERCHIAMO NEL TUO GESTIONALE",
+        db_l="LEGGE DAL TUO GESTIONALE ORDINI",
+        db=[("order.status", "Imballato"), ("order.carrier", "BRT"),
+            ("order.tracking", "0A47…8812"),
+            ("order.promised_date", "gio 21 ago")],
+        msg_l="COSA SENTE IL CLIENTE MENTRE CERCA",
+        msg="“Guardo subito, un attimo solo.”",
+        t_l="Letto e risposto in", t_v="412 ms", t_note="scheda vera, non un export",
+        w_t="Dopo la chiamata", w_s="quattro scritture, un tentativo ripetuto",
+        w_l="SCRIVE DOVE SI LAVORA DAVVERO",
+        w=[("crm.lead_updated", "CRM"), ("helpdesk.ticket_opened", "Helpdesk"),
+           ("sms.tracking_link_sent", "Cliente"),
+           ("webhook.call_completed", "Il tuo endpoint")],
+        log_l="CONSEGNA",
+        log=[("Tentativo 1 · il tuo endpoint", "503", "bad"),
+             ("Ripetuto dopo 30s", "consegnato", "rty"),
+             ("Firmato, e registrato sulla chiamata", "ok", "")],
+        w_note="Niente finisce in un buco nero. Ogni tentativo si vede, e una "
+               "consegna che non riesce mai diventa un problema aperto con la "
+               "chiamata allegata."),
+  },
+
   "insight": {
     "en": dict(
         rank_t="What people rang about", rank_s="Air conditioning \u00b7 VIP \u00b7 last 30 days",
@@ -870,6 +1182,62 @@ def pair_panels(lang, kind="tools"):
                     esc(t["en_l"]), esc(t["fn"]), esc(t["fn_hint"]),
                     esc(t["when_l"]), when, esc(t["db_l"]), db,
                     esc(t["msg_l"]), esc(t["msg"])))
+    elif kind == "connect":
+        db = "".join('<div class="pending"><i></i>%s<em>%s</em></div>'
+                     % (esc(k), esc(v)) for k, v in t["db"])
+        left = ('<div class="dlg">'
+                '<div class="dlg-h"><b>%s</b><span>%s</span></div>'
+                '<div class="cn-heard">%s <b>%s</b>'
+                '<span class="cn-wave"><i style="height:5px"></i>'
+                '<i style="height:11px"></i><i style="height:7px"></i>'
+                '<i style="height:13px"></i><i style="height:6px"></i></span></div>'
+                '<p class="dlg-sect" style="margin-top:4px">%s</p>'
+                '<div class="dlg-menu" style="border-top:1px solid rgba(18,10,11,.13);'
+                'border-radius:10px">'
+                '<div class="dlg-search" style="border-bottom:0;color:var(--ink)">'
+                'order <span data-typed></span><span class="dlg-caret"></span>'
+                '</div></div>'
+                '<p class="dlg-sect">%s</p><div class="dlg-db">%s</div>'
+                '<p class="dlg-sect">%s</p><div class="dlg-msg">%s</div>'
+                '<div class="cn-t">%s <b>%s</b><span>%s</span></div></div>'
+                % (esc(t["read_t"]), esc(t["read_s"]), esc(t["heard_l"]),
+                   esc(t["heard"]), esc(t["find_l"]), esc(t["db_l"]), db,
+                   esc(t["msg_l"]), esc(t["msg"]), esc(t["t_l"]), esc(t["t_v"]),
+                   esc(t["t_note"])))
+        writes = "".join('<div class="pending"><i></i>%s<em>%s</em></div>'
+                         % (esc(k), esc(v)) for k, v in t["w"])
+        log = "".join('<div>%s<em class="%s">%s</em></div>' % (esc(a), c, esc(b))
+                      for a, b, c in t["log"])
+        right = ('<div class="dlg">'
+                 '<div class="dlg-h"><b>%s</b><span>%s</span></div>'
+                 '<p class="dlg-sect" style="margin-top:4px">%s</p>'
+                 '<div class="dlg-db">%s</div>'
+                 '<p class="dlg-sect">%s</p><div class="cn-log">%s</div>'
+                 '<p class="cv-note">%s</p></div>'
+                 % (esc(t["w_t"]), esc(t["w_s"]), esc(t["w_l"]), writes,
+                    esc(t["log_l"]), log, esc(t["w_note"])))
+    elif kind == "review":
+        log = "".join('<div><i>%s</i>%s</div>' % (esc(t0), esc(t1))
+                      for t0, t1 in t["iss_log"])
+        left = ('<div class="dlg">'
+                '<div class="iss-h"><span class="iss-b iss-res">%s</span>'
+                '<span class="iss-b iss-high">%s</span>'
+                '<span class="iss-id">%s</span></div>'
+                '<div class="dlg-h"><b>%s</b></div>'
+                '<p class="iss-q">%s</p>'
+                '<div class="iss-log">%s</div></div>'
+                % (esc(t["iss_state"]), esc(t["iss_sev"]), esc(t["iss_id"]),
+                   esc(t["iss_t"]), t["iss_q"], log))
+        rows = "".join(
+            '<div class="%s"><span class="sgn">%s</span><span>%s</span></div>'
+            % (k, "&minus;" if k == "rm" else "+", esc(v)) for k, v in t["df"])
+        right = ('<div class="dlg">'
+                 '<div class="dlg-h"><b>%s</b><span>%s</span></div>'
+                 '<div class="df-ver"><b>%s</b></div>'
+                 '<div class="df">%s</div>'
+                 '<p class="cv-note">%s</p></div>'
+                 % (esc(t["df_t"]), esc(t["df_s"]), esc(t["df_v"]), rows,
+                    esc(t["df_note"])))
     elif kind == "insight":
         bars = "".join(
             '<div class="ib-row"><p>%s</p><div class="ib-track">'
@@ -1036,18 +1404,48 @@ def section_shot(d):
 
 
 STEP_ICONS = {
-    # 1 - the customer talking: a speech bubble with a spark
+    # Daniel, 15 Aug: "the icons in the steps tiles are wrong! icons should
+    # reflect what's written in that tile". They were: every page reused
+    # talk/build/hear/run, drawn for the Voice Agent Builder steps, on pages
+    # whose steps are wire, test, label, count, review, fix, publish, read.
+    # One key per MEANING, not per position.
+
+    # the customer talking: a speech bubble with a spark
     "talk": '<path d="M20 12a8 8 0 0 1-8.5 8 8.6 8.6 0 0 1-3.7-.9L3 21l1.8-4.8A8 8 0 0 1 4 12a8 8 0 0 1 16 0z"/>'
             '<path d="M12 8.4l.8 1.9 1.9.8-1.9.8-.8 1.9-.8-1.9-1.9-.8 1.9-.8z"/>',
-    # 2 - us building: blocks being assembled
+    # us building: blocks being assembled
     "build": '<rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2"/>'
              '<rect x="3" y="13" width="8" height="8" rx="2"/><path d="M17 13v8M13 17h8"/>',
-    # 3 - listening to the draft before it ships
+    # listening to the draft before it ships: a headset
     "hear": '<path d="M4 13v-1a8 8 0 0 1 16 0v1"/><rect x="2.5" y="13" width="4.5" height="6" rx="2"/>'
             '<rect x="17" y="13" width="4.5" height="6" rx="2"/><path d="M19.2 19v.6a2.6 2.6 0 0 1-2.6 2.6H13"/>',
-    # 4 - running it and keeping it current
+    # running it and keeping it current: a cycle that ends in a check
     "run": '<path d="M20.5 12a8.5 8.5 0 1 1-2.6-6.1"/><path d="M20.8 4.2v4.4h-4.4"/>'
            '<path d="M8.5 14.5l2.6-2.9 2.2 1.9 3.1-3.6"/>',
+    # wiring it to their systems: the link
+    "wire": '<path d="M10.2 13.6a4.6 4.6 0 0 0 6.5.2l2.4-2.4a4.6 4.6 0 0 0-6.5-6.5l-1.4 1.4"/>'
+            '<path d="M13.8 10.4a4.6 4.6 0 0 0-6.5-.2l-2.4 2.4a4.6 4.6 0 0 0 6.5 6.5l1.4-1.4"/>',
+    # trying it on a call that already happened: play, over a waveform
+    "trial": '<path d="M3 10.2v3.6M7 6.8v10.4M11 9v6"/><path d="M15 8.2l6.2 3.8-6.2 3.8z"/>',
+    # setting the labels up: a tag
+    "label": '<path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/>'
+             '<circle cx="7.4" cy="7.4" r="1.3"/>',
+    # checking them against real calls: a list, ticked
+    "verify": '<rect x="3.5" y="4" width="17" height="16" rx="2.5"/><path d="M7.5 9.3h9M7.5 13.2h4.5"/>'
+              '<path d="M13.6 15.9l1.8 1.8 3.4-3.9"/>',
+    # counting, forever: bars on a baseline
+    "count": '<path d="M3 20.5h18"/><path d="M6.6 20.5v-5.6M12 20.5v-11M17.4 20.5v-8"/>',
+    # defining what a good call is: the standard, written down and ticked
+    "standard": '<path d="M14 3.5H7A2.5 2.5 0 0 0 4.5 6v12A2.5 2.5 0 0 0 7 20.5h10a2.5 2.5 0 0 0 2.5-2.5V9z"/>'
+                '<path d="M14 3.5V9h5.5"/><path d="M8.4 14.1l2 2 4.2-4.6"/>',
+    # reviewing every call: a magnifier over the shape of a call
+    "review": '<circle cx="10.8" cy="10.8" r="7"/><path d="M20.5 20.5 15.8 15.8"/>'
+              '<path d="M8.3 9.4v2.8M10.8 7.7v7.2M13.3 9.4v2.8"/>',
+    # fixing it: the wrench
+    "fix": '<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.8-3.8a6 6 0 0 1-7.9 7.9l-6.9 6.9a2.1 2.1 0 0 1-3-3l6.9-6.9a6 6 0 0 1 7.9-7.9z"/>',
+    # reading all of it: an open book
+    "read": '<path d="M12 6.6C10.5 5.1 8.5 4.6 6 4.6H3.5v13H6c2.5 0 4.5.5 6 2 1.5-1.5 3.5-2 6-2h2.5v-13H18c-2.5 0-4.5.5-6 2z"/>'
+            '<path d="M12 6.6v13"/>',
 }
 
 
@@ -1150,6 +1548,16 @@ def build(lang, slug, d):
             b["viz"] = questions_viz(lang)
         elif b.get("viz") == "ACTIONS_VIZ":
             b["viz"] = actions_viz(lang)
+        elif b.get("viz") == "REVIEW_VIZ":
+            b["viz"] = review_viz(lang)
+        elif b.get("viz") == "LIVING_VIZ":
+            b["viz"] = living_viz(lang)
+        elif b.get("viz") == "READS_VIZ":
+            b["viz"] = reads_viz(lang)
+        elif b.get("viz") == "WRITES_VIZ":
+            b["viz"] = writes_viz(lang)
+        elif b.get("viz") == "CONNECT_VIZ":
+            b["viz"] = connect_viz(lang)
 
     sections = "".join([
         section_shot(d),

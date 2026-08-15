@@ -54,6 +54,8 @@ PAGES = [
     "/product/voice-agent-builder", "/it/prodotto/voice-agent-builder",
     "/product/workflow-builder", "/it/prodotto/workflow-builder",
     "/product/call-data-intelligence", "/it/prodotto/call-data-intelligence",
+    "/product/agent-evaluation", "/it/prodotto/agent-evaluation",
+    "/product/integrations-webhooks", "/it/prodotto/integrations-webhooks",
     "/", "/it",
     "/playbooks/peak-season", "/it/playbook/picchi-stagionali",
     "/playbooks/international-expansion", "/it/playbook/espansione-internazionale",
@@ -144,7 +146,17 @@ with sync_playwright() as p:
                           args=["--no-sandbox"])
     ctx = b.new_context(viewport={"width": WIDTH, "height": 900})
     todo = PAGES
-    if SLICE:
+    if SLICE.startswith("only:"):
+        want = [x.strip() for x in SLICE[5:].split(",") if x.strip()]
+        unknown = [w for w in want if w not in PAGES]
+        if unknown:
+            # module level, not a function: exit rather than return
+            print("only: unknown page(s) %s - add them to PAGES first" % unknown)
+            b.close()
+            sys.exit(1)
+        todo = want
+        print("only -> %d page(s)" % len(todo))
+    elif SLICE:
         # NOT `a, _, b` - `b` is the browser handle in this scope, and
         # rebinding it to a string made b.close() blow up at the end of a
         # run that had otherwise passed.

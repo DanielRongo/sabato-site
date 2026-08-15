@@ -128,8 +128,8 @@ VOICE_AGENT_BUILDER_IT = dict(
              "team.", True),
             ("build", "Lo costruiamo noi, tutto",
              "Le istruzioni, gli strumenti, il collegamento al catalogo e al "
-             "gestionale ordini. Sui tuoi sviluppatori non cade niente, perché "
-             "non c'è niente da fare.", False),
+             "gestionale ordini. Il tuo team tecnico può guardare ogni pezzo: "
+             "solo, non gli chiediamo uno sprint.", False),
             ("hear", "Lo senti tu, prima di tutti",
              "Ti chiamiamo con la bozza e te la senti gestire i casi che ti "
              "preoccupano. Online ci va quando lo dici tu.", False),
@@ -286,11 +286,11 @@ WORKFLOW_BUILDER_IT = dict(
              "Cosa fa oggi il tuo team dopo una chiamata, e quali di quelle "
              "cose devono smettere di essere il compito di qualcuno. Quella "
              "lista è tutto il briefing.", True),
-            ("build", "Lo colleghiamo ai tuoi sistemi",
+            ("wire", "Lo colleghiamo ai tuoi sistemi",
              "CRM, helpdesk, messaggistica, gestionale ordini. Con quello che "
-             "espongono: API, webhook, un export. Ai tuoi sviluppatori non "
-             "chiediamo niente.", False),
-            ("hear", "Lo provi su una chiamata vera",
+             "espongono: API, webhook, un export. I tuoi sviluppatori "
+             "autorizzano gli accessi, il resto lo facciamo noi.", False),
+            ("trial", "Lo provi su una chiamata vera",
              "Facciamo girare il workflow su una chiamata già avvenuta e ti "
              "facciamo vedere esattamente cosa ha scritto e dove. Online ci va "
              "quando pubblichi tu.", False),
@@ -325,8 +325,8 @@ WORKFLOW_BUILDER_IT = dict(
          "Pochi secondi dalla fine della chiamata. Chi ha accettato il "
          "riepilogo di solito ce l'ha prima di aver riposato il telefono."),
         ("Che fine fanno registrazione e trascrizione?",
-         "Restano legate alla conversazione e sono a tua disposizione. La "
-         "conservazione la imposta la tua policy, non la nostra."),
+         "Restano legate alla conversazione: le apri, le leggi o le esporti "
+         "quando vuoi."),
     ],
 
     cta=dict(
@@ -433,17 +433,17 @@ CALL_DATA_INTELLIGENCE_IT = dict(
         step_word="PASSO",
         steps=[
             ("talk", "Ci dici cosa vuoi sapere",
-             "Le domande che faresti se qualcuno trascrivesse ogni chiamata a "
-             "mano. Quelle diventano le etichette.", True),
-            ("build", "Le etichette le impostiamo noi",
+             "Le domande che faresti se una persona ascoltasse tutte le "
+             "chiamate. Quelle diventano le etichette.", True),
+            ("label", "Le etichette le impostiamo noi",
              "Categorie che rispecchiano il tuo catalogo, livelli che "
              "rispecchiano i tuoi clienti, e tutto il resto che vuoi contare. "
              "Non una tassonomia generica appiccicata sopra.", False),
-            ("hear", "Le verifichi su chiamate vere",
+            ("verify", "Le verifichi su chiamate vere",
              "Ti facciamo vedere le etichette su chiamate già avvenute, così "
              "controlli che siano giuste prima che qualcuno ci costruisca un "
              "report sopra.", False),
-            ("run", "Poi conta tutto, per sempre",
+            ("count", "Poi conta tutto, per sempre",
              "Ogni chiamata da quel giorno in poi, etichettata allo stesso "
              "modo: così il confronto mese su mese vuol dire qualcosa.", False),
         ],
@@ -457,10 +457,11 @@ CALL_DATA_INTELLIGENCE_IT = dict(
          "filtri e conti, e da qualsiasi numero apri le chiamate che ci stanno "
          "dietro. La registrazione è la prova, non il prodotto."),
         ("Analizzate come si sentiva il cliente?",
-         "No, ed è una scelta. Dedurre lo stato emotivo di una persona è "
-         "terreno discusso con l'AI Act europeo e preferiamo non costruirci "
-         "sopra. Tutto quello che etichettiamo è un fatto della chiamata: cosa "
-         "è stato chiesto, di che categoria era, se è stata risolta."),
+         "No, ed è una scelta. Indovinare l’umore di una persona dalla voce "
+         "non è una cosa su cui vorremmo far prendere decisioni a "
+         "un’azienda. Tutto quello che etichettiamo è un fatto della "
+         "chiamata: cosa è stato chiesto, di che categoria era, se è stata "
+         "risolta."),
         ("I dati possiamo portarceli via?",
          "Sì. Li esporti, oppure te li mandiamo nel tuo data warehouse o nel "
          "tuo sistema di reportistica via webhook. Sono dati tuoi sui tuoi "
@@ -489,6 +490,335 @@ CALL_DATA_INTELLIGENCE_IT = dict(
     ),
 )
 
+AGENT_EVALUATION_IT = dict(
+    slug="agent-evaluation",
+    en="agent-evaluation",
+    chip="Agent Evaluation",
+    pair_kind="review",
+
+    title="Agent Evaluation | Sabato AI",
+    description="Ogni chiamata rivista, ogni lacuna scritta, ogni modifica al "
+                "prompt versionata. La parte che nessuno mostra in demo, e che "
+                "è quasi tutto il lavoro. Online in due settimane.",
+
+    h1="La demo è il 5%.[br]Noi facciamo il 95.",
+    sub="Qualsiasi fornitore di voice AI ti fa vedere un agente che parla. "
+        "Quella parte si fa in un weekend. Il novantacinque per cento restante "
+        "è sapere che alla diecimillesima chiamata dice ancora la cosa "
+        "giusta, accorgersene il giorno in cui smette, e poterlo dimostrare. "
+        "Quella metà non te la vende quasi nessuno, perché in demo non si "
+        "vede.",
+
+    hero_visual="",
+
+    shot=dict(
+        src="/product/assets/agent-evaluation",
+        alt="La bacheca dei problemi di Sabato: le lacune trovate in revisione "
+            "- una regola che nessuno ha scritto, dati prodotto che si "
+            "contraddicono, una policy che esiste in due versioni - ognuna con "
+            "il numero di chiamate da cui è saltata fuori.",
+        caption="Una settimana normale. Quasi tutto quello che la revisione "
+                "trova è conoscenza che manca, non un agente rotto.",
+    ),
+
+    pair=dict(
+        eyebrow="LA PARTE CHE NESSUNO TI MOSTRA",
+        h2="Una lacuna, e la correzione[br]che l’ha chiusa.",
+        lede="Ecco com’è fatto davvero il lavoro. Dodici clienti hanno "
+             "descritto una stanza più grande di qualsiasi cosa ci fosse nei "
+             "dati prodotto: abbiamo chiesto la tabella di copertura, scritto la "
+             "regola su quella, provata su quelle dodici chiamate e pubblicata "
+             "entro l’ora. La versione precedente è ancora lì.",
+    ),
+
+    group=dict(
+        eyebrow="COME LO TENIAMO ONESTO",
+        h2="Rivisto ogni giorno.[br]Riscritto ogni settimana.",
+    ),
+
+    blocks=[
+        dict(
+            eyebrow="01 · RIVEDIAMO OGNI CHIAMATA",
+            h2="Due su cento era un budget, non uno standard.",
+            h2_in_col=True,
+            viz="REVIEW_VIZ",
+            body=[
+                "Il controllo qualità su un team al telefono vuol dire che "
+                "qualcuno ascolta due chiamate su cento e spera fossero "
+                "rappresentative. Quel numero non l’ha scelto nessuno perché "
+                "fosse rigoroso: l’hanno scelto perché ascoltare costa un’ora "
+                "di una persona.",
+                "Adesso non più. Ogni chiamata viene letta contro quello che "
+                "per te è una chiamata fatta bene, e quello che ne esce non è "
+                "un punteggio in un foglio: è un elenco di lacune precise - "
+                "una regola che nessuno ha scritto, un prodotto che nessuno ha "
+                "descritto, una policy che esiste in due versioni - ognuna con "
+                "quante volte è saltata fuori.",
+            ],
+        ),
+        dict(
+            eyebrow="02 · IL PROMPT È VIVO",
+            h2="Non è un file scritto una volta e basta.",
+            h2_in_col=True,
+            viz="LIVING_VIZ",
+            flip=True,
+            body=[
+                "Le istruzioni dietro al tuo agente cambiano quasi ogni "
+                "settimana, perché le chiamate vere continuano a tirare fuori "
+                "cose che nessuno aveva previsto. Uno chiede di parlare con una "
+                "persona in un modo che le regole non contemplavano. Una frase "
+                "cade male su una linea disturbata.",
+                "Ognuna di quelle modifiche è scritta, versionata e "
+                "riconducibile alla chiamata che l’ha causata, e qualsiasi "
+                "versione si può rimettere. Un agente che al sesto mese è "
+                "identico al primo giorno vuol dire che non se n’è occupato "
+                "nessuno.",
+            ],
+        ),
+    ],
+
+    hands=dict(
+        eyebrow="COMPLETAMENTE GESTITO",
+        h2="Questo è il lavoro[br]che stai comprando.",
+        lede="Non una dashboard da guardare. Un ciclo che portiamo avanti noi, "
+             "sul tuo agente, ogni settimana - e puoi leggerlo tutto.",
+        step_word="PASSO",
+        steps=[
+            ("standard", "Definisci tu cos’è una chiamata fatta bene",
+             "Cosa deve succedere sempre, cosa non si dice mai, quando deve "
+             "subentrare una persona. Quello diventa lo standard su cui si "
+             "rivede tutto.", True),
+            ("review", "Rivediamo, tutti i giorni",
+             "Non a campione. Gli errori li scriviamo come cose precise e "
+             "contabili, non come un punteggio di qualità su cui non ci fai "
+             "niente.", False),
+            ("fix", "Correggiamo e pubblichiamo",
+             "Scritto sulla regola esatta che ha fallito, provato su chiamate "
+             "già avvenute e pubblicato: di solito lo stesso giorno.", False),
+            ("read", "E puoi leggere tutto",
+             "Ogni problema, ogni correzione, ogni versione del prompt e cosa è "
+             "cambiato in mezzo. Comprese quelle che abbiamo aperto su di "
+             "noi.", False),
+        ],
+    ),
+
+    faq_h2="Le domande che fanno davvero",
+    faq=[
+        ("Chi decide cos’è una chiamata fatta bene?",
+         "Lo decidi tu, e noi lo mettiamo per iscritto così si può anche "
+         "contestare. È la tua policy - cosa si deve dire, cosa non si "
+         "promette mai, quando subentra una persona - non un modello di "
+         "qualità generico con dentro le nostre opinioni."),
+        ("Non è che vi date i voti da soli?",
+         "In parte sì, e far finta di no sarebbe offensivo. Quello che lo "
+         "rende verificabile è che lo standard è tuo, che ogni problema e "
+         "ogni correzione li vedi con la trascrizione allegata, e che lo "
+         "storico mostra esattamente cosa è cambiato e quando. Puoi non "
+         "essere d’accordo su una chiamata che abbiamo dato per buona."),
+        ("Quanto ci mette una cosa a essere corretta davvero?",
+         "Di solito lo stesso giorno in cui salta fuori. L’esempio in questa "
+         "pagina è passato dal momento in cui uno ha visto lo schema alla "
+         "pubblicazione in quaranta minuti, e quasi tutto quel tempo è "
+         "servito a provare la modifica sulle chiamate da cui veniva."),
+        ("Cosa impedisce che una correzione ne rompa un’altra?",
+         "Le modifiche si provano su chiamate già avvenute prima di "
+         "avvicinarsi a un cliente, e restano in bozza finché non le "
+         "pubblichi. Se una peggiora le cose, la versione precedente è "
+         "ancora lì e torna dentro con un clic."),
+        ("Dobbiamo farlo noi qualcosa di tutto questo?",
+         "No. Puoi leggere ogni problema e ogni correzione, e c’è chi vuole "
+         "farci sopra un giro ogni settimana. Altri non lo aprono mai. Vanno "
+         "bene entrambe: il lavoro succede comunque."),
+        ("Costa a parte?",
+         "No. È il modo in cui la cosa resta funzionante. Fartelo pagare a "
+         "parte vorrebbe dire farti pagare il nostro controllo qualità."),
+    ],
+
+    cta=dict(
+        hand="online in due settimane",
+        h2="Chiedici cosa succede alla diecimillesima chiamata.",
+        sub="È la domanda che vorremmo ci facessero se fossimo noi a comprare. "
+            "Falla a noi, e falla a chiunque altro stai sentendo.",
+    ),
+)
+
+# ---------------------------------------------------------------------------
+# Italiano localizzato, non tradotto. Due trappole già cadute una volta su
+# questo sito: i calchi ("sotto il cofano" non esiste, si dice "dietro le
+# quinte") e gli accenti scritti con l’apostrofo.
+# ---------------------------------------------------------------------------
+INTEGRATIONS_WEBHOOKS_IT = dict(
+    slug="integrations-webhooks",
+    en="integrations-webhooks",
+    chip="Integrazioni & Webhook",
+    pair_kind="connect",
+
+    title="Integrazioni & Webhook | Sabato AI",
+    description="L’agente legge il tuo gestionale, il catalogo e il CRM "
+                "mentre il cliente è ancora in linea, e scrive dopo. Nativo con "
+                "Shopify, 8.500+ app via Zapier. Online in due settimane.",
+
+    h1="Le risposte sono già[br]nei tuoi sistemi.",
+    sub="Un agente che non vede il tuo gestionale può solo dire con "
+        "gentilezza che non lo sa. Il nostro legge la scheda vera mentre il "
+        "cliente è ancora al telefono - stato, disponibilità, data di "
+        "consegna, cosa aveva comprato l’altra volta - e poi scrive dove si "
+        "lavora davvero.",
+
+    hero_visual="",
+
+    shot=dict(
+        src="/product/assets/integrations-webhooks",
+        alt="Il flusso post-chiamata di Sabato: finisce una chiamata e partono "
+            "quattro passaggi - il lead nel CRM, l’ordine aggiornato in modo "
+            "nativo su Shopify, 8.500+ app via Zapier e un webhook firmato "
+            "verso i tuoi sistemi - con sotto il registro delle esecuzioni.",
+        caption="Finisce una chiamata. Succedono quattro cose, in quattro "
+                "strumenti diversi, prima che qualcuno apra il computer.",
+    ),
+
+    pair=dict(
+        eyebrow="COSA VUOL DIRE DAVVERO “INTEGRATO”",
+        h2="Legge durante la chiamata.[br]Scrive dopo.",
+        lede="Quasi sempre “integrato” vuol dire un export notturno e una "
+             "dashboard. Va benissimo per un report ed è inutile al telefono, "
+             "perché il cliente sta chiedendo dell’ordine che ha fatto "
+             "quaranta minuti fa. Tutto quello che l’agente dice viene letto "
+             "nel momento in cui lo dice, e tutto quello che fa dopo succede "
+             "nei sistemi dove il tuo team lavora già.",
+    ),
+
+    group=dict(
+        eyebrow="COSA TOCCA",
+        h2="Legge quello che serve.[br]Scrive dove lavori tu.",
+    ),
+
+    blocks=[
+        dict(
+            eyebrow="01 · COSA PUÒ LEGGERE",
+            h2="La risposta è già in un tuo sistema.",
+            h2_in_col=True,
+            viz="READS_VIZ",
+            body=[
+                "Quasi tutte le domande per cui un cliente chiama hanno una "
+                "risposta dentro un software che paghi già. Dov’è il mio "
+                "ordine. C’è la mia taglia. È arrivato il reso. Cosa avevo "
+                "preso l’altra volta. Quanto costa con il mio sconto "
+                "rivenditore. Non sono domande difficili: sono difficili solo "
+                "perché chi potrebbe guardare è già al telefono con "
+                "qualcun altro.",
+                "L’agente ha accesso in lettura ai campi che gli servono e a "
+                "nient’altro, e li legge nel momento in cui risponde. Quindi "
+                "quello che dice è vero quando lo dice, non vero alle tre di "
+                "notte quando è girato l’export.",
+            ],
+        ),
+        dict(
+            eyebrow="02 · COSA CI FA",
+            h2="Poi fa il lavoro, dove il lavoro si fa.",
+            h2_in_col=True,
+            viz="WRITES_VIZ",
+            flip=True,
+            body=[
+                "Leggere è metà. L’altra metà è che dopo nessuno deve "
+                "ribattere la chiamata a mano. Il lead arriva nel CRM con "
+                "quello che si sono detti davvero. Il ticket si apre "
+                "nell’helpdesk con il numero d’ordine già dentro. Il "
+                "cliente riceve il link di tracking via SMS prima di "
+                "riattaccare. E l’account manager scopre che ha appena "
+                "chiamato un’opportunità da quattordicimila euro.",
+                "Lavoriamo con quello che riesci a esporre: un’API, un "
+                "webhook, un file notturno, o un portale in cui entriamo come "
+                "farebbe una persona.",
+            ],
+        ),
+        dict(
+            eyebrow="03 · A COSA SI COLLEGA",
+            h2="Nativo con Shopify.[br]Tutto il resto via Zapier.",
+            h2_in_col=True,
+            viz="CONNECT_VIZ",
+            body=[
+                "Con Shopify è nativo. L’agente legge l’ordine, la "
+                "disponibilità e cosa aveva comprato l’altra volta "
+                "direttamente dal tuo store, e ci riscrive dentro la nota, il "
+                "tag e l’ordine in bozza. Nessuno strato in mezzo e niente da "
+                "mantenere per te.",
+                "Tutto il resto che già usi - helpdesk, CRM, email, fogli, "
+                "agenda, WhatsApp - si collega via Zapier, che sono 8.500+ app. "
+                "Se non c’è, è un webhook: un pomeriggio di lavoro, non un "
+                "progetto.",
+            ],
+        ),
+    ],
+
+    hands=dict(
+        eyebrow="COMPLETAMENTE GESTITO",
+        h2="La parte tecnica la facciamo noi.[br]La tua roadmap resta tua.",
+        lede="Quattro passi dalla prima chiamata a un agente che legge i tuoi "
+             "dati veri. Tre sono nostri, e a nessuno serve uno sprint del tuo "
+             "team.",
+        step_word="PASSO",
+        steps=[
+            ("standard", "Ci dici cosa deve vedere",
+             "Quali sistemi hanno le risposte e chi li tiene in mano. Una "
+             "chiamata con chi lo sa, o una login.", True),
+            ("wire", "Lo colleghiamo noi",
+             "API, webhook, file notturno, o un portale in cui entriamo. "
+             "Credenziali, mappatura e casi strani li gestiamo noi.", False),
+            ("trial", "Lo guardi leggere una scheda vera",
+             "Lo facciamo girare su un ordine vero e ti mostriamo cosa ha visto "
+             "e cosa no. Online ci va quando lo dici tu.", False),
+            ("run", "Lo teniamo collegato",
+             "I sistemi cambiano, i token scadono, i campi si rinominano. "
+             "Quando si rompe qualcosa lo vediamo noi e lo sistemiamo prima che "
+             "ti costi una chiamata.", False),
+        ],
+    ),
+
+    faq_h2="Le domande che fanno davvero",
+    faq=[
+        ("E se il nostro gestionale non ha API?",
+         "Allora usiamo quello che ha: un export notturno, una vista sul "
+         "database, o un portale in cui entriamo come ci entra il tuo team. Ci "
+         "vuole più tempo e funziona. Due delle connessioni dietro la "
+         "schermata qui sopra sono esattamente questo."),
+        ("Quanto ci mette l’integrazione?",
+         "Giorni, non un trimestre, perché il lavoro è nostro. La parte "
+         "lunga non è quasi mai il software: è farsi dare le credenziali "
+         "da chi tiene in mano il sistema."),
+        ("Legge i dati veri o una copia?",
+         "I dati veri. L’agente interroga il tuo sistema nel momento in cui "
+         "risponde, quindi quello che dice al cliente è vero quando lo dice, "
+         "non vero alle tre di notte quando è girato un export. Ogni lettura "
+         "e ogni scrittura restano elencate sulla chiamata a cui "
+         "appartenevano."),
+        ("Cosa succede se una scrittura fallisce?",
+         "Riprova. Se continua a fallire diventa un problema aperto con la "
+         "chiamata allegata invece di sparire, e vedi ogni tentativo - anche "
+         "quelli che ce ne hanno messi due."),
+        ("Possiamo mandare i dati delle chiamate nei nostri sistemi?",
+         "Sì. call.completed arriva al tuo endpoint con trascrizione, "
+         "etichette ed esito, firmato e versionato. Qualcuno lo manda dritto "
+         "nella propria reportistica e la nostra interfaccia non la apre mai."),
+        ("Quali sistemi supportate?",
+         "Con Shopify siamo nativi. Tutto il resto passa da Zapier, che sono "
+         "8.500+ app - Zendesk, Salesforce, HubSpot, Klaviyo, Slack, Fogli "
+         "Google, WhatsApp e il resto della directory. Quello che non c’è è "
+         "un webhook. L’elenco non è davvero il punto: se una persona del "
+         "tuo team riesce a tirare fuori la risposta da lì, ci riusciamo "
+         "anche noi."),
+    ],
+
+    cta=dict(
+        hand="online in due settimane",
+        h2="Chiedici di leggere un tuo ordine.",
+        sub="Non una slide sulle integrazioni: una scheda vera dal tuo sistema, "
+            "letta ad alta voce in chiamata, nelle prime due settimane.",
+    ),
+)
+
 PRODUCTS_IT = {p["slug"]: p for p in [VOICE_AGENT_BUILDER_IT, WORKFLOW_BUILDER_IT,
-                                      CALL_DATA_INTELLIGENCE_IT]}
-ORDER_IT = ["voice-agent-builder", "workflow-builder", "call-data-intelligence"]
+                                      CALL_DATA_INTELLIGENCE_IT, AGENT_EVALUATION_IT,
+                                      INTEGRATIONS_WEBHOOKS_IT]}
+ORDER_IT = ["voice-agent-builder", "workflow-builder", "call-data-intelligence",
+            "agent-evaluation", "integrations-webhooks"]

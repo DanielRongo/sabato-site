@@ -43,6 +43,8 @@ PAGES = [
     "/product/voice-agent-builder", "/it/prodotto/voice-agent-builder",
     "/product/workflow-builder", "/it/prodotto/workflow-builder",
     "/product/call-data-intelligence", "/it/prodotto/call-data-intelligence",
+    "/product/agent-evaluation", "/it/prodotto/agent-evaluation",
+    "/product/integrations-webhooks", "/it/prodotto/integrations-webhooks",
     "/", "/it", "/pricing", "/it/prezzi", "/about", "/it/chi-siamo",
     "/contact", "/it/contatti", "/blog", "/it/blog", "/terms",
     "/privacy-policy", "/use-cases", "/it/casi-duso", "/industries",
@@ -103,7 +105,15 @@ def main():
     # relaxing any check - same widths, same assertions, fewer pages per call.
     global PAGES
     sl = sys.argv[2] if len(sys.argv) > 2 else ""
-    if sl:
+    if sl.startswith("only:"):
+        want = [x.strip() for x in sl[5:].split(",") if x.strip()]
+        unknown = [w for w in want if w not in PAGES]
+        if unknown:
+            print("only: unknown page(s) %s - add them to PAGES first" % unknown)
+            return 1
+        PAGES = want
+        print("only -> %d page(s)" % len(PAGES))
+    elif sl:
         a, b = (sl.split(":") + [""])[:2]
         PAGES = PAGES[int(a or 0):int(b) if b else None]
         print("slice %s -> %d page(s)" % (sl, len(PAGES)))

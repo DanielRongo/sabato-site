@@ -15,3 +15,7 @@ _to_delete/
 # transient delivery tarballs from the Cowork bridge
 proof-widget.tgz
 _to_delete/
+
+# delivery scratch from the Cowork bridge - the mount refuses unlink, so
+# payload tarballs get parked here instead of deleted. Safe to bin by hand.
+_delivery-*.tgz
