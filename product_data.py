@@ -112,22 +112,32 @@ VOICE_AGENT_BUILDER = dict(
         ),
     ],
 
-    # ---- the band that answers "do I have to do this?" --------------------
+    # ---- the managed-service process ---------------------------------------
+    # Not a feature list: the sequence a customer actually goes through, with
+    # the one step that is theirs marked out. Three of the four are ours, and
+    # that ratio IS the argument - do not "balance" it.
     hands=dict(
-        h2="Who actually touches this",
-        lede="You are looking at our tool, not your new job. Here is the "
-             "honest split.",
-        cards=[
-            ("You bring the rules",
-             "How you want customers spoken to. What must never be promised. "
-             "Which calls should always reach a person. You know these; we "
-             "don't."),
-            ("We do the building",
-             "Writing the brief, wiring the tools to your catalogue and your "
-             "order system, testing it, and changing it as your range moves."),
-            ("You see all of it",
-             "Every call transcribed, every tool the agent used, every change "
-             "with a date on it. Read-only unless you want otherwise."),
+        eyebrow="FULLY MANAGED",
+        h2="All we need from you[br]is what you already know.",
+        lede="Four steps from the first conversation to an agent answering real "
+             "calls. Three of them are ours. You never have to open the tool.",
+        step_word="STEP",
+        steps=[
+            ("talk", "You tell us how it should go",
+             "One session. How you want customers spoken to, what must never be "
+             "promised, and the answers that only exist in your team's heads.",
+             True),
+            ("build", "We build the whole thing",
+             "The instructions, the tools, the connection to your catalogue and "
+             "your order system. Nothing lands on your engineers, because there "
+             "is nothing for them to do.", False),
+            ("hear", "You hear it before anyone else",
+             "We call you with the draft and you listen to it handle your "
+             "awkward cases. It does not go live until you say it can.", False),
+            ("run", "We run it and keep it current",
+             "New products, new prices, new edge cases. It stays right as your "
+             "catalogue moves - and every call is transcribed for you to read.",
+             False),
         ],
     ),
 
@@ -140,7 +150,8 @@ VOICE_AGENT_BUILDER = dict(
          "edits yourself, you can, and that is a choice rather than a "
          "requirement."),
         ("Can we see exactly what it has been told to say?",
-         "Yes, in full, in plain English or Italian. It is a written brief, "
+         "Yes, in full, and in whatever language the agent works in - we "
+         "are not limited to any particular set. It is a written brief, "
          "not a black box, and every edit to it is dated and kept."),
         ("What happens when it doesn't know the answer?",
          "It says so and passes the call to one of your people, warm, with "

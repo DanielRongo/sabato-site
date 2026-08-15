@@ -42,7 +42,7 @@
   <link href="/fuc/images/hWFOqN6Okd1QgfKhizqgIF1s.png" rel="icon" media="(prefers-color-scheme: light)">
   <link href="/fuc/images/dEcuqc3xAQ3JJoX4xQDYrMQefA.png" rel="icon" media="(prefers-color-scheme: dark)">
   <link rel="apple-touch-icon" href="/fuc/images/dEcuqc3xAQ3JJoX4xQDYrMQefA.png">
-  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "You set the rules. We build the agent.", "description": "Where your phone agent gets its instructions, its tools and its limits. You set the rules, we build it and keep it current. Live in two weeks.", "url": "https://www.sabato.ai/product/voice-agent-builder", "inLanguage": "en", "isPartOf": {"@type": "WebSite", "name": "Sabato AI", "url": "https://www.sabato.ai"}, "publisher": {"@type": "Organization", "name": "Sabato AI"}}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Do we have to build the agent ourselves?", "acceptedAnswer": {"@type": "Answer", "text": "No. This is the tool we build it in. You get an account and can read everything - the brief, the tools, the transcripts - but nobody on your side has to configure anything. If you would rather make small edits yourself, you can, and that is a choice rather than a requirement."}}, {"@type": "Question", "name": "Can we see exactly what it has been told to say?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, in full, in plain English or Italian. It is a written brief, not a black box, and every edit to it is dated and kept."}}, {"@type": "Question", "name": "What happens when it doesn't know the answer?", "acceptedAnswer": {"@type": "Answer", "text": "It says so and passes the call to one of your people, warm, with what the customer already told it. It is set up to hand over rather than guess - a wrong answer delivered confidently costs far more than a transfer."}}, {"@type": "Question", "name": "Can it do anything, or only talk?", "acceptedAnswer": {"@type": "Answer", "text": "It can look up orders and stock, send a follow-up message, open a ticket, transfer the call, and push what happened into your systems through a webhook. What it can reach is decided when we build it."}}, {"@type": "Question", "name": "Our catalogue changes constantly. Does the agent go stale?", "acceptedAnswer": {"@type": "Answer", "text": "It reads your catalogue rather than a copy of it, so new products and price changes are there as soon as they are live in your store. The brief itself we maintain as part of the service."}}, {"@type": "Question", "name": "How long until it is answering real calls?", "acceptedAnswer": {"@type": "Answer", "text": "Two weeks from the intro call, on your own number, with a real catalogue behind it."}}]}</script><link rel="alternate" hreflang="en" href="https://www.sabato.ai/product/voice-agent-builder"><link rel="alternate" hreflang="it" href="https://www.sabato.ai/it/prodotto/voice-agent-builder"><link rel="alternate" hreflang="x-default" href="https://www.sabato.ai/product/voice-agent-builder">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "You set the rules. We build the agent.", "description": "Where your phone agent gets its instructions, its tools and its limits. You set the rules, we build it and keep it current. Live in two weeks.", "url": "https://www.sabato.ai/product/voice-agent-builder", "inLanguage": "en", "isPartOf": {"@type": "WebSite", "name": "Sabato AI", "url": "https://www.sabato.ai"}, "publisher": {"@type": "Organization", "name": "Sabato AI"}}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Do we have to build the agent ourselves?", "acceptedAnswer": {"@type": "Answer", "text": "No. This is the tool we build it in. You get an account and can read everything - the brief, the tools, the transcripts - but nobody on your side has to configure anything. If you would rather make small edits yourself, you can, and that is a choice rather than a requirement."}}, {"@type": "Question", "name": "Can we see exactly what it has been told to say?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, in full, and in whatever language the agent works in - we are not limited to any particular set. It is a written brief, not a black box, and every edit to it is dated and kept."}}, {"@type": "Question", "name": "What happens when it doesn't know the answer?", "acceptedAnswer": {"@type": "Answer", "text": "It says so and passes the call to one of your people, warm, with what the customer already told it. It is set up to hand over rather than guess - a wrong answer delivered confidently costs far more than a transfer."}}, {"@type": "Question", "name": "Can it do anything, or only talk?", "acceptedAnswer": {"@type": "Answer", "text": "It can look up orders and stock, send a follow-up message, open a ticket, transfer the call, and push what happened into your systems through a webhook. What it can reach is decided when we build it."}}, {"@type": "Question", "name": "Our catalogue changes constantly. Does the agent go stale?", "acceptedAnswer": {"@type": "Answer", "text": "It reads your catalogue rather than a copy of it, so new products and price changes are there as soon as they are live in your store. The brief itself we maintain as part of the service."}}, {"@type": "Question", "name": "How long until it is answering real calls?", "acceptedAnswer": {"@type": "Answer", "text": "Two weeks from the intro call, on your own number, with a real catalogue behind it."}}]}</script><link rel="alternate" hreflang="en" href="https://www.sabato.ai/product/voice-agent-builder"><link rel="alternate" hreflang="it" href="https://www.sabato.ai/it/prodotto/voice-agent-builder"><link rel="alternate" hreflang="x-default" href="https://www.sabato.ai/product/voice-agent-builder">
   <style>
     /* ============ Fonts (local mirrors, same files the site loads) ============ */
     @font-face { font-family: "Satoshi"; src: url("/fuc/third-party-assets/fontshare/wf/TTX2Z3BF3P6Y5BQT3IV2VNOK6FL22KUT/7QYRJOI3JIMYHGY6CH7SOIFRQLZOLNJ6/KFIAZD4RUMEZIYV6FQ3T3GP5PDBDB6JY.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 400; }
@@ -698,25 +698,55 @@
       .pr-flip .queue-grid > .queue-viz { order: 0; }
     }
 
-    /* ============ Product: who touches this ============ */
+    /* ============ Product: the managed-service steps ============ */
+    /* Was "who actually touches this" - three cards splitting the work between
+       us and the customer. Daniel, 14 Aug: make it read as the PROCESS they can
+       expect, and make it obvious we do all of it and the only thing they supply
+       is guidance and what they know. So: four numbered steps, three of them
+       ours, each with an icon. */
     .pr-hands { max-width: 1200px; margin: 0 auto; padding: 104px 40px 0; }
-    .pr-hands h2 { color: var(--ink); font-size: 38px; font-weight: 700;
-      letter-spacing: -1.1px; line-height: 1.15; margin: 0 0 14px; }
+    .pr-hands-head { text-align: center; max-width: 760px; margin: 0 auto 48px; }
+    .pr-hands .eyebrow { color: rgb(120,118,117); font-size: 13px; font-weight: 700;
+      letter-spacing: 2.5px; margin: 0 0 16px; }
+    .pr-hands h2 { color: var(--ink); font-size: 44px; font-weight: 700;
+      letter-spacing: -1.5px; line-height: 1.1; margin: 0 0 18px; }
     .pr-hands .pb-lede { color: var(--gray); font-size: 17.5px; line-height: 1.7;
-      margin: 0 0 34px; max-width: 62ch; }
-    .pr-hands-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr));
-      gap: 20px; }
-    .pr-hand { border: 1px solid rgba(18,10,11,.12); border-radius: 16px;
-      padding: 24px 24px 26px; background: #fff; }
-    .pr-hand h3 { color: var(--ink); font-size: 19px; font-weight: 700;
-      letter-spacing: -.3px; margin: 0 0 10px; }
-    .pr-hand p { color: var(--gray); font-size: 15.5px; line-height: 1.65; margin: 0; }
+      margin: 0 auto; max-width: 58ch; }
+    .pr-hands-grid { display: grid; grid-template-columns: repeat(4, minmax(0,1fr));
+      gap: 18px; }
+    .pr-step { border: 1px solid rgba(18,10,11,.12); border-radius: 16px;
+      padding: 24px 22px 26px; background: #fff; position: relative; }
+    .pr-step-ic { width: 46px; height: 46px; border-radius: 13px; display: flex;
+      align-items: center; justify-content: center; margin-bottom: 18px;
+      background: rgb(238,247,205); }
+    .pr-step-ic svg { width: 23px; height: 23px; fill: none; stroke: rgb(60,74,20);
+      stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+    /* The customer's own step is the one that looks different - it is the only
+       thing being asked of them, so it should be the one the eye lands on. */
+    .pr-step.is-you { background: rgb(18,10,11); border-color: rgb(18,10,11); }
+    .pr-step.is-you .pr-step-ic { background: rgb(200,240,74); }
+    .pr-step.is-you .pr-step-ic svg { stroke: rgb(18,10,11); }
+    .pr-step.is-you h3 { color: rgb(248,244,241); }
+    .pr-step.is-you p { color: rgba(248,244,241,.72); }
+    .pr-step.is-you .pr-step-n { color: rgb(200,240,74); }
+    .pr-step-n { font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 12px; font-weight: 700; color: rgb(150,146,142);
+      letter-spacing: .5px; display: block; margin-bottom: 8px; }
+    .pr-step h3 { color: var(--ink); font-size: 18px; font-weight: 700;
+      letter-spacing: -.3px; line-height: 1.25; margin: 0 0 10px; }
+    .pr-step p { color: var(--gray); font-size: 15px; line-height: 1.6; margin: 0; }
+
+    @media (max-width: 1100px) {
+      .pr-hands-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    }
+    @media (max-width: 640px) {
+      .pr-hands { padding: 72px 22px 0; }
+      .pr-hands h2 { font-size: 31px; letter-spacing: -.8px; }
+      .pr-hands-grid { grid-template-columns: 1fr; }
+    }
 
     @media (max-width: 900px) {
       .tv { grid-template-columns: 1fr; }
-      .pr-hands-grid { grid-template-columns: 1fr; }
-      .pr-hands { padding: 72px 22px 0; }
-      .pr-hands h2 { font-size: 30px; }
       .pr-shot { padding: 44px 22px 0; }
       /* The two-column flex squeezes the bold half into a three-line column on
          a phone. Stack it instead. */
@@ -822,13 +852,16 @@ rm.addEventListener&&rm.addEventListener('change',function(){if(!eligible())stop
       </div>
     </section>
     <section class="pr-hands">
-      <h2>Who actually touches this</h2>
-      <p class="pb-lede">You are looking at our tool, not your new job. Here is the honest split.</p>
-      <div class="pr-hands-grid"><div class="pr-hand"><h3>You bring the rules</h3><p>How you want customers spoken to. What must never be promised. Which calls should always reach a person. You know these; we don't.</p></div><div class="pr-hand"><h3>We do the building</h3><p>Writing the brief, wiring the tools to your catalogue and your order system, testing it, and changing it as your range moves.</p></div><div class="pr-hand"><h3>You see all of it</h3><p>Every call transcribed, every tool the agent used, every change with a date on it. Read-only unless you want otherwise.</p></div></div>
+      <div class="pr-hands-head">
+        <p class="eyebrow">FULLY MANAGED</p>
+        <h2>All we need from you<br>is what you already know.</h2>
+        <p class="pb-lede">Four steps from the first conversation to an agent answering real calls. Three of them are ours. You never have to open the tool.</p>
+      </div>
+      <div class="pr-hands-grid"><div class="pr-step is-you"><span class="pr-step-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 0 1-8.5 8 8.6 8.6 0 0 1-3.7-.9L3 21l1.8-4.8A8 8 0 0 1 4 12a8 8 0 0 1 16 0z"/><path d="M12 8.4l.8 1.9 1.9.8-1.9.8-.8 1.9-.8-1.9-1.9-.8 1.9-.8z"/></svg></span><span class="pr-step-n">STEP 1</span><h3>You tell us how it should go</h3><p>One session. How you want customers spoken to, what must never be promised, and the answers that only exist in your team's heads.</p></div><div class="pr-step"><span class="pr-step-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/><path d="M17 13v8M13 17h8"/></svg></span><span class="pr-step-n">STEP 2</span><h3>We build the whole thing</h3><p>The instructions, the tools, the connection to your catalogue and your order system. Nothing lands on your engineers, because there is nothing for them to do.</p></div><div class="pr-step"><span class="pr-step-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13v-1a8 8 0 0 1 16 0v1"/><rect x="2.5" y="13" width="4.5" height="6" rx="2"/><rect x="17" y="13" width="4.5" height="6" rx="2"/><path d="M19.2 19v.6a2.6 2.6 0 0 1-2.6 2.6H13"/></svg></span><span class="pr-step-n">STEP 3</span><h3>You hear it before anyone else</h3><p>We call you with the draft and you listen to it handle your awkward cases. It does not go live until you say it can.</p></div><div class="pr-step"><span class="pr-step-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 12a8.5 8.5 0 1 1-2.6-6.1"/><path d="M20.8 4.2v4.4h-4.4"/><path d="M8.5 14.5l2.6-2.9 2.2 1.9 3.1-3.6"/></svg></span><span class="pr-step-n">STEP 4</span><h3>We run it and keep it current</h3><p>New products, new prices, new edge cases. It stays right as your catalogue moves - and every call is transcribed for you to read.</p></div></div>
     </section><section class="sb-proof sb-proof-inline" data-lang="en"><div class="sb-proof-head"><h2>Success stories</h2><p>What happened in the first month on the line - measured on real calls, not modelled.</p></div><div class="sb-proof-card"><div class="sb-proof-quote"><img class="sb-proof-face" src="/customers/assets/marco-logreco.jpg" width="260" height="260" alt="Marco Logreco, Head of E-Commerce at Creative Cables" loading="lazy" decoding="async"><div class="sb-proof-said"><blockquote>&ldquo;Elena handles our most repetitive calls - order status, shipping, returns - on-brand and instantly. Our team now focuses on the cases that actually need a person.&rdquo;</blockquote><div class="sb-proof-by"><p class="sb-proof-who"><b>Marco Logreco</b><span>Head of E-Commerce, Creative Cables</span></p><img class="sb-proof-logo" src="/customers/assets/creative-cables-logo-white.png" alt="Creative Cables" width="110" height="34" loading="lazy" decoding="async"></div></div></div><div class="sb-proof-stats"><div class="sb-proof-stat"><span class="sb-proof-num">39%</span><span class="sb-proof-lab">Calls resolved end to end</span></div><div class="sb-proof-stat"><span class="sb-proof-num">57%</span><span class="sb-proof-lab">Of order-status calls automated</span></div><div class="sb-proof-stat"><span class="sb-proof-num">55s</span><span class="sb-proof-lab">Average handle time</span></div></div><a class="sb-proof-cta" href="/customers/creative-cables">Read the full case study<span aria-hidden="true"> &rarr;</span></a></div></section><script data-sb-proof-inline>(function(){function fit(){var w=document.querySelector('section.sb-proof-inline');if(!w)return;var q=w.querySelector('blockquote'),by=w.querySelector('.sb-proof-by');if(!q||!by)return;by.style.width='';if(innerWidth<768)return;var r=document.createRange();r.selectNodeContents(q);var rects=r.getClientRects(),m=0,i;for(i=0;i<rects.length;i++){if(rects[i].width>1&&rects[i].right>m)m=rects[i].right;}var l=q.getBoundingClientRect().left;if(m>l+40)by.style.width=Math.ceil(m-l)+'px';}if(document.readyState!=='loading')fit();else document.addEventListener('DOMContentLoaded',fit);addEventListener('load',fit);addEventListener('resize',fit);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);})();</script>
     <section class="pb-faqs">
       <h2>Questions operators actually ask</h2>
-      <div class="pb-faq-grid"><div class="pb-qa"><h3>Do we have to build the agent ourselves?</h3><p>No. This is the tool we build it in. You get an account and can read everything - the brief, the tools, the transcripts - but nobody on your side has to configure anything. If you would rather make small edits yourself, you can, and that is a choice rather than a requirement.</p></div><div class="pb-qa"><h3>Can we see exactly what it has been told to say?</h3><p>Yes, in full, in plain English or Italian. It is a written brief, not a black box, and every edit to it is dated and kept.</p></div><div class="pb-qa"><h3>What happens when it doesn't know the answer?</h3><p>It says so and passes the call to one of your people, warm, with what the customer already told it. It is set up to hand over rather than guess - a wrong answer delivered confidently costs far more than a transfer.</p></div><div class="pb-qa"><h3>Can it do anything, or only talk?</h3><p>It can look up orders and stock, send a follow-up message, open a ticket, transfer the call, and push what happened into your systems through a webhook. What it can reach is decided when we build it.</p></div><div class="pb-qa"><h3>Our catalogue changes constantly. Does the agent go stale?</h3><p>It reads your catalogue rather than a copy of it, so new products and price changes are there as soon as they are live in your store. The brief itself we maintain as part of the service.</p></div><div class="pb-qa"><h3>How long until it is answering real calls?</h3><p>Two weeks from the intro call, on your own number, with a real catalogue behind it.</p></div></div>
+      <div class="pb-faq-grid"><div class="pb-qa"><h3>Do we have to build the agent ourselves?</h3><p>No. This is the tool we build it in. You get an account and can read everything - the brief, the tools, the transcripts - but nobody on your side has to configure anything. If you would rather make small edits yourself, you can, and that is a choice rather than a requirement.</p></div><div class="pb-qa"><h3>Can we see exactly what it has been told to say?</h3><p>Yes, in full, and in whatever language the agent works in - we are not limited to any particular set. It is a written brief, not a black box, and every edit to it is dated and kept.</p></div><div class="pb-qa"><h3>What happens when it doesn't know the answer?</h3><p>It says so and passes the call to one of your people, warm, with what the customer already told it. It is set up to hand over rather than guess - a wrong answer delivered confidently costs far more than a transfer.</p></div><div class="pb-qa"><h3>Can it do anything, or only talk?</h3><p>It can look up orders and stock, send a follow-up message, open a ticket, transfer the call, and push what happened into your systems through a webhook. What it can reach is decided when we build it.</p></div><div class="pb-qa"><h3>Our catalogue changes constantly. Does the agent go stale?</h3><p>It reads your catalogue rather than a copy of it, so new products and price changes are there as soon as they are live in your store. The brief itself we maintain as part of the service.</p></div><div class="pb-qa"><h3>How long until it is answering real calls?</h3><p>Two weeks from the intro call, on your own number, with a real catalogue behind it.</p></div></div>
     </section>
     <section class="cta-band">
       <p class="hand">live in two weeks</p>

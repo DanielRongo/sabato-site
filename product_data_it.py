@@ -111,23 +111,32 @@ VOICE_AGENT_BUILDER_IT = dict(
         ),
     ],
 
+    # Non un elenco di funzionalità: la sequenza che il cliente attraversa
+    # davvero, con l'unico passo che tocca a lui messo in evidenza. Tre su
+    # quattro sono nostri, e quella proporzione È l'argomento.
     hands=dict(
-        h2="Chi ci mette le mani, in concreto",
-        lede="Quello che vedi è il nostro strumento di lavoro, non un lavoro in "
-             "più per te. La divisione è questa.",
-        cards=[
-            ("Le regole le porti tu",
-             "Come vuoi che si parli ai tuoi clienti. Cosa non si promette mai. "
-             "Quali chiamate devono arrivare sempre a una persona. Queste le "
-             "sai tu, non noi."),
-            ("Il lavoro lo facciamo noi",
-             "Scrivere le istruzioni, collegare gli strumenti al catalogo e "
-             "agli ordini, provare tutto, e rimetterci mano quando la gamma "
-             "cambia."),
-            ("Tu vedi tutto",
-             "Ogni chiamata trascritta, ogni strumento che l'agente ha usato, "
-             "ogni modifica con la sua data. In sola lettura, se preferisci "
-             "così."),
+        eyebrow="SERVIZIO COMPLETO",
+        h2="Da te ci serve solo[br]quello che già sai.",
+        lede="Quattro passaggi dalla prima chiacchierata a un agente che "
+             "risponde a chiamate vere. Tre sono nostri. Lo strumento non devi "
+             "aprirlo mai.",
+        step_word="PASSO",
+        steps=[
+            ("talk", "Ci racconti come deve andare",
+             "Una sessione. Come vuoi che si parli ai tuoi clienti, cosa non si "
+             "promette mai, e le risposte che stanno solo nella testa del tuo "
+             "team.", True),
+            ("build", "Lo costruiamo noi, tutto",
+             "Le istruzioni, gli strumenti, il collegamento al catalogo e al "
+             "gestionale ordini. Sui tuoi sviluppatori non cade niente, perché "
+             "non c'è niente da fare.", False),
+            ("hear", "Lo senti tu, prima di tutti",
+             "Ti chiamiamo con la bozza e te la senti gestire i casi che ti "
+             "preoccupano. Online ci va quando lo dici tu.", False),
+            ("run", "Lo teniamo acceso e aggiornato",
+             "Prodotti nuovi, prezzi nuovi, casi nuovi. Resta giusto mentre il "
+             "catalogo si muove - e ogni chiamata te la trovi trascritta.",
+             False),
         ],
     ),
 
@@ -140,8 +149,9 @@ VOICE_AGENT_BUILDER_IT = dict(
          "di mettere mano a qualche modifica leggera, puoi: è una possibilità, "
          "non un compito."),
         ("Possiamo vedere esattamente cosa gli avete detto di dire?",
-         "Sì, tutto, in italiano. Sono istruzioni scritte, non una scatola "
-         "nera, e ogni modifica resta registrata con la sua data."),
+         "Sì, tutto, e nella lingua in cui lavora l'agente: non siamo "
+         "legati a un elenco di lingue. Sono istruzioni scritte, non una "
+         "scatola nera, e ogni modifica resta registrata con la sua data."),
         ("E quando non sa rispondere?",
          "Lo dice e passa la chiamata a una persona del tuo team, con quello "
          "che il cliente ha già raccontato. È fatto per passare la mano invece "

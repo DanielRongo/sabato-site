@@ -310,25 +310,55 @@ PRODUCT_CSS = """
       .pr-flip .queue-grid > .queue-viz { order: 0; }
     }
 
-    /* ============ Product: who touches this ============ */
+    /* ============ Product: the managed-service steps ============ */
+    /* Was "who actually touches this" - three cards splitting the work between
+       us and the customer. Daniel, 14 Aug: make it read as the PROCESS they can
+       expect, and make it obvious we do all of it and the only thing they supply
+       is guidance and what they know. So: four numbered steps, three of them
+       ours, each with an icon. */
     .pr-hands { max-width: 1200px; margin: 0 auto; padding: 104px 40px 0; }
-    .pr-hands h2 { color: var(--ink); font-size: 38px; font-weight: 700;
-      letter-spacing: -1.1px; line-height: 1.15; margin: 0 0 14px; }
+    .pr-hands-head { text-align: center; max-width: 760px; margin: 0 auto 48px; }
+    .pr-hands .eyebrow { color: rgb(120,118,117); font-size: 13px; font-weight: 700;
+      letter-spacing: 2.5px; margin: 0 0 16px; }
+    .pr-hands h2 { color: var(--ink); font-size: 44px; font-weight: 700;
+      letter-spacing: -1.5px; line-height: 1.1; margin: 0 0 18px; }
     .pr-hands .pb-lede { color: var(--gray); font-size: 17.5px; line-height: 1.7;
-      margin: 0 0 34px; max-width: 62ch; }
-    .pr-hands-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr));
-      gap: 20px; }
-    .pr-hand { border: 1px solid rgba(18,10,11,.12); border-radius: 16px;
-      padding: 24px 24px 26px; background: #fff; }
-    .pr-hand h3 { color: var(--ink); font-size: 19px; font-weight: 700;
-      letter-spacing: -.3px; margin: 0 0 10px; }
-    .pr-hand p { color: var(--gray); font-size: 15.5px; line-height: 1.65; margin: 0; }
+      margin: 0 auto; max-width: 58ch; }
+    .pr-hands-grid { display: grid; grid-template-columns: repeat(4, minmax(0,1fr));
+      gap: 18px; }
+    .pr-step { border: 1px solid rgba(18,10,11,.12); border-radius: 16px;
+      padding: 24px 22px 26px; background: #fff; position: relative; }
+    .pr-step-ic { width: 46px; height: 46px; border-radius: 13px; display: flex;
+      align-items: center; justify-content: center; margin-bottom: 18px;
+      background: rgb(238,247,205); }
+    .pr-step-ic svg { width: 23px; height: 23px; fill: none; stroke: rgb(60,74,20);
+      stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+    /* The customer's own step is the one that looks different - it is the only
+       thing being asked of them, so it should be the one the eye lands on. */
+    .pr-step.is-you { background: rgb(18,10,11); border-color: rgb(18,10,11); }
+    .pr-step.is-you .pr-step-ic { background: rgb(200,240,74); }
+    .pr-step.is-you .pr-step-ic svg { stroke: rgb(18,10,11); }
+    .pr-step.is-you h3 { color: rgb(248,244,241); }
+    .pr-step.is-you p { color: rgba(248,244,241,.72); }
+    .pr-step.is-you .pr-step-n { color: rgb(200,240,74); }
+    .pr-step-n { font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 12px; font-weight: 700; color: rgb(150,146,142);
+      letter-spacing: .5px; display: block; margin-bottom: 8px; }
+    .pr-step h3 { color: var(--ink); font-size: 18px; font-weight: 700;
+      letter-spacing: -.3px; line-height: 1.25; margin: 0 0 10px; }
+    .pr-step p { color: var(--gray); font-size: 15px; line-height: 1.6; margin: 0; }
+
+    @media (max-width: 1100px) {
+      .pr-hands-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    }
+    @media (max-width: 640px) {
+      .pr-hands { padding: 72px 22px 0; }
+      .pr-hands h2 { font-size: 31px; letter-spacing: -.8px; }
+      .pr-hands-grid { grid-template-columns: 1fr; }
+    }
 
     @media (max-width: 900px) {
       .tv { grid-template-columns: 1fr; }
-      .pr-hands-grid { grid-template-columns: 1fr; }
-      .pr-hands { padding: 72px 22px 0; }
-      .pr-hands h2 { font-size: 30px; }
       .pr-shot { padding: 44px 22px 0; }
       /* The two-column flex squeezes the bold half into a three-line column on
          a phone. Stack it instead. */
@@ -689,21 +719,52 @@ def section_shot(d):
     </section>""" % (s["src"], s["src"], esc(s["alt"]), esc(s["caption"]))
 
 
-def section_hands(d):
-    """"Who actually touches this" - mandatory on every Product page.
+STEP_ICONS = {
+    # 1 - the customer talking: a speech bubble with a spark
+    "talk": '<path d="M20 12a8 8 0 0 1-8.5 8 8.6 8.6 0 0 1-3.7-.9L3 21l1.8-4.8A8 8 0 0 1 4 12a8 8 0 0 1 16 0z"/>'
+            '<path d="M12 8.4l.8 1.9 1.9.8-1.9.8-.8 1.9-.8-1.9-1.9-.8 1.9-.8z"/>',
+    # 2 - us building: blocks being assembled
+    "build": '<rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2"/>'
+             '<rect x="3" y="13" width="8" height="8" rx="2"/><path d="M17 13v8M13 17h8"/>',
+    # 3 - listening to the draft before it ships
+    "hear": '<path d="M4 13v-1a8 8 0 0 1 16 0v1"/><rect x="2.5" y="13" width="4.5" height="6" rx="2"/>'
+            '<rect x="17" y="13" width="4.5" height="6" rx="2"/><path d="M19.2 19v.6a2.6 2.6 0 0 1-2.6 2.6H13"/>',
+    # 4 - running it and keeping it current
+    "run": '<path d="M20.5 12a8.5 8.5 0 1 1-2.6-6.1"/><path d="M20.8 4.2v4.4h-4.4"/>'
+           '<path d="M8.5 14.5l2.6-2.9 2.2 1.9 3.1-3.6"/>',
+}
 
-    The moment a page shows a builder, the reader asks whether the work lands
-    on them. Answer it here rather than on the sales call.
+
+def section_hands(d):
+    """The managed-service process, in four steps.
+
+    Replaces the old three-card us/you split. Daniel, 14 Aug: it should read as
+    the process they can expect, and make plain that we do all of it and the
+    only thing they supply is guidance and what only they know.
+
+    Step one is styled differently from the other three ON PURPOSE - it is the
+    only thing being asked of the customer, so it should be the tile the eye
+    lands on. The other three being visually identical is the argument.
     """
     h = d["hands"]
-    cards = "".join('<div class="pr-hand"><h3>%s</h3><p>%s</p></div>'
-                    % (esc(t), esc(p)) for t, p in h["cards"])
+    cards = []
+    for i, (icon, title, body, mine) in enumerate(h["steps"], 1):
+        cards.append('<div class="pr-step%s"><span class="pr-step-ic">'
+                     '<svg viewBox="0 0 24 24" aria-hidden="true">%s</svg></span>'
+                     '<span class="pr-step-n">%s %d</span>'
+                     '<h3>%s</h3><p>%s</p></div>'
+                     % (" is-you" if mine else "", STEP_ICONS[icon],
+                        esc(h["step_word"]), i, esc(title), esc(body)))
     return """
     <section class="pr-hands">
-      <h2>%s</h2>
-      <p class="pb-lede">%s</p>
+      <div class="pr-hands-head">
+        <p class="eyebrow">%s</p>
+        <h2>%s</h2>
+        <p class="pb-lede">%s</p>
+      </div>
       <div class="pr-hands-grid">%s</div>
-    </section>""" % (nb(esc(h["h2"])), esc(h["lede"]), cards)
+    </section>""" % (esc(h["eyebrow"]), nb(esc(h["h2"])), esc(h["lede"]),
+                     "".join(cards))
 
 
 def template(lang):
