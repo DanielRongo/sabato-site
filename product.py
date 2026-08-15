@@ -129,6 +129,25 @@ PRODUCT_CSS = """
     .rf-arrow { height: 14px; margin: -6px 0 -6px 25px;
       border-left: 1px dashed rgba(248,244,241,.28); }
 
+    /* ---- where one call lands: named systems, not abstractions ---- */
+    .rf-dests .rf-step { align-items: center; gap: 14px; }
+    .rf-dest { flex: 0 0 108px; font-size: 13px; font-weight: 700;
+      letter-spacing: .2px; color: rgb(248,244,241); }
+    .rf-step.is-live .rf-dest { color: rgb(200,240,74); }
+    .rf-txt { font-size: 14.5px; line-height: 1.5; color: rgba(248,244,241,.72); }
+    .rf-step.is-live .rf-txt { color: rgb(248,244,241); }
+
+    /* ---- conversational-intelligence labels ---- */
+    .lbs { display: flex; flex-wrap: wrap; gap: 8px; margin: 2px 0 4px; }
+    .lb { font-size: 13.5px; font-weight: 600; letter-spacing: -.1px;
+      padding: 7px 11px; border-radius: 999px; white-space: nowrap; }
+    .lb-cat { background: rgba(61,129,201,.18); color: #a8cdf0; }
+    .lb-ask { background: rgba(119,88,200,.20); color: #c3b1f2; }
+    .lb-vip { background: rgb(200,240,74); color: rgb(18,10,11); }
+    .lb-rep { background: rgba(63,154,99,.20); color: #a4dcbb; }
+    .lb-geo { background: rgba(232,152,31,.18); color: #f0c489; }
+    .lb-ok  { background: rgba(248,244,241,.12); color: rgba(248,244,241,.86); }
+
     /* ============ Product: centred hero ============ */
     /* Daniel, 14 Aug: "hero text should be centered." The template's .split-hero
        is a two-column grid with an empty .hero-visual on the right - option A
@@ -512,50 +531,59 @@ def brief_viz(lang):
             % (esc(t["title"]), esc(t["chip"]), rows, esc(t["foot"])))
 
 
-SIGNALS_TEXT = {
-    "en": dict(title="Read from one call", chip="STRUCTURED",
-               rows=[("outcome", "answered"), ("key_ask", "delivery date"),
-                     ("sentiment", "calm"), ("transfer_present", "no"),
-                     ("outcome_confidence", "0.94")],
-               foot="Twenty-three fields, every call, no exceptions."),
-    "it": dict(title="Letto da una chiamata", chip="STRUTTURATO",
-               rows=[("outcome", "risolta"), ("key_ask", "data di consegna"),
-                     ("sentiment", "tranquillo"), ("transfer_present", "no"),
-                     ("outcome_confidence", "0.94")],
-               foot="Ventitré campi, a ogni chiamata, senza eccezioni."),
+# 01 - the labels put on a conversation.
+#
+# NO SENTIMENT. Daniel, 15 Aug: emotion inference is a fight nobody needs under
+# the AI Act, so it is gone from this page entirely - the canvas, the run log
+# and the webhook body too. Everything here is a FACT about the call or the
+# customer, not a guess about how they felt.
+LABELS_TEXT = {
+    "en": dict(title="Labels on one call", chip="AUTOMATIC",
+               rows=[("Air conditioning", "cat"), ("Sizing & fit", "ask"),
+                     ("VIP \u00b7 \u20ac4,240 lifetime", "vip"),
+                     ("Repeat customer", "rep"), ("Calling from Germany", "geo"),
+                     ("Resolved on the call", "ok")],
+               foot="Every call, automatically. Then filter your calls by any of them."),
+    "it": dict(title="Etichette di una chiamata", chip="AUTOMATICHE",
+               rows=[("Climatizzazione", "cat"), ("Taglia e compatibilit\u00e0", "ask"),
+                     ("VIP \u00b7 4.240 \u20ac di storico", "vip"),
+                     ("Gi\u00e0 cliente", "rep"), ("Chiama dalla Germania", "geo"),
+                     ("Risolta in chiamata", "ok")],
+               foot="A ogni chiamata, da sole. Poi filtri le chiamate per qualsiasi di queste."),
 }
 
 
-def signals_viz(lang):
-    t = SIGNALS_TEXT[lang]
-    rows = "".join('<div class="bf-row"><span class="bf-n">%s</span>'
-                   '<p style="margin-left:auto;color:rgb(200,240,74)">%s</p></div>'
-                   % (esc(k), esc(v)) for k, v in t["rows"])
-    return ('<div class="bf"><div class="bf-h"><b>%s</b><span>%s</span></div>%s'
+def labels_viz(lang):
+    t = LABELS_TEXT[lang]
+    chips = "".join('<span class="lb lb-%s">%s</span>' % (k, esc(v))
+                    for v, k in t["rows"])
+    return ('<div class="bf"><div class="bf-h"><b>%s</b><span>%s</span></div>'
+            '<div class="lbs">%s</div>'
             '<div class="bf-foot"><span class="bf-dot"></span>%s</div></div>'
-            % (esc(t["title"]), esc(t["chip"]), rows, esc(t["foot"])))
+            % (esc(t["title"]), esc(t["chip"]), chips, esc(t["foot"])))
 
 
 BRANCH_TEXT = {
-    "en": [("If they said yes to it", "The summary goes out on WhatsApp.", False),
-           ("If it went badly", "A person gets it, with the transcript attached.", False),
-           ("Either way", "The CRM is updated before anyone could have typed it.", True)],
-    "it": [("Se hanno detto di sì", "Il riepilogo parte su WhatsApp.", False),
-           ("Se è andata male", "Ci pensa una persona, con la trascrizione allegata.", False),
-           ("In ogni caso", "Il CRM è aggiornato prima che qualcuno l'avrebbe scritto.", True)],
+    "en": [("CRM", "Lead created and assigned to an owner.", False),
+           ("Zendesk", "Ticket moved to Waiting on customer.", False),
+           ("Email + SMS", "Account manager told inside a minute: hot B2B opportunity.", True),
+           ("Inbox", "Summary to the Head of Support, flagged for manual review.", False)],
+    "it": [("CRM", "Lead creato e assegnato a un commerciale.", False),
+           ("Zendesk", "Ticket spostato su In attesa del cliente.", False),
+           ("Email + SMS", "L'account manager avvisato entro un minuto: opportunit\u00e0 B2B calda.", True),
+           ("Inbox", "Riepilogo al responsabile assistenza, segnato per revisione manuale.", False)],
 }
 
 
 def branch_viz(lang):
+    """Where a single call actually lands. Named systems, not abstractions -
+    "Zendesk" does more work here than "your helpdesk"."""
     parts = []
-    for i, (title, line, always) in enumerate(BRANCH_TEXT[lang]):
-        if i:
-            parts.append('<div class="rf-arrow"></div>')
-        parts.append('<div class="rf-step%s"><span class="rf-k">%s</span>'
-                     '<span><b>%s</b><em>%s</em></span></div>'
-                     % (" is-live" if always else "", "&rarr;" if always else str(i + 1),
-                        esc(title), esc(line)))
-    return '<div class="rf">%s</div>' % "".join(parts)
+    for title, line, hot in BRANCH_TEXT[lang]:
+        parts.append('<div class="rf-step%s"><span class="rf-dest">%s</span>'
+                     '<span class="rf-txt">%s</span></div>'
+                     % (" is-live" if hot else "", esc(title), esc(line)))
+    return '<div class="rf rf-dests">%s</div>' % "".join(parts)
 
 
 def release_flow(lang):
@@ -640,12 +668,12 @@ PAIR_TEXT = {
         cancel="Cancel", add="Save",
         body_l="BODY",
         body=[("outcome", "{{Read_the_call.outcome}}"),
-              ("key_ask", "{{Read_the_call.key_ask}}"),
-              ("sentiment", "{{Read_the_call.sentiment}}"),
-              ("order_id", "{{Read_the_call.order_id}}")],
+              ("key_ask", "{{Label_the_call.key_ask}}"),
+              ("customer_tier", "{{Label_the_call.customer_tier}}"),
+              ("order_id", "{{Label_the_call.order_id}}")],
         set_t="Run \u00b7 14:32:06", set_s="What this workflow did on one call",
         db_l="STEPS THAT RAN",
-        db=[("Read the call", "23 fields"),
+        db=[("Label the call", "18 labels"),
             ("Did they say yes?", "consent \u2713"),
             ("Send the summary", "WhatsApp sent"),
             ("Write to the CRM", "200 OK"),
@@ -659,13 +687,13 @@ PAIR_TEXT = {
         cancel="Annulla", add="Salva",
         body_l="CORPO",
         body=[("outcome", "{{Legge_la_chiamata.outcome}}"),
-              ("key_ask", "{{Legge_la_chiamata.key_ask}}"),
-              ("sentiment", "{{Legge_la_chiamata.sentiment}}"),
-              ("order_id", "{{Legge_la_chiamata.order_id}}")],
+              ("key_ask", "{{Etichetta.key_ask}}"),
+              ("customer_tier", "{{Etichetta.customer_tier}}"),
+              ("order_id", "{{Etichetta.order_id}}")],
         set_t="Esecuzione \u00b7 14:32:06",
         set_s="Cosa ha fatto questo workflow su una chiamata",
         db_l="PASSAGGI ESEGUITI",
-        db=[("Legge la chiamata", "23 campi"),
+        db=[("Etichetta la chiamata", "18 etichette"),
             ("Hanno detto di s\u00ec?", "consenso \u2713"),
             ("Manda il riepilogo", "WhatsApp inviato"),
             ("Scrivi sul CRM", "200 OK"),
@@ -971,8 +999,8 @@ def build(lang, slug, d):
             b["viz"] = release_flow(lang)
         elif b.get("viz") == "BRIEF_VIZ":
             b["viz"] = brief_viz(lang)
-        elif b.get("viz") == "SIGNALS_VIZ":
-            b["viz"] = signals_viz(lang)
+        elif b.get("viz") == "LABELS_VIZ":
+            b["viz"] = labels_viz(lang)
         elif b.get("viz") == "BRANCH_VIZ":
             b["viz"] = branch_viz(lang)
 

@@ -240,17 +240,18 @@ WORKFLOW_BUILDER_IT = dict(
     blocks=[
         dict(
             eyebrow="01 · COSA LEGGE",
-            h2="Un riassunto non serve. I campi sì.",
+            h2="Un riassunto non serve.[br]Le etichette sì.",
             h2_in_col=True,
-            viz="SIGNALS_VIZ",
+            viz="LABELS_VIZ",
             body=[
                 "Un paragrafo del tipo «ecco com'è andata la chiamata» non si "
-                "filtra, non si conta e non ci fai niente. Quindi la chiamata "
-                "viene letta dentro campi con un nome: cosa ha chiesto davvero, "
-                "com'è finita, quanto ne siamo sicuri, com'era il tono, se è "
-                "servito coinvolgere qualcuno.",
-                "Su quei campi si dirama tutto quello che viene dopo. E sono "
-                "gli stessi campi che a fine mese diventano i tuoi numeri.",
+                "filtra, non si conta e non ci fai niente. Quindi ogni "
+                "conversazione viene etichettata: la categoria di prodotto, "
+                "cosa ha chiesto davvero, se ha già comprato, quanto vale, da "
+                "che paese sta chiamando.",
+                "Su quelle etichette si dirama tutto quello che viene dopo. E "
+                "sono quelle che a fine mese ti fanno chiedere quale categoria "
+                "ha generato più chiamate e quante hanno venduto.",
             ],
         ),
         dict(
@@ -261,10 +262,11 @@ WORKFLOW_BUILDER_IT = dict(
             viz="BRANCH_VIZ",
             body=[
                 "Una chiamata andata bene e una andata male non possono avere "
-                "lo stesso seguito. Decidono le condizioni: il riepilogo parte "
-                "solo verso chi ha detto di sì, un reclamo finisce davanti a "
-                "una persona con la trascrizione allegata, e sul CRM si scrive "
-                "in ogni caso.",
+                "lo stesso seguito. Decidono le etichette. Un cliente VIP che "
+                "chiede una fornitura fa arrivare un SMS all'account manager "
+                "prima ancora che abbia riposato il telefono; un'escalation "
+                "finisce riassunta al responsabile assistenza con la "
+                "trascrizione allegata; ticket e CRM si aggiornano comunque.",
                 "Aggiungere un ramo è una modifica come le altre: resta in "
                 "bozza, la provi su una chiamata vera, e va online quando "
                 "pubblichi.",
@@ -314,7 +316,7 @@ WORKFLOW_BUILDER_IT = dict(
         ("Può comportarsi diversamente a seconda della chiamata?",
          "È esattamente il punto. Le condizioni leggono i campi estratti dalla "
          "conversazione - cosa hanno chiesto, com'è finita, se hanno dato il "
-         "consenso, che tono avevano - e ogni ramo fa una cosa diversa."),
+         "consenso, quanto valgono - e ogni ramo fa una cosa diversa."),
         ("Dobbiamo costruirceli noi questi workflow?",
          "No. Tu ci dici cosa deve succedere dopo una chiamata e lo costruiamo "
          "noi. Hai un accesso e puoi guardare ogni esecuzione, ma non c'è "

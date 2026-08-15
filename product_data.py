@@ -235,17 +235,18 @@ WORKFLOW_BUILDER = dict(
     blocks=[
         dict(
             eyebrow="01 · WHAT IT READS",
-            h2="A summary is useless. Fields are not.",
+            h2="A summary is useless.[br]Labels are not.",
             h2_in_col=True,
-            viz="SIGNALS_VIZ",
+            viz="LABELS_VIZ",
             body=[
                 "A paragraph of \u201chere is what happened on the call\u201d "
-                "cannot be filtered, counted or acted on. So the call is read "
-                "into named fields instead: what they actually asked for, how "
-                "it ended, how sure we are, how they sounded, whether anyone "
-                "had to be pulled in.",
-                "Those fields are what everything downstream branches on - and "
-                "they are the same fields that turn into next month's numbers.",
+                "cannot be filtered, counted or acted on. So every conversation "
+                "gets labelled instead: the product category, what they "
+                "actually asked for, whether they have bought before, what "
+                "they are worth, which country they are calling from.",
+                "Those labels are what everything downstream branches on - and "
+                "they are what lets you ask, at the end of the month, which "
+                "category generated the most calls and which of them sold.",
             ],
         ),
         dict(
@@ -256,10 +257,11 @@ WORKFLOW_BUILDER = dict(
             viz="BRANCH_VIZ",
             body=[
                 "A good call and a bad one should not produce the same "
-                "aftermath. Conditions decide: a summary goes out only to "
-                "people who said yes to it, a complaint lands in front of a "
-                "person with the transcript attached, and the CRM is updated "
-                "either way.",
+                "aftermath. The labels decide. A VIP asking about a bulk order "
+                "gets the account manager texted before they have put the phone "
+                "down; an escalation gets summarised to the Head of Support "
+                "with the transcript attached; the ticket and the CRM are "
+                "updated either way.",
                 "Adding a branch is a change like any other - it sits in draft, "
                 "you can test it against a real call, and it goes live when you "
                 "publish.",
@@ -307,7 +309,7 @@ WORKFLOW_BUILDER = dict(
         ("Can it decide differently depending on the call?",
          "That is the point of it. Conditions read the fields pulled out of the "
          "conversation - what they asked for, how it ended, whether they "
-         "consented, how they sounded - and each branch does something "
+         "consented, what they are worth - and each branch does something "
          "different."),
         ("Do we have to build these ourselves?",
          "No. You tell us what should happen after a call and we build it. You "

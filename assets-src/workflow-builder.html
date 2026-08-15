@@ -3,11 +3,22 @@
 <head>
 <meta charset="utf-8">
 <style>
+  /* Post-call workflow canvas. Rebuilt 15 Aug: the first version was a wide,
+     sparse three-column graph on an empty canvas with no right-hand panel, and
+     next to the agent-designer shot it read as a thinner picture of a thinner
+     product. This one narrows the graph, thickens the nodes, and gives the
+     canvas the same selected-node configuration panel the designer has - which
+     is where most of that shot's density actually comes from.
+
+     NO SENTIMENT ANYWHERE. Daniel, 15 Aug: inferring how a caller felt is a
+     fight nobody needs under the AI Act. Labels here are factual - category,
+     what they asked for, order value, whether they have bought before, where
+     they are calling from. */
   :root{
     --side:#141416; --side-txt:#8f8d94; --side-hi:#cfeb4d;
     --bg:#faf9f8; --line:#eae7e3; --line-2:#f3f1ee;
     --ink:#15131a; --mut:#77726e; --mut-2:#a8a39e;
-    --sage:#8bb99f; --lime:#d4ee56; --lime-soft:#eef7cd;
+    --sage:#8bb99f; --lime:#d4ee56;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html,body{width:1560px;height:860px;overflow:hidden}
@@ -23,8 +34,7 @@
   .logo svg{width:19px;height:19px}
   .ws .t{flex:1;min-width:0}
   .ws .t b{display:block;font:600 13px/1.25 "Inter Display",Inter;letter-spacing:-.01em}
-  .ws .t s{display:block;text-decoration:none;font:500 9.5px/1.3 Inter;color:#77747c;
-           letter-spacing:.09em}
+  .ws .t s{display:block;text-decoration:none;font:500 9.5px/1.3 Inter;color:#77747c;letter-spacing:.09em}
   .ws .cv{width:13px;color:#6b6874;flex:0 0 13px}
   .mlbl{font:600 9.5px/1 Inter;letter-spacing:.14em;color:#5a575f;padding:0 20px 9px}
   .nav{display:flex;flex-direction:column;gap:1px;flex:1}
@@ -57,8 +67,8 @@
   .btn.run svg{width:12px;height:12px;fill:#fff}
 
   .cols{flex:1;display:flex;gap:13px;min-height:0;padding-left:6px}
-  .sub{width:172px;flex:0 0 172px;padding:8px 0 0 8px}
-  .sb{padding:8px 11px;border-radius:8px;font:500 12.8px/1 Inter;color:var(--mut);
+  .sub{width:158px;flex:0 0 158px;padding:8px 0 0 8px}
+  .sb{padding:8px 11px;border-radius:8px;font:500 12.5px/1 Inter;color:var(--mut);
       margin-bottom:2px;border:1px solid transparent}
   .sb.on{background:#fff;color:var(--ink);font-weight:600;border-color:var(--line);
          box-shadow:0 1px 2px rgba(20,15,10,.06)}
@@ -67,44 +77,74 @@
           border-radius:14px;position:relative;overflow:hidden;
           background-image:radial-gradient(#e6e2dd 1px,transparent 1px);
           background-size:16px 16px;background-position:5px 5px}
-  .zoom{position:absolute;left:13px;top:13px;background:#fff;border:1px solid var(--line);
+  .zoom{position:absolute;left:12px;top:12px;background:#fff;border:1px solid var(--line);
         border-radius:9px;box-shadow:0 1px 3px rgba(20,15,10,.06);overflow:hidden}
-  .zb{width:30px;height:29px;display:flex;align-items:center;justify-content:center;
+  .zb{width:29px;height:28px;display:flex;align-items:center;justify-content:center;
       border-bottom:1px solid var(--line-2);color:#635e5a}
   .zb:last-child{border-bottom:0}
   .zb svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.8;
           stroke-linecap:round;stroke-linejoin:round}
-  .addbtn{position:absolute;right:13px;top:13px;height:31px;background:var(--lime);
+  .addbtn{position:absolute;right:12px;top:12px;height:30px;background:var(--lime);
           border-radius:9px;display:flex;align-items:center;gap:7px;padding:0 12px;
-          font:600 12px/1 Inter;color:#2f3a09;box-shadow:0 1px 3px rgba(90,110,20,.22)}
-  .addbtn svg{width:14px;height:14px;stroke:#2f3a09;fill:none;stroke-width:2;
+          font:600 11.8px/1 Inter;color:#2f3a09;box-shadow:0 1px 3px rgba(90,110,20,.22)}
+  .addbtn svg{width:13px;height:13px;stroke:#2f3a09;fill:none;stroke-width:2;
               stroke-linecap:round;stroke-linejoin:round}
 
-  .stage{position:absolute;left:50%;top:62px;transform:translateX(-50%);width:900px}
-  svg.wires{position:absolute;left:0;top:0;width:900px;height:640px;pointer-events:none}
+  .stage{position:absolute;left:50%;top:56px;transform:translateX(-50%);width:452px}
+  svg.wires{position:absolute;left:0;top:0;width:452px;height:660px;pointer-events:none}
 
-  .node{position:absolute;width:214px;background:#fff;border:1px solid #e6e2dd;
+  .node{position:absolute;width:212px;background:#fff;border:1px solid #e6e2dd;
         border-radius:12px;box-shadow:0 4px 14px rgba(28,22,14,.06),0 1px 2px rgba(28,22,14,.04);
         padding:10px 11px 9px}
-  .node .nh{display:flex;align-items:center;gap:8px}
+  .node.sel{border-color:#d3dda9;box-shadow:0 0 0 2.5px rgba(212,238,86,.36),
+            0 8px 20px rgba(28,22,14,.09)}
+  .nh{display:flex;align-items:center;gap:8px}
   .nic{width:26px;height:26px;flex:0 0 26px;border-radius:8px;display:flex;
        align-items:center;justify-content:center}
-  .nic svg{width:14px;height:14px;fill:none;stroke-width:1.8;stroke-linecap:round;
-           stroke-linejoin:round}
+  .nic svg{width:14px;height:14px;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
   .nt s{display:block;text-decoration:none;font:600 8.5px/1 Inter;letter-spacing:.1em;
         color:var(--mut-2);margin-bottom:3px}
-  .nt b{font:600 13px/1.2 Inter;letter-spacing:-.01em}
+  .nt b{font:600 12.8px/1.2 Inter;letter-spacing:-.01em}
   .meta{margin-top:8px;display:flex;flex-wrap:wrap;gap:4px}
-  .pill{font:500 10px/1 "JetBrains Mono",monospace;color:#6d6864;background:#f5f3f1;
+  .pill{font:500 9.5px/1 "JetBrains Mono",monospace;color:#6d6864;background:#f5f3f1;
         border-radius:5px;padding:4px 6px}
   .pill.k{background:#eef7cd;color:#48591a}
-  .sm{margin-top:7px;font:400 11px/1.4 Inter;color:var(--mut)}
+  .sm{margin-top:7px;font:400 10.8px/1.4 Inter;color:var(--mut)}
   .trigger{background:#f4faea;border-color:#cfe1a5}
   .tag{position:absolute;top:-9px;left:12px;background:#3f6b52;color:#fff;
        font:700 8.5px/1 Inter;letter-spacing:.1em;padding:4px 7px;border-radius:5px}
   .port{position:absolute;left:50%;transform:translateX(-50%);width:8px;height:8px;
         border-radius:99px;background:#fff;border:2px solid #ccc7c1}
   .port.t{top:-4.5px} .port.b{bottom:-4.5px}
+
+  /* ---- right-hand configuration panel: where the density comes from ---- */
+  .panel{width:426px;flex:0 0 426px;background:#fff;border:1px solid var(--line);
+         border-radius:14px;padding:16px 18px;display:flex;flex-direction:column;
+         overflow:hidden;box-shadow:0 1px 2px rgba(20,15,10,.035)}
+  .ph{display:flex;align-items:flex-start;gap:9px;margin-bottom:14px}
+  .ph h2{font:600 15.5px/1.25 "Inter Display",Inter;letter-spacing:-.018em}
+  .ph p{font:400 11.8px/1.4 Inter;color:var(--mut);margin-top:2px}
+  .ph .dots{margin-left:auto;color:var(--mut-2);font-size:14px;letter-spacing:.05em}
+  .sect{font-size:10.5px;font-weight:700;letter-spacing:1.4px;color:var(--mut-2);
+        margin:0 0 9px}
+  .sect.mt{margin-top:16px}
+  .fieldrow{display:flex;align-items:center;gap:9px;padding:7px 11px;
+            border:1px solid var(--line);border-radius:0}
+  .fields{border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  .fields .fieldrow{border:0;border-bottom:1px solid var(--line-2)}
+  .fields .fieldrow:last-child{border-bottom:0}
+  .fieldrow code{font:600 12px/1 "JetBrains Mono",monospace;color:var(--ink)}
+  .fieldrow em{margin-left:auto;font-style:normal;font:500 11px/1 Inter;color:var(--mut-2)}
+  .ty{font:500 9.5px/1 Inter;letter-spacing:.4px;padding:4px 6px;border-radius:5px;
+      background:#f1efec;color:#6d6864}
+  .ty.s{background:#e9f1fa;color:#2f6ba8} .ty.n{background:#fdf1d9;color:#9a6512}
+  .ty.b{background:#e8f4ec;color:#2f7a4c} .ty.a{background:#f2ecfb;color:#6a4bb5}
+  .code{border:1px solid var(--line);border-radius:10px;background:#fdfcfa;
+        padding:12px 13px;flex:1;min-height:0;overflow:hidden;position:relative;
+        font:400 11px/1.65 "JetBrains Mono",monospace;color:#4e4a45;white-space:pre-wrap}
+  .code .k{color:#2f6ba8} .code .v{color:#3f7a4c} .code .p{color:#b9b4ae}
+  .code::after{content:"";position:absolute;left:0;right:0;bottom:0;height:44px;
+               background:linear-gradient(transparent,#fdfcfa)}
 </style>
 </head>
 <body>
@@ -163,25 +203,19 @@
       <div class="addbtn"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Add action</div>
 
       <div class="stage">
-        <svg class="wires" viewBox="0 0 900 640">
+        <svg class="wires" viewBox="0 0 452 660">
           <g stroke="#cfcac4" stroke-width="1.5" fill="none" stroke-linecap="round">
-            <!-- trigger fans out to three columns -->
-            <path d="M450 92 V116 Q450 130 436 130 H127 Q113 130 113 144 V168"/>
-            <path d="M450 92 V168"/>
-            <path d="M450 92 V116 Q450 130 464 130 H773 Q787 130 787 144 V168"/>
-            <!-- left column chain -->
-            <path d="M113 288 V336"/>
-            <!-- middle column chain -->
-            <path d="M450 268 V316"/>
-            <path d="M450 416 V464"/>
-            <path d="M450 564 V604"/>
-            <!-- right column chain -->
-            <path d="M787 268 V316"/>
+            <path d="M226 96 V128"/>
+            <path d="M226 246 V274 Q226 288 212 288 H120 Q106 288 106 302 V330"/>
+            <path d="M226 246 V274 Q226 288 240 288 H332 Q346 288 346 302 V330"/>
+            <path d="M106 452 V492"/>
+            <path d="M346 440 V492"/>
+            <path d="M106 492 H346"/>
+            <path d="M226 492 V520"/>
           </g>
         </svg>
 
-        <!-- TRIGGER -->
-        <div class="node trigger" style="left:343px;top:20px;width:214px">
+        <div class="node trigger" style="left:120px;top:24px">
           <span class="tag">TRIGGER</span>
           <div class="nh">
             <span class="nic" style="background:#e2f0e8"><svg viewBox="0 0 24 24" stroke="#3f6b52"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/><path d="M15 4h6M18 1v6"/></svg></span>
@@ -191,81 +225,82 @@
           <span class="port b"></span>
         </div>
 
-        <!-- LEFT: read the call -> CRM -->
-        <div class="node" style="left:6px;top:168px">
+        <div class="node sel" style="left:120px;top:128px">
           <span class="port t"></span>
           <div class="nh">
             <span class="nic" style="background:#efe9fb"><svg viewBox="0 0 24 24" stroke="#7758c8"><path d="M12 3.5l1.6 3.9 3.9 1.6-3.9 1.6L12 14.5l-1.6-3.9L6.5 9l3.9-1.6z"/><path d="M18.5 15l.8 1.9 1.9.8-1.9.8-.8 1.9-.8-1.9-1.9-.8 1.9-.8z"/></svg></span>
-            <span class="nt"><s>AI EXTRACT</s><b>Read the call</b></span>
+            <span class="nt"><s>AI EXTRACT</s><b>Label the call</b></span>
           </div>
-          <div class="meta"><span class="pill k">23 signals</span><span class="pill">outcome</span><span class="pill">key_ask</span><span class="pill">sentiment</span></div>
-          <span class="port b"></span>
-        </div>
-        <div class="node" style="left:6px;top:336px">
-          <span class="port t"></span>
-          <div class="nh">
-            <span class="nic" style="background:#fbe9f2"><svg viewBox="0 0 24 24" stroke="#b2557f"><circle cx="12" cy="12" r="9"/><path d="M3.2 10h17.6M3.2 14h17.6M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg></span>
-            <span class="nt"><s>WEBHOOK</s><b>Write to the CRM</b></span>
+          <div class="meta">
+            <span class="pill k">18 labels</span><span class="pill">category</span>
+            <span class="pill">key_ask</span><span class="pill">customer_tier</span>
+            <span class="pill">country</span><span class="pill">repeat_customer</span>
           </div>
-          <p class="sm">POST · api.northaven.example</p>
           <span class="port b"></span>
         </div>
 
-        <!-- MIDDLE: consent -> filter -> whatsapp -->
-        <div class="node" style="left:343px;top:168px">
-          <span class="port t"></span>
-          <div class="nh">
-            <span class="nic" style="background:#efe9fb"><svg viewBox="0 0 24 24" stroke="#7758c8"><path d="M12 3.5l1.6 3.9 3.9 1.6-3.9 1.6L12 14.5l-1.6-3.9L6.5 9l3.9-1.6z"/></svg></span>
-            <span class="nt"><s>AI EXTRACT</s><b>Did they say yes?</b></span>
-          </div>
-          <div class="meta"><span class="pill">whatsapp_consent</span></div>
-          <span class="port b"></span>
-        </div>
-        <div class="node" style="left:343px;top:316px">
+        <div class="node" style="left:0;top:330px">
           <span class="port t"></span>
           <div class="nh">
             <span class="nic" style="background:#e4f1f7"><svg viewBox="0 0 24 24" stroke="#3d81c9"><path d="M3 5h18l-7 8v6l-4 2v-8z"/></svg></span>
-            <span class="nt"><s>FILTER</s><b>Only if they did</b></span>
+            <span class="nt"><s>FILTER</s><b>High-value B2B?</b></span>
           </div>
-          <p class="sm">consent = true</p>
+          <p class="sm">tier = VIP &amp; order_value &gt; &euro;2,000</p>
+          <div class="meta"><span class="pill">then</span><span class="pill k">alert the AM</span></div>
           <span class="port b"></span>
         </div>
-        <div class="node" style="left:343px;top:464px">
+
+        <div class="node" style="left:240px;top:330px">
           <span class="port t"></span>
           <div class="nh">
             <span class="nic" style="background:#e4f2e8"><svg viewBox="0 0 24 24" stroke="#3f9a63"><path d="M20.5 11.6a8.4 8.4 0 0 1-12.3 7.5L3.5 20.5l1.5-4.6A8.4 8.4 0 1 1 20.5 11.6z"/><path d="M8.6 9.2c.3 2.6 3.6 5.9 6.2 6.2l1.3-1.6-2-1.2-1 .8a8 8 0 0 1-2.5-2.5l.8-1-1.2-2z"/></svg></span>
             <span class="nt"><s>MESSAGE</s><b>Send the summary</b></span>
           </div>
-          <p class="sm">WhatsApp · what was discussed + the link</p>
+          <p class="sm">WhatsApp, if they agreed to it</p>
           <span class="port b"></span>
-        </div>
-        <div class="node" style="left:343px;top:604px">
-          <span class="port t"></span>
-          <div class="nh">
-            <span class="nic" style="background:#fdf1d9"><svg viewBox="0 0 24 24" stroke="#e8981f"><path d="M4 6h16v13H4z"/><path d="M4 9.5h16M9 6V3.5M15 6V3.5"/></svg></span>
-            <span class="nt"><s>COLLECTION</s><b>Log it against the order</b></span>
-          </div>
         </div>
 
-        <!-- RIGHT: exceptions -->
-        <div class="node" style="left:680px;top:168px">
+        <div class="node" style="left:120px;top:520px">
           <span class="port t"></span>
           <div class="nh">
-            <span class="nic" style="background:#e4f1f7"><svg viewBox="0 0 24 24" stroke="#3d81c9"><path d="M3 5h18l-7 8v6l-4 2v-8z"/></svg></span>
-            <span class="nt"><s>FILTER</s><b>Went badly?</b></span>
+            <span class="nic" style="background:#fbe9f2"><svg viewBox="0 0 24 24" stroke="#b2557f"><circle cx="12" cy="12" r="9"/><path d="M3.2 10h17.6M3.2 14h17.6M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg></span>
+            <span class="nt"><s>WEBHOOK</s><b>Update the CRM</b></span>
           </div>
-          <p class="sm">sentiment = negative, or no answer found</p>
-          <span class="port b"></span>
-        </div>
-        <div class="node" style="left:680px;top:316px">
-          <span class="port t"></span>
-          <div class="nh">
-            <span class="nic" style="background:#fae8e8"><svg viewBox="0 0 24 24" stroke="#c05555"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V4s-1 1-4 1-5-2-8-2-4 1-4 1z"/><path d="M4 22v-7"/></svg></span>
-            <span class="nt"><s>ISSUE TRACKER</s><b>Put it in front of a human</b></span>
-          </div>
-          <p class="sm">With the transcript attached</p>
+          <p class="sm">POST · api.northaven.example/v1/calls</p>
         </div>
       </div>
+    </div>
+
+    <div class="panel">
+      <div class="ph">
+        <span><h2>Label the call</h2><p>AI extract · runs on every call</p></span>
+        <span class="dots">•••</span>
+      </div>
+
+      <p class="sect">LABELS EXTRACTED (18)</p>
+      <div class="fields">
+        <div class="fieldrow"><code>category</code><em>Air conditioning</em><span class="ty s">string</span></div>
+        <div class="fieldrow"><code>key_ask</code><em>Sizing &amp; fit</em><span class="ty s">string</span></div>
+        <div class="fieldrow"><code>customer_tier</code><em>VIP</em><span class="ty a">enum</span></div>
+        <div class="fieldrow"><code>lifetime_value</code><em>4,240</em><span class="ty n">number</span></div>
+        <div class="fieldrow"><code>repeat_customer</code><em>true</em><span class="ty b">bool</span></div>
+        <div class="fieldrow"><code>country</code><em>DE</em><span class="ty s">string</span></div>
+        <div class="fieldrow"><code>resolved</code><em>true</em><span class="ty b">bool</span></div>
+      </div>
+
+      <p class="sect mt">LAST RUN · 14:32:06</p>
+      <div class="code">{
+  <span class="k">"category"</span>: <span class="v">"Air conditioning"</span>,
+  <span class="k">"key_ask"</span>: <span class="v">"Sizing &amp; fit"</span>,
+  <span class="k">"customer_tier"</span>: <span class="v">"VIP"</span>,
+  <span class="k">"lifetime_value"</span>: <span class="v">4240</span>,
+  <span class="k">"repeat_customer"</span>: <span class="v">true</span>,
+  <span class="k">"country"</span>: <span class="v">"DE"</span>,
+  <span class="k">"order_id"</span>: <span class="v">"NH-5512"</span>,
+  <span class="k">"resolved"</span>: <span class="v">true</span>,
+  <span class="k">"summary_consent"</span>: <span class="v">true</span>,
+  <span class="p">... 9 more</span>
+}</div>
     </div>
   </div>
 </main>
