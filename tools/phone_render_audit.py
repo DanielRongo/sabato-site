@@ -52,6 +52,7 @@ SLICE = sys.argv[2] if len(sys.argv) > 2 else ""
 # sections are covered incidentally - they appear on every page here.
 PAGES = [
     "/product/voice-agent-builder", "/it/prodotto/voice-agent-builder",
+    "/product/workflow-builder", "/it/prodotto/workflow-builder",
     "/", "/it",
     "/playbooks/peak-season", "/it/playbook/picchi-stagionali",
     "/playbooks/international-expansion", "/it/playbook/espansione-internazionale",

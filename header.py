@@ -46,6 +46,8 @@ import sys
 from footer import nav_data   # same enhance.js arrays the footer reads
 from playbook_data import PLAYBOOKS, ORDER            # the trigger half of the menu
 from playbook_data_it import PLAYBOOKS_IT, ORDER_IT
+from product_data import PRODUCTS, ORDER as PR_ORDER
+from product_data_it import PRODUCTS_IT, ORDER_IT as PR_ORDER_IT
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 CAL = "https://cal.com/sabatoai/intro"
@@ -66,18 +68,21 @@ LOGO = "/fuc/images/UTATYXc6NipXQRoxyaGHHfHSyA4-f2557e25.png"
 # the hub first - that is how the /use-cases hub went unbuilt for months.
 NAV = {
     "en": [("Use Cases", "/use-cases", "uc"), ("Industries", "/industries", "ind"),
-           ("Product", "/product/voice-agent-builder", None),
+           ("Product", "/product/voice-agent-builder", "pr"),
            ("Pricing", "/pricing", None), ("About", "/about", None),
            ("Contact", "/contact", None)],
     "it": [("Casi d'uso", "/it/casi-duso", "uc"), ("Settori", "/it/settori", "ind"),
-           ("Prodotto", "/it/prodotto/voice-agent-builder", None),
+           ("Prodotto", "/it/prodotto/voice-agent-builder", "pr"),
            ("Prezzi", "/it/prezzi", None), ("Chi Siamo", "/it/chi-siamo", None),
            ("Contatti", "/it/contatti", None)],
 }
 ALL_LABEL = {"en": {"uc": "All workflows", "ind": "All industries",
-                    "pb": "All playbooks"},
+                    "pb": "All playbooks", "pr": ""},
              "it": {"uc": "Tutti i flussi", "ind": "Tutti i settori",
-                    "pb": "Tutti i playbook"}}
+                    "pb": "Tutti i playbook", "pr": ""}}
+# PRODUCT has no "all" link yet because it has no hub yet. Empty string means
+# the link is skipped rather than rendered pointing at nothing. Build the hub
+# and put its label here - see HANDOFF.md.
 # The playbook column needs its own "all" link now that a hub exists - without
 # it /playbooks is reachable only from the sitemap, which is how the use-case
 # hub went unbuilt for months.
@@ -111,6 +116,19 @@ MENU_HIDE = {
 def _menu_visible(items):
     return [(l, h) for l, h in items
             if h.rstrip("/").rsplit("/", 1)[-1] not in MENU_HIDE]
+
+
+def product_items(lang):
+    """(label, href) for every product page that exists.
+
+    Read from product_data, exactly like playbook_items reads playbook_data, so
+    a new product page appears in the menu the moment it is written. A second
+    hand-kept list is a second thing to forget - that lesson is already written
+    into the function below.
+    """
+    src, order, base = ((PRODUCTS, PR_ORDER, "/product/") if lang == "en"
+                        else (PRODUCTS_IT, PR_ORDER_IT, "/it/prodotto/"))
+    return [(src[s]["chip"], base + s) for s in order]
 
 
 def playbook_items(lang):
@@ -190,11 +208,17 @@ def _desktop_nav(lang):
         if not kind:
             out.append(f'<a href="{href}">{esc}</a>')
             continue
-        items = _menu_visible(ucs) if kind == "uc" else inds
+        if kind == "pr":
+            items = product_items(lang)
+        elif kind == "uc":
+            items = _menu_visible(ucs)
+        else:
+            items = inds
         lis = "".join(f'<a href="{h}">{html.escape(l, quote=False)}</a>'
                       for l, h in items)
-        lis += (f'<a class="sb-dd-all" href="{href}">'
-                f'{html.escape(ALL_LABEL[lang][kind], quote=False)}</a>')
+        if ALL_LABEL[lang][kind]:
+            lis += (f'<a class="sb-dd-all" href="{href}">'
+                    f'{html.escape(ALL_LABEL[lang][kind], quote=False)}</a>')
         if kind == "uc":
             # data-uc-dropdown stays on the OUTER span. postdeploy_check asserts
             # that attribute on four pages; moving it into a column would keep

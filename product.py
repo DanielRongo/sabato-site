@@ -220,6 +220,26 @@ PRODUCT_CSS = """
       background: rgb(139,185,159); font-style: normal; }
     .dlg-db em { margin-left: auto; font-style: normal; font-family: Inter, sans-serif;
       font-size: 12.5px; color: rgb(140,136,132); }
+    /* the workflow variant: a plain endpoint row and a key/value body */
+    .dlg-sel.is-plain { background: rgb(250,249,247); font-family: ui-monospace,
+      SFMono-Regular, Menlo, monospace; font-size: 12.5px; color: rgb(70,66,62); }
+    .dlg-sel.is-plain::after { content: none; }
+    .dlg-kvs { border: 1px solid rgba(18,10,11,.13); border-radius: 9px; overflow: hidden; }
+    .dlg-kv { display: flex; align-items: center; gap: 10px; padding: 9px 12px; }
+    .dlg-kv + .dlg-kv { border-top: 1px solid rgba(18,10,11,.07); }
+    .dlg-kv code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 13px; font-weight: 600; color: var(--ink); }
+    .dlg-kv span { margin-left: auto; font-family: ui-monospace, SFMono-Regular,
+      Menlo, monospace; font-size: 12px; color: rgb(120,116,112);
+      /* {{Legge_la_chiamata.sentiment}} is one unbreakable token and it is
+         longer in Italian than in English - it pushed the panel 4px past a
+         390px viewport and the whole document scrolled sideways. Caught by
+         tools/phone_render_audit.py on the Italian page only. */
+      min-width: 0; overflow-wrap: anywhere; }
+    .dlg-sel.is-plain { overflow-wrap: anywhere; }
+    /* The run log names steps rather than fields, so it needs prose width. */
+    .dlg-db div { font-family: Inter, sans-serif; font-size: 13.5px; }
+    .dlg-db em { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
 
     /* ---- animation ------------------------------------------------------
        Runs only when the block is on screen, only above 900px, and never when
@@ -241,6 +261,10 @@ PRODUCT_CSS = """
 
     @media (max-width: 900px) {
       .pr-pair { padding: 72px 22px 72px; }
+      /* one column per row on a phone: side by side, the value column has no
+         room left once the key has taken its share */
+      .dlg-kv { display: block; }
+      .dlg-kv span { display: block; margin: 3px 0 0; }
       .pr-pair h2 { font-size: 31px; letter-spacing: -.8px; }
       .pr-pair-grid { grid-template-columns: 1fr; gap: 16px; }
     }
@@ -488,6 +512,52 @@ def brief_viz(lang):
             % (esc(t["title"]), esc(t["chip"]), rows, esc(t["foot"])))
 
 
+SIGNALS_TEXT = {
+    "en": dict(title="Read from one call", chip="STRUCTURED",
+               rows=[("outcome", "answered"), ("key_ask", "delivery date"),
+                     ("sentiment", "calm"), ("transfer_present", "no"),
+                     ("outcome_confidence", "0.94")],
+               foot="Twenty-three fields, every call, no exceptions."),
+    "it": dict(title="Letto da una chiamata", chip="STRUTTURATO",
+               rows=[("outcome", "risolta"), ("key_ask", "data di consegna"),
+                     ("sentiment", "tranquillo"), ("transfer_present", "no"),
+                     ("outcome_confidence", "0.94")],
+               foot="Ventitré campi, a ogni chiamata, senza eccezioni."),
+}
+
+
+def signals_viz(lang):
+    t = SIGNALS_TEXT[lang]
+    rows = "".join('<div class="bf-row"><span class="bf-n">%s</span>'
+                   '<p style="margin-left:auto;color:rgb(200,240,74)">%s</p></div>'
+                   % (esc(k), esc(v)) for k, v in t["rows"])
+    return ('<div class="bf"><div class="bf-h"><b>%s</b><span>%s</span></div>%s'
+            '<div class="bf-foot"><span class="bf-dot"></span>%s</div></div>'
+            % (esc(t["title"]), esc(t["chip"]), rows, esc(t["foot"])))
+
+
+BRANCH_TEXT = {
+    "en": [("If they said yes to it", "The summary goes out on WhatsApp.", False),
+           ("If it went badly", "A person gets it, with the transcript attached.", False),
+           ("Either way", "The CRM is updated before anyone could have typed it.", True)],
+    "it": [("Se hanno detto di sì", "Il riepilogo parte su WhatsApp.", False),
+           ("Se è andata male", "Ci pensa una persona, con la trascrizione allegata.", False),
+           ("In ogni caso", "Il CRM è aggiornato prima che qualcuno l'avrebbe scritto.", True)],
+}
+
+
+def branch_viz(lang):
+    parts = []
+    for i, (title, line, always) in enumerate(BRANCH_TEXT[lang]):
+        if i:
+            parts.append('<div class="rf-arrow"></div>')
+        parts.append('<div class="rf-step%s"><span class="rf-k">%s</span>'
+                     '<span><b>%s</b><em>%s</em></span></div>'
+                     % (" is-live" if always else "", "&rarr;" if always else str(i + 1),
+                        esc(title), esc(line)))
+    return '<div class="rf">%s</div>' % "".join(parts)
+
+
 def release_flow(lang):
     parts = []
     for i, (title, line, live) in enumerate(RELEASE_FLOW_TEXT[lang]):
@@ -508,6 +578,7 @@ def release_flow(lang):
 # rebuilt as markup so they stay readable at half width on a phone.
 # ---------------------------------------------------------------------------
 PAIR_TEXT = {
+  "tools": {
     "en": dict(
         assign_t="Assign", assign_s="Assign a tool to this agent",
         tools_l="Tools", select="Select", search="Search for a tool",
@@ -555,52 +626,138 @@ PAIR_TEXT = {
             ("order.promised_date", "gio 21 ago")],
         msg_l="MESSAGGIO DI ATTESA",
         msg="\u201cGuardo subito, un attimo solo.\u201d"),
+  },
+
+  # ---- the WORKFLOW BUILDER pair -----------------------------------------
+  # Left: how a step is configured. Right: what that step actually did on one
+  # real call. Config alone is a screenshot of a form; the run beside it is the
+  # thing that makes a reader believe it works.
+  "workflow": {
+    "en": dict(
+        assign_t="Write to the CRM", assign_s="Webhook step",
+        tools_l="Endpoint", select="POST  \u00b7  api.northaven.example/v1/calls",
+        search="", typed="", items=[], on="",
+        cancel="Cancel", add="Save",
+        body_l="BODY",
+        body=[("outcome", "{{Read_the_call.outcome}}"),
+              ("key_ask", "{{Read_the_call.key_ask}}"),
+              ("sentiment", "{{Read_the_call.sentiment}}"),
+              ("order_id", "{{Read_the_call.order_id}}")],
+        set_t="Run \u00b7 14:32:06", set_s="What this workflow did on one call",
+        db_l="STEPS THAT RAN",
+        db=[("Read the call", "23 fields"),
+            ("Did they say yes?", "consent \u2713"),
+            ("Send the summary", "WhatsApp sent"),
+            ("Write to the CRM", "200 OK"),
+            ("Log it against the order", "#5512")],
+        msg_l="TOTAL",
+        msg="3.1 seconds, start to finish. Nobody was involved."),
+    "it": dict(
+        assign_t="Scrivi sul CRM", assign_s="Passaggio webhook",
+        tools_l="Endpoint", select="POST  \u00b7  api.northaven.example/v1/calls",
+        search="", typed="", items=[], on="",
+        cancel="Annulla", add="Salva",
+        body_l="CORPO",
+        body=[("outcome", "{{Legge_la_chiamata.outcome}}"),
+              ("key_ask", "{{Legge_la_chiamata.key_ask}}"),
+              ("sentiment", "{{Legge_la_chiamata.sentiment}}"),
+              ("order_id", "{{Legge_la_chiamata.order_id}}")],
+        set_t="Esecuzione \u00b7 14:32:06",
+        set_s="Cosa ha fatto questo workflow su una chiamata",
+        db_l="PASSAGGI ESEGUITI",
+        db=[("Legge la chiamata", "23 campi"),
+            ("Hanno detto di s\u00ec?", "consenso \u2713"),
+            ("Manda il riepilogo", "WhatsApp inviato"),
+            ("Scrivi sul CRM", "200 OK"),
+            ("Registra sull'ordine", "#5512")],
+        msg_l="TOTALE",
+        msg="3,1 secondi in tutto. Nessuno ha alzato un dito."),
+  },
 }
 
 
-def pair_panels(lang):
-    """The two dialogs, drawn from the real Assign and tool-settings screens.
+def pair_panels(lang, kind="tools"):
+    """The two dialogs under the statement.
 
     Live markup, not pictures: at half width on a 390px phone an image of this
     UI would render its 13px labels at about 6px.
+
+    Two variants. "tools" is the Assign dialog beside a tool's settings, for the
+    Voice Agent Builder. "workflow" is a webhook step's configuration beside the
+    log of what that workflow actually did on one call - config alone is a
+    screenshot of a form; the run beside it is what makes it believable.
     """
-    t = PAIR_TEXT[lang]
-    items = "".join('<div class="dlg-item%s" data-tool="%s">%s</div>'
-                    % (" on" if i == t["on"] else "", esc(i), esc(i))
-                    for i in t["items"])
-    assign = ('<div class="dlg">'
-              '<div class="dlg-h"><b>%s</b><span>%s</span></div>'
-              '<p class="dlg-l">%s</p>'
-              '<div class="dlg-sel">%s</div>'
-              '<div class="dlg-menu">'
-              '<div class="dlg-search"><span data-typed>%s</span>'
-              '<span class="dlg-caret"></span></div>%s</div>'
-              '<div class="dlg-btns"><span class="dlg-b gh">%s</span>'
-              '<span class="dlg-b go">%s</span></div></div>'
-              % (esc(t["assign_t"]), esc(t["assign_s"]), esc(t["tools_l"]),
-                 esc(t["select"]), esc(t["search"]), items,
-                 esc(t["cancel"]), esc(t["add"])))
-    when = "".join("<p>%s</p>" % w for w in t["when"])
-    db = "".join('<div><i></i>%s<em>%s</em></div>' % (esc(k), esc(v))
-                 for k, v in t["db"])
-    settings = ('<div class="dlg">'
+    t = PAIR_TEXT[kind][lang]
+
+    if kind == "tools":
+        items = "".join('<div class="dlg-item%s" data-tool="%s">%s</div>'
+                        % (" on" if i == t["on"] else "", esc(i), esc(i))
+                        for i in t["items"])
+        left = ('<div class="dlg">'
                 '<div class="dlg-h"><b>%s</b><span>%s</span></div>'
-                '<div class="dlg-row"><p class="dlg-l">%s</p>'
-                '<p class="dlg-l" style="flex:0 0 auto">%s</p>'
-                '<span class="dlg-tog"><i></i></span></div>'
-                '<div class="dlg-field">%s</div>'
-                '<p class="dlg-hint">%s</p>'
-                '<p class="dlg-sect">%s</p>'
-                '<div class="dlg-box">%s</div>'
-                '<p class="dlg-sect">%s</p>'
-                '<div class="dlg-db">%s</div>'
-                '<p class="dlg-sect">%s</p>'
-                '<div class="dlg-msg">%s</div></div>'
-                % (esc(t["set_t"]), esc(t["set_s"]), esc(t["fn_l"]), esc(t["en_l"]),
-                   esc(t["fn"]), esc(t["fn_hint"]), esc(t["when_l"]), when,
-                   esc(t["db_l"]), db, esc(t["msg_l"]), esc(t["msg"])))
+                '<p class="dlg-l">%s</p><div class="dlg-sel">%s</div>'
+                '<div class="dlg-menu">'
+                '<div class="dlg-search"><span data-typed>%s</span>'
+                '<span class="dlg-caret"></span></div>%s</div>'
+                '<div class="dlg-btns"><span class="dlg-b gh">%s</span>'
+                '<span class="dlg-b go">%s</span></div></div>'
+                % (esc(t["assign_t"]), esc(t["assign_s"]), esc(t["tools_l"]),
+                   esc(t["select"]), esc(t["search"]), items,
+                   esc(t["cancel"]), esc(t["add"])))
+        when = "".join("<p>%s</p>" % w for w in t["when"])
+        db = "".join('<div><i></i>%s<em>%s</em></div>' % (esc(k), esc(v))
+                     for k, v in t["db"])
+        right = ('<div class="dlg">'
+                 '<div class="dlg-h"><b>%s</b><span>%s</span></div>'
+                 '<div class="dlg-row"><p class="dlg-l">%s</p>'
+                 '<p class="dlg-l" style="flex:0 0 auto">%s</p>'
+                 '<span class="dlg-tog"><i></i></span></div>'
+                 '<div class="dlg-field">%s</div><p class="dlg-hint">%s</p>'
+                 '<p class="dlg-sect">%s</p><div class="dlg-box">%s</div>'
+                 '<p class="dlg-sect">%s</p><div class="dlg-db">%s</div>'
+                 '<p class="dlg-sect">%s</p><div class="dlg-msg">%s</div></div>'
+                 % (esc(t["set_t"]), esc(t["set_s"]), esc(t["fn_l"]),
+                    esc(t["en_l"]), esc(t["fn"]), esc(t["fn_hint"]),
+                    esc(t["when_l"]), when, esc(t["db_l"]), db,
+                    esc(t["msg_l"]), esc(t["msg"])))
+    else:
+        body = "".join('<div class="dlg-kv"><code>%s</code><span>%s</span></div>'
+                       % (esc(k), esc(v)) for k, v in t["body"])
+        left = ('<div class="dlg">'
+                '<div class="dlg-h"><b>%s</b><span>%s</span></div>'
+                '<p class="dlg-l">%s</p><div class="dlg-sel is-plain">%s</div>'
+                '<p class="dlg-sect">%s</p><div class="dlg-kvs">%s</div>'
+                '<div class="dlg-btns"><span class="dlg-b gh">%s</span>'
+                '<span class="dlg-b go">%s</span></div></div>'
+                % (esc(t["assign_t"]), esc(t["assign_s"]), esc(t["tools_l"]),
+                   esc(t["select"]), esc(t["body_l"]), body,
+                   esc(t["cancel"]), esc(t["add"])))
+        db = "".join('<div><i></i>%s<em>%s</em></div>' % (esc(k), esc(v))
+                     for k, v in t["db"])
+        right = ('<div class="dlg">'
+                 '<div class="dlg-h"><b>%s</b><span>%s</span></div>'
+                 '<p class="dlg-sect" style="margin-top:4px">%s</p>'
+                 '<div class="dlg-db">%s</div>'
+                 '<p class="dlg-sect">%s</p><div class="dlg-msg">%s</div></div>'
+                 % (esc(t["set_t"]), esc(t["set_s"]), esc(t["db_l"]), db,
+                    esc(t["msg_l"]), esc(t["msg"])))
+
     return ('<div class="pr-pair-grid" data-typed-word="%s">%s%s</div>'
-            % (esc(t["typed"]), assign, settings))
+            % (esc(t.get("typed", "")), left, right))
+
+
+def section_pair(d, lang):
+    """A statement, then two half-width panels proving it."""
+    p = d["pair"]
+    return """
+    <section class="pr-pair">
+      <p class="eyebrow">%s</p>
+      <h2>%s</h2>
+      <p class="pb-lede">%s</p>
+      %s
+      %s
+    </section>""" % (esc(p["eyebrow"]), nb(esc(p["h2"])), esc(p["lede"]),
+                     pair_panels(lang, d.get("pair_kind", "tools")), ANIM_JS)
 
 
 # ---------------------------------------------------------------------------
@@ -655,18 +812,6 @@ rm.addEventListener&&rm.addEventListener('change',function(){if(!eligible())stop
 })();</script>"""
 
 
-def section_pair(d, lang):
-    """A statement, then two half-width panels proving it."""
-    p = d["pair"]
-    return """
-    <section class="pr-pair">
-      <p class="eyebrow">%s</p>
-      <h2>%s</h2>
-      <p class="pb-lede">%s</p>
-      %s
-      %s
-    </section>""" % (esc(p["eyebrow"]), nb(esc(p["h2"])), esc(p["lede"]),
-                     pair_panels(lang), ANIM_JS)
 
 
 def section_blocks(d):
@@ -826,6 +971,10 @@ def build(lang, slug, d):
             b["viz"] = release_flow(lang)
         elif b.get("viz") == "BRIEF_VIZ":
             b["viz"] = brief_viz(lang)
+        elif b.get("viz") == "SIGNALS_VIZ":
+            b["viz"] = signals_viz(lang)
+        elif b.get("viz") == "BRANCH_VIZ":
+            b["viz"] = branch_viz(lang)
 
     sections = "".join([
         section_shot(d),

@@ -41,6 +41,7 @@ WIDTHS = [(390, "phone"), (1440, "desktop")]
 # hrefs from a template and are uniform - a sample of them is enough.
 PAGES = [
     "/product/voice-agent-builder", "/it/prodotto/voice-agent-builder",
+    "/product/workflow-builder", "/it/prodotto/workflow-builder",
     "/", "/it", "/pricing", "/it/prezzi", "/about", "/it/chi-siamo",
     "/contact", "/it/contatti", "/blog", "/it/blog", "/terms",
     "/privacy-policy", "/use-cases", "/it/casi-duso", "/industries",

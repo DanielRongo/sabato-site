@@ -180,5 +180,160 @@ VOICE_AGENT_BUILDER_IT = dict(
     ),
 )
 
-PRODUCTS_IT = {p["slug"]: p for p in [VOICE_AGENT_BUILDER_IT]}
-ORDER_IT = ["voice-agent-builder"]
+
+# ---------------------------------------------------------------------------
+# 2. WORKFLOW BUILDER
+#
+# La linea netta fra questa pagina e il Voice Agent Builder: quella è cosa fa
+# l'agente MENTRE il cliente è al telefono, questa è cosa succede DOPO che ha
+# riagganciato. Tenere separate le due cose è il motivo per cui esistono due
+# pagine invece di una lunghissima.
+#
+# Attenzione ai calchi, come sempre: "post-call" non si traduce "post-chiamata"
+# in una frase parlata - si dice "dopo la chiamata". E "gestionale" è la parola
+# italiana per il sistema ordini, non "sistema di gestione ordini".
+# ---------------------------------------------------------------------------
+WORKFLOW_BUILDER_IT = dict(
+    slug="workflow-builder",
+    en="workflow-builder",
+    chip="Workflow Builder",
+
+    title="Workflow Builder | Sabato AI",
+    description="Cosa succede dopo che il cliente ha riagganciato: la chiamata "
+                "viene letta, i dati estratti, i tuoi sistemi aggiornati. "
+                "Nessuno scrive niente a mano. Online in due settimane.",
+
+    h1="La chiamata finisce.[br]Il lavoro comincia.",
+    sub="Quasi tutti i centralini si fermano quando cade la linea. È lì che "
+        "comincia il lavoro vero: la nota, il messaggio, il ticket, il campo "
+        "che qualcuno deve aggiornare. Nel Workflow Builder quel lavoro smette "
+        "di essere il compito di qualcuno.",
+
+    hero_visual="",
+
+    shot=dict(
+        src="/product/assets/workflow-builder",
+        alt="Il canvas dei workflow dopo la chiamata: un trigger a fine "
+            "chiamata che si dirama in lettura della chiamata, verifica del "
+            "consenso, invio del riepilogo WhatsApp, scrittura sul CRM e "
+            "segnalazione di un problema.",
+        caption="Il workflow di uno store dopo la chiamata. Tutto quello che "
+                "vedi qui parte nei secondi dopo che il cliente ha "
+                "riagganciato.",
+    ),
+
+    pair_kind="workflow",
+    pair=dict(
+        eyebrow="DOPO LA CHIAMATA",
+        h2="Non lo scrive nessuno.[br]È già fatto.",
+        lede="Appena la chiamata finisce, l'agente la passa a un workflow. La "
+             "chiamata viene letta, le condizioni verificate, e ogni sistema "
+             "che deve saperlo lo sa - prima che il tuo team avesse finito di "
+             "scrivere la prima nota.",
+    ),
+
+    group=dict(
+        eyebrow="COM'È FATTO UN WORKFLOW",
+        h2="Legge la chiamata.[br]Poi agisce.",
+    ),
+
+    blocks=[
+        dict(
+            eyebrow="01 · COSA LEGGE",
+            h2="Un riassunto non serve. I campi sì.",
+            h2_in_col=True,
+            viz="SIGNALS_VIZ",
+            body=[
+                "Un paragrafo del tipo «ecco com'è andata la chiamata» non si "
+                "filtra, non si conta e non ci fai niente. Quindi la chiamata "
+                "viene letta dentro campi con un nome: cosa ha chiesto davvero, "
+                "com'è finita, quanto ne siamo sicuri, com'era il tono, se è "
+                "servito coinvolgere qualcuno.",
+                "Su quei campi si dirama tutto quello che viene dopo. E sono "
+                "gli stessi campi che a fine mese diventano i tuoi numeri.",
+            ],
+        ),
+        dict(
+            eyebrow="02 · COSA FA",
+            h2="Chiamate diverse meritano finali diversi.",
+            h2_in_col=True,
+            flip=True,
+            viz="BRANCH_VIZ",
+            body=[
+                "Una chiamata andata bene e una andata male non possono avere "
+                "lo stesso seguito. Decidono le condizioni: il riepilogo parte "
+                "solo verso chi ha detto di sì, un reclamo finisce davanti a "
+                "una persona con la trascrizione allegata, e sul CRM si scrive "
+                "in ogni caso.",
+                "Aggiungere un ramo è una modifica come le altre: resta in "
+                "bozza, la provi su una chiamata vera, e va online quando "
+                "pubblichi.",
+            ],
+        ),
+    ],
+
+    hands=dict(
+        eyebrow="SERVIZIO COMPLETO",
+        h2="Tu dici cosa deve succedere.[br]Lo colleghiamo noi.",
+        lede="Quattro passaggi dalla prima chiacchierata a un workflow che gira "
+             "dopo ogni chiamata. Tre sono nostri. Lo strumento non devi "
+             "aprirlo mai.",
+        step_word="PASSO",
+        steps=[
+            ("talk", "Ci dici cosa deve succedere",
+             "Cosa fa oggi il tuo team dopo una chiamata, e quali di quelle "
+             "cose devono smettere di essere il compito di qualcuno. Quella "
+             "lista è tutto il briefing.", True),
+            ("build", "Lo colleghiamo ai tuoi sistemi",
+             "CRM, helpdesk, messaggistica, gestionale ordini. Con quello che "
+             "espongono: API, webhook, un export. Ai tuoi sviluppatori non "
+             "chiediamo niente.", False),
+            ("hear", "Lo provi su una chiamata vera",
+             "Facciamo girare il workflow su una chiamata già avvenuta e ti "
+             "facciamo vedere esattamente cosa ha scritto e dove. Online ci va "
+             "quando pubblichi tu.", False),
+            ("run", "Poi gira su ogni chiamata",
+             "In silenzio, in pochi secondi, e ogni esecuzione resta "
+             "registrata: se qualcosa non torna, vedi quale passaggio l'ha "
+             "fatto.", False),
+        ],
+    ),
+
+    faq_h2="Le domande che ci fanno davvero",
+    faq=[
+        ("A cosa si collega, in concreto?",
+         "A qualsiasi cosa abbia un'API o un webhook, che è quasi tutto: "
+         "Shopify, il tuo helpdesk, il CRM, WhatsApp, un foglio Google se il "
+         "lavoro vive davvero lì. Se un sistema non ha un'API te lo diciamo, "
+         "invece di far finta di niente."),
+        ("E se il workflow fa la cosa sbagliata?",
+         "Ogni esecuzione resta registrata passaggio per passaggio, quindi vedi "
+         "cosa è partito e cosa ha scritto. Le modifiche seguono la stessa "
+         "strada dell'agente - bozza, prova, pubblicazione - così una modifica "
+         "sbagliata si becca prima che arrivi a un cliente, non dopo."),
+        ("Può comportarsi diversamente a seconda della chiamata?",
+         "È esattamente il punto. Le condizioni leggono i campi estratti dalla "
+         "conversazione - cosa hanno chiesto, com'è finita, se hanno dato il "
+         "consenso, che tono avevano - e ogni ramo fa una cosa diversa."),
+        ("Dobbiamo costruirceli noi questi workflow?",
+         "No. Tu ci dici cosa deve succedere dopo una chiamata e lo costruiamo "
+         "noi. Hai un accesso e puoi guardare ogni esecuzione, ma non c'è "
+         "niente che devi configurare."),
+        ("Quanto ci mette a partire?",
+         "Pochi secondi dalla fine della chiamata. Chi ha accettato il "
+         "riepilogo di solito ce l'ha prima di aver riposato il telefono."),
+        ("Che fine fanno registrazione e trascrizione?",
+         "Restano legate alla conversazione e sono a tua disposizione. La "
+         "conservazione la imposta la tua policy, non la nostra."),
+    ],
+
+    cta=dict(
+        hand="online in due settimane",
+        h2="Cosa fa il tuo team dopo una chiamata?",
+        sub="Qualunque sia la risposta, è probabilmente una lista. Mandacela e "
+            "ti diciamo quali pezzi smettono di essere il compito di qualcuno.",
+    ),
+)
+
+PRODUCTS_IT = {p["slug"]: p for p in [VOICE_AGENT_BUILDER_IT, WORKFLOW_BUILDER_IT]}
+ORDER_IT = ["voice-agent-builder", "workflow-builder"]

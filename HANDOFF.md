@@ -225,6 +225,96 @@ a band on the /use-cases hub, promoted into the nav only if it earns it.
 
 ---
 
+---
+
+## PRODUCT SECTION - state of play (14 Aug)
+
+### The five pages, and where each one stands
+
+| # | Name | Slug | Status |
+|---|---|---|---|
+| 1 | **Voice Agent Builder** | `/product/voice-agent-builder` | **BUILT**, both languages, on staging |
+| 2 | **Workflow Builder** | not yet | name settled, page not started |
+| 3 | **Call Data Intelligence** | not yet | name settled, page not started |
+| 4 | **Agent Evaluation** | not yet | name settled, page not started |
+| 5 | **Integrations & Webhooks** | not yet | name settled, page not started |
+
+All five names are now FINAL. Daniel settled the two that were provisional on
+14 Aug. **"Visual Agentic Workflow Builder" lost both adjectives** - nobody
+searches for either, and "agentic" would have aged like "web 2.0" inside a URL
+that outlives the word. **"Calls Evaluation Tool" became "Agent Evaluation"**.
+
+Two things decided with those names, worth not relitigating:
+
+- **Workflow Builder collides with the Workflows nav label on purpose.** The
+  nine workflow pages are what the builder MAKES. Each should link to the
+  builder and the builder back to all nine. That cross-link does not exist yet -
+  build it when page 2 lands.
+- **"Agent Evaluation" is owned in search by contact-centre QA for HUMAN agents**
+  (Observe.AI, HiveDesk, Time Doctor all rank for it). Accepted knowingly:
+  nobody picks a voice vendor by searching that phrase, and the playbooks carry
+  the search load.
+
+### BEFORE page 2 ships: build the `/product` hub
+
+The header's top-level **Product** item currently points straight at
+`/product/voice-agent-builder`. That is honest with one page and misleading
+with three. A hub plus a dropdown, exactly like Use Cases and Industries.
+
+### What the built page establishes for the other four
+
+- **Layout**: centred hero -> ONE full-bleed screenshot -> statement + two
+  half-width panels -> one dark band holding the numbered chapters -> the
+  managed-service steps -> FAQ -> CTA. Exactly one full-bleed image per page;
+  Daniel, 14 Aug: "too many full widths are not good for readability."
+- **The managed-service steps band is mandatory.** Four steps, three of them
+  ours, and step one styled differently because it is the only thing asked of
+  the customer. That 3:1 ratio is the argument - do not "balance" it.
+- **Screenshots are rebuilt, not screenshotted.** `assets-src/` holds the HTML
+  source; it lives OUTSIDE `site/` because the three injectors glob
+  `site/**/*.html` and would inject analytics into an asset source.
+- **Anything showing UI at less than full width is live HTML, not an image.**
+  At half width on a 390px phone a picture of that UI renders its 13px labels
+  at about 6px.
+- **Never publish the voice vendor.** The real screenshots exposed ElevenLabs;
+  it is deliberately absent from the rebuild.
+
+### The animation, and the four rules it obeys
+
+The two dialog panels animate: a tool name types into the search field, the
+non-matching tools dim, the order-system rows fill in. Rules, all verified
+rather than assumed - break any one and it is worse than a static picture:
+
+1. never below 900px (a typing animation on a touch device is noise)
+2. never under `prefers-reduced-motion`
+3. only while on screen, via IntersectionObserver
+4. **moves nothing** - filtering dims rows instead of removing them, and the
+   typed text sits in a fixed-height row. Body height measured across the whole
+   loop: identical every sample.
+
+### Italian: two failure modes that both shipped once
+
+**Calques.** "Sotto il cofano" is not Italian - it is "under the hood"
+translated. So was "è il posto dove" ("is where") and "agente di ingresso"
+("entry agent" - fine as a label inside the product, wrong on a sales page).
+Daniel, 14 Aug: "non tradurre letteralmente, localizza."
+
+**Missing accents.** The first draft wrote `c'e'`, `piu'`, `cosi'`,
+`disponibilita'` - thirty of them, zero real accents. Every other Italian file
+in this repo uses è, più, così (159 in playbook_data_it.py, 421 in
+industry_data_it.py). An Italian reader spots `c'e'` instantly as machine
+translation. **An accent check in the gate has been offered and not yet built** -
+build it before the next Italian page.
+
+### Next on this section
+
+1. `/product` hub, before page 2.
+2. Workflow Builder page + cross-links to the nine workflow pages.
+3. Accent/calque guard in the gate.
+4. Cross-link the multilingual playbook from the product FAQ - the page now
+   claims any language, and `/playbooks/multilingual-support` is what sells it.
+
+
 ## Still open from earlier sessions
 
 1. **Cookie consent.** GA4 sets `_ga` before any consent and there is no banner.

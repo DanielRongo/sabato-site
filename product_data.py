@@ -179,9 +179,156 @@ VOICE_AGENT_BUILDER = dict(
     ),
 )
 
-PRODUCTS = {p["slug"]: p for p in [VOICE_AGENT_BUILDER]}
 
-# Display order for the section, and for the cross-links at the foot of each
-# page. Only pages that EXIST belong here - the remaining four are listed in
-# HANDOFF.md with two names still unsettled.
-ORDER = ["voice-agent-builder"]
+# ---------------------------------------------------------------------------
+# 2. WORKFLOW BUILDER
+#
+# The clean line between this page and the Voice Agent Builder: that one is
+# what the agent does WHILE the customer is on the phone. This one is what
+# happens AFTER they hang up. Keep that split - it is the reason two pages
+# exist rather than one long one, and it is also the honest description of the
+# product's two canvases.
+# ---------------------------------------------------------------------------
+WORKFLOW_BUILDER = dict(
+    slug="workflow-builder",
+    it="workflow-builder",
+    chip="Workflow Builder",
+
+    title="Workflow Builder | Sabato AI",
+    description="What happens after the customer hangs up: the call is read, "
+                "the facts are pulled out, and your systems are updated. Nobody "
+                "types anything. Live in two weeks.",
+
+    # 14 and 17 characters.
+    h1="The call ends.[br]The work starts.",
+    sub="Most phone systems stop when the line goes dead. That is the moment "
+        "the actual work begins - the note, the message, the ticket, the field "
+        "somebody has to update. The Workflow Builder is where that work stops "
+        "being anybody's job.",
+
+    hero_visual="",
+
+    shot=dict(
+        src="/product/assets/workflow-builder",
+        alt="The Sabato post-call workflow canvas: a Call Ended trigger "
+            "branching into reading the call, checking consent, sending a "
+            "WhatsApp summary, writing to a CRM and raising an issue.",
+        caption="One store's post-call workflow. Everything on this canvas "
+                "runs in the seconds after the customer hangs up.",
+    ),
+
+    pair_kind="workflow",
+    pair=dict(
+        eyebrow="AFTER THE CALL",
+        h2="Nobody types this up.[br]It is already done.",
+        lede="The agent hands the call to a workflow the moment it ends. The "
+             "call gets read, the conditions get checked, and every system that "
+             "should know about it is told - before your team would have "
+             "finished writing the first note.",
+    ),
+
+    group=dict(
+        eyebrow="HOW A WORKFLOW IS PUT TOGETHER",
+        h2="Read the call.[br]Then act on it.",
+    ),
+
+    blocks=[
+        dict(
+            eyebrow="01 · WHAT IT READS",
+            h2="A summary is useless. Fields are not.",
+            h2_in_col=True,
+            viz="SIGNALS_VIZ",
+            body=[
+                "A paragraph of \u201chere is what happened on the call\u201d "
+                "cannot be filtered, counted or acted on. So the call is read "
+                "into named fields instead: what they actually asked for, how "
+                "it ended, how sure we are, how they sounded, whether anyone "
+                "had to be pulled in.",
+                "Those fields are what everything downstream branches on - and "
+                "they are the same fields that turn into next month's numbers.",
+            ],
+        ),
+        dict(
+            eyebrow="02 · WHAT IT DOES",
+            h2="Different calls deserve different endings.",
+            h2_in_col=True,
+            flip=True,
+            viz="BRANCH_VIZ",
+            body=[
+                "A good call and a bad one should not produce the same "
+                "aftermath. Conditions decide: a summary goes out only to "
+                "people who said yes to it, a complaint lands in front of a "
+                "person with the transcript attached, and the CRM is updated "
+                "either way.",
+                "Adding a branch is a change like any other - it sits in draft, "
+                "you can test it against a real call, and it goes live when you "
+                "publish.",
+            ],
+        ),
+    ],
+
+    hands=dict(
+        eyebrow="FULLY MANAGED",
+        h2="You describe the outcome.[br]We wire it up.",
+        lede="Four steps from the first conversation to a workflow running "
+             "after every call. Three of them are ours. You never have to open "
+             "the tool.",
+        step_word="STEP",
+        steps=[
+            ("talk", "You say what should happen",
+             "What your team does after a call today, and which of it should "
+             "stop being a person's job. That list is the whole brief.", True),
+            ("build", "We wire it to your systems",
+             "Your CRM, your helpdesk, your messaging, your order system. "
+             "Through whatever they expose - an API, a webhook, an export. No "
+             "work for your engineers.", False),
+            ("hear", "You test it on a real call",
+             "We run the workflow against a call that already happened and show "
+             "you exactly what it wrote and where. Nothing runs live until you "
+             "publish it.", False),
+            ("run", "It runs on every call after that",
+             "Silently, in seconds, and every run is logged - so when something "
+             "looks wrong you can see which step did it.", False),
+        ],
+    ),
+
+    faq_h2="Questions operators actually ask",
+    faq=[
+        ("What can it actually connect to?",
+         "Anything with an API or a webhook - and that is most things: Shopify, "
+         "your helpdesk, your CRM, WhatsApp, a Google Sheet if that is genuinely "
+         "where the work lives. If a system has no API we will tell you rather "
+         "than pretend."),
+        ("What if the workflow does the wrong thing?",
+         "Every run is logged step by step, so you can see what fired and what "
+         "it wrote. Changes go through the same draft-test-publish path as the "
+         "agent itself, so a bad change is caught before it reaches a customer "
+         "rather than after."),
+        ("Can it decide differently depending on the call?",
+         "That is the point of it. Conditions read the fields pulled out of the "
+         "conversation - what they asked for, how it ended, whether they "
+         "consented, how they sounded - and each branch does something "
+         "different."),
+        ("Do we have to build these ourselves?",
+         "No. You tell us what should happen after a call and we build it. You "
+         "get an account and can watch every run, but there is nothing you have "
+         "to configure."),
+        ("How fast does it run?",
+         "Seconds after the call ends. A customer who agreed to a summary "
+         "usually has it before they have put the phone down properly."),
+        ("What happens to the recording and the transcript?",
+         "Both are kept against the conversation and available to you. "
+         "Retention is set to whatever your policy says, not ours."),
+    ],
+
+    cta=dict(
+        hand="live in two weeks",
+        h2="What does your team do after a call?",
+        sub="Whatever the answer is, it is probably a list. Send it to us and "
+            "we will tell you which parts stop being anyone's job.",
+    ),
+)
+
+PRODUCTS = {p["slug"]: p for p in [VOICE_AGENT_BUILDER, WORKFLOW_BUILDER]}
+
+ORDER = ["voice-agent-builder", "workflow-builder"]
