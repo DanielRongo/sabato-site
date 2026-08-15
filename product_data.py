@@ -57,11 +57,28 @@ VOICE_AGENT_BUILDER = dict(
                 "specialists take the calls it should not handle alone.",
     ),
 
+    # The statement + two half-width panels that follow the anchor shot.
+    pair=dict(
+        eyebrow="THE TOOLS",
+        h2="It does things.[br]It doesn't just say things.",
+        lede="A chatbot with a phone number can only talk. An agent with tools "
+             "reads the actual order out of your system while the customer is "
+             "still on the line - status, carrier, the date you promised - and "
+             "writes back what happened before it hangs up.",
+    ),
+
+    # The two chapters below share one dark band and one title.
+    group=dict(
+        eyebrow="UNDER THE HOOD",
+        h2="How it is built,[br]and how it changes.",
+    ),
+
     blocks=[
         # ---- 1. the brief ------------------------------------------------
         dict(
-            tone="dark",
-            eyebrow="THE BRIEF",
+            eyebrow="01 · THE BRIEF",
+            viz="BRIEF_VIZ",
+            h2_in_col=True,
             h2="An agent is only as good as its instructions.",
             body=[
                 "Underneath every agent is a written brief: who it is, what it "
@@ -75,29 +92,13 @@ VOICE_AGENT_BUILDER = dict(
             ],
         ),
 
-        # ---- 2. the tools (visual 2 lives here) ---------------------------
-        dict(
-            tone="light",
-            eyebrow="THE TOOLS",
-            h2="It does things. It doesn't just say things.",
-            h2_in_col=True,     # short enough to survive the narrower column
-            body=[
-                "A chatbot with a phone number can only talk. An agent with "
-                "tools can look a customer's order up, check whether the thing "
-                "they want is in stock, hand the call to a person, and write "
-                "what happened back into your systems before it hangs up.",
-                "Each tool carries its own rule about when to reach for it - "
-                "and, just as importantly, when not to.",
-            ],
-            viz="TOOLS_VIZ",    # substituted by product.py
-        ),
 
         # ---- 3. release control -------------------------------------------
         dict(
-            tone="dark",
-            eyebrow="NOTHING SHIPS BY ACCIDENT",
+            eyebrow="02 · NOTHING SHIPS BY ACCIDENT",
             h2="Draft it. Hear it. Then publish it.",
             h2_in_col=True,
+            flip=True,
             viz="RELEASE_FLOW",
             body=[
                 "Changes sit in a draft until somebody publishes them. Before "

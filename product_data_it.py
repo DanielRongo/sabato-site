@@ -1,17 +1,31 @@
 # -*- coding: utf-8 -*-
 """Copy italiana per le pagine Prodotto.
 
-NON E' UNA TRADUZIONE. Daniel, 14 Aug: "non tradurre l'italiano letteralmente
-ma localizza davvero". Quindi questa pagina e' scritta in italiano, non
-ricalcata sull'inglese: le frasi sono diverse, non solo le parole. Dove
-l'inglese usa "brief" l'italiano usa "istruzioni", perche' "brief" in un
-e-commerce italiano suona da agenzia pubblicitaria. Dove l'inglese fa una
-battuta sul chatbot, l'italiano fa la stessa battuta ma con il ritmo giusto.
+NON È UNA TRADUZIONE. Daniel, 14 ago: "non tradurre l'italiano letteralmente
+ma localizza davvero", e poi, sulla prima versione: "sotto il cofano non
+esiste - si dice dietro le quinte". Quindi qui si scrive in italiano e si
+controlla ogni frase contro il calco, non contro l'inglese.
 
-Il nome del prodotto resta in inglese - "Voice Agent Builder" - come fanno
-tutti i prodotti software venduti in Italia. Tradurlo ("Costruttore di Agenti
-Vocali") suonerebbe come un manuale tradotto male, ed e' esattamente
-l'impressione che questa pagina non puo' permettersi.
+I calchi trovati e corretti nella prima stesura, come promemoria:
+
+    "sotto il cofano"        -> "dietro le quinte"
+    "e' il posto dove..."    -> costruzione italiana, non "is where"
+    "agente di ingresso"     -> "il primo agente" / "quello che risponde".
+                                "Entry agent" resta inglese DENTRO il prodotto,
+                                ma in una pagina di vendita si dice altrimenti.
+    "di un negozio"          -> "di uno store": chi vende online in Italia dice
+                                store o shop, non negozio.
+
+ACCENTI VERI, NON APOSTROFI. La prima stesura scriveva "e'", "piu'", "cosi'",
+"disponibilita'". Ogni altro file italiano di questo repo usa è, più, così,
+disponibilità - 159 accenti in playbook_data_it.py, 421 in industry_data_it.py,
+zero apostrofi di ripiego. Una pagina che scrive "c'e'" invece di "c'è" si
+riconosce a colpo d'occhio come tradotta male, che è esattamente l'impressione
+che questa pagina non può permettersi.
+
+Il nome del prodotto resta in inglese - "Voice Agent Builder" - come tutti i
+prodotti software venduti in Italia. "Costruttore di Agenti Vocali" suonerebbe
+come un manuale tradotto col traduttore automatico.
 """
 
 VOICE_AGENT_BUILDER_IT = dict(
@@ -24,131 +38,133 @@ VOICE_AGENT_BUILDER_IT = dict(
                 "limiti. Le regole le detti tu, noi lo costruiamo e lo teniamo "
                 "aggiornato. Online in due settimane.",
 
-    # 22 e 22 caratteri. "Al resto pensiamo noi" e' gia' la formula che usa la
-    # homepage italiana ("Scegli i workflow. Al resto pensiamo noi."): riusarla
-    # qui fa suonare il sito come una voce sola invece che come sei pagine
-    # scritte da sei persone.
+    # 22 e 22 caratteri. "Al resto pensiamo noi" è già la formula della homepage
+    # italiana ("Scegli i workflow. Al resto pensiamo noi."): riusarla qui fa
+    # suonare il sito come una voce sola invece che come sei pagine scritte da
+    # sei persone diverse.
     h1="Le regole le detti tu.[br]Al resto pensiamo noi.",
-    sub="Il Voice Agent Builder e' il posto dove un agente telefonico riceve "
-        "le sue istruzioni, i suoi strumenti e i suoi limiti. Tu spieghi come "
-        "deve andare una chiamata. Al resto - costruirlo e tenerlo aggiornato "
-        "- pensiamo noi.",
+    sub="Nel Voice Agent Builder un agente telefonico prende le sue istruzioni, "
+        "i suoi strumenti e i suoi limiti. Tu racconti come deve andare una "
+        "chiamata. Costruirlo, e poi tenerlo aggiornato, è compito nostro.",
 
     hero_visual="",
 
     shot=dict(
         src="/product/assets/voice-agent-builder",
-        alt="Il designer degli agenti di Sabato: un agente di ingresso "
-            "collegato a tre agenti specializzati, con la configurazione "
-            "dell'agente selezionato aperta di fianco.",
-        caption="L'agente pre-vendita di un negozio. L'agente di ingresso "
-                "risponde; tre specialisti prendono le chiamate che non deve "
-                "gestire da solo.",
+        alt="Il designer degli agenti di Sabato: l'agente che risponde alle "
+            "chiamate collegato a tre agenti specializzati, con la "
+            "configurazione dell'agente selezionato aperta di fianco.",
+        caption="L'agente pre-vendita di uno store. Risponde il primo agente; "
+                "le chiamate che non deve gestire da solo passano a tre "
+                "specialisti.",
+    ),
+
+    # Lo statement e i due pannelli che seguono lo screenshot grande.
+    pair=dict(
+        eyebrow="GLI STRUMENTI",
+        h2="Non parla soltanto.[br]Fa le cose.",
+        lede="Un chatbot con un numero di telefono sa solo parlare. Un agente "
+             "con gli strumenti giusti tira fuori l'ordine dal tuo gestionale "
+             "mentre il cliente è ancora al telefono - stato, corriere, la data "
+             "che gli avevi promesso - e prima di riagganciare ci scrive com'è "
+             "andata.",
+    ),
+
+    # I due capitoli qui sotto stanno in un'unica fascia scura, sotto un titolo.
+    group=dict(
+        eyebrow="DIETRO LE QUINTE",
+        h2="Come si costruisce.[br]E come si cambia.",
     ),
 
     blocks=[
         dict(
-            tone="dark",
-            eyebrow="LE ISTRUZIONI",
+            eyebrow="01 · LE ISTRUZIONI",
             h2="Un agente vale quanto le istruzioni che ha.",
+            h2_in_col=True,
+            viz="BRIEF_VIZ",
             body=[
-                "Sotto ogni agente c'e' un documento scritto: chi e', a cosa "
-                "serve, come deve parlare e le cose che non deve dire mai. "
-                "Non codice - frasi. Quello che daresti a una persona nuova il "
-                "primo giorno, con la differenza che questa se lo rilegge "
-                "prima di ogni singola chiamata.",
+                "Dietro ogni agente c'è un documento scritto: chi è, a cosa "
+                "serve, come deve parlare e le cose che non deve dire mai. Non "
+                "codice: frasi. Quello che daresti a una persona nuova il primo "
+                "giorno, con la differenza che questa se lo rilegge prima di "
+                "ogni singola chiamata.",
                 "Il tuo puoi leggerlo quando vuoi. Ogni modifica resta "
-                "registrata con la data, cosi' \"da quando dice questa cosa?\" "
-                "e' una domanda che ha una risposta.",
+                "registrata con la sua data, così «da quando dice questa "
+                "cosa?» diventa una domanda che ha una risposta.",
             ],
         ),
         dict(
-            tone="light",
-            eyebrow="GLI STRUMENTI",
-            h2="Non parla soltanto. Fa le cose.",
+            eyebrow="02 · NIENTE VA ONLINE PER SBAGLIO",
+            h2="Prima in bozza. Poi la senti. Poi pubblichi.",
             h2_in_col=True,
-            body=[
-                "Un chatbot con un numero di telefono sa solo parlare. Un "
-                "agente con gli strumenti giusti cerca l'ordine del cliente, "
-                "controlla se quello che vuole c'e' davvero, passa la chiamata "
-                "a una persona e scrive com'e' andata nei tuoi sistemi prima "
-                "di riagganciare.",
-                "Ogni strumento ha la sua regola su quando usarlo. E, cosa che "
-                "conta uguale, su quando non usarlo.",
-            ],
-            viz="TOOLS_VIZ",
-        ),
-        dict(
-            tone="dark",
-            eyebrow="NIENTE VA ONLINE PER SBAGLIO",
-            h2="Prima in bozza. Poi lo ascolti. Poi pubblichi.",
-            h2_in_col=True,
+            flip=True,
             viz="RELEASE_FLOW",
             body=[
-                "Le modifiche restano in bozza finche' qualcuno non le "
-                "pubblica. Prima puoi chiamare la bozza e sentirtela gestire "
-                "proprio il caso che ti preoccupa: e' un test piu' serio che "
+                "Le modifiche restano in bozza finché qualcuno non le pubblica. "
+                "Prima puoi chiamare la bozza e sentirtela gestire proprio il "
+                "caso che ti preoccupa: è una prova molto più seria che "
                 "rileggere le istruzioni e sperare.",
-                "Le modifiche in attesa sono elencate prima di uscire, e ogni "
-                "versione resta. Se un cambiamento peggiora le cose, quella "
-                "precedente e' ancora li'.",
+                "Quello che sta per uscire è elencato prima di uscire, e ogni "
+                "versione resta. Se un cambiamento peggiora le cose, quella di "
+                "prima è ancora lì.",
             ],
         ),
     ],
 
     hands=dict(
         h2="Chi ci mette le mani, in concreto",
-        lede="Quello che vedi e' il nostro strumento di lavoro, non un lavoro "
-             "in piu' per te. La divisione onesta e' questa.",
+        lede="Quello che vedi è il nostro strumento di lavoro, non un lavoro in "
+             "più per te. La divisione è questa.",
         cards=[
             ("Le regole le porti tu",
-             "Come vuoi che si parli ai tuoi clienti. Cosa non si promette "
-             "mai. Quali chiamate devono sempre arrivare a una persona. Queste "
-             "le sai tu, non noi."),
+             "Come vuoi che si parli ai tuoi clienti. Cosa non si promette mai. "
+             "Quali chiamate devono arrivare sempre a una persona. Queste le "
+             "sai tu, non noi."),
             ("Il lavoro lo facciamo noi",
              "Scrivere le istruzioni, collegare gli strumenti al catalogo e "
-             "agli ordini, testare, e rimetterci mano quando la gamma cambia."),
+             "agli ordini, provare tutto, e rimetterci mano quando la gamma "
+             "cambia."),
             ("Tu vedi tutto",
              "Ogni chiamata trascritta, ogni strumento che l'agente ha usato, "
              "ogni modifica con la sua data. In sola lettura, se preferisci "
-             "cosi'."),
+             "così."),
         ],
     ),
 
     faq_h2="Le domande che ci fanno davvero",
     faq=[
         ("Dobbiamo costruircelo noi l'agente?",
-         "No. Questo e' lo strumento con cui lo costruiamo noi. Tu hai un "
+         "No. Questo è lo strumento con cui lo costruiamo noi. Tu hai un "
          "accesso e puoi leggere tutto - istruzioni, strumenti, trascrizioni - "
-         "ma nessuno da parte tua deve configurare niente. Se poi preferisci "
-         "fare da solo qualche modifica leggera, puoi: e' una possibilita', "
+         "ma dalla tua parte non deve configurare niente nessuno. Se poi ti va "
+         "di mettere mano a qualche modifica leggera, puoi: è una possibilità, "
          "non un compito."),
         ("Possiamo vedere esattamente cosa gli avete detto di dire?",
-         "Si', tutto, in italiano. Sono istruzioni scritte, non una scatola "
-         "nera, e ogni modifica resta registrata con la data."),
+         "Sì, tutto, in italiano. Sono istruzioni scritte, non una scatola "
+         "nera, e ogni modifica resta registrata con la sua data."),
         ("E quando non sa rispondere?",
          "Lo dice e passa la chiamata a una persona del tuo team, con quello "
-         "che il cliente ha gia' raccontato. E' impostato per passare la mano "
-         "invece di inventare: una risposta sbagliata detta con sicurezza "
-         "costa molto piu' di un trasferimento."),
-        ("Puo' fare qualcosa o sa solo parlare?",
-         "Cerca ordini e disponibilita', manda un messaggio di riepilogo, apre "
-         "un ticket, trasferisce la chiamata e scrive com'e' andata nei tuoi "
-         "sistemi tramite webhook. Cosa puo' raggiungere lo decidiamo insieme "
-         "quando lo costruiamo."),
+         "che il cliente ha già raccontato. È fatto per passare la mano invece "
+         "di inventare: una risposta sbagliata detta con sicurezza costa molto "
+         "più di un trasferimento."),
+        ("Può fare qualcosa o sa solo parlare?",
+         "Cerca ordini e disponibilità, manda un riepilogo, apre un ticket, "
+         "trasferisce la chiamata e scrive com'è andata nei tuoi sistemi "
+         "tramite webhook. Cosa può raggiungere lo decidiamo insieme quando lo "
+         "costruiamo."),
         ("Il nostro catalogo cambia in continuazione. L'agente resta indietro?",
          "Legge il tuo catalogo, non una copia: prodotti nuovi e cambi di "
-         "prezzo ci sono appena sono online nel tuo store. Le istruzioni le "
+         "prezzo ci sono appena vanno online nel tuo store. Le istruzioni le "
          "manteniamo noi, fa parte del servizio."),
         ("Quanto ci vuole prima che risponda a chiamate vere?",
-         "Due settimane dalla prima call, sul tuo numero, con il catalogo "
-         "vero dietro."),
+         "Due settimane dalla prima call, sul tuo numero, con il catalogo vero "
+         "dietro."),
     ],
 
     cta=dict(
         hand="online in due settimane",
-        h2="Portaci una chiamata che ricevete sempre.",
-        sub="Dicci qual e' la chiamata che il tuo team non ne puo' piu' di "
+        h2="Portaci una chiamata che ricevete di continuo.",
+        sub="Dicci qual è la chiamata che il tuo team non ne può più di "
             "prendere, e ti facciamo vedere l'agente che la prende al posto "
             "suo. Senza slide.",
     ),

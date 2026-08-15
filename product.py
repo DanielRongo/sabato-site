@@ -129,6 +129,187 @@ PRODUCT_CSS = """
     .rf-arrow { height: 14px; margin: -6px 0 -6px 25px;
       border-left: 1px dashed rgba(248,244,241,.28); }
 
+    /* ============ Product: centred hero ============ */
+    /* Daniel, 14 Aug: "hero text should be centered." The template's .split-hero
+       is a two-column grid with an empty .hero-visual on the right - option A
+       puts no picture in the hero - so left-aligned copy sat in the left half
+       of a page whose next element is a full-bleed screenshot. Collapse the grid
+       to one centred column and the hero reads as a title card for the shot
+       underneath it. */
+    .split-hero { display: block; text-align: center; }
+    .split-hero .hero-copy { max-width: 780px; margin: 0 auto; }
+    .split-hero .hero-visual { display: none; }
+    .split-hero .sub { margin-left: auto; margin-right: auto; max-width: 62ch; }
+    .split-hero .hero-cta { justify-content: center; }
+
+    /* ============ Product: statement + a pair of panels ============ */
+    /* Daniel, 14 Aug: "after the full width screenshot, I don't want another
+       full width widget - lead with a statement, and below it two screenshots
+       half width each." So exactly one full-bleed image on the page, and the
+       second look at the product arrives as two half-width panels under a line
+       that says what they prove.
+       These are LIVE HTML dressed as dialogs, not images: at half width on a
+       390px phone a picture of this UI would render its 13px labels at ~6px. */
+    .pr-pair { max-width: 1200px; margin: 0 auto; padding: 104px 40px 104px;
+      text-align: center; }
+    /* Daniel, 14 Aug: the dark band started flush against the panels above it.
+       .pr-pair had no bottom padding, so two sections touched. */
+    .pr-pair .eyebrow { color: rgb(120,118,117); font-size: 13px; font-weight: 700;
+      letter-spacing: 2.5px; margin: 0 0 18px; }
+    .pr-pair h2 { color: var(--ink); font-size: 44px; font-weight: 700;
+      letter-spacing: -1.5px; line-height: 1.1; margin: 0 auto 20px; max-width: 22ch; }
+    .pr-pair .pb-lede { color: var(--gray); font-size: 17.5px; line-height: 1.7;
+      margin: 0 auto 44px; max-width: 60ch; }
+    .pr-pair-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px;
+      text-align: left; }
+
+    /* a panel, dressed as one of the product's own dialogs */
+    .dlg { border: 1px solid rgba(18,10,11,.13); border-radius: 16px; background: #fff;
+      box-shadow: 0 12px 34px rgba(18,10,11,.08), 0 1px 3px rgba(18,10,11,.05);
+      padding: 20px 20px 18px; display: flex; flex-direction: column; }
+    .dlg-h { margin-bottom: 16px; }
+    .dlg-h b { display: block; font-size: 16px; letter-spacing: -.25px; color: var(--ink); }
+    .dlg-h span { display: block; font-size: 13.5px; color: rgb(120,118,117); margin-top: 2px; }
+    .dlg-l { font-size: 13px; font-weight: 700; color: var(--ink); margin: 0 0 8px; }
+    .dlg-sel { border: 1px solid rgba(18,10,11,.13); border-radius: 10px;
+      background: rgb(238,247,205); padding: 11px 13px; font-size: 14px;
+      color: rgb(120,118,117); display: flex; align-items: center; }
+    .dlg-sel::after { content: "\2303\2304"; margin-left: auto; font-size: 11px;
+      letter-spacing: -2px; color: rgb(140,136,132); }
+    .dlg-menu { border: 1px solid rgba(18,10,11,.13); border-top: 0;
+      border-radius: 0 0 10px 10px; overflow: hidden; }
+    .dlg-search { padding: 10px 13px; font-size: 13.5px; color: rgb(150,146,142);
+      border-bottom: 1px solid rgba(18,10,11,.09); background: #fff; }
+    .dlg-item { padding: 9px 13px; font-size: 14px; color: var(--ink);
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+    .dlg-item + .dlg-item { border-top: 1px solid rgba(18,10,11,.055); }
+    .dlg-item.on { background: rgb(246,250,232); font-weight: 700; }
+    .dlg-btns { display: flex; gap: 9px; justify-content: flex-end; margin-top: auto;
+      padding-top: 18px; }
+    .dlg-b { border-radius: 9px; padding: 9px 18px; font-size: 13.5px; font-weight: 700; }
+    .dlg-b.gh { border: 1px solid rgba(18,10,11,.15); color: var(--ink); }
+    .dlg-b.go { background: rgb(139,185,159); color: #fff; }
+
+    .dlg-field { border: 1px solid rgba(18,10,11,.13); border-radius: 9px;
+      padding: 10px 12px; font-size: 14px; font-family: ui-monospace, SFMono-Regular,
+      Menlo, monospace; color: var(--ink); }
+    .dlg-hint { font-size: 12.5px; color: rgb(140,136,132); margin: 7px 0 0; }
+    .dlg-row { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+    .dlg-row .dlg-l { margin: 0; flex: 1; }
+    .dlg-tog { width: 34px; height: 20px; border-radius: 999px; background: rgb(95,187,116);
+      position: relative; flex: 0 0 34px; }
+    .dlg-tog i { position: absolute; top: 2.5px; left: 16.5px; width: 15px; height: 15px;
+      border-radius: 999px; background: #fff; }
+    .dlg-box { border: 1px solid rgba(18,10,11,.13); border-radius: 9px;
+      padding: 12px 13px; background: rgb(250,249,247); }
+    .dlg-box p { margin: 0 0 7px; font-size: 13.5px; line-height: 1.5; color: rgb(70,66,62); }
+    .dlg-box p:last-child { margin-bottom: 0; }
+    .dlg-box b { color: var(--ink); }
+    .dlg-sect { font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+      color: rgb(140,136,132); margin: 20px 0 10px; }
+    .dlg-msg { border: 1px solid rgba(18,10,11,.13); border-radius: 9px;
+      padding: 10px 12px; font-size: 14px; color: rgb(70,66,62); font-style: italic; }
+
+    /* the rows that show the tool reading a real order record */
+    .dlg-db { border: 1px solid rgba(18,10,11,.13); border-radius: 9px; overflow: hidden; }
+    .dlg-db div { display: flex; align-items: center; gap: 9px; padding: 8px 12px;
+      font-size: 13px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      color: rgb(70,66,62); }
+    .dlg-db div + div { border-top: 1px solid rgba(18,10,11,.07); }
+    .dlg-db i { width: 6px; height: 6px; border-radius: 999px; flex: 0 0 6px;
+      background: rgb(139,185,159); font-style: normal; }
+    .dlg-db em { margin-left: auto; font-style: normal; font-family: Inter, sans-serif;
+      font-size: 12.5px; color: rgb(140,136,132); }
+
+    /* ---- animation ------------------------------------------------------
+       Runs only when the block is on screen, only above 900px, and never when
+       the visitor has asked for reduced motion. Nothing here changes the size
+       of anything: the search text sits in a fixed-height row and filtering
+       dims rows rather than removing them, so the animation cannot move the
+       page under someone's cursor. */
+    .dlg-caret { display: inline-block; width: 1px; height: 1em; margin-left: 1px;
+      background: rgb(120,116,112); vertical-align: -2px; opacity: 0; }
+    .pr-anim .dlg-caret { animation: prBlink 1s steps(1) infinite; }
+    @keyframes prBlink { 0%,49% { opacity: 1 } 50%,100% { opacity: 0 } }
+    .dlg-item { transition: opacity .35s ease, background-color .35s ease; }
+    .dlg-item.dim { opacity: .28; }
+    .dlg-b.go { transition: transform .18s ease, box-shadow .18s ease; }
+    .dlg-b.go.hit { transform: translateY(1px);
+      box-shadow: 0 0 0 4px rgba(139,185,159,.28); }
+    .dlg-db div { opacity: 1; transition: opacity .4s ease; }
+    .pr-anim .dlg-db div.pending { opacity: .22; }
+
+    @media (max-width: 900px) {
+      .pr-pair { padding: 72px 22px 72px; }
+      .pr-pair h2 { font-size: 31px; letter-spacing: -.8px; }
+      .pr-pair-grid { grid-template-columns: 1fr; gap: 16px; }
+    }
+
+    /* ============ Product: the two chapters as ONE dark section ============ */
+    /* Daniel, 14 Aug: "consolidate this into one section only and break it from
+       the previous one with a section title." Two consecutive full-width dark
+       bands read as two unrelated things; they are one idea - what the agent is
+       told, and how that changes. So: one band, one title, two rows inside it,
+       and the rows still alternate sides. */
+    .pr-group { padding-top: 104px; padding-bottom: 104px; }
+    .pr-group-head { text-align: center; max-width: 780px; margin: 0 auto 72px; }
+    .pr-group-head .eyebrow { color: rgb(200,240,74); font-size: 13px;
+      font-weight: 700; letter-spacing: 2.5px; margin: 0 0 16px; }
+    .pr-group-head h2 { color: rgb(248,244,241); font-size: 44px; font-weight: 700;
+      letter-spacing: -1.5px; line-height: 1.1; margin: 0; }
+    .pr-row + .pr-row { margin-top: 84px; padding-top: 84px;
+      border-top: 1px solid rgba(248,244,241,.13); }
+    .pr-row .eyebrow { color: rgb(200,240,74); }
+    /* The rows are h2-in-column, so the headline and the illustration start on
+       the same line. Flip moves the illustration to the left on alternate rows;
+       DOM order stays copy-first so a screen reader is unaffected. */
+    .pr-row.flip .queue-grid > .qcopy { order: 2; }
+    .pr-row.flip .queue-grid > .queue-viz { order: 1; }
+    @media (max-width: 900px) {
+      .pr-group { padding-top: 72px; padding-bottom: 72px; }
+      .pr-group-head { margin-bottom: 48px; }
+      .pr-group-head h2 { font-size: 31px; letter-spacing: -.8px; }
+      .pr-row + .pr-row { margin-top: 56px; padding-top: 56px; }
+      .pr-row.flip .queue-grid > .qcopy,
+      .pr-row.flip .queue-grid > .queue-viz { order: 0; }
+    }
+
+    /* ============ Product: the brief card (chapter 01) ============ */
+    .bf { border: 1px solid rgba(248,244,241,.16); border-radius: 14px;
+      background: rgba(248,244,241,.04); padding: 16px 17px 15px; }
+    .bf-h { display: flex; align-items: center; gap: 9px; padding-bottom: 12px;
+      border-bottom: 1px solid rgba(248,244,241,.13); margin-bottom: 13px; }
+    .bf-h b { color: rgb(248,244,241); font-size: 14.5px; letter-spacing: -.15px; }
+    .bf-h span { margin-left: auto; font-size: 11.5px; letter-spacing: 1.1px;
+      color: rgba(248,244,241,.5); }
+    .bf-row { display: flex; align-items: baseline; gap: 11px; padding: 7px 0; }
+    .bf-n { font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 12px; color: rgb(200,240,74); flex: 0 0 auto; }
+    .bf-row p { margin: 0; color: rgba(248,244,241,.86); font-size: 15px;
+      line-height: 1.45; }
+    .bf-foot { margin-top: 13px; padding-top: 12px;
+      border-top: 1px solid rgba(248,244,241,.13); display: flex;
+      align-items: center; gap: 8px; font-size: 13.5px;
+      color: rgba(248,244,241,.6); }
+    .bf-dot { width: 7px; height: 7px; border-radius: 999px; flex: 0 0 7px;
+      background: rgb(200,240,74); }
+
+    /* ============ Product: alternating sides ============ */
+    /* Daniel, 14 Aug: "the first screenshot should be full width, but not the
+       rest - too many full widths are not good for readability." So exactly one
+       full-bleed image on the page (.pr-shot) and every chapter after it runs as
+       a two-column row, with the side flipping so the page does not read as a
+       stack down one edge. Ordering is done in CSS, not in the markup, so the
+       copy stays first in the DOM and a screen reader still hears headline ->
+       prose -> illustration. */
+    .pr-flip .queue-grid > .qcopy { order: 2; }
+    .pr-flip .queue-grid > .queue-viz { order: 1; }
+    @media (max-width: 900px) {
+      /* On one column the flip would put the picture above its own headline. */
+      .pr-flip .queue-grid > .qcopy { order: 0; }
+      .pr-flip .queue-grid > .queue-viz { order: 0; }
+    }
+
     /* ============ Product: who touches this ============ */
     .pr-hands { max-width: 1200px; margin: 0 auto; padding: 104px 40px 0; }
     .pr-hands h2 { color: var(--ink); font-size: 38px; font-weight: 700;
@@ -183,11 +364,11 @@ TOOLS_VIZ_TEXT = {
         tools_h="TOOLS ON THIS AGENT",
         rule_h="WHEN <code>TRANSFER_CALL</code> FIRES",
         say_h="AND IT SAYS, BEFORE IT TRANSFERS",
-        tools=[("search", "search_products", "Find an item in the catalogue"),
-               ("order", "get_order", "Look an order up by number"),
+        tools=[("search", "search_products", "Search the catalogue"),
+               ("order", "get_order", "Find an order by number"),
                ("track", "where_is_my_order", "Live tracking status"),
-               ("person", "transfer_call", "Hand the call to a person"),
-               ("hook", "webhook", "Push the outcome to your systems")],
+               ("person", "transfer_call", "Hand over to a person"),
+               ("hook", "webhook", "Write the outcome to your systems")],
         rules=["The answer isn't in the knowledge base.",
                "They ask about a specific model, price or stock level.",
                "The product sits outside the categories we cover.",
@@ -202,15 +383,15 @@ TOOLS_VIZ_TEXT = {
         tools_h="STRUMENTI DI QUESTO AGENTE",
         rule_h="QUANDO SCATTA <code>TRANSFER_CALL</code>",
         say_h="E PRIMA DI PASSARE, DICE",
-        tools=[("search", "search_products", "Cerca un articolo a catalogo"),
+        tools=[("search", "search_products", "Cerca a catalogo"),
                ("order", "get_order", "Trova un ordine dal numero"),
-               ("track", "where_is_my_order", "Stato della spedizione, live"),
-               ("person", "transfer_call", "Passa la chiamata a una persona"),
+               ("track", "where_is_my_order", "Stato spedizione, live"),
+               ("person", "transfer_call", "Passa a una persona"),
                ("hook", "webhook", "Scrive l'esito nei tuoi sistemi")],
-        rules=["La risposta non e' nella knowledge base.",
+        rules=["La risposta non \u00e8 nella knowledge base.",
                "Chiedono un modello, un prezzo o una disponibilita' precisa.",
-               "Il prodotto e' fuori dalle categorie che copriamo.",
-               "Un ordine va modificato, o e' arrivato qualcosa di rotto.",
+               "Il prodotto \u00e8 fuori dalle categorie che copriamo.",
+               "Un ordine va modificato, o \u00e8 arrivato qualcosa di rotto.",
                "Chiedono una persona - o si sono chiaramente innervositi."],
         say="&ldquo;Un attimo, le passo subito un collega.&rdquo;",
         foot_b="Tutto questo non lo scrivi tu.",
@@ -246,10 +427,35 @@ RELEASE_FLOW_TEXT = {
     "en": [("Draft", "A change is written. Nothing about the live agent moves.", False),
            ("Test", "Call the draft yourself and hear it handle the awkward one.", False),
            ("Publish", "It goes live. The version before it is still kept.", True)],
-    "it": [("Bozza", "La modifica e' scritta. Sull'agente vero non cambia niente.", False),
+    "it": [("Bozza", "La modifica \u00e8 scritta. Sull'agente vero non cambia niente.", False),
            ("Prova", "Chiami la bozza e te la senti gestire il caso scomodo.", False),
-           ("Pubblica", "Va online. La versione precedente resta comunque li'.", True)],
+           ("Pubblica", "Va online. La versione precedente resta comunque l\u00ec.", True)],
 }
+
+
+BRIEF_TEXT = {
+    "en": dict(title="System message", chip="PLAIN ENGLISH",
+               rows=["Who you are, and who you are answering for.",
+                     "How to talk. Short sentences. No jargon.",
+                     "What you must never promise.",
+                     "When to stop and pass the call to a person."],
+               foot="Every edit dated and kept."),
+    "it": dict(title="Istruzioni", chip="IN ITALIANO",
+               rows=["Chi sei, e per conto di chi rispondi.",
+                     "Come parlare. Frasi corte. Niente tecnicismi.",
+                     "Cosa non devi promettere mai.",
+                     "Quando fermarti e passare la chiamata a una persona."],
+               foot="Ogni modifica registrata, con la data."),
+}
+
+
+def brief_viz(lang):
+    t = BRIEF_TEXT[lang]
+    rows = "".join('<div class="bf-row"><span class="bf-n">%d.</span><p>%s</p></div>'
+                   % (i + 1, esc(r)) for i, r in enumerate(t["rows"]))
+    return ('<div class="bf"><div class="bf-h"><b>%s</b><span>%s</span></div>%s'
+            '<div class="bf-foot"><span class="bf-dot"></span>%s</div></div>'
+            % (esc(t["title"]), esc(t["chip"]), rows, esc(t["foot"])))
 
 
 def release_flow(lang):
@@ -266,6 +472,204 @@ def release_flow(lang):
 # ---------------------------------------------------------------------------
 # Sections
 # ---------------------------------------------------------------------------
+# ---------------------------------------------------------------------------
+# The pair of dialogs that follow the anchor screenshot. Drawn from the real
+# "Assign a tool to this agent" dialog and the transfer_call settings screen,
+# rebuilt as markup so they stay readable at half width on a phone.
+# ---------------------------------------------------------------------------
+PAIR_TEXT = {
+    "en": dict(
+        assign_t="Assign", assign_s="Assign a tool to this agent",
+        tools_l="Tools", select="Select", search="Search for a tool",
+        typed="where",
+        items=["search_products", "get_order", "where_is_my_order",
+               "transfer_call", "webhook"], on="where_is_my_order",
+        cancel="Cancel", add="Add",
+        set_t="Settings \u00b7 where_is_my_order", set_s="This tool\u2019s settings",
+        fn_l="Function name", fn="where_is_my_order",
+        fn_hint="Called by the model, never by the caller.",
+        en_l="Enabled",
+        when_l="When to call this tool",
+        when=["<b>Do</b> call it the moment somebody asks where their order is, "
+              "when it will arrive, or why it is late.",
+              "<b>Don\u2019t</b> call it before you have an order number \u2014 "
+              "ask for it, or use the number they are calling from."],
+        db_l="READS FROM YOUR ORDER SYSTEM",
+        db=[("order.status", "Packed"),
+            ("order.carrier", "BRT"),
+            ("order.tracking", "0A47\u20268812"),
+            ("order.promised_date", "Thu 21 Aug")],
+        msg_l="FILLER MESSAGE",
+        msg="\u201cLet me look that up \u2014 one second.\u201d"),
+    "it": dict(
+        assign_t="Assegna", assign_s="Assegna uno strumento a questo agente",
+        tools_l="Strumenti", select="Seleziona", search="Cerca uno strumento",
+        typed="where",
+        items=["search_products", "get_order", "where_is_my_order",
+               "transfer_call", "webhook"], on="where_is_my_order",
+        cancel="Annulla", add="Aggiungi",
+        set_t="Impostazioni \u00b7 where_is_my_order",
+        set_s="Impostazioni dello strumento",
+        fn_l="Nome della funzione", fn="where_is_my_order",
+        fn_hint="La chiama il modello, mai il cliente.",
+        en_l="Attivo",
+        when_l="Quando usare questo strumento",
+        when=["<b>Usalo</b> appena qualcuno chiede dov\u2019\u00e8 il suo "
+              "ordine, quando arriva o perch\u00e9 \u00e8 in ritardo.",
+              "<b>Non usarlo</b> senza un numero d\u2019ordine: chiedilo, "
+              "oppure parti dal numero da cui stanno chiamando."],
+        db_l="LEGGE DAL TUO GESTIONALE ORDINI",
+        db=[("order.status", "Imballato"),
+            ("order.carrier", "BRT"),
+            ("order.tracking", "0A47\u20268812"),
+            ("order.promised_date", "gio 21 ago")],
+        msg_l="MESSAGGIO DI ATTESA",
+        msg="\u201cGuardo subito, un attimo solo.\u201d"),
+}
+
+
+def pair_panels(lang):
+    """The two dialogs, drawn from the real Assign and tool-settings screens.
+
+    Live markup, not pictures: at half width on a 390px phone an image of this
+    UI would render its 13px labels at about 6px.
+    """
+    t = PAIR_TEXT[lang]
+    items = "".join('<div class="dlg-item%s" data-tool="%s">%s</div>'
+                    % (" on" if i == t["on"] else "", esc(i), esc(i))
+                    for i in t["items"])
+    assign = ('<div class="dlg">'
+              '<div class="dlg-h"><b>%s</b><span>%s</span></div>'
+              '<p class="dlg-l">%s</p>'
+              '<div class="dlg-sel">%s</div>'
+              '<div class="dlg-menu">'
+              '<div class="dlg-search"><span data-typed>%s</span>'
+              '<span class="dlg-caret"></span></div>%s</div>'
+              '<div class="dlg-btns"><span class="dlg-b gh">%s</span>'
+              '<span class="dlg-b go">%s</span></div></div>'
+              % (esc(t["assign_t"]), esc(t["assign_s"]), esc(t["tools_l"]),
+                 esc(t["select"]), esc(t["search"]), items,
+                 esc(t["cancel"]), esc(t["add"])))
+    when = "".join("<p>%s</p>" % w for w in t["when"])
+    db = "".join('<div><i></i>%s<em>%s</em></div>' % (esc(k), esc(v))
+                 for k, v in t["db"])
+    settings = ('<div class="dlg">'
+                '<div class="dlg-h"><b>%s</b><span>%s</span></div>'
+                '<div class="dlg-row"><p class="dlg-l">%s</p>'
+                '<p class="dlg-l" style="flex:0 0 auto">%s</p>'
+                '<span class="dlg-tog"><i></i></span></div>'
+                '<div class="dlg-field">%s</div>'
+                '<p class="dlg-hint">%s</p>'
+                '<p class="dlg-sect">%s</p>'
+                '<div class="dlg-box">%s</div>'
+                '<p class="dlg-sect">%s</p>'
+                '<div class="dlg-db">%s</div>'
+                '<p class="dlg-sect">%s</p>'
+                '<div class="dlg-msg">%s</div></div>'
+                % (esc(t["set_t"]), esc(t["set_s"]), esc(t["fn_l"]), esc(t["en_l"]),
+                   esc(t["fn"]), esc(t["fn_hint"]), esc(t["when_l"]), when,
+                   esc(t["db_l"]), db, esc(t["msg_l"]), esc(t["msg"])))
+    return ('<div class="pr-pair-grid" data-typed-word="%s">%s%s</div>'
+            % (esc(t["typed"]), assign, settings))
+
+
+# ---------------------------------------------------------------------------
+# The animation. Deliberately small.
+#
+# Rules it obeys, because an animation that breaks any of them is worse than a
+# static picture:
+#   - never runs below 900px. A cursor-and-typing sequence on a touch device is
+#     nonsense, and it is where most of this traffic actually is.
+#   - never runs under prefers-reduced-motion.
+#   - only runs while on screen, so it is not burning a phone battery three
+#     screens above the fold.
+#   - moves NOTHING. Filtering dims rows instead of removing them, and the typed
+#     text sits in a fixed-height row, so no step can shift the page.
+# ---------------------------------------------------------------------------
+ANIM_JS = """<script>(function(){
+var g=document.querySelector('.pr-pair-grid');if(!g)return;
+var mq=window.matchMedia('(min-width:901px)'),rm=window.matchMedia('(prefers-reduced-motion:reduce)');
+var typed=g.querySelector('[data-typed]'),base=typed?typed.textContent:'',
+    items=[].slice.call(g.querySelectorAll('.dlg-item')),
+    add=g.querySelector('.dlg-b.go'),rows=[].slice.call(g.querySelectorAll('.dlg-db div')),
+    word=g.getAttribute('data-typed-word')||'',t=[],on=false;
+function clear(){t.forEach(clearTimeout);t=[];}
+function at(ms,fn){t.push(setTimeout(fn,ms));}
+function reset(){if(typed)typed.textContent=base;items.forEach(function(e){e.classList.remove('dim');});
+  rows.forEach(function(r){r.classList.add('pending');});if(add)add.classList.remove('hit');}
+function run(){
+  clear();reset();
+  var d=700;
+  for(var i=1;i<=word.length;i++)(function(i){at(d+i*110,function(){
+    if(typed)typed.textContent=word.slice(0,i);});})(i);
+  d+=word.length*110+260;
+  at(d,function(){items.forEach(function(e){
+    if(e.getAttribute('data-tool').indexOf(word)!==0)e.classList.add('dim');});});
+  at(d+700,function(){if(add)add.classList.add('hit');});
+  at(d+1000,function(){if(add)add.classList.remove('hit');});
+  rows.forEach(function(r,i){at(d+1200+i*330,function(){r.classList.remove('pending');});});
+  at(d+1200+rows.length*330+2600,function(){if(on)run();});
+}
+function stop(){on=false;clear();if(typed)typed.textContent=base;
+  items.forEach(function(e){e.classList.remove('dim');});
+  rows.forEach(function(r){r.classList.remove('pending');});g.classList.remove('pr-anim');}
+function start(){if(on)return;on=true;g.classList.add('pr-anim');run();}
+function eligible(){return mq.matches&&!rm.matches;}
+if('IntersectionObserver' in window){
+  new IntersectionObserver(function(es){es.forEach(function(e){
+    if(e.isIntersecting&&eligible())start();else stop();});},{threshold:.35}).observe(g);
+} 
+['change'].forEach(function(){});
+mq.addEventListener&&mq.addEventListener('change',function(){if(!eligible())stop();});
+rm.addEventListener&&rm.addEventListener('change',function(){if(!eligible())stop();});
+})();</script>"""
+
+
+def section_pair(d, lang):
+    """A statement, then two half-width panels proving it."""
+    p = d["pair"]
+    return """
+    <section class="pr-pair">
+      <p class="eyebrow">%s</p>
+      <h2>%s</h2>
+      <p class="pb-lede">%s</p>
+      %s
+      %s
+    </section>""" % (esc(p["eyebrow"]), nb(esc(p["h2"])), esc(p["lede"]),
+                     pair_panels(lang), ANIM_JS)
+
+
+def section_blocks(d):
+    """Every chapter inside ONE dark band, under one section title.
+
+    Replaces the previous one-section-per-chapter rendering. Each chapter keeps
+    its own eyebrow, headline and illustration, and alternate rows flip the
+    illustration to the left; what goes away is the second full-width dark
+    background, which made two halves of one argument look like two subjects.
+    """
+    g = d["group"]
+    rows = []
+    for i, b in enumerate(d["blocks"]):
+        body = "".join('<p class="qbody">%s</p>' % p for p in b["body"])
+        fine = '<p class="fine">%s</p>' % b["fine"] if b.get("fine") else ""
+        grid = ('<div class="queue-grid pb-h2col">'
+                '<div class="qcopy"><p class="eyebrow">%s</p><h2>%s</h2>%s</div>'
+                '<div class="queue-viz">%s%s</div></div>'
+                % (esc(b["eyebrow"]), nb(esc(b["h2"])), body, b["viz"], fine))
+        rows.append('<div class="pr-row%s">%s</div>'
+                    % (" flip" if b.get("flip") else "", grid))
+    return """
+    <section class="queue-band pr-group">
+      <div class="queue-inner">
+        <div class="pr-group-head">
+          <p class="eyebrow">%s</p>
+          <h2>%s</h2>
+        </div>
+        %s
+      </div>
+    </section>""" % (esc(g["eyebrow"]), nb(esc(g["h2"])), "".join(rows))
+
+
 def section_shot(d):
     """The platform screenshot, full-bleed, directly under the hero.
 
@@ -359,10 +763,13 @@ def build(lang, slug, d):
             b["viz"] = tools_viz(lang)
         elif b.get("viz") == "RELEASE_FLOW":
             b["viz"] = release_flow(lang)
+        elif b.get("viz") == "BRIEF_VIZ":
+            b["viz"] = brief_viz(lang)
 
     sections = "".join([
         section_shot(d),
-        pb.section_blocks(d),
+        section_pair(d, lang),
+        section_blocks(d),
         section_hands(d),
         pb.section_proof(d, lang),
         pb.section_faq(d),

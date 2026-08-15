@@ -517,6 +517,187 @@
     .rf-arrow { height: 14px; margin: -6px 0 -6px 25px;
       border-left: 1px dashed rgba(248,244,241,.28); }
 
+    /* ============ Product: centred hero ============ */
+    /* Daniel, 14 Aug: "hero text should be centered." The template's .split-hero
+       is a two-column grid with an empty .hero-visual on the right - option A
+       puts no picture in the hero - so left-aligned copy sat in the left half
+       of a page whose next element is a full-bleed screenshot. Collapse the grid
+       to one centred column and the hero reads as a title card for the shot
+       underneath it. */
+    .split-hero { display: block; text-align: center; }
+    .split-hero .hero-copy { max-width: 780px; margin: 0 auto; }
+    .split-hero .hero-visual { display: none; }
+    .split-hero .sub { margin-left: auto; margin-right: auto; max-width: 62ch; }
+    .split-hero .hero-cta { justify-content: center; }
+
+    /* ============ Product: statement + a pair of panels ============ */
+    /* Daniel, 14 Aug: "after the full width screenshot, I don't want another
+       full width widget - lead with a statement, and below it two screenshots
+       half width each." So exactly one full-bleed image on the page, and the
+       second look at the product arrives as two half-width panels under a line
+       that says what they prove.
+       These are LIVE HTML dressed as dialogs, not images: at half width on a
+       390px phone a picture of this UI would render its 13px labels at ~6px. */
+    .pr-pair { max-width: 1200px; margin: 0 auto; padding: 104px 40px 104px;
+      text-align: center; }
+    /* Daniel, 14 Aug: the dark band started flush against the panels above it.
+       .pr-pair had no bottom padding, so two sections touched. */
+    .pr-pair .eyebrow { color: rgb(120,118,117); font-size: 13px; font-weight: 700;
+      letter-spacing: 2.5px; margin: 0 0 18px; }
+    .pr-pair h2 { color: var(--ink); font-size: 44px; font-weight: 700;
+      letter-spacing: -1.5px; line-height: 1.1; margin: 0 auto 20px; max-width: 22ch; }
+    .pr-pair .pb-lede { color: var(--gray); font-size: 17.5px; line-height: 1.7;
+      margin: 0 auto 44px; max-width: 60ch; }
+    .pr-pair-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px;
+      text-align: left; }
+
+    /* a panel, dressed as one of the product's own dialogs */
+    .dlg { border: 1px solid rgba(18,10,11,.13); border-radius: 16px; background: #fff;
+      box-shadow: 0 12px 34px rgba(18,10,11,.08), 0 1px 3px rgba(18,10,11,.05);
+      padding: 20px 20px 18px; display: flex; flex-direction: column; }
+    .dlg-h { margin-bottom: 16px; }
+    .dlg-h b { display: block; font-size: 16px; letter-spacing: -.25px; color: var(--ink); }
+    .dlg-h span { display: block; font-size: 13.5px; color: rgb(120,118,117); margin-top: 2px; }
+    .dlg-l { font-size: 13px; font-weight: 700; color: var(--ink); margin: 0 0 8px; }
+    .dlg-sel { border: 1px solid rgba(18,10,11,.13); border-radius: 10px;
+      background: rgb(238,247,205); padding: 11px 13px; font-size: 14px;
+      color: rgb(120,118,117); display: flex; align-items: center; }
+    .dlg-sel::after { content: "34"; margin-left: auto; font-size: 11px;
+      letter-spacing: -2px; color: rgb(140,136,132); }
+    .dlg-menu { border: 1px solid rgba(18,10,11,.13); border-top: 0;
+      border-radius: 0 0 10px 10px; overflow: hidden; }
+    .dlg-search { padding: 10px 13px; font-size: 13.5px; color: rgb(150,146,142);
+      border-bottom: 1px solid rgba(18,10,11,.09); background: #fff; }
+    .dlg-item { padding: 9px 13px; font-size: 14px; color: var(--ink);
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+    .dlg-item + .dlg-item { border-top: 1px solid rgba(18,10,11,.055); }
+    .dlg-item.on { background: rgb(246,250,232); font-weight: 700; }
+    .dlg-btns { display: flex; gap: 9px; justify-content: flex-end; margin-top: auto;
+      padding-top: 18px; }
+    .dlg-b { border-radius: 9px; padding: 9px 18px; font-size: 13.5px; font-weight: 700; }
+    .dlg-b.gh { border: 1px solid rgba(18,10,11,.15); color: var(--ink); }
+    .dlg-b.go { background: rgb(139,185,159); color: #fff; }
+
+    .dlg-field { border: 1px solid rgba(18,10,11,.13); border-radius: 9px;
+      padding: 10px 12px; font-size: 14px; font-family: ui-monospace, SFMono-Regular,
+      Menlo, monospace; color: var(--ink); }
+    .dlg-hint { font-size: 12.5px; color: rgb(140,136,132); margin: 7px 0 0; }
+    .dlg-row { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+    .dlg-row .dlg-l { margin: 0; flex: 1; }
+    .dlg-tog { width: 34px; height: 20px; border-radius: 999px; background: rgb(95,187,116);
+      position: relative; flex: 0 0 34px; }
+    .dlg-tog i { position: absolute; top: 2.5px; left: 16.5px; width: 15px; height: 15px;
+      border-radius: 999px; background: #fff; }
+    .dlg-box { border: 1px solid rgba(18,10,11,.13); border-radius: 9px;
+      padding: 12px 13px; background: rgb(250,249,247); }
+    .dlg-box p { margin: 0 0 7px; font-size: 13.5px; line-height: 1.5; color: rgb(70,66,62); }
+    .dlg-box p:last-child { margin-bottom: 0; }
+    .dlg-box b { color: var(--ink); }
+    .dlg-sect { font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+      color: rgb(140,136,132); margin: 20px 0 10px; }
+    .dlg-msg { border: 1px solid rgba(18,10,11,.13); border-radius: 9px;
+      padding: 10px 12px; font-size: 14px; color: rgb(70,66,62); font-style: italic; }
+
+    /* the rows that show the tool reading a real order record */
+    .dlg-db { border: 1px solid rgba(18,10,11,.13); border-radius: 9px; overflow: hidden; }
+    .dlg-db div { display: flex; align-items: center; gap: 9px; padding: 8px 12px;
+      font-size: 13px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      color: rgb(70,66,62); }
+    .dlg-db div + div { border-top: 1px solid rgba(18,10,11,.07); }
+    .dlg-db i { width: 6px; height: 6px; border-radius: 999px; flex: 0 0 6px;
+      background: rgb(139,185,159); font-style: normal; }
+    .dlg-db em { margin-left: auto; font-style: normal; font-family: Inter, sans-serif;
+      font-size: 12.5px; color: rgb(140,136,132); }
+
+    /* ---- animation ------------------------------------------------------
+       Runs only when the block is on screen, only above 900px, and never when
+       the visitor has asked for reduced motion. Nothing here changes the size
+       of anything: the search text sits in a fixed-height row and filtering
+       dims rows rather than removing them, so the animation cannot move the
+       page under someone's cursor. */
+    .dlg-caret { display: inline-block; width: 1px; height: 1em; margin-left: 1px;
+      background: rgb(120,116,112); vertical-align: -2px; opacity: 0; }
+    .pr-anim .dlg-caret { animation: prBlink 1s steps(1) infinite; }
+    @keyframes prBlink { 0%,49% { opacity: 1 } 50%,100% { opacity: 0 } }
+    .dlg-item { transition: opacity .35s ease, background-color .35s ease; }
+    .dlg-item.dim { opacity: .28; }
+    .dlg-b.go { transition: transform .18s ease, box-shadow .18s ease; }
+    .dlg-b.go.hit { transform: translateY(1px);
+      box-shadow: 0 0 0 4px rgba(139,185,159,.28); }
+    .dlg-db div { opacity: 1; transition: opacity .4s ease; }
+    .pr-anim .dlg-db div.pending { opacity: .22; }
+
+    @media (max-width: 900px) {
+      .pr-pair { padding: 72px 22px 72px; }
+      .pr-pair h2 { font-size: 31px; letter-spacing: -.8px; }
+      .pr-pair-grid { grid-template-columns: 1fr; gap: 16px; }
+    }
+
+    /* ============ Product: the two chapters as ONE dark section ============ */
+    /* Daniel, 14 Aug: "consolidate this into one section only and break it from
+       the previous one with a section title." Two consecutive full-width dark
+       bands read as two unrelated things; they are one idea - what the agent is
+       told, and how that changes. So: one band, one title, two rows inside it,
+       and the rows still alternate sides. */
+    .pr-group { padding-top: 104px; padding-bottom: 104px; }
+    .pr-group-head { text-align: center; max-width: 780px; margin: 0 auto 72px; }
+    .pr-group-head .eyebrow { color: rgb(200,240,74); font-size: 13px;
+      font-weight: 700; letter-spacing: 2.5px; margin: 0 0 16px; }
+    .pr-group-head h2 { color: rgb(248,244,241); font-size: 44px; font-weight: 700;
+      letter-spacing: -1.5px; line-height: 1.1; margin: 0; }
+    .pr-row + .pr-row { margin-top: 84px; padding-top: 84px;
+      border-top: 1px solid rgba(248,244,241,.13); }
+    .pr-row .eyebrow { color: rgb(200,240,74); }
+    /* The rows are h2-in-column, so the headline and the illustration start on
+       the same line. Flip moves the illustration to the left on alternate rows;
+       DOM order stays copy-first so a screen reader is unaffected. */
+    .pr-row.flip .queue-grid > .qcopy { order: 2; }
+    .pr-row.flip .queue-grid > .queue-viz { order: 1; }
+    @media (max-width: 900px) {
+      .pr-group { padding-top: 72px; padding-bottom: 72px; }
+      .pr-group-head { margin-bottom: 48px; }
+      .pr-group-head h2 { font-size: 31px; letter-spacing: -.8px; }
+      .pr-row + .pr-row { margin-top: 56px; padding-top: 56px; }
+      .pr-row.flip .queue-grid > .qcopy,
+      .pr-row.flip .queue-grid > .queue-viz { order: 0; }
+    }
+
+    /* ============ Product: the brief card (chapter 01) ============ */
+    .bf { border: 1px solid rgba(248,244,241,.16); border-radius: 14px;
+      background: rgba(248,244,241,.04); padding: 16px 17px 15px; }
+    .bf-h { display: flex; align-items: center; gap: 9px; padding-bottom: 12px;
+      border-bottom: 1px solid rgba(248,244,241,.13); margin-bottom: 13px; }
+    .bf-h b { color: rgb(248,244,241); font-size: 14.5px; letter-spacing: -.15px; }
+    .bf-h span { margin-left: auto; font-size: 11.5px; letter-spacing: 1.1px;
+      color: rgba(248,244,241,.5); }
+    .bf-row { display: flex; align-items: baseline; gap: 11px; padding: 7px 0; }
+    .bf-n { font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 12px; color: rgb(200,240,74); flex: 0 0 auto; }
+    .bf-row p { margin: 0; color: rgba(248,244,241,.86); font-size: 15px;
+      line-height: 1.45; }
+    .bf-foot { margin-top: 13px; padding-top: 12px;
+      border-top: 1px solid rgba(248,244,241,.13); display: flex;
+      align-items: center; gap: 8px; font-size: 13.5px;
+      color: rgba(248,244,241,.6); }
+    .bf-dot { width: 7px; height: 7px; border-radius: 999px; flex: 0 0 7px;
+      background: rgb(200,240,74); }
+
+    /* ============ Product: alternating sides ============ */
+    /* Daniel, 14 Aug: "the first screenshot should be full width, but not the
+       rest - too many full widths are not good for readability." So exactly one
+       full-bleed image on the page (.pr-shot) and every chapter after it runs as
+       a two-column row, with the side flipping so the page does not read as a
+       stack down one edge. Ordering is done in CSS, not in the markup, so the
+       copy stays first in the DOM and a screen reader still hears headline ->
+       prose -> illustration. */
+    .pr-flip .queue-grid > .qcopy { order: 2; }
+    .pr-flip .queue-grid > .queue-viz { order: 1; }
+    @media (max-width: 900px) {
+      /* On one column the flip would put the picture above its own headline. */
+      .pr-flip .queue-grid > .qcopy { order: 0; }
+      .pr-flip .queue-grid > .queue-viz { order: 0; }
+    }
+
     /* ============ Product: who touches this ============ */
     .pr-hands { max-width: 1200px; margin: 0 auto; padding: 104px 40px 0; }
     .pr-hands h2 { color: var(--ink); font-size: 38px; font-weight: 700;
@@ -588,25 +769,56 @@
         <figcaption>One store's pre-sales agent. The entry agent picks up; three specialists take the calls it should not handle alone.</figcaption>
       </figure>
     </section>
-    <section class="queue-band">
-      <div class="queue-inner">
-        <p class="eyebrow">THE BRIEF</p>
-        <h2>An agent is only as good as its instructions.</h2>
-        <div class="qcopy pb-wide pb-statement"><p class="qbody">Underneath every agent is a written brief: who it is, what it is for, how it should talk, and the things it must never say. Not code - sentences. The kind of thing you would hand a new hire on their first morning, except this one reads it before every single call.</p><p class="qbody">You can read yours at any time, and so can we. Every edit is dated and kept, so "when did it start saying that?" is a question with an answer.</p></div>
-      </div>
+    <section class="pr-pair">
+      <p class="eyebrow">THE TOOLS</p>
+      <h2>It does things.<br>It doesn't just say things.</h2>
+      <p class="pb-lede">A chatbot with a phone number can only talk. An agent with tools reads the actual order out of your system while the customer is still on the line - status, carrier, the date you promised - and writes back what happened before it hangs up.</p>
+      <div class="pr-pair-grid" data-typed-word="where"><div class="dlg"><div class="dlg-h"><b>Assign</b><span>Assign a tool to this agent</span></div><p class="dlg-l">Tools</p><div class="dlg-sel">Select</div><div class="dlg-menu"><div class="dlg-search"><span data-typed>Search for a tool</span><span class="dlg-caret"></span></div><div class="dlg-item" data-tool="search_products">search_products</div><div class="dlg-item" data-tool="get_order">get_order</div><div class="dlg-item on" data-tool="where_is_my_order">where_is_my_order</div><div class="dlg-item" data-tool="transfer_call">transfer_call</div><div class="dlg-item" data-tool="webhook">webhook</div></div><div class="dlg-btns"><span class="dlg-b gh">Cancel</span><span class="dlg-b go">Add</span></div></div><div class="dlg"><div class="dlg-h"><b>Settings · where_is_my_order</b><span>This tool’s settings</span></div><div class="dlg-row"><p class="dlg-l">Function name</p><p class="dlg-l" style="flex:0 0 auto">Enabled</p><span class="dlg-tog"><i></i></span></div><div class="dlg-field">where_is_my_order</div><p class="dlg-hint">Called by the model, never by the caller.</p><p class="dlg-sect">When to call this tool</p><div class="dlg-box"><p><b>Do</b> call it the moment somebody asks where their order is, when it will arrive, or why it is late.</p><p><b>Don’t</b> call it before you have an order number — ask for it, or use the number they are calling from.</p></div><p class="dlg-sect">READS FROM YOUR ORDER SYSTEM</p><div class="dlg-db"><div><i></i>order.status<em>Packed</em></div><div><i></i>order.carrier<em>BRT</em></div><div><i></i>order.tracking<em>0A47…8812</em></div><div><i></i>order.promised_date<em>Thu 21 Aug</em></div></div><p class="dlg-sect">FILLER MESSAGE</p><div class="dlg-msg">“Let me look that up — one second.”</div></div></div>
+      <script>(function(){
+var g=document.querySelector('.pr-pair-grid');if(!g)return;
+var mq=window.matchMedia('(min-width:901px)'),rm=window.matchMedia('(prefers-reduced-motion:reduce)');
+var typed=g.querySelector('[data-typed]'),base=typed?typed.textContent:'',
+    items=[].slice.call(g.querySelectorAll('.dlg-item')),
+    add=g.querySelector('.dlg-b.go'),rows=[].slice.call(g.querySelectorAll('.dlg-db div')),
+    word=g.getAttribute('data-typed-word')||'',t=[],on=false;
+function clear(){t.forEach(clearTimeout);t=[];}
+function at(ms,fn){t.push(setTimeout(fn,ms));}
+function reset(){if(typed)typed.textContent=base;items.forEach(function(e){e.classList.remove('dim');});
+  rows.forEach(function(r){r.classList.add('pending');});if(add)add.classList.remove('hit');}
+function run(){
+  clear();reset();
+  var d=700;
+  for(var i=1;i<=word.length;i++)(function(i){at(d+i*110,function(){
+    if(typed)typed.textContent=word.slice(0,i);});})(i);
+  d+=word.length*110+260;
+  at(d,function(){items.forEach(function(e){
+    if(e.getAttribute('data-tool').indexOf(word)!==0)e.classList.add('dim');});});
+  at(d+700,function(){if(add)add.classList.add('hit');});
+  at(d+1000,function(){if(add)add.classList.remove('hit');});
+  rows.forEach(function(r,i){at(d+1200+i*330,function(){r.classList.remove('pending');});});
+  at(d+1200+rows.length*330+2600,function(){if(on)run();});
+}
+function stop(){on=false;clear();if(typed)typed.textContent=base;
+  items.forEach(function(e){e.classList.remove('dim');});
+  rows.forEach(function(r){r.classList.remove('pending');});g.classList.remove('pr-anim');}
+function start(){if(on)return;on=true;g.classList.add('pr-anim');run();}
+function eligible(){return mq.matches&&!rm.matches;}
+if('IntersectionObserver' in window){
+  new IntersectionObserver(function(es){es.forEach(function(e){
+    if(e.isIntersecting&&eligible())start();else stop();});},{threshold:.35}).observe(g);
+} 
+['change'].forEach(function(){});
+mq.addEventListener&&mq.addEventListener('change',function(){if(!eligible())stop();});
+rm.addEventListener&&rm.addEventListener('change',function(){if(!eligible())stop();});
+})();</script>
     </section>
-    <section class="pb-light">
+    <section class="queue-band pr-group">
       <div class="queue-inner">
-        
-        
-        <div class="queue-grid pb-h2col"><div class="qcopy"><p class="eyebrow">THE TOOLS</p><h2>It does things. It doesn't just say things.</h2><p class="qbody">A chatbot with a phone number can only talk. An agent with tools can look a customer's order up, check whether the thing they want is in stock, hand the call to a person, and write what happened back into your systems before it hangs up.</p><p class="qbody">Each tool carries its own rule about when to reach for it - and, just as importantly, when not to.</p></div><div class="queue-viz"><div class="tv"><div class="tv-card"><p class="tv-eyebrow">TOOLS ON THIS AGENT</p><div class="tv-tool"><span class="tv-ic" style="background:#e9f1fa"><svg viewBox="0 0 24 24" stroke="#3d81c9" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg></span><span><code>search_products</code><em>Find an item in the catalogue</em></span></div><div class="tv-tool"><span class="tv-ic" style="background:#e8f4ec"><svg viewBox="0 0 24 24" stroke="#3f9a63" aria-hidden="true"><path d="M4 5h16v14H4z"/><path d="M8 10h8M8 14h5"/></svg></span><span><code>get_order</code><em>Look an order up by number</em></span></div><div class="tv-tool"><span class="tv-ic" style="background:#e8f4ec"><svg viewBox="0 0 24 24" stroke="#3f9a63" aria-hidden="true"><path d="M3 8h13v9H3zM16 11h3.5L21 14v3h-5"/><circle cx="7" cy="18.5" r="1.8"/><circle cx="18" cy="18.5" r="1.8"/></svg></span><span><code>where_is_my_order</code><em>Live tracking status</em></span></div><div class="tv-tool"><span class="tv-ic" style="background:#f7ebf1"><svg viewBox="0 0 24 24" stroke="#b2557f" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="10" cy="7" r="3.6"/><path d="M20 8v6M23 11h-6"/></svg></span><span><code>transfer_call</code><em>Hand the call to a person</em></span></div><div class="tv-tool"><span class="tv-ic" style="background:#fdf1d9"><svg viewBox="0 0 24 24" stroke="#e8981f" aria-hidden="true"><path d="M12 20V9M8 13l4-4 4 4"/><path d="M4 5h16"/></svg></span><span><code>webhook</code><em>Push the outcome to your systems</em></span></div></div><div class="tv-card"><p class="tv-eyebrow">WHEN <code>TRANSFER_CALL</code> FIRES</p><div class="tv-rule"><span class="tv-n">1</span><p>The answer isn't in the knowledge base.</p></div><div class="tv-rule"><span class="tv-n">2</span><p>They ask about a specific model, price or stock level.</p></div><div class="tv-rule"><span class="tv-n">3</span><p>The product sits outside the categories we cover.</p></div><div class="tv-rule"><span class="tv-n">4</span><p>An order needs changing, or something arrived damaged.</p></div><div class="tv-rule"><span class="tv-n">5</span><p>They ask for a person - or they're clearly annoyed.</p></div><div class="tv-say"><p class="tv-eyebrow">AND IT SAYS, BEFORE IT TRANSFERS</p><div class="tv-bubble">&ldquo;One moment &mdash; I&rsquo;m putting you through to a colleague now.&rdquo;</div></div></div><div class="tv-foot"><span class="tv-dot"></span><span><b>You never write any of this.</b> <em>We do, and we keep it current as your catalogue changes.</em></span></div></div></div></div>
-      </div>
-    </section>
-    <section class="queue-band">
-      <div class="queue-inner">
-        
-        
-        <div class="queue-grid pb-h2col"><div class="qcopy"><p class="eyebrow">NOTHING SHIPS BY ACCIDENT</p><h2>Draft it. Hear it. Then publish it.</h2><p class="qbody">Changes sit in a draft until somebody publishes them. Before that you can call the draft and listen to it handle the thing you are worried about, which is a better test than reading the brief and hoping.</p><p class="qbody">Staged changes are listed before they go out, and every version is kept. If a change makes things worse, the previous one is still there.</p></div><div class="queue-viz"><div class="rf"><div class="rf-step"><span class="rf-k">1</span><span><b>Draft</b><em>A change is written. Nothing about the live agent moves.</em></span></div><div class="rf-arrow"></div><div class="rf-step"><span class="rf-k">2</span><span><b>Test</b><em>Call the draft yourself and hear it handle the awkward one.</em></span></div><div class="rf-arrow"></div><div class="rf-step is-live"><span class="rf-k">3</span><span><b>Publish</b><em>It goes live. The version before it is still kept.</em></span></div></div></div></div>
+        <div class="pr-group-head">
+          <p class="eyebrow">UNDER THE HOOD</p>
+          <h2>How it is built,<br>and how it changes.</h2>
+        </div>
+        <div class="pr-row"><div class="queue-grid pb-h2col"><div class="qcopy"><p class="eyebrow">01 · THE BRIEF</p><h2>An agent is only as good as its instructions.</h2><p class="qbody">Underneath every agent is a written brief: who it is, what it is for, how it should talk, and the things it must never say. Not code - sentences. The kind of thing you would hand a new hire on their first morning, except this one reads it before every single call.</p><p class="qbody">You can read yours at any time, and so can we. Every edit is dated and kept, so "when did it start saying that?" is a question with an answer.</p></div><div class="queue-viz"><div class="bf"><div class="bf-h"><b>System message</b><span>PLAIN ENGLISH</span></div><div class="bf-row"><span class="bf-n">1.</span><p>Who you are, and who you are answering for.</p></div><div class="bf-row"><span class="bf-n">2.</span><p>How to talk. Short sentences. No jargon.</p></div><div class="bf-row"><span class="bf-n">3.</span><p>What you must never promise.</p></div><div class="bf-row"><span class="bf-n">4.</span><p>When to stop and pass the call to a person.</p></div><div class="bf-foot"><span class="bf-dot"></span>Every edit dated and kept.</div></div></div></div></div><div class="pr-row flip"><div class="queue-grid pb-h2col"><div class="qcopy"><p class="eyebrow">02 · NOTHING SHIPS BY ACCIDENT</p><h2>Draft it. Hear it. Then publish it.</h2><p class="qbody">Changes sit in a draft until somebody publishes them. Before that you can call the draft and listen to it handle the thing you are worried about, which is a better test than reading the brief and hoping.</p><p class="qbody">Staged changes are listed before they go out, and every version is kept. If a change makes things worse, the previous one is still there.</p></div><div class="queue-viz"><div class="rf"><div class="rf-step"><span class="rf-k">1</span><span><b>Draft</b><em>A change is written. Nothing about the live agent moves.</em></span></div><div class="rf-arrow"></div><div class="rf-step"><span class="rf-k">2</span><span><b>Test</b><em>Call the draft yourself and hear it handle the awkward one.</em></span></div><div class="rf-arrow"></div><div class="rf-step is-live"><span class="rf-k">3</span><span><b>Publish</b><em>It goes live. The version before it is still kept.</em></span></div></div></div></div></div>
       </div>
     </section>
     <section class="pr-hands">
