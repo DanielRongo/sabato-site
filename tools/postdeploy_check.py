@@ -27,7 +27,8 @@ BASE = sys.argv[1].rstrip("/") if len(sys.argv) > 1 else "http://127.0.0.1:8909"
 SLICE = sys.argv[2] if len(sys.argv) > 2 else ""
 PAGES = [
     "/product/voice-agent-builder", "/it/prodotto/voice-agent-builder",
-    "/product/workflow-builder", "/it/prodotto/workflow-builder","/", "/it", "/pricing", "/about", "/contact", "/blog", "/it/blog",
+    "/product/workflow-builder", "/it/prodotto/workflow-builder",
+    "/product/call-data-intelligence", "/it/prodotto/call-data-intelligence","/", "/it", "/pricing", "/about", "/contact", "/blog", "/it/blog",
          # The Italian pricing and about pages were never swept until the proof
          # widget landed on them. Two more page loads, one more blind spot gone.
          "/it/prezzi", "/it/chi-siamo",

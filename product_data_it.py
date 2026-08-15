@@ -337,5 +337,158 @@ WORKFLOW_BUILDER_IT = dict(
     ),
 )
 
-PRODUCTS_IT = {p["slug"]: p for p in [VOICE_AGENT_BUILDER_IT, WORKFLOW_BUILDER_IT]}
-ORDER_IT = ["voice-agent-builder", "workflow-builder"]
+
+# ---------------------------------------------------------------------------
+# 3. CALL DATA INTELLIGENCE
+#
+# L'angolo: il telefono è l'unico posto dove un cliente ti dice, con parole sue,
+# cosa voleva e non ha trovato. La barra di ricerca mostra cosa ha scritto; il
+# telefono mostra cosa intendeva.
+#
+# Calchi evitati: "research panel" non si dice "pannello di ricerca" (è una
+# ricerca di mercato); "insight" resta inglese solo se serve, ma qui non serve.
+# ---------------------------------------------------------------------------
+CALL_DATA_INTELLIGENCE_IT = dict(
+    slug="call-data-intelligence",
+    en="call-data-intelligence",
+    chip="Call Data Intelligence",
+    pair_kind="insight",
+
+    title="Call Data Intelligence | Sabato AI",
+    description="Ogni chiamata letta, etichettata e contata. Scopri quali "
+                "domande tornano sempre, quali prodotti confondono e cosa manca "
+                "al catalogo. Online in due settimane.",
+
+    h1="I clienti te l'hanno[br]già detto.",
+    sub="La barra di ricerca ti dice cosa hanno scritto. Il telefono ti dice "
+        "cosa intendevano - ed è l'unico posto dove te lo dicono in frasi "
+        "intere. Call Data Intelligence è dove mille di quelle conversazioni "
+        "diventano qualcosa su cui puoi agire.",
+
+    hero_visual="",
+
+    shot=dict(
+        src="/product/assets/call-data-intelligence",
+        alt="La vista conversazioni di Sabato: i filtri per etichetta in alto, "
+            "una riga di numeri chiave e la classifica di quello per cui i "
+            "clienti hanno chiamato, con dietro le singole chiamate.",
+        caption="Filtrato su una categoria e un livello di cliente. La "
+                "classifica è quello che quei 412 hanno chiesto davvero.",
+    ),
+
+    pair=dict(
+        eyebrow="COM'È FATTO",
+        h2="Ogni chiamata contata.[br]Ogni conto verificabile.",
+        lede="Filtri per categoria, per cosa hanno chiesto, per chi ha già "
+             "comprato, per paese. La classifica si aggiorna. E qualsiasi "
+             "numero si apre sulle chiamate da cui viene, così nessuno deve "
+             "crederti sulla parola.",
+    ),
+
+    group=dict(
+        eyebrow="QUELLO CHE IL TELEFONO SA",
+        h2="Chiedigli quello che vuoi.[br]Ha ascoltato tutto.",
+    ),
+
+    blocks=[
+        dict(
+            eyebrow="01 · LE DOMANDE",
+            h2="Non ti è mai servita una ricerca di mercato.",
+            h2_in_col=True,
+            viz="QUESTIONS_VIZ",
+            body=[
+                "Ci sono aziende che pagano agenzie per chiedere ai clienti "
+                "cosa non gli è chiaro. Tu hai centinaia di clienti al mese che "
+                "te lo raccontano al telefono, spontaneamente, con parole loro - "
+                "e fino a ieri non finiva scritto da nessuna parte dove potessi "
+                "contarlo.",
+                "Adesso sì. Non come una pila di registrazioni che non aprirà "
+                "nessuno, ma come etichette che filtri e totali che ordini.",
+            ],
+        ),
+        dict(
+            eyebrow="02 · COSA CI FAI",
+            h2="Un numero su cui non agisci è una curiosità.",
+            h2_in_col=True,
+            flip=True,
+            viz="ACTIONS_VIZ",
+            body=[
+                "Centotrentaquattro persone che chiamano per sapere che modello "
+                "serve per la loro stanza non sono una statistica interessante. "
+                "Sono un paragrafo che manca su una scheda prodotto, una taglia "
+                "che finisce sempre, e una domanda che il tuo agente dovrebbe "
+                "già gestire prima che qualcuno alzi la cornetta.",
+                "Misurare il telefono non serve per avere una dashboard. Serve "
+                "per le quattro o cinque cose che ogni mese cambi grazie a "
+                "quello che leggi lì.",
+            ],
+        ),
+    ],
+
+    hands=dict(
+        eyebrow="SERVIZIO COMPLETO",
+        h2="Nessun analista.[br]Nessun export. Nessuna attesa.",
+        lede="Quattro passaggi dalla prima chiacchierata a numeri di cui ti "
+             "fidi. Tre sono nostri. Lo strumento non devi aprirlo mai.",
+        step_word="PASSO",
+        steps=[
+            ("talk", "Ci dici cosa vuoi sapere",
+             "Le domande che faresti se qualcuno trascrivesse ogni chiamata a "
+             "mano. Quelle diventano le etichette.", True),
+            ("build", "Le etichette le impostiamo noi",
+             "Categorie che rispecchiano il tuo catalogo, livelli che "
+             "rispecchiano i tuoi clienti, e tutto il resto che vuoi contare. "
+             "Non una tassonomia generica appiccicata sopra.", False),
+            ("hear", "Le verifichi su chiamate vere",
+             "Ti facciamo vedere le etichette su chiamate già avvenute, così "
+             "controlli che siano giuste prima che qualcuno ci costruisca un "
+             "report sopra.", False),
+            ("run", "Poi conta tutto, per sempre",
+             "Ogni chiamata da quel giorno in poi, etichettata allo stesso "
+             "modo: così il confronto mese su mese vuol dire qualcosa.", False),
+        ],
+    ),
+
+    faq_h2="Le domande che ci fanno davvero",
+    faq=[
+        ("È solo registrazione delle chiamate con una ricerca sopra?",
+         "No. Le registrazioni sono un pagliaio: cento ore che non ascolterà "
+         "mai nessuno. Qui ogni chiamata viene letta dentro etichette che "
+         "filtri e conti, e da qualsiasi numero apri le chiamate che ci stanno "
+         "dietro. La registrazione è la prova, non il prodotto."),
+        ("Analizzate come si sentiva il cliente?",
+         "No, ed è una scelta. Dedurre lo stato emotivo di una persona è "
+         "terreno discusso con l'AI Act europeo e preferiamo non costruirci "
+         "sopra. Tutto quello che etichettiamo è un fatto della chiamata: cosa "
+         "è stato chiesto, di che categoria era, se è stata risolta."),
+        ("I dati possiamo portarceli via?",
+         "Sì. Li esporti, oppure te li mandiamo nel tuo data warehouse o nel "
+         "tuo sistema di reportistica via webhook. Sono dati tuoi sui tuoi "
+         "clienti: tenerli in ostaggio sarebbe un modo strano di farsi "
+         "rinnovare."),
+        ("Da quanto indietro parte?",
+         "Dal giorno in cui l'agente va online. Non c'è modo di etichettare "
+         "chiamate che nessuno ha mai registrato, quindi prima parte e prima "
+         "esiste un confronto mese su mese."),
+        ("Chi può vedere le trascrizioni?",
+         "Chi dici tu. Gli accessi sono per persona, e puoi tenere le "
+         "trascrizioni aperte a un responsabile lasciando chiuse le "
+         "registrazioni."),
+        ("Funziona anche se la maggior parte delle chiamate le prendiamo noi?",
+         "Sì: l'agente etichetta quelle che gestisce, e anche quelle che passa "
+         "al tuo team restano etichettate fino al momento del trasferimento. "
+         "Non serve automatizzare tutto per misurare tutto."),
+    ],
+
+    cta=dict(
+        hand="online in due settimane",
+        h2="Qual è la domanda a cui non sai rispondere?",
+        sub="Quasi tutti ne hanno una: perché abbandonano, cosa chiedono prima "
+            "di comprare, quale prodotto confonde chiunque. Probabilmente la "
+            "risposta è già sul tuo telefono.",
+    ),
+)
+
+PRODUCTS_IT = {p["slug"]: p for p in [VOICE_AGENT_BUILDER_IT, WORKFLOW_BUILDER_IT,
+                                      CALL_DATA_INTELLIGENCE_IT]}
+ORDER_IT = ["voice-agent-builder", "workflow-builder", "call-data-intelligence"]

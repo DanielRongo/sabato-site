@@ -42,6 +42,7 @@ WIDTHS = [(390, "phone"), (1440, "desktop")]
 PAGES = [
     "/product/voice-agent-builder", "/it/prodotto/voice-agent-builder",
     "/product/workflow-builder", "/it/prodotto/workflow-builder",
+    "/product/call-data-intelligence", "/it/prodotto/call-data-intelligence",
     "/", "/it", "/pricing", "/it/prezzi", "/about", "/it/chi-siamo",
     "/contact", "/it/contatti", "/blog", "/it/blog", "/terms",
     "/privacy-policy", "/use-cases", "/it/casi-duso", "/industries",

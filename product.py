@@ -317,6 +317,37 @@ PRODUCT_CSS = """
       .pr-row.flip .queue-grid > .queue-viz { order: 0; }
     }
 
+    /* ============ Product: the insight pair (Call Data Intelligence) ======= */
+    /* Ranked bars: magnitude, so ONE hue, more-is-darker - no categorical set
+       is introduced here and there is nothing to validate. 22px marks, rounded
+       at the data end and square at the baseline, values at the end because in
+       a ranked list the number IS the content. */
+    .ib { display: flex; flex-direction: column; gap: 12px; }
+    .ib-row { display: grid; grid-template-columns: 1fr; gap: 5px; }
+    .ib-row p { margin: 0; font-size: 14px; line-height: 1.3; color: var(--ink); }
+    .ib-track { height: 22px; background: rgb(236,233,230); border-radius: 0 4px 4px 0; }
+    .ib-fill { height: 22px; background: rgb(43,42,46); border-radius: 0 4px 4px 0;
+      display: flex; align-items: center; justify-content: flex-end; padding-right: 9px; }
+    .ib-fill em { font-style: normal; font-family: ui-monospace, SFMono-Regular,
+      Menlo, monospace; font-size: 11.5px; font-weight: 700; color: rgb(200,240,74); }
+    .ib-axis { display: flex; justify-content: space-between; margin-top: 4px;
+      padding-top: 7px; border-top: 1px solid rgba(18,10,11,.12);
+      font-size: 11px; font-weight: 500; color: rgb(150,146,142); }
+
+    /* one conversation: the evidence behind a number */
+    .cv-q { font-size: 15.5px; line-height: 1.5; color: var(--ink); margin: 0 0 12px; }
+    .cv-meta { display: flex; gap: 10px; font-size: 12.5px; color: rgb(140,136,132);
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace; margin-bottom: 12px; }
+    .cv-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .cv-tag { font-size: 11.5px; font-weight: 700; padding: 5px 9px; border-radius: 999px; }
+    .cv-cat { background: #e6effa; color: #2c5f96; }
+    .cv-ask { background: #efe9fb; color: #5c46a0; }
+    .cv-vip { background: #e7f5c8; color: #4a5c15; }
+    .cv-ok  { background: #e6f2ea; color: #2f6b47; }
+    .cv-note { margin-top: 14px; padding-top: 13px;
+      border-top: 1px solid rgba(18,10,11,.10); font-size: 13.5px; line-height: 1.5;
+      color: rgb(120,116,112); }
+
     /* ============ Product: the brief card (chapter 01) ============ */
     .bf { border: 1px solid rgba(248,244,241,.16); border-radius: 14px;
       background: rgba(248,244,241,.04); padding: 16px 17px 15px; }
@@ -586,6 +617,56 @@ def branch_viz(lang):
     return '<div class="rf rf-dests">%s</div>' % "".join(parts)
 
 
+QUESTIONS_TEXT = {
+    "en": dict(title="Questions it answers", chip="NO ANALYST",
+               rows=["Which category generates the most calls?",
+                     "What do people ask that the site never answers?",
+                     "How many calls end without a person?",
+                     "Which asks come from customers who already buy from you?",
+                     "What changed since last month?"],
+               foot="Ask it in the interface. No ticket, no export, no waiting."),
+    "it": dict(title="Domande a cui risponde", chip="SENZA ANALISTA",
+               rows=["Quale categoria genera pi\u00f9 chiamate?",
+                     "Cosa chiedono che il sito non spiega da nessuna parte?",
+                     "Quante chiamate finiscono senza una persona?",
+                     "Quali domande arrivano da chi compra gi\u00e0 da te?",
+                     "Cos'\u00e8 cambiato rispetto al mese scorso?"],
+               foot="Lo chiedi nell'interfaccia. Niente ticket, niente export, niente attese."),
+}
+
+
+def questions_viz(lang):
+    t = QUESTIONS_TEXT[lang]
+    rows = "".join('<div class="bf-row"><span class="bf-n">%d.</span><p>%s</p></div>'
+                   % (i + 1, esc(r)) for i, r in enumerate(t["rows"]))
+    return ('<div class="bf"><div class="bf-h"><b>%s</b><span>%s</span></div>%s'
+            '<div class="bf-foot"><span class="bf-dot"></span>%s</div></div>'
+            % (esc(t["title"]), esc(t["chip"]), rows, esc(t["foot"])))
+
+
+ACTIONS_TEXT = {
+    "en": [("The product page", "Answer the question 134 people had to ring to ask.", True),
+           ("Buying", "Stock the size that keeps selling out, before it does again."),
+           ("The team", "Brief them on the objection that actually comes up."),
+           ("The agent", "Turn the repeat question into a workflow that handles it.")],
+    "it": [("La scheda prodotto", "Rispondi alla domanda per cui in 134 hanno dovuto chiamare.", True),
+           ("Gli acquisti", "Ordina la taglia che finisce sempre, prima che finisca di nuovo."),
+           ("Il team", "Preparali sull'obiezione che arriva davvero."),
+           ("L'agente", "Trasforma la domanda ricorrente in un workflow che la gestisce.")],
+}
+
+
+def actions_viz(lang):
+    parts = []
+    for row in ACTIONS_TEXT[lang]:
+        title, line = row[0], row[1]
+        hot = len(row) > 2 and row[2]
+        parts.append('<div class="rf-step%s"><span class="rf-dest">%s</span>'
+                     '<span class="rf-txt">%s</span></div>'
+                     % (" is-live" if hot else "", esc(title), esc(line)))
+    return '<div class="rf rf-dests">%s</div>' % "".join(parts)
+
+
 def release_flow(lang):
     parts = []
     for i, (title, line, live) in enumerate(RELEASE_FLOW_TEXT[lang]):
@@ -654,6 +735,47 @@ PAIR_TEXT = {
             ("order.promised_date", "gio 21 ago")],
         msg_l="MESSAGGIO DI ATTESA",
         msg="\u201cGuardo subito, un attimo solo.\u201d"),
+  },
+
+  # ---- the CALL DATA INTELLIGENCE pair -----------------------------------
+  # Left: the count. Right: one of the calls behind it. A number on its own is
+  # a claim; the number beside the sentence somebody actually said is evidence.
+  "insight": {
+    "en": dict(
+        rank_t="What people rang about", rank_s="Air conditioning \u00b7 VIP \u00b7 last 30 days",
+        typed="",
+        rank=[("Which unit fits my room", 100, "134"),
+              ("Is it in stock this week", 71, "95"),
+              ("Where is my order", 58, "78"),
+              ("Does it work with my boiler", 40, "54"),
+              ("Installation and fitting", 27, "36")],
+        axis_l="0", axis_m="calls", axis_r="134",
+        cv_t="One of the 134", cv_s="14:32 \u00b7 3m 04s \u00b7 resolved on the call",
+        cv_q="\u201cIt\u2019s a north-facing room, about 24 square metres, and I "
+             "don\u2019t know what size I need.\u201d",
+        cv_tags=[("Air conditioning", "cat"), ("Sizing &amp; fit", "ask"),
+                 ("VIP", "vip"), ("Resolved", "ok")],
+        cv_note="A number is a claim. The number next to the sentence somebody "
+                "actually said is evidence \u2014 and it is the sentence your "
+                "product page should have answered."),
+    "it": dict(
+        rank_t="Per cosa chiamano", rank_s="Climatizzazione \u00b7 VIP \u00b7 ultimi 30 giorni",
+        typed="",
+        rank=[("Che modello serve per la mia stanza", 100, "134"),
+              ("\u00c8 disponibile questa settimana", 71, "95"),
+              ("Dov\u2019\u00e8 il mio ordine", 58, "78"),
+              ("Funziona con la mia caldaia", 40, "54"),
+              ("Installazione e montaggio", 27, "36")],
+        axis_l="0", axis_m="chiamate", axis_r="134",
+        cv_t="Una delle 134", cv_s="14:32 \u00b7 3m 04s \u00b7 risolta in chiamata",
+        cv_q="\u201c\u00c8 una stanza esposta a nord, saranno 24 metri quadri, "
+             "e non ho idea di che potenza mi serva.\u201d",
+        cv_tags=[("Climatizzazione", "cat"), ("Taglia e potenza", "ask"),
+                 ("VIP", "vip"), ("Risolta", "ok")],
+        cv_note="Un numero \u00e8 un\u2019affermazione. Il numero accanto alla "
+                "frase che una persona ha detto davvero \u00e8 una prova \u2014 "
+                "ed \u00e8 la frase a cui la tua scheda prodotto avrebbe dovuto "
+                "rispondere."),
   },
 
   # ---- the WORKFLOW BUILDER pair -----------------------------------------
@@ -748,6 +870,27 @@ def pair_panels(lang, kind="tools"):
                     esc(t["en_l"]), esc(t["fn"]), esc(t["fn_hint"]),
                     esc(t["when_l"]), when, esc(t["db_l"]), db,
                     esc(t["msg_l"]), esc(t["msg"])))
+    elif kind == "insight":
+        bars = "".join(
+            '<div class="ib-row"><p>%s</p><div class="ib-track">'
+            '<div class="ib-fill" style="width:%d%%"><em>%s</em></div></div></div>'
+            % (esc(lbl), pct, esc(val)) for lbl, pct, val in t["rank"])
+        left = ('<div class="dlg">'
+                '<div class="dlg-h"><b>%s</b><span>%s</span></div>'
+                '<div class="ib">%s</div>'
+                '<div class="ib-axis"><span>%s</span><span>%s</span>'
+                '<span>%s</span></div></div>'
+                % (esc(t["rank_t"]), esc(t["rank_s"]), bars,
+                   esc(t["axis_l"]), esc(t["axis_m"]), esc(t["axis_r"])))
+        tags = "".join('<span class="cv-tag cv-%s">%s</span>' % (k, v)
+                       for v, k in t["cv_tags"])
+        right = ('<div class="dlg">'
+                 '<div class="dlg-h"><b>%s</b><span>%s</span></div>'
+                 '<p class="cv-q">%s</p>'
+                 '<div class="cv-tags">%s</div>'
+                 '<p class="cv-note">%s</p></div>'
+                 % (esc(t["cv_t"]), esc(t["cv_s"]), t["cv_q"], tags,
+                    esc(t["cv_note"])))
     else:
         body = "".join('<div class="dlg-kv"><code>%s</code><span>%s</span></div>'
                        % (esc(k), esc(v)) for k, v in t["body"])
@@ -1003,6 +1146,10 @@ def build(lang, slug, d):
             b["viz"] = labels_viz(lang)
         elif b.get("viz") == "BRANCH_VIZ":
             b["viz"] = branch_viz(lang)
+        elif b.get("viz") == "QUESTIONS_VIZ":
+            b["viz"] = questions_viz(lang)
+        elif b.get("viz") == "ACTIONS_VIZ":
+            b["viz"] = actions_viz(lang)
 
     sections = "".join([
         section_shot(d),

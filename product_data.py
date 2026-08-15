@@ -331,6 +331,154 @@ WORKFLOW_BUILDER = dict(
     ),
 )
 
-PRODUCTS = {p["slug"]: p for p in [VOICE_AGENT_BUILDER, WORKFLOW_BUILDER]}
 
-ORDER = ["voice-agent-builder", "workflow-builder"]
+# ---------------------------------------------------------------------------
+# 3. CALL DATA INTELLIGENCE
+#
+# The angle: your phone line is the only place a customer tells you, in their
+# own words, what they wanted and could not find. Search logs show what they
+# typed; calls show what they meant. That is the whole page.
+# ---------------------------------------------------------------------------
+CALL_DATA_INTELLIGENCE = dict(
+    slug="call-data-intelligence",
+    it="call-data-intelligence",
+    chip="Call Data Intelligence",
+    pair_kind="insight",
+
+    title="Call Data Intelligence | Sabato AI",
+    description="Every call read, labelled and counted. See which questions keep "
+                "coming, which products confuse people, and what your catalogue "
+                "is missing. Live in two weeks.",
+
+    # 14 and 18 characters.
+    h1="Your customers[br]already told you.",
+    sub="Your search bar shows you what people typed. Your phone line shows you "
+        "what they meant - and it is the only place they say it in full "
+        "sentences. Call Data Intelligence is where a thousand of those "
+        "conversations become something you can act on.",
+
+    hero_visual="",
+
+    shot=dict(
+        src="/product/assets/call-data-intelligence",
+        alt="The Sabato conversations view: label filters across the top, a row "
+            "of headline numbers, and a ranked list of what customers rang "
+            "about, with the individual calls behind it.",
+        caption="Filtered to one category and one customer tier. The ranking is "
+                "what those 412 callers actually asked for.",
+    ),
+
+    pair=dict(
+        eyebrow="WHAT IT LOOKS LIKE",
+        h2="Every call, counted.[br]Every count, checkable.",
+        lede="Filter by category, by what they asked for, by whether they have "
+             "bought before, by country. The ranking updates. And any number in "
+             "it opens into the calls it came from, so nobody has to take your "
+             "word for it.",
+    ),
+
+    group=dict(
+        eyebrow="WHAT THE PHONE KNOWS",
+        h2="Ask it anything.[br]It has been listening.",
+    ),
+
+    blocks=[
+        dict(
+            eyebrow="01 · THE QUESTIONS",
+            h2="You never needed a research panel.",
+            h2_in_col=True,
+            viz="QUESTIONS_VIZ",
+            body=[
+                "Companies pay agencies to run panels that ask customers what "
+                "confuses them. You have hundreds of customers a month "
+                "volunteering it down a phone line, unprompted, in their own "
+                "words - and until now none of it was written down anywhere you "
+                "could count.",
+                "Now it is. Not as a pile of recordings nobody opens, but as "
+                "labels you can filter and totals you can sort.",
+            ],
+        ),
+        dict(
+            eyebrow="02 · WHAT YOU DO WITH IT",
+            h2="A number nobody acts on is trivia.",
+            h2_in_col=True,
+            flip=True,
+            viz="ACTIONS_VIZ",
+            body=[
+                "One hundred and thirty-four people ringing to ask which unit "
+                "fits their room is not an interesting statistic. It is a "
+                "missing paragraph on a product page, a size that keeps selling "
+                "out, and a question your agent should be handling before "
+                "anyone picks up.",
+                "The point of measuring the phone is not the dashboard. It is "
+                "the four or five changes a month that come out of it.",
+            ],
+        ),
+    ],
+
+    hands=dict(
+        eyebrow="FULLY MANAGED",
+        h2="No analyst.[br]No export. No waiting.",
+        lede="Four steps from the first conversation to numbers you trust. "
+             "Three of them are ours. You never have to open the tool.",
+        step_word="STEP",
+        steps=[
+            ("talk", "You say what you want to know",
+             "The questions you would ask if somebody were transcribing every "
+             "call by hand. Those become the labels.", True),
+            ("build", "We set the labels up",
+             "Categories that match your catalogue, tiers that match your "
+             "customers, whatever else you need counted. Not a generic taxonomy "
+             "bolted onto your business.", False),
+            ("hear", "You check them against real calls",
+             "We show you the labels against calls that already happened, so "
+             "you can see they are right before anyone reports on them.", False),
+            ("run", "Then it counts everything, forever",
+             "Every call from that day on, labelled the same way, so the month "
+             "to month comparison actually means something.", False),
+        ],
+    ),
+
+    faq_h2="Questions operators actually ask",
+    faq=[
+        ("Is this just call recording with a search box?",
+         "No. Recordings are a haystack - a hundred hours nobody will ever "
+         "listen to. This reads every call into labels you can filter and count, "
+         "then lets you open the calls behind any number. The recording is the "
+         "evidence, not the product."),
+        ("Do you analyse how the customer sounded?",
+         "No, and deliberately. Inferring somebody's emotional state is "
+         "contested ground under the EU AI Act and we would rather not build on "
+         "it. Everything we label is a fact about the call - what was asked, "
+         "what category it was, whether it was resolved."),
+        ("Can we get the data out?",
+         "Yes. Export it, or have it pushed into your warehouse or your "
+         "reporting stack through a webhook. It is your data about your "
+         "customers; holding it hostage would be a strange way to earn a "
+         "renewal."),
+        ("How far back does it go?",
+         "From the day the agent goes live. There is no way to label calls that "
+         "were never recorded, so the sooner it starts the sooner a month-on-"
+         "month comparison exists."),
+        ("Who can see the transcripts?",
+         "Whoever you say. Access is per person, and you can keep the "
+         "transcripts open to a manager while the raw recordings stay closed."),
+        ("Does this work if we still answer most calls ourselves?",
+         "Yes - the agent labels what it handles, and calls transferred to your "
+         "team are labelled too, up to the point of transfer. You do not have to "
+         "automate everything to measure everything."),
+    ],
+
+    cta=dict(
+        hand="live in two weeks",
+        h2="What is the question you cannot answer?",
+        sub="Most operators have one - why people abandon, what they ask before "
+            "buying, which product confuses everyone. It is probably already on "
+            "your phone line.",
+    ),
+)
+
+PRODUCTS = {p["slug"]: p for p in [VOICE_AGENT_BUILDER, WORKFLOW_BUILDER,
+                                   CALL_DATA_INTELLIGENCE]}
+
+ORDER = ["voice-agent-builder", "workflow-builder", "call-data-intelligence"]
