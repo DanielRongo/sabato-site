@@ -306,6 +306,26 @@ industry_data_it.py). An Italian reader spots `c'e'` instantly as machine
 translation. **An accent check in the gate has been offered and not yet built** -
 build it before the next Italian page.
 
+### PARKED (Daniel, 15 Aug): the main hero image needs another pass
+
+"Fine for now, but we need to rework on the main hero image - let's leave this
+for the end when we finish all the product pages."
+
+The full-bleed platform shot on **Workflow Builder** is accepted as good enough
+to ship, not as finished. Do NOT reopen it page by page. Revisit once all five
+product pages exist and do every hero shot in one pass - they have to look like
+a set, which is exactly the judgement you cannot make while only two exist.
+
+Worth bringing to that pass:
+
+- v2 already added the right-hand config panel, which is where the agent-designer
+  shot gets most of its density. Whatever is still missing is something else -
+  probably that a workflow graph is inherently emptier than a form.
+- The animation idea from 14 Aug (cursor, typing, nodes appearing) is a hero-shot
+  decision, so it belongs in this pass rather than before it.
+- Sources are HTML under `assets-src/`, so a redesign is an edit and a re-render,
+  not a re-screenshot.
+
 ### Next on this section
 
 1. `/product` hub, before page 2.
