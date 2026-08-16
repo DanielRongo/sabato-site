@@ -76,9 +76,16 @@ header[class^="framer-"] { display: none !important; }
 /* ============ desktop grid ============ */
 .sb-grid {
   display: grid;
-  grid-template-columns: minmax(210px, 1fr) repeat(5, max-content);
-  justify-content: space-between;
-  column-gap: 40px;
+  /* EVEN PITCH, measured. Two wrong answers came before this one:
+       - equal-width columns with a 1.45fr brand: pitch 218 / 385 / 384 / 370,
+         so Company sat too far from Product.
+       - content-width columns with one gap: pitch 351 / 110 / 193 / 192 / 184,
+         so Company sat too close to it - "too attached".
+     Five equal link columns on a single gap put every column start the same
+     distance apart: 192 / 193 / 192 / 193. A short column like Company simply
+     leaves space under its own heading, which is what a column IS. */
+  grid-template-columns: minmax(235px, 1.15fr) repeat(5, 1fr);
+  column-gap: 24px;
   row-gap: 0;
   padding-bottom: 88px;
 }
