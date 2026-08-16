@@ -21,7 +21,11 @@
     --sage:#8bb99f; --lime:#d4ee56;
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  html,body{width:1560px;height:860px;overflow:hidden}
+  html,body{width:1560px;height:796px;overflow:hidden}  /* 796, NOT 860: product.py declares the <img> as 1560x796, so an
+     860-tall export gets squashed 7.4% vertically by the browser. That
+     non-uniform scale is what made these two look like a different
+     product - the type is the same Inter, it was being distorted.
+     Daniel, 15 Aug: "fonts and look and feel that doesn't match". */
   body{background:var(--bg);font:13.5px/1.45 Inter,-apple-system,sans-serif;
        color:var(--ink);-webkit-font-smoothing:antialiased;display:flex}
 
@@ -63,7 +67,8 @@
   .btn{height:33px;border-radius:9px;display:flex;align-items:center;padding:0 14px;
        font:600 12.6px/1 Inter}
   .btn.ghost{background:#fff;border:1px solid var(--line);color:var(--ink)}
-  .btn.run{background:var(--ink);color:#fff;display:flex;gap:7px;align-items:center}
+  .btn.run{background:var(--sage);color:#fff;display:flex;gap:7px;align-items:center;
+           box-shadow:0 1px 2px rgba(60,90,72,.2)}
   .btn.run svg{width:12px;height:12px;fill:#fff}
 
   .cols{flex:1;display:flex;gap:13px;min-height:0;padding-left:6px}

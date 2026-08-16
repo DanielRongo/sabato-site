@@ -658,12 +658,12 @@ INTEGRATIONS_WEBHOOKS_IT = dict(
                 "mentre il cliente è ancora in linea, e scrive dopo. Nativo con "
                 "Shopify, 8.500+ app via Zapier. Online in due settimane.",
 
-    h1="Le risposte sono già[br]nei tuoi sistemi.",
-    sub="Un agente che non vede il tuo gestionale può solo dire con "
-        "gentilezza che non lo sa. Il nostro legge la scheda vera mentre il "
-        "cliente è ancora al telefono - stato, disponibilità, data di "
-        "consegna, cosa aveva comprato l’altra volta - e poi scrive dove si "
-        "lavora davvero.",
+    h1="Il tuo agente si collega[br]a tutto quello che già usi.",
+    sub="Un agente vocale da solo sa solo dire con gentilezza che non lo sa. Il "
+        "nostro non lavora da solo: legge il gestionale, il catalogo e la "
+        "scheda del cliente mentre la persona è ancora al telefono, e quando la "
+        "chiamata finisce scrive nel tuo CRM, nel tuo helpdesk e nel tuo store. "
+        "Nativo con Shopify, e 8.500+ app via Zapier.",
 
     hero_visual="",
 

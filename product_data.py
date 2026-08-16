@@ -668,11 +668,12 @@ INTEGRATIONS_WEBHOOKS = dict(
                 "caller is still on the line, and writes back after. Native "
                 "with Shopify, 8,500+ apps through Zapier. Live in two weeks.",
 
-    h1="Your systems already[br]have the answers.",
-    sub="An agent that cannot see your order system can only be polite about not "
-        "knowing. Ours reads the real record while the caller is still on the "
-        "line - status, stock, delivery date, what they bought last time - and "
-        "writes back where the work actually lives when the call ends.",
+    h1="Your agent plugs into[br]everything you already run.",
+    sub="A voice agent on its own can only be polite about not knowing. Ours "
+        "does not work alone: it reads your order system, your catalogue and "
+        "your customer record while the caller is still on the line, and when "
+        "the call ends it writes into your CRM, your helpdesk and your store. "
+        "Native with Shopify, and 8,500+ apps through Zapier.",
 
     hero_visual="",
 
