@@ -22,7 +22,7 @@ from customer_data_it import CUSTOMERS_IT, ORDER_IT
 LANGS = {
     "en": {"tpl": "templates/customer.html",    "out": "site/customers",
            "base": "/customers/%s",     "data": None, "order": None,
-           "cta": "Start Free Pilot"},
+           "cta": "Book a Call"},
     "it": {"tpl": "templates/customer-it.html", "out": "site/it/clienti",
            "base": "/it/clienti/%s",    "data": None, "order": None,
            "cta": "Inizia Pilot Gratuito"},

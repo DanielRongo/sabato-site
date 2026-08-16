@@ -58,25 +58,27 @@ LI_ICON = "/fuc/images/3vdzRTYV1XV6UUX6QKcsDIfU-e464e3f1.svg"
 # logo held a 61px-tall slot, then collapsed to its real ~18px the instant it
 # loaded. Scrolling into the footer made the whole brand block jump. Correct
 # ratios mean the reserved box is right before the image arrives: no shift.
-COPY = ("&copy; 2026 Sabato LTD - 71-75, Shelton Street, Covent Garden, "
-        "London (UK) - All rights reserved.")
+COPY = ("&copy; 2026 Sabato LTD - 71-75 Shelton Street, London (UK) - "
+        "All rights reserved.")
 
 COPY_EN = dict(
     home="/", tagline='The #1 managed Voice AI <br>for <span class="sb-nb">E-Commerce</span>.',
-    backed="Backed by", company="Company", usecases="Use Cases", industries="Industries",
+    backed="Backed by", company="Company", usecases="Workflows", industries="Industries",
     links=[("Home", "/"), ("Pricing", "/pricing"), ("About", "/about"),
            ("Contact us", "/contact"), ("Blog", "/blog")],
-    demo="Book a Demo", terms="Terms and Conditions", privacy="Privacy and Cookies",
+    product="Product", playbooks="Playbooks",
+    demo="Book a Call", terms="Terms and Conditions", privacy="Privacy and Cookies",
     cookies="Cookie preferences",
     other_label="Italiano", other_href="/it", logo_alt="Sabato AI - Home",
     terms_href="/terms", privacy_href="/privacy-policy",
 )
 COPY_IT = dict(
     home="/it", tagline="La prima voice AI dedicata <br>esclusivamente all&rsquo;E-Commerce.",
-    backed="Supportato da", company="Azienda", usecases="Casi d&rsquo;uso", industries="Settori",
+    backed="Supportato da", company="Azienda", usecases="Flussi", industries="Settori",
     links=[("Home", "/it"), ("Prezzi", "/it/prezzi"), ("Chi Siamo", "/it/chi-siamo"),
            ("Contattaci", "/it/contatti"), ("Blog", "/it/blog")],
-    demo="Prenota una Demo", terms="Termini e Condizioni", privacy="Privacy e Cookie",
+    product="Prodotto", playbooks="Playbook",
+    demo="Prenota una call", terms="Termini e Condizioni", privacy="Privacy e Cookie",
     cookies="Preferenze cookie",
     other_label="English", other_href="/", logo_alt="Sabato AI - Home",
     # Real Italian pages since 7 Aug 2026 - these used to point at the English
@@ -153,6 +155,60 @@ def _column(title, items):
             f'<ul>{lis}</ul></details>')
 
 
+# ---------------------------------------------------------------------------
+# FOOTER-ONLY SHORT LABELS. Daniel, 16 Aug: "I only wanted you to change them
+# in the FOOTER menu so they fit into the space".
+#
+# Two different jobs: the header dropdown has a whole column and can afford the
+# full name; a footer column has a sixth of the width and has to hold one line.
+# So the short forms live HERE and nowhere else - enhance.js and playbook_data
+# keep the real labels, which the header, the hubs and every cross-link use.
+#
+# KEYED ON HREF, not on the label: labels are editorial and get rewritten,
+# hrefs are the identity of the page. Key this on text and the next rewording
+# silently un-shortens the footer.
+# ---------------------------------------------------------------------------
+SHORT = {
+    "en": {
+        "/use-cases/cart-abandonment-recovery": "Cart Recovery",
+        "/use-cases/qualify-and-collect-for-quote": "B2B Quote Collection",
+        "/use-cases/checkout-summary-via-text": "WhatsApp Checkout",
+        "/use-cases/back-in-stock-notification": "Back-in-Stock Alerts",
+        "/playbooks/international-expansion": "Open New Markets",
+    },
+    "it": {
+        "/it/casi-duso/recupero-carrelli-abbandonati": "Recupero Carrelli",
+        "/it/casi-duso/riepilogo-checkout-via-messaggio": "Checkout su WhatsApp",
+        "/it/casi-duso/feedback-post-consegna": "Feedback Consegna",
+        "/it/playbook/espansione-internazionale": "Apri nuovi mercati",
+        "/it/playbook/costi-assistenza": "Taglia i costi",
+    },
+}
+
+
+def _short(lang, items):
+    """Swap in the footer label where there is one. Everything else passes."""
+    return [(SHORT[lang].get(h.rstrip("/"), l), h) for l, h in items]
+
+
+def product_links(lang):
+    """Every product page, from product_data - never a second hand-kept list."""
+    from product_data import PRODUCTS, ORDER
+    from product_data_it import PRODUCTS_IT, ORDER_IT
+    src, order, base = ((PRODUCTS, ORDER, "/product/") if lang == "en"
+                        else (PRODUCTS_IT, ORDER_IT, "/it/prodotto/"))
+    return [(src[s]["chip"], base + s) for s in order]
+
+
+def playbook_links(lang):
+    """Every playbook, from playbook_data, same reason."""
+    from playbook_data import PLAYBOOKS, ORDER
+    from playbook_data_it import PLAYBOOKS_IT, ORDER_IT
+    src, order, base = ((PLAYBOOKS, ORDER, "/playbooks/") if lang == "en"
+                        else (PLAYBOOKS_IT, ORDER_IT, "/it/playbook/"))
+    return [(src[s]["nav"], base + s) for s in order]
+
+
 def footer_html(lang="en"):
     if lang not in LANGS:
         raise ValueError(f"footer.py: unknown language {lang!r}")
@@ -179,7 +235,9 @@ def footer_html(lang="en"):
             f'<div class="sb-col sb-col-static">'
               f'<span class="sb-h4">{c["company"]}</span><ul>{company}</ul>'
             f'</div>'
-            + _column(c["usecases"], ucs)
+            + _column(c["product"], product_links(lang))
+            + _column(c["playbooks"], _short(lang, playbook_links(lang)))
+            + _column(c["usecases"], _short(lang, ucs))
             + _column(c["industries"], inds) +
           f'</div>'
           f'<div class="sb-bottom">'

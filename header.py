@@ -67,32 +67,33 @@ LOGO = "/fuc/images/UTATYXc6NipXQRoxyaGHHfHSyA4-f2557e25.png"
 # misleading at three. Do not add the other four to this menu without building
 # the hub first - that is how the /use-cases hub went unbuilt for months.
 NAV = {
-    "en": [("Use Cases", "/use-cases", "uc"), ("Industries", "/industries", "ind"),
-           ("Product", "/product/voice-agent-builder", "pr"),
-           ("Pricing", "/pricing", None), ("About", "/about", None),
-           ("Contact", "/contact", None)],
-    "it": [("Casi d'uso", "/it/casi-duso", "uc"), ("Settori", "/it/settori", "ind"),
-           ("Prodotto", "/it/prodotto/voice-agent-builder", "pr"),
-           ("Prezzi", "/it/prezzi", None), ("Chi Siamo", "/it/chi-siamo", None),
-           ("Contatti", "/it/contatti", None)],
+    # Daniel, 16 Aug: "we don't want more than 5 master menu items in the
+    # header, otherwise it gets crowded in width", grouped the way he proposed:
+    #   PRODUCT   = what you buy  -> Platform + Workflows (what it makes)
+    #   USE CASES = does it fit   -> Playbooks + Industries
+    # Contact leaves the nav: there is a Contact button now, and a link plus a
+    # button to the same page is one of those things nobody notices until they
+    # count.
+    "en": [("Product", "/product/voice-agent-builder", "pr"),
+           ("Use Cases", "/use-cases", "uc"),
+           ("About", "/about", None), ("Pricing", "/pricing", None)],
+    "it": [("Prodotto", "/it/prodotto/voice-agent-builder", "pr"),
+           ("Casi d\u2019uso", "/it/casi-duso", "uc"),
+           ("Chi Siamo", "/it/chi-siamo", None), ("Prezzi", "/it/prezzi", None)],
 }
 ALL_LABEL = {"en": {"uc": "All workflows", "ind": "All industries",
                     "pb": "All playbooks", "pr": ""},
              "it": {"uc": "Tutti i flussi", "ind": "Tutti i settori",
                     "pb": "Tutti i playbook", "pr": ""}}
-# PRODUCT has no "all" link yet because it has no hub yet. Empty string means
-# the link is skipped rather than rendered pointing at nothing. Build the hub
-# and put its label here - see HANDOFF.md.
-# The playbook column needs its own "all" link now that a hub exists - without
-# it /playbooks is reachable only from the sitemap, which is how the use-case
-# hub went unbuilt for months.
+# PRODUCT has no "all" link because it has no hub yet. Empty string skips the
+# link rather than rendering one that points at nothing.
 PB_HUB = {"en": "/playbooks", "it": "/it/playbook"}
-# Two taxonomies, one menu. The left column is what the agent DOES on a call;
-# the right column is WHY someone is looking in the first place. Same buyer, two
-# different moments, so they have to be visible at the same time rather than one
-# buried under the other.
-COL_HEAD = {"en": {"uc": "Workflows", "pb": "Playbooks"},
-            "it": {"uc": "Flussi", "pb": "Playbook"}}
+IND_HUB = {"en": "/industries", "it": "/it/settori"}
+UC_HUB = {"en": "/use-cases", "it": "/it/casi-duso"}
+COL_HEAD = {"en": {"uc": "Workflows", "pb": "Playbooks",
+                   "pr": "Platform", "ind": "Industries"},
+            "it": {"uc": "Flussi", "pb": "Playbook",
+                   "pr": "Piattaforma", "ind": "Settori"}}
 PB_BASE = {"en": "/playbooks/", "it": "/it/playbook/"}
 
 # HIDDEN FROM THE DESKTOP DROPDOWN ONLY. Daniel, 13 Aug: the menu was
@@ -110,6 +111,15 @@ MENU_HIDE = {
     "cart-abandonment-recovery", "recupero-carrelli-abbandonati",
     "checkout-summary-via-text", "riepilogo-checkout-via-messaggio",
     "post-delivery-feedback", "feedback-post-consegna",
+    # Daniel, 16 Aug: three industries out of the DROPDOWN as redundant - "but
+    # keep them everywhere else". Same rule as the three workflows above: the
+    # pages stay, and so do their links in the footer, on /industries, on every
+    # cross-link and in the sitemap. This is a menu decision, not a
+    # deprecation, and it is keyed on slug in both languages for the same
+    # reason - labels get rewritten, slugs are the page.
+    "outdoor-garden", "giardino-outdoor",
+    "sports-fitness", "sport-fitness",
+    "industrial-b2b", "industria-b2b",
 }
 
 
@@ -142,12 +152,41 @@ def playbook_items(lang):
     src, order, base = ((PLAYBOOKS, ORDER, PB_BASE["en"]) if lang == "en"
                         else (PLAYBOOKS_IT, ORDER_IT, PB_BASE["it"]))
     return [(src[s]["nav"], base + s) for s in order]
+FLAG = {
+    # Rounded flat SVG, not emoji. Emoji flags are a lottery: Windows draws
+    # them as the letters "GB" and "IT" in a box, and the other platforms all
+    # draw a different shape. Daniel, 16 Aug: "replace with a rounded flat
+    # higher quality version".
+    "it": ('<svg class="sb-flag" viewBox="0 0 30 20" width="24" height="16" '
+           'aria-hidden="true" focusable="false">'
+           '<defs><clipPath id="fr-it"><rect width="30" height="20" rx="3.2"/></clipPath></defs>'
+           '<g clip-path="url(#fr-it)">'
+           '<rect width="10" height="20" fill="#009246"/>'
+           '<rect x="10" width="10" height="20" fill="#f1f2f1"/>'
+           '<rect x="20" width="10" height="20" fill="#ce2b37"/></g></svg>'),
+    "gb": ('<svg class="sb-flag" viewBox="0 0 30 20" width="24" height="16" '
+           'aria-hidden="true" focusable="false">'
+           '<defs><clipPath id="fr-gb"><rect width="30" height="20" rx="3.2"/></clipPath></defs>'
+           '<g clip-path="url(#fr-gb)">'
+           '<rect width="30" height="20" fill="#012169"/>'
+           '<path d="M0 0l30 20M30 0L0 20" stroke="#f1f2f1" stroke-width="4.4"/>'
+           '<path d="M0 0l30 20M30 0L0 20" stroke="#c8102e" stroke-width="2.2"/>'
+           '<path d="M15 0v20M0 10h30" stroke="#f1f2f1" stroke-width="6.6"/>'
+           '<path d="M15 0v20M0 10h30" stroke="#c8102e" stroke-width="3.8"/></g></svg>'),
+}
+
+
 COPY = {
-    "en": dict(home="/", btn="Start Free Pilot", demo="Book a Demo",
-               other="/it", other_flag="\U0001F1EE\U0001F1F9", other_label="Italiano",
+    # Daniel, 16 Aug: "'Start free pilot' is wording that should disappear -
+    # people don't appreciate free stuff". Two buttons instead of one slab: a
+    # quiet way to reach us, and the thing we want clicked.
+    "en": dict(home="/", btn="Book a Call", ghost="Contact", ghost_href="/contact",
+               demo="Book a Call",
+               other="/it", other_flag=FLAG["it"], other_label="Italiano",
                menu="Open menu", close="Close menu", logo_alt="Sabato AI - Home"),
-    "it": dict(home="/it", btn="Inizia il Pilota Gratuito", demo="Prenota una Demo",
-               other="/", other_flag="\U0001F1EC\U0001F1E7", other_label="English",
+    "it": dict(home="/it", btn="Prenota una call", ghost="Contatti",
+               ghost_href="/it/contatti", demo="Prenota una call",
+               other="/", other_flag=FLAG["gb"], other_label="English",
                menu="Apri il menu", close="Chiudi il menu", logo_alt="Sabato AI - Home"),
 }
 
@@ -189,19 +228,27 @@ def _plain_links(lang):
     return out
 
 
+def _col(lang, head, items, all_label, all_href):
+    """One column of a dropdown: a heading, its links, its own hub link."""
+    lis = "".join(f'<a href="{h}">{html.escape(l, quote=False)}</a>'
+                  for l, h in items)
+    if all_label:
+        lis += (f'<a class="sb-dd-all" href="{all_href}">'
+                f'{html.escape(all_label, quote=False)}</a>')
+    return (f'<span class="sb-dd-col">'
+            f'<span class="sb-dd-head">{html.escape(head, quote=False)}</span>'
+            f'{lis}</span>')
+
+
 def _desktop_nav(lang):
-    """Nav with the two dropdowns.
+    """Nav with two two-column dropdowns.
 
-    data-uc-dropdown is not decoration: tools/postdeploy_check.py asserts it on
-    /, /pricing, /about and /contact. enhance.js used to inject these onto
-    Framer's nav; that pass is now inert, so the markup has to carry them. The
-    gate caught their absence the first time this header shipped, which is
-    exactly what it is for.
-
-    Items come from the same enhance.js arrays the footer parses, so adding a
-    use-case page still updates nav, footer and hub together.
+    data-uc-dropdown is asserted by tools/postdeploy_check.py on four pages. It
+    stays on the OUTER span - moving it into a column would keep the check
+    green while quietly changing what it guards.
     """
     ucs, inds = nav_data(lang)
+    H, A = COL_HEAD[lang], ALL_LABEL[lang]
     out = []
     for label, href, kind in NAV[lang]:
         esc = html.escape(label, quote=False)
@@ -209,42 +256,15 @@ def _desktop_nav(lang):
             out.append(f'<a href="{href}">{esc}</a>')
             continue
         if kind == "pr":
-            items = product_items(lang)
-        elif kind == "uc":
-            items = _menu_visible(ucs)
+            body = (_col(lang, H["pr"], product_items(lang), A["pr"], href)
+                    + _col(lang, H["uc"], _menu_visible(ucs), A["uc"], UC_HUB[lang]))
         else:
-            items = inds
-        lis = "".join(f'<a href="{h}">{html.escape(l, quote=False)}</a>'
-                      for l, h in items)
-        if ALL_LABEL[lang][kind]:
-            lis += (f'<a class="sb-dd-all" href="{href}">'
-                    f'{html.escape(ALL_LABEL[lang][kind], quote=False)}</a>')
-        if kind == "uc":
-            # data-uc-dropdown stays on the OUTER span. postdeploy_check asserts
-            # that attribute on four pages; moving it into a column would keep
-            # the check green while quietly changing what it guards.
-            pb = "".join(f'<a href="{h}">{html.escape(l, quote=False)}</a>'
-                         for l, h in playbook_items(lang))
-            pb += (f'<a class="sb-dd-all" href="{PB_HUB[lang]}">'
-                   f'{html.escape(ALL_LABEL[lang]["pb"], quote=False)}</a>')
-            # PLAYBOOKS FIRST. The left column is now WHY someone is looking
-            # (peak season, expansion, cost); the right is WHAT the agent does
-            # on a call. Reading order follows the buyer's order - they arrive
-            # with a situation, not with a workflow in mind.
-            body = (f'<span class="sb-dd-col">'
-                    f'<span class="sb-dd-head">{html.escape(COL_HEAD[lang]["pb"], quote=False)}</span>'
-                    f'{pb}</span>'
-                    f'<span class="sb-dd-col">'
-                    f'<span class="sb-dd-head">{html.escape(COL_HEAD[lang]["uc"], quote=False)}</span>'
-                    f'{lis}</span>')
-            dd = f'<span class="sb-dd sb-dd-2col" data-uc-dropdown="{kind}">{body}</span>'
-        else:
-            dd = f'<span class="sb-dd" data-uc-dropdown="{kind}">{lis}</span>'
-        out.append(
-            f'<span class="sb-nav-item">'
-            f'<a href="{href}" aria-haspopup="true">{esc}</a>'
-            f'{dd}'
-            f'</span>')
+            body = (_col(lang, H["pb"], playbook_items(lang), A["pb"], PB_HUB[lang])
+                    + _col(lang, H["ind"], _menu_visible(inds), A["ind"],
+                           IND_HUB[lang]))
+        dd = f'<span class="sb-dd sb-dd-2col" data-uc-dropdown="{kind}">{body}</span>'
+        out.append(f'<span class="sb-nav-item">'
+                   f'<a href="{href}" aria-haspopup="true">{esc}</a>{dd}</span>')
     return "".join(out)
 
 
@@ -259,11 +279,15 @@ def header_html(lang="en"):
             f'<img src="{LOGO}" alt="Sabato AI" width="2080" height="278"></a>'
           f'<nav class="sb-hdr-nav" aria-label="Main">'
             + _desktop_nav(lang) +
+          f'</nav>'
+          f'<span class="sb-hdr-cta">'
             f'<a class="sb-hdr-flag" href="{c["other"]}" data-lang-switch '
             f'aria-label="{c["other_label"]}">{c["other_flag"]}</a>'
-          f'</nav>'
-          f'<a class="sb-hdr-btn" href="{CAL}" target="_blank" rel="noopener">'
-          f'{html.escape(c["btn"], quote=False)}</a>'
+            f'<a class="sb-hdr-btn sb-hdr-ghost" href="{c["ghost_href"]}">'
+            f'{html.escape(c["ghost"], quote=False)}</a>'
+            f'<a class="sb-hdr-btn" href="{CAL}" target="_blank" rel="noopener">'
+            f'{html.escape(c["btn"], quote=False)}</a>'
+          f'</span>'
           f'<button class="sb-burger" type="button" aria-expanded="false" '
           f'aria-controls="sb-menu" aria-label="{c["menu"]}">'
           f'<span></span><span></span></button>'

@@ -41,10 +41,10 @@ CAL = "https://cal.com/sabatoai/intro"
 LANGS = {
     "en": dict(out=os.path.join(SITE, "playbooks"), base="/playbooks/%s",
                locale="en_US", lang="en",
-               cta_btn="Start Free Pilot", hand="live in two weeks"),
+               cta_btn="Book a Call", hand="live in two weeks"),
     "it": dict(out=os.path.join(SITE, "it", "playbook"), base="/it/playbook/%s",
                locale="it_IT", lang="it",
-               cta_btn="Inizia il Pilota Gratuito", hand="online in due settimane"),
+               cta_btn="Prenota una call", hand="online in due settimane"),
 }
 
 # Playbook-only components. Everything else - tokens, hero, dark band, CTA band,

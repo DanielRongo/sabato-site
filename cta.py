@@ -66,7 +66,7 @@ COPY = {
         body=("Pre-configured AI voice workflows for e-commerce. Connected to your "
               "catalog. <br>Fully managed. Live in two weeks. Book a call or talk to "
               "our AI right now."),
-        btn="Start Free Pilot",
+        btn="Book a Call",
     ),
     "it": dict(
         eyebrow="Inizia ora",
@@ -74,7 +74,7 @@ COPY = {
         body=("Workflow vocali AI preconfigurati per l&rsquo;e-commerce. Collegati al tuo "
               "catalogo. Completamente gestiti. <br>Operativi in due settimane. Prenota "
               "una call o parla con la nostra AI adesso."),
-        btn="Inizia il Pilota Gratuito",
+        btn="Prenota una call",
     ),
 }
 

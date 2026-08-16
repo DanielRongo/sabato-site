@@ -76,8 +76,10 @@ header[class^="framer-"] { display: none !important; }
 /* ============ desktop grid ============ */
 .sb-grid {
   display: grid;
-  grid-template-columns: 1.35fr 1fr 1.25fr 1fr;
-  gap: 48px;
+  grid-template-columns: minmax(210px, 1fr) repeat(5, max-content);
+  justify-content: space-between;
+  column-gap: 40px;
+  row-gap: 0;
   padding-bottom: 88px;
 }
 /* .sb-footer prefix is required, not stylistic. The reset above is
@@ -101,16 +103,16 @@ header[class^="framer-"] { display: none !important; }
 
 .sb-h4 {
   color: var(--sb-fg);
-  font-size: 18px;
+  font-size: 13.5px;
   font-weight: 500;
   display: block;
-  margin-bottom: 22px;
+  margin-bottom: 16px;
 }
-.sb-col li { margin-bottom: 14px; }
+.sb-col li { margin-bottom: 9px; }
 .sb-col a {
   color: var(--sb-muted);
-  font-size: 18px;
-  line-height: 1.5;
+  font-size: 14px;
+  line-height: 1.35;
   text-decoration: none;
   transition: color .2s;
 }
@@ -137,11 +139,12 @@ header[class^="framer-"] { display: none !important; }
   gap: 24px;
   flex-wrap: wrap;
 }
-.sb-copy { color: var(--sb-off); font-size: 16px; opacity: .85; }
-.sb-legal { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
+.sb-copy { color: var(--sb-off); font-size: 13.5px; opacity: .8;
+  white-space: nowrap; }
+.sb-legal { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
 .sb-legal a {
   color: var(--sb-off);
-  font-size: 16px;
+  font-size: 13.5px;
   opacity: .85;
   text-decoration: none;
   transition: opacity .2s;
@@ -211,7 +214,7 @@ header[class^="framer-"] { display: none !important; }
     gap: 18px;
     padding: 26px 0 40px;
   }
-  .sb-copy { font-size: 14px; line-height: 1.5; }
+  .sb-copy { font-size: 13px; line-height: 1.5; white-space: normal; }
   .sb-legal { gap: 18px; }
   .sb-legal a { font-size: 15px; }
 }
@@ -389,7 +392,7 @@ header[class^="framer-"] { display: none !important; }
   background: #fff;
   border-radius: 24px;
   height: 88px;
-  padding: 16px 70px;
+  padding: 16px 34px 16px 40px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -399,7 +402,7 @@ header[class^="framer-"] { display: none !important; }
 .sb-hdr-logo { display: block; flex: none; line-height: 0; }
 .sb-hdr-logo img { width: 132px; height: auto; display: block; }
 
-.sb-hdr-nav { display: flex; align-items: center; gap: 48px; }
+.sb-hdr-nav { display: flex; align-items: center; gap: 34px; }
 .sb-hdr-nav a {
   font-size: 16px;
   font-weight: 500;
@@ -410,21 +413,43 @@ header[class^="framer-"] { display: none !important; }
   transition: opacity .2s;
 }
 .sb-hdr-nav a:hover, .sb-hdr-nav a:focus-visible { opacity: .6; }
-.sb-hdr-flag { font-size: 16px; line-height: 1; text-decoration: none; }
+.sb-hdr-flag { display: inline-flex; line-height: 0; text-decoration: none; }
+.sb-hdr-flag .sb-flag {
+  display: block;
+  border-radius: 4px;
+  box-shadow: 0 0 0 1px rgba(18,10,11,.10);
+  transition: transform .18s ease;
+}
+.sb-hdr-flag:hover .sb-flag { transform: scale(1.08); }
 
+/* Two buttons, not one slab. The switcher sits with them, behind a hairline:
+   it is a setting, not a destination. */
+.sb-hdr-cta { flex: none; display: flex; align-items: center; gap: 10px; }
+.sb-hdr-cta .sb-hdr-flag { margin-right: 4px; padding-right: 12px;
+  border-right: 1px solid rgba(18,10,11,.12); }
 .sb-hdr-btn {
   flex: none;
   display: inline-block;
   background: var(--sb-h-lime);
   color: var(--sb-h-ink);
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 700;
   line-height: 27.2px;
   text-decoration: none;
-  padding: 12px 30px;
+  padding: 10px 22px;
   border-radius: 100px;
   white-space: nowrap;
-  transition: transform .2s ease;
+  transition: transform .2s ease, background-color .2s ease, border-color .2s ease;
+}
+.sb-hdr-btn.sb-hdr-ghost {
+  background: transparent;
+  border: 1px solid rgba(18,10,11,.18);
+  font-weight: 600;
+}
+.sb-hdr-btn.sb-hdr-ghost:hover, .sb-hdr-btn.sb-hdr-ghost:focus-visible {
+  border-color: rgba(18,10,11,.45);
+  background: rgba(18,10,11,.03);
+  transform: none;
 }
 .sb-hdr-btn:hover, .sb-hdr-btn:focus-visible { transform: scale(1.04); }
 
@@ -475,7 +500,7 @@ header[class^="framer-"] { display: none !important; }
   .sb-header { padding: 25px 30px; }
   .sb-hdr-shell { height: 60px; padding: 11px 29px; }
   .sb-hdr-logo img { width: 117px; }
-  .sb-hdr-nav, .sb-hdr-btn { display: none; }
+  .sb-hdr-nav, .sb-hdr-btn, .sb-hdr-cta { display: none; }
   .sb-burger { display: block; margin-right: -5px; }
 
   .sb-panel {
@@ -500,7 +525,7 @@ header[class^="framer-"] { display: none !important; }
     text-decoration: none;
   }
   .sb-panel-inner a:active { opacity: .6; }
-  .sb-panel-inner .sb-hdr-flag { font-size: 22px; }
+  .sb-panel-inner .sb-hdr-flag .sb-flag { width: 30px; height: 20px; }
   /* The bar has to sit above its own panel, or the burger is unreachable. */
   .sb-hdr-shell { position: relative; z-index: 100; }
 }
@@ -524,8 +549,12 @@ header[class^="framer-"] { display: none !important; }
 .sb-dd {
   position: absolute;
   top: calc(100% + 18px);
-  left: 50%;
-  transform: translateX(-50%) translateY(-6px);
+  /* LEFT-ALIGNED to the nav item, not centred on it: a 2-column panel centred
+     on a 60px label hangs past the item on both sides and reads as belonging
+     to whichever item it happens to sit under. -14px cancels the panel's own
+     padding so the first LINK lines up with the label, not the panel edge. */
+  left: -16px;
+  transform: translateY(-6px);
   min-width: 260px;
   background: #fff;
   border-radius: 20px;
@@ -543,7 +572,7 @@ header[class^="framer-"] { display: none !important; }
 .sb-nav-item:focus-within .sb-dd {
   opacity: 1;
   visibility: visible;
-  transform: translateX(-50%) translateY(0);
+  transform: translateY(0);
 }
 .sb-hdr-nav .sb-dd a {
   font-size: 15px;
@@ -705,23 +734,41 @@ header[class^="framer-"] { display: none !important; }
   .sb-hero-card { padding-bottom: 26px; }
 }
 
-.sb-hero-tag {
+/* THE HERO CHIP. Colour discipline: the two vendor marks keep their own
+   brand colours (that is what makes them readable at 15px), everything else
+   is white at three opacities, and the lime is reserved for the arrow. */
+.sb-hero-chip {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  background: #fff;
-  border-radius: 322px;
-  padding: 4px 20px 4px 8px;
+  gap: 11px;
+  text-decoration: none;
+  background: rgba(255, 255, 255, .05);
+  border: 1px solid rgba(255, 255, 255, .14);
+  border-radius: 999px;
+  padding: 7px 17px 7px 13px;
+  transition: background-color .2s ease, border-color .2s ease;
 }
-.sb-hero-badge {
-  background: rgb(255, 43, 43);
-  color: #fff;
-  border-radius: 76px;
-  padding: 3px 16px;
-  font-size: 12px;
-  line-height: 1.5;
+.sb-hero-chip:hover, .sb-hero-chip:focus-visible {
+  background: rgba(255, 255, 255, .09);
+  border-color: rgba(255, 255, 255, .26);
 }
-.sb-hero-tagtext { color: #000; font-size: 14px; }
+.sb-chip-seg { display: inline-flex; align-items: center; gap: 7px; }
+.sb-chip-seg b { color: #f4f2ef; font-size: 14px; font-weight: 600; }
+.sb-chip-seg span { color: rgba(244, 242, 239, .78); font-size: 14px; }
+.sb-chip-sep { width: 1px; height: 16px; background: rgba(255, 255, 255, .18); }
+.sb-chip-more { color: rgba(244, 242, 239, .6); font-size: 13.5px; }
+.sb-chip-arrow { color: rgb(204, 255, 0); font-size: 14px; line-height: 1;
+  transition: transform .2s ease; }
+.sb-hero-chip:hover .sb-chip-arrow { transform: translateX(3px); }
+.sb-chip-mark { display: block; flex: none; }
+.sb-cflag { display: inline-block; vertical-align: -1px; border-radius: 3px;
+  box-shadow: 0 0 0 1px rgba(255,255,255,.14); margin-right: 7px; }
+
+/* phones: the long tail drops rather than wrapping the chip onto two lines */
+@media (max-width: 640px) {
+  .sb-hero-chip { gap: 9px; padding: 6px 14px 6px 11px; }
+  .sb-chip-more, .sb-chip-sep:last-of-type { display: none; }
+}
 
 .sb-hero-h1 {
   font-size: 72px;

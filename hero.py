@@ -106,12 +106,67 @@ NUMBERS = [
 ]
 
 # Regional-indicator pairs, written as escapes so the file stays ASCII.
-FLAG = {"gb": "\U0001F1EC\U0001F1E7", "us": "\U0001F1FA\U0001F1F8",
-        "it": "\U0001F1EE\U0001F1F9", "es": "\U0001F1EA\U0001F1F8"}
+# Flat rounded SVG, not emoji - same reason as the header switcher: Windows
+# renders regional-indicator pairs as the letters in a box.
+def _flag(uid, body):
+    return ('<svg class="sb-cflag" viewBox="0 0 30 20" width="18" height="12" '
+            'aria-hidden="true" focusable="false">'
+            f'<defs><clipPath id="cf-{uid}"><rect width="30" height="20" rx="3"/></clipPath></defs>'
+            f'<g clip-path="url(#cf-{uid})">{body}</g></svg>')
+
+
+FLAG = {
+    "gb": _flag("gb",
+        '<rect width="30" height="20" fill="#012169"/>'
+        '<path d="M0 0l30 20M30 0L0 20" stroke="#f1f2f1" stroke-width="4.4"/>'
+        '<path d="M0 0l30 20M30 0L0 20" stroke="#c8102e" stroke-width="2.2"/>'
+        '<path d="M15 0v20M0 10h30" stroke="#f1f2f1" stroke-width="6.6"/>'
+        '<path d="M15 0v20M0 10h30" stroke="#c8102e" stroke-width="3.8"/>'),
+    "us": _flag("us",
+        '<rect width="30" height="20" fill="#f1f2f1"/>'
+        '<path d="M0 1.5h30M0 4.6h30M0 7.7h30M0 10.8h30M0 13.9h30M0 17h30" '
+        'stroke="#b31942" stroke-width="1.55"/>'
+        '<rect width="13" height="10.8" fill="#0a3161"/>'),
+    "it": _flag("it",
+        '<rect width="10" height="20" fill="#009246"/>'
+        '<rect x="10" width="10" height="20" fill="#f1f2f1"/>'
+        '<rect x="20" width="10" height="20" fill="#ce2b37"/>'),
+    "es": _flag("es",
+        '<rect width="30" height="20" fill="#aa151b"/>'
+        '<rect y="5" width="30" height="10" fill="#f1bf00"/>'),
+}
+
+# ---------------------------------------------------------------------------
+# THE HERO CHIP. Replaces the white "New / Integration with Shopify" pill.
+# Daniel, 16 Aug: "I don't like the pill - propose another design even if that
+# means completely revamping it", then: "I love the pill that includes both
+# Shopify and Zapier, keep that".
+#
+# Three things were wrong with the old one and only one was visual:
+#   - a WHITE SLAB with a RED badge on a black hero: the loudest object on the
+#     page, spending all that attention on the word "New".
+#   - "New" ages, and nothing will remember to remove it.
+#   - it went NOWHERE. The most-looked-at element above the fold was not a link.
+# ---------------------------------------------------------------------------
+SHOPIFY_MARK = (
+    '<svg class="sb-chip-mark" viewBox="0 0 24 27" width="15" height="17" '
+    'aria-hidden="true" focusable="false">'
+    '<path d="M18.6 4.9a.3.3 0 0 0-.25-.25c-.1 0-2.1-.15-2.1-.15s-1.4-1.4-1.55-1.55c-.15-.15-.45-.1-.56-.07 0 0-.3.1-.78.25A5.5 5.5 0 0 0 12.98 1 3 3 0 0 0 10.5.02C8.6.08 6.72 1.45 5.2 3.9 4.14 5.6 3.33 7.75 3.1 9.4c-2.2.68-3.73 1.16-3.77 1.17-1.1.35-1.14.38-1.28 1.42C-2.06 12.77 0 26.9 0 26.9l15.2 2.6 6.6-1.63S18.62 5.07 18.6 4.9z" '
+    'fill="#95BF47" transform="translate(2.4 -1.6) scale(.86)"/>'
+    '<path d="M14.2 3.13c-.28.08-.6.18-.95.29 0-.66-.09-1.58-.4-2.37 1 .19 1.48 1.3 1.35 2.08z" fill="#5E8E3E"/>'
+    '<path d="M11.9 8.9s-.86-.46-1.9-.46c-1.55 0-1.63.97-1.63 1.21 0 1.33 3.46 1.84 3.46 4.95 0 2.45-1.55 4.02-3.64 4.02-2.5 0-3.79-1.56-3.79-1.56l.67-2.22s1.32 1.14 2.44 1.14c.73 0 1.03-.58 1.03-1 0-1.74-2.84-1.82-2.84-4.66 0-2.4 1.72-4.72 5.2-4.72 1.34 0 2 .38 2 .38l-1 3.02z" fill="#fff"/></svg>')
+
+ZAPIER_MARK = (
+    '<svg class="sb-chip-mark" viewBox="0 0 24 24" width="13" height="13" '
+    'aria-hidden="true" focusable="false">'
+    '<path d="M13 2.5 4.5 13.5H11l-.8 8 8.3-11h-6.3z" fill="#ff4f00"/></svg>')
 
 COPY = {
     "en": dict(
         badge="New",
+        chip_a="Shopify", chip_b="Zapier", chip_c="+ 8,500 apps",
+        chip_href="/product/integrations-webhooks",
+        chip_aria="How Sabato connects to your systems",
         tag="Integration with Shopify",
         # Framer breaks this line by hand. Without the <br> the browser breaks
         # after the hyphen instead - "The voice layer your e- / commerce is
@@ -127,6 +182,9 @@ COPY = {
     ),
     "it": dict(
         badge="Novit&agrave;",
+        chip_a="Shopify", chip_b="Zapier", chip_c="+ 8.500 app",
+        chip_href="/it/prodotto/integrations-webhooks",
+        chip_aria="Come Sabato si collega ai tuoi sistemi",
         tag="Integrazione con Shopify",
         h1="Il tuo e-commerce ha tutto. Tranne la voce.",
         sub1=("Workflow vocali AI preconfigurati che si collegano al tuo catalogo e "
@@ -227,10 +285,15 @@ def hero_html(lang="en", allow_placeholder=False):
       f'<section class="sb-hero" data-lang="{lang}">'
         f'<div class="sb-hero-card">'
           f'<div class="sb-hero-inner">'
-            f'<div class="sb-hero-tag">'
-              f'<span class="sb-hero-badge">{c["badge"]}</span>'
-              f'<span class="sb-hero-tagtext">{c["tag"]}</span>'
-            f'</div>'
+            f'<a class="sb-hero-chip" href="{c["chip_href"]}" '
+            f'aria-label="{c["chip_aria"]}">'
+              f'<span class="sb-chip-seg">{SHOPIFY_MARK}<b>{c["chip_a"]}</b></span>'
+              f'<i class="sb-chip-sep"></i>'
+              f'<span class="sb-chip-seg">{ZAPIER_MARK}<span>{c["chip_b"]}</span></span>'
+              f'<i class="sb-chip-sep"></i>'
+              f'<span class="sb-chip-more">{c["chip_c"]}</span>'
+              f'<span class="sb-chip-arrow">&rarr;</span>'
+            f'</a>'
             f'<h1 class="sb-hero-h1">{c["h1"]}</h1>'
             f'<p class="sb-hero-sub">{c["sub1"]}</p>'
             f'<p class="sb-hero-sub">{c["sub2"]}</p>'

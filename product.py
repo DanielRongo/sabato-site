@@ -51,10 +51,10 @@ nb = pb.nb
 LANGS = {
     "en": dict(out=os.path.join(SITE, "product"), base="/product/%s",
                locale="en_US", lang="en",
-               cta_btn="Start Free Pilot", hand="live in two weeks"),
+               cta_btn="Book a Call", hand="live in two weeks"),
     "it": dict(out=os.path.join(SITE, "it", "prodotto"), base="/it/prodotto/%s",
                locale="it_IT", lang="it",
-               cta_btn="Inizia il Pilota Gratuito", hand="online in due settimane"),
+               cta_btn="Prenota una call", hand="online in due settimane"),
 }
 
 # ---------------------------------------------------------------------------

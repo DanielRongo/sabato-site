@@ -335,9 +335,16 @@ with sync_playwright() as p:
             if not it:
                 # every footer use-case link must point at its real page, not the old anchor
                 checks["footer_uc_links"] = pg.evaluate("""(() => {
+                  // Two sets on purpose. The HEADER dropdown carries the real
+                  // labels from enhance.js; the FOOTER carries the short forms
+                  // from SHORT in footer.py, because a footer column is a sixth
+                  // of the page wide. Both are listed so this still guards the
+                  // footer links, which is what it was written for - these used
+                  // to be #anchors.
                   const labels = ['Pre-Sales Consultation','Cart Abandonment Recovery','Where Is My Order',
                     'Qualify & Collect for Quote','Open a Complaint','Checkout Summary via Text',
-                    'Managing Returns','Post-Delivery Feedback','Back-in-Stock Notification'];
+                    'Managing Returns','Post-Delivery Feedback','Back-in-Stock Notification',
+                    'Cart Recovery','B2B Quote Collection','WhatsApp Checkout','Back-in-Stock Alerts'];
                   let found = 0, bad = 0;
                   document.querySelectorAll('a').forEach(a => {
                     const t = (a.textContent||'').trim();
@@ -369,9 +376,14 @@ with sync_playwright() as p:
     ctx = b.new_context(viewport={"width": 1440, "height": 900})
     for src, label, expect in ([] if not CLICKS else [("/", "Managing Returns", "/use-cases/managing-returns"),
                                ("/", "Industrial & B2B", "/industries/industrial-b2b"),
-                               ("/pricing", "Industries", "/industries"),
+                               # 16 Aug: the nav restructure means /industries is no
+                               # longer a top-level item - it is the hub link at the
+                               # foot of the Use Cases dropdown. Same thing being
+                               # proven (our nav links survive Framer's router), via
+                               # the label that now exists.
+                               ("/pricing", "All industries", "/industries"),
                                ("/it", "Automotive e Ricambi", "/it/settori/ricambi-auto"),
-                               ("/it/blog", "Settori", "/it/settori"),
+                               ("/it/blog", "Tutti i settori", "/it/settori"),
                                ("/blog", "Open a Complaint", "/use-cases/open-a-complaint"),
                                ("/use-cases/where-is-my-order", "Pre-Sales Consultation",
                                 "/use-cases/pre-sales-consultation")]):
@@ -379,7 +391,19 @@ with sync_playwright() as p:
         try:
             pg.goto(BASE + src, wait_until="networkidle", timeout=45000)
             pg.wait_for_timeout(2800)
-            loc = pg.locator(f'a:has-text("{label}")').filter(visible=True).last
+            # Some targets now live inside a hover dropdown (the hub links moved
+            # there on 16 Aug), so they do not exist as visible nodes until the
+            # nav item is hovered. Hover each item until the link appears - this
+            # tests the real path a person takes rather than reaching past it.
+            target = pg.locator(f'a:has-text("{label}")')
+            if target.filter(visible=True).count() == 0:
+                items = pg.locator(".sb-nav-item > a")
+                for i in range(items.count()):
+                    items.nth(i).hover()
+                    pg.wait_for_timeout(350)
+                    if target.filter(visible=True).count():
+                        break
+            loc = target.filter(visible=True).last
             loc.scroll_into_view_if_needed()
             pg.wait_for_timeout(400)
             loc.click(timeout=8000)
