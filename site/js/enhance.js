@@ -606,7 +606,9 @@
     "color:rgb(11,11,12);transition:background .18s,border-color .18s}" +
     ".sb-prod-pill svg{width:18px;height:18px;flex:none}" +
     ".sb-prod-pill[aria-selected=true]{background:rgb(204,255,0);border-color:rgb(204,255,0)}" +
-    ".sb-prod-panel{display:none}.sb-prod-panel.is-on{display:block}" +
+    ".sb-prod-panel{display:none}.sb-prod-panel.is-on{display:block;animation:sbProdIn .22s ease-out}" +
+    "@keyframes sbProdIn{from{opacity:0}to{opacity:1}}" +
+    "@media(prefers-reduced-motion:reduce){.sb-prod-panel.is-on{animation:none}}" +
     ".sb-prod-shot{background:rgb(11,11,12);border-radius:24px;padding:12px}" +
     ".sb-prod-shot img{display:block;width:100%;height:auto;border-radius:14px}" +
     ".sb-prod-cap{display:flex;align-items:baseline;gap:20px;flex-wrap:wrap;margin:20px 6px 0}" +
@@ -706,6 +708,38 @@
     wrap.innerHTML = '<div class="sb-prod-pills" role="tablist">' + pills + "</div>" + panels;
     inner.appendChild(wrap);
     for (var r = 0; r < rows.length; r++) rows[r].remove();
+
+    /* PRELOAD THE OTHER FOUR SCREENSHOTS.
+
+       The inactive panels are display:none, so the browser has no reason to
+       fetch their images until the moment they are shown - which is exactly
+       when the visitor is looking at them. The first click on each tab
+       therefore rendered an empty frame that filled in a beat later.
+
+       Warming them eagerly at page load would be the wrong trade: five product
+       exports is ~1MB of WebP on a page most visitors never scroll this far
+       down. So fetch them when the browser says it is idle, and again on the
+       first hover or keyboard focus over the pill row, whichever comes first -
+       a mouse arriving at the pills is the earliest honest signal that a click
+       is coming, and it beats the click by enough to matter.
+
+       Only the variant the current viewport would actually use is warmed, so a
+       phone does not pull four 3120px exports over mobile data. */
+    var warmed = false;
+    function warmShots() {
+      if (warmed) return;
+      warmed = true;
+      var phone = window.matchMedia && window.matchMedia("(max-width: 810px)").matches;
+      for (var w = 0; w < PROD_TABS.length; w++) {
+        var im = new Image();
+        im.decoding = "async";
+        im.src = "/product/assets/" + PROD_TABS[w].shot + (phone ? "-phone" : "") + ".webp";
+      }
+    }
+    if (window.requestIdleCallback) window.requestIdleCallback(warmShots, { timeout: 3000 });
+    else setTimeout(warmShots, 1800);
+    wrap.addEventListener("pointerenter", warmShots, true);
+    wrap.addEventListener("focusin", warmShots);
 
     wrap.addEventListener("click", function (e) {
       var btn = e.target && e.target.closest ? e.target.closest(".sb-prod-pill") : null;
