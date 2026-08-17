@@ -27,9 +27,15 @@ CASES = [
     ("/",       "Where Is My Order", "/use-cases/where-is-my-order"),
     ("/pricing", "Open a Complaint", "/use-cases/open-a-complaint"),
     ("/it",     "Gestione Resi",     "/it/casi-duso/gestione-resi"),
-    # Alias case: the Italian footer says "Riepilogo Acquisto via SMS" while the
-    # nav array's label is "Riepilogo Checkout via Messaggio".
-    ("/it",     "Riepilogo Acquisto via SMS", "/it/casi-duso/riepilogo-checkout-via-messaggio"),
+    # Alias case, and the reason this row keeps needing attention: the FOOTER
+    # label is not the nav array's label. footer.py's SHORT map shortens five
+    # entries per language so the column fits its 210px track, so the visible
+    # text here is "Checkout su WhatsApp" while the nav array still says
+    # "Riepilogo Checkout via Messaggio" and enhance.js's alias list carries
+    # "Riepilogo Acquisto via SMS" from the Framer build. All three must resolve
+    # to the same page; this asserts the one a visitor can actually see.
+    # If you change footer.py's SHORT map, change this line with it.
+    ("/it",     "Checkout su WhatsApp", "/it/casi-duso/riepilogo-checkout-via-messaggio"),
 ]
 
 # Undo everything enhance.js does to the use-case links, so the click happens in

@@ -43,27 +43,41 @@
   /* Use-case pages that exist. label = exact text on the site; href = live page.
      Italian list holds only the pages actually built - unbuilt ones keep their
      original anchor so nothing links to a 404. */
+  /* The `aliases` that read like abbreviations are footer.py's SHORT map: the
+     footer column is a 210px track, so five entries per language are shortened
+     there and the visible text is NOT the label below. resolveByLabel is the
+     fallback the click interceptor uses when hydration has reverted the href,
+     so a short label missing from this list means a DEAD footer link on a cold
+     first load - caught by tools/test_footer_clicks.py on 17 Aug 2026, where
+     "Checkout su WhatsApp" resolved to Framer's /#usecases hook.
+     KEEP IN SYNC WITH footer.py's SHORT map. */
   var USECASES_EN = [
     { label: "Pre-Sales Consultation", href: "/use-cases/pre-sales-consultation" },
-    { label: "Cart Abandonment Recovery", href: "/use-cases/cart-abandonment-recovery" },
+    { label: "Cart Abandonment Recovery", href: "/use-cases/cart-abandonment-recovery",
+      aliases: ["Cart Recovery"] },
     { label: "Where Is My Order", href: "/use-cases/where-is-my-order" },
-    { label: "Qualify & Collect for Quote", href: "/use-cases/qualify-and-collect-for-quote" },
+    { label: "Qualify & Collect for Quote", href: "/use-cases/qualify-and-collect-for-quote",
+      aliases: ["B2B Quote Collection"] },
     { label: "Open a Complaint", href: "/use-cases/open-a-complaint" },
-    { label: "Checkout Summary via Text", href: "/use-cases/checkout-summary-via-text" },
+    { label: "Checkout Summary via Text", href: "/use-cases/checkout-summary-via-text",
+      aliases: ["WhatsApp Checkout"] },
     { label: "Managing Returns", href: "/use-cases/managing-returns" },
     { label: "Post-Delivery Feedback", href: "/use-cases/post-delivery-feedback" },
-    { label: "Back-in-Stock Notification", href: "/use-cases/back-in-stock-notification" }
+    { label: "Back-in-Stock Notification", href: "/use-cases/back-in-stock-notification",
+      aliases: ["Back-in-Stock Alerts"] }
   ];
   var USECASES_IT = [
     { label: "Consulenza Pre-Vendita", href: "/it/casi-duso/consulenza-pre-vendita" },
-    { label: "Recupero Carrelli Abbandonati", href: "/it/casi-duso/recupero-carrelli-abbandonati" },
+    { label: "Recupero Carrelli Abbandonati", href: "/it/casi-duso/recupero-carrelli-abbandonati",
+      aliases: ["Recupero Carrelli"] },
     { label: "Dov'è il Mio Ordine", href: "/it/casi-duso/dove-e-il-mio-ordine" },
     { label: "Preventivi Automatici", href: "/it/casi-duso/preventivi-automatici" },
     { label: "Apertura Reclamo", href: "/it/casi-duso/apertura-reclamo" },
     { label: "Riepilogo Checkout via Messaggio", href: "/it/casi-duso/riepilogo-checkout-via-messaggio",
-      aliases: ["Riepilogo Acquisto via SMS"] },
+      aliases: ["Riepilogo Acquisto via SMS", "Checkout su WhatsApp"] },
     { label: "Gestione Resi", href: "/it/casi-duso/gestione-resi" },
-    { label: "Feedback Post-Consegna", href: "/it/casi-duso/feedback-post-consegna" },
+    { label: "Feedback Post-Consegna", href: "/it/casi-duso/feedback-post-consegna",
+      aliases: ["Feedback Consegna"] },
     { label: "Notifica Ritorno in Stock", href: "/it/casi-duso/notifica-ritorno-in-stock" }
   ];
   /* /it/chi-siamo renders an entire ENGLISH footer above the Italian one (the
@@ -508,6 +522,214 @@
     anchor.parentElement.insertBefore(wrap, anchor.nextSibling);
   }
 
+  /* THE PRODUCT SHOWCASE - replaces Framer's "Pick the workflows" section.
+
+     Same reasoning as injectCustomerBand: this section is Framer BODY content,
+     React-hydrated, so editing index.html does nothing that survives. We find
+     the section by its own heading text, keep its eyebrow pill / h2 / sub
+     ELEMENTS (so the typography stays Framer's, not ours) and swap only their
+     text, then replace the card rows with five tabs over the product
+     screenshots.
+
+     Idempotence matters more here than in the band, because this pass runs on
+     every observer tick: setText() writes only when the string actually
+     differs, so a steady state produces zero mutations and the observer
+     settles. The tab markup is guarded on data-sb-prod.
+
+     The screenshots are the real product exports at /product/assets/*.webp -
+     the same files the five product pages use, so there is nothing new to ship
+     and nothing to keep in sync. */
+  var PROD_ANCHOR = IT ? "Scegli i workflow. Al resto pensiamo noi."
+                       : "Pick the workflows that move your numbers";
+
+  var PROD_COPY = IT
+    ? { pill: "Prodotto",
+        h2: "Un agente al telefono. <br>Dietro, un'intera operazione.",
+        sub: "Cinque schermate, un prodotto. È quello che gira mentre i tuoi " +
+             "clienti parlano, e puoi leggerlo tutto.",
+        explore: "Scopri" }
+    : { pill: "Product",
+        h2: "One agent on the line. <br>A whole operation behind it.",
+        sub: "Five screens, one product. This is what runs while your customers " +
+             "talk, and everything in it is readable by you.",
+        explore: "Explore" };
+
+  var PROD_ICONS = {
+    build: '<rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/><path d="M10 6.5h5a2 2 0 0 1 2 2V14"/>',
+    automate: '<path d="M13 2 4.5 13H11l-1 9 9.5-12H13z"/>',
+    understand: '<path d="M4 20V10M9.5 20V4M15 20v-7M20.5 20v-4"/>',
+    improve: '<path d="M21 12a9 9 0 1 1-3.2-6.9"/><path d="M8.5 11.8 11.4 15 21 5.4"/>',
+    connect: '<path d="M10.5 13.5a4 4 0 0 0 5.7 0l2.9-2.9a4 4 0 0 0-5.7-5.7l-1.4 1.4"/>' +
+             '<path d="M13.5 10.5a4 4 0 0 0-5.7 0l-2.9 2.9a4 4 0 0 0 5.7 5.7l1.4-1.4"/>'
+  };
+
+  var PROD_TABS = IT
+    ? [{ k: "build", tab: "Costruisci", shot: "voice-agent-builder", name: "Voice Agent Builder",
+         tag: "Il tuo agente, le sue regole, i suoi strumenti, su una tela che sai leggere.",
+         href: "/it/prodotto/voice-agent-builder" },
+       { k: "automate", tab: "Automatizza", shot: "workflow-builder", name: "Workflow Builder",
+         tag: "Cosa succede dopo la chiamata: il tag, il ticket, il follow-up, senza nessuno.",
+         href: "/it/prodotto/workflow-builder" },
+       { k: "understand", tab: "Capisci", shot: "call-data-intelligence", name: "Call Data Intelligence",
+         tag: "Ogni chiamata trascritta e cercabile. Cosa chiedono, cosa non hai, cosa non funziona.",
+         href: "/it/prodotto/call-data-intelligence" },
+       { k: "improve", tab: "Migliora", shot: "agent-evaluation", name: "Agent Evaluation",
+         tag: "Rivediamo le chiamate, troviamo le lacune, pubblichiamo la correzione. Tu guardi.",
+         href: "/it/prodotto/agent-evaluation" },
+       { k: "connect", tab: "Collega", shot: "integrations-webhooks", name: "Integrazioni &amp; Webhook",
+         tag: "Nativo con Shopify, 8.500+ app via Zapier, un webhook per tutto il resto.",
+         href: "/it/prodotto/integrations-webhooks" }]
+    : [{ k: "build", tab: "Build", shot: "voice-agent-builder", name: "Voice Agent Builder",
+         tag: "Your agent, its rules, its tools, designed with you on a canvas you can read.",
+         href: "/product/voice-agent-builder" },
+       { k: "automate", tab: "Automate", shot: "workflow-builder", name: "Workflow Builder",
+         tag: "What happens after the call: the tag, the ticket, the follow-up, without a person.",
+         href: "/product/workflow-builder" },
+       { k: "understand", tab: "Understand", shot: "call-data-intelligence", name: "Call Data Intelligence",
+         tag: "Every call, transcribed and searchable. What they asked, what you don't stock, what broke.",
+         href: "/product/call-data-intelligence" },
+       { k: "improve", tab: "Improve", shot: "agent-evaluation", name: "Agent Evaluation",
+         tag: "We review the calls, find the gaps, publish the fix. You watch it happen.",
+         href: "/product/agent-evaluation" },
+       { k: "connect", tab: "Connect", shot: "integrations-webhooks", name: "Integrations &amp; Webhooks",
+         tag: "Native with Shopify, 8,500+ apps via Zapier, a webhook for everything else.",
+         href: "/product/integrations-webhooks" }];
+
+  /* Pills borrow the Book-a-Call lime for the active state and the site's
+     #F9FAFD card grey for the rest, so nothing new enters the palette. The
+     screenshot frame is the ink used on the product pages. */
+  var PROD_CSS =
+    ".sb-prod-pills{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:0 0 26px}" +
+    ".sb-prod-pill{display:inline-flex;align-items:center;gap:9px;background:#F9FAFD;" +
+    "border:1px solid #e3e2e2;border-radius:999px;padding:13px 24px;cursor:pointer;" +
+    "font-family:Satoshi,Inter,sans-serif;font-weight:700;font-size:16px;line-height:1;" +
+    "color:rgb(11,11,12);transition:background .18s,border-color .18s}" +
+    ".sb-prod-pill svg{width:18px;height:18px;flex:none}" +
+    ".sb-prod-pill[aria-selected=true]{background:rgb(204,255,0);border-color:rgb(204,255,0)}" +
+    ".sb-prod-panel{display:none}.sb-prod-panel.is-on{display:block}" +
+    ".sb-prod-shot{background:rgb(11,11,12);border-radius:24px;padding:12px}" +
+    ".sb-prod-shot img{display:block;width:100%;height:auto;border-radius:14px}" +
+    ".sb-prod-cap{display:flex;align-items:baseline;gap:20px;flex-wrap:wrap;margin:20px 6px 0}" +
+    ".sb-prod-cap b{font-weight:700;font-size:20px;color:rgb(11,11,12)}" +
+    ".sb-prod-cap span{font-size:16px;color:rgb(111,106,102);flex:1;min-width:280px}" +
+    ".sb-prod-cap a{font-weight:700;font-size:16px;color:rgb(11,11,12);text-decoration:none;" +
+    "white-space:nowrap;border-bottom:2px solid rgb(204,255,0);padding-bottom:2px}" +
+    "@media(max-width:809px){.sb-prod-pills{gap:8px;margin-bottom:20px}" +
+    ".sb-prod-pill{padding:10px 16px;font-size:14px}.sb-prod-pill svg{width:15px;height:15px}" +
+    ".sb-prod-shot{border-radius:16px;padding:7px}.sb-prod-shot img{border-radius:9px}" +
+    ".sb-prod-cap{gap:8px;margin-top:16px}.sb-prod-cap b{font-size:17px}" +
+    ".sb-prod-cap span{font-size:14.5px;min-width:0;flex:1 1 100%}}";
+
+  /* Writes only when the value actually changes. Without this the pass feeds
+     the MutationObserver on every tick. */
+  function setText(el, txt) {
+    if (el && el.textContent !== txt) el.textContent = txt;
+  }
+  function setHTML(el, htm) {
+    if (el && el.innerHTML !== htm) el.innerHTML = htm;
+  }
+
+  function replaceWorkflowsWithProduct() {
+    var sec = null;
+    var hs = document.querySelectorAll("h2");
+    for (var i = 0; i < hs.length; i++) {
+      var t = normLabel(hs[i].textContent);
+      if (t === normLabel(PROD_ANCHOR) || t === normLabel(stripTags(PROD_COPY.h2))) {
+        sec = hs[i].closest("section"); break;
+      }
+    }
+    if (!sec) return;
+
+    var h2 = sec.querySelector("h2");
+    if (!h2) return;
+
+    /* Framer's shape here is section > column > [heading block, card row,
+       card row, card row]. Find the column and the heading block by
+       containment rather than by class - the hashed class names change every
+       time the Framer project is republished. */
+    var inner = sec.firstElementChild;
+    if (!inner || !inner.contains(h2)) return;
+    var head = null, kids = inner.children;
+    for (var k = 0; k < kids.length; k++) if (kids[k].contains(h2)) head = kids[k];
+    if (!head) return;
+
+    /* The eyebrow pill and the sub are the section's own elements - only their
+       text changes, so Framer keeps owning the type. Both are scoped to the
+       heading block, so a card title can never be mistaken for the sub. */
+    var pill = head.querySelector("a p, a span");
+    if (pill && normLabel(pill.textContent).length < 40) setText(pill, PROD_COPY.pill);
+    setHTML(h2, PROD_COPY.h2);
+    /* Framer splits the sub into two paragraphs on /it and one on / - take the
+       first for the new copy and fold the rest away. Hidden rather than
+       removed: React owns these nodes and puts back anything we delete. */
+    var ps = head.querySelectorAll("p"), got = false;
+    for (var j = 0; j < ps.length; j++) {
+      if (ps[j] === pill || pill_contains(pill, ps[j])) continue;
+      if (!got) { setText(ps[j], PROD_COPY.sub); got = true; }
+      else if (ps[j].style.display !== "none") ps[j].style.display = "none";
+    }
+
+    if (sec.querySelector("[data-sb-prod]")) return;
+
+    if (!document.getElementById("sb-prod-css")) {
+      var st = document.createElement("style");
+      st.id = "sb-prod-css"; st.textContent = PROD_CSS;
+      (document.head || document.documentElement).appendChild(st);
+    }
+
+    var rows = [];
+    for (var q = 0; q < kids.length; q++) if (kids[q] !== head) rows.push(kids[q]);
+
+    var pills = "", panels = "";
+    for (var n = 0; n < PROD_TABS.length; n++) {
+      var tb = PROD_TABS[n], on = n === 0;
+      pills +=
+        '<button class="sb-prod-pill" type="button" role="tab" data-i="' + n + '" ' +
+        'aria-selected="' + (on ? "true" : "false") + '">' +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" ' +
+        'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+        PROD_ICONS[tb.k] + "</svg><span>" + tb.tab + "</span></button>";
+      panels +=
+        '<div class="sb-prod-panel' + (on ? " is-on" : "") + '" data-p="' + n + '">' +
+          '<div class="sb-prod-shot"><picture>' +
+            '<source media="(max-width: 810px)" srcset="/product/assets/' + tb.shot + '-phone.webp">' +
+            '<img src="/product/assets/' + tb.shot + '.webp" width="1560" height="796" ' +
+            'loading="lazy" decoding="async" alt="' + tb.name + '">' +
+          "</picture></div>" +
+          '<div class="sb-prod-cap"><b>' + tb.name + "</b><span>" + tb.tag + "</span>" +
+          '<a href="' + tb.href + '">' + PROD_COPY.explore + " &rarr;</a></div>" +
+        "</div>";
+    }
+
+    var wrap = document.createElement("div");
+    wrap.setAttribute("data-sb-prod", "1");
+    wrap.innerHTML = '<div class="sb-prod-pills" role="tablist">' + pills + "</div>" + panels;
+    inner.appendChild(wrap);
+    for (var r = 0; r < rows.length; r++) rows[r].remove();
+
+    wrap.addEventListener("click", function (e) {
+      var btn = e.target && e.target.closest ? e.target.closest(".sb-prod-pill") : null;
+      if (!btn) return;
+      var bs = wrap.querySelectorAll(".sb-prod-pill");
+      for (var a = 0; a < bs.length; a++) bs[a].setAttribute("aria-selected", "false");
+      btn.setAttribute("aria-selected", "true");
+      var pn = wrap.querySelectorAll(".sb-prod-panel");
+      for (var c = 0; c < pn.length; c++) pn[c].classList.remove("is-on");
+      var want = wrap.querySelector('.sb-prod-panel[data-p="' + btn.getAttribute("data-i") + '"]');
+      if (want) want.classList.add("is-on");
+    });
+  }
+
+  function stripTags(s) { return (s || "").replace(/<[^>]*>/g, " "); }
+
+  /* True when `el` sits inside the eyebrow pill's own anchor - the pill's text
+     node is a <p> too, so it has to be excluded from the sub hunt. */
+  function pill_contains(pill, el) {
+    if (!pill) return false;
+    var a = pill.closest ? pill.closest("a") : null;
+    return !!(a && a.contains(el));
+  }
+
   /* Measured 7 Aug 2026 by wrapping every pass in a MutationObserver and
      loading 21 pages at 1440 and 390: restoreChiSiamo, injectFooterLinks,
      injectIndustriesNav and injectDropdown made ZERO DOM changes on every page
@@ -527,6 +749,7 @@
     enforceItalianLinks();
     wireUseCaseTargets(); wireIndustryTargets(); installClickInterceptor();
     injectCustomerBand();
+    replaceWorkflowsWithProduct();
   }
   /* SELF-FEEDING OBSERVER - fixed 6 Aug 2026.
 

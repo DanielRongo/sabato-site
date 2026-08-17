@@ -790,6 +790,21 @@ header[class^="framer-"] { display: none !important; }
   .sb-chip-more, .sb-chip-sep:last-of-type { display: none; }
 }
 
+/* The lime eyebrow. It carries the category ("Managed Voice AI for
+   e-commerce") so the headline is free to make the promise instead of naming
+   the market. Sits between the Shopify chip and the h1: 30px below the chip,
+   and the h1's own 16px top margin closes the gap under it. Satoshi 13px with
+   the same .2em tracking as every other eyebrow on the site. */
+.sb-hero-eyebrow {
+  display: block;
+  margin: 30px 0 -2px;
+  font-size: 13px;
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: rgb(204, 255, 0);
+}
 .sb-hero-h1 {
   font-size: 72px;
   line-height: 82.8px;
@@ -965,6 +980,7 @@ header[class^="framer-"] { display: none !important; }
      pad. */
   .sb-hero-card { padding: 70px 0 56px; }
   .sb-hero-inner { padding: 0 18px; }
+  .sb-hero-eyebrow { margin: 22px 0 -2px; font-size: 11.5px; letter-spacing: .16em; }
   .sb-hero-h1 { font-size: 36px; line-height: 41.4px; margin-top: 18px; }
   .sb-hero-sub { font-size: 18px; line-height: 30.6px; }
   .sb-hero-hand { font-size: 17px; margin-top: 34px; }

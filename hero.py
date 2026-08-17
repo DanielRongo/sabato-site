@@ -168,13 +168,16 @@ COPY = {
         chip_href="/product/integrations-webhooks",
         chip_aria="How Sabato connects to your systems",
         tag="Integration with Shopify",
-        # Framer breaks this line by hand. Without the <br> the browser breaks
-        # after the hyphen instead - "The voice layer your e- / commerce is
-        # missing." The Italian headline has no <br> and wraps naturally.
-        h1="The voice layer your <br>e-commerce is missing.",
-        sub1=("Custom AI voice workflows that plug into your catalog and handle "
-              "calls across the entire customer journey. WISMO. Pre-sales."),
-        sub2="Order tracking. Returns. Fully managed. Live in two weeks.",
+        # The lime eyebrow carries the category so the headline does not have
+        # to. Both lines of the h1 are hand-broken: the sentence is a pair and
+        # letting the browser wrap it anywhere else breaks the parallel.
+        eyebrow="Managed Voice AI for e-commerce",
+        h1="You grow the store. <br>We run the phone line.",
+        sub1=("Sabato puts a managed voice agent on your support line, built for "
+              "e-commerce and retail, wired into your catalog and your order system, "
+              "speaking every language you sell in. We build it, we run it, we "
+              "improve it every day. Your team gets its time back."),
+        sub2="",
         hand="call it right now &mdash; it picks up",
         reveal="Show number",
         call="Call now",
@@ -186,11 +189,13 @@ COPY = {
         chip_href="/it/prodotto/integrations-webhooks",
         chip_aria="Come Sabato si collega ai tuoi sistemi",
         tag="Integrazione con Shopify",
-        h1="Il tuo e-commerce ha tutto. Tranne la voce.",
-        sub1=("Workflow vocali AI preconfigurati che si collegano al tuo catalogo e "
-              "gestiscono le chiamate lungo tutto il percorso cliente. Pre-vendita. "
-              "Recupero carrelli. Tracking ordini. Resi."),
-        sub2="Completamente gestito. Operativo in due settimane.",
+        eyebrow="Voice AI gestita per l&rsquo;e-commerce",
+        h1="Tu fai crescere lo store. <br>Al telefono ci pensiamo noi.",
+        sub1=("Sabato mette un agente vocale gestito sulla tua linea di assistenza, "
+              "pensato per e-commerce e retail, collegato al catalogo e al sistema "
+              "ordini, che parla tutte le lingue in cui vendi. Lo costruiamo, lo "
+              "gestiamo, lo miglioriamo ogni giorno. Il tuo team si riprende il suo tempo."),
+        sub2="",
         hand="chiamalo adesso &mdash; risponde",
         reveal="Mostra numero",
         call="Chiama ora",
@@ -294,9 +299,10 @@ def hero_html(lang="en", allow_placeholder=False):
               f'<span class="sb-chip-more">{c["chip_c"]}</span>'
               f'<span class="sb-chip-arrow">&rarr;</span>'
             f'</a>'
+            f'<span class="sb-hero-eyebrow">{c["eyebrow"]}</span>'
             f'<h1 class="sb-hero-h1">{c["h1"]}</h1>'
             f'<p class="sb-hero-sub">{c["sub1"]}</p>'
-            f'<p class="sb-hero-sub">{c["sub2"]}</p>'
+            + (f'<p class="sb-hero-sub">{c["sub2"]}</p>' if c["sub2"] else "") +
             f'<p class="sb-hero-hand">{c["hand"]}</p>'
             f'<div class="sb-hero-nums">{_cards(lang)}</div>'
             f'<a class="sb-hero-listen" href="{SAMPLE_CALL}" target="_blank" rel="noopener">'
