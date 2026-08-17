@@ -89,7 +89,13 @@ header[class^="framer-"] { display: none !important; }
      from "Home" to "Pre-Sales Consultation". This is EQUAL GUTTERS - 40px
      between every pair - with space-between so the block still spans from the
      brand to the right margin instead of leaving a hole on the right. */
-  grid-template-columns: minmax(210px, 1fr) repeat(5, max-content);
+  /* Daniel, 17 Aug: "move the company menu a couple points more left, as it's
+     too close to product now". The brand column was 1fr, so it swallowed every
+     spare pixel and pushed the five lists as far right as they would go.
+     Fixing it at 210px hands 43px back: Company starts at 403 instead of 437,
+     and space-between shares the rest so every gutter grows together, 40 ->
+     49px. The block still ends flush with the right margin. */
+  grid-template-columns: 210px repeat(5, max-content);
   justify-content: space-between;
   column-gap: 40px;
   row-gap: 0;
@@ -121,6 +127,7 @@ header[class^="framer-"] { display: none !important; }
   display: block;
   margin-bottom: 16px;
 }
+.sb-grid > .sb-col-static { min-width: 128px; }
 .sb-col li { margin-bottom: 9px; }
 .sb-col a {
   color: var(--sb-muted);
@@ -1401,4 +1408,25 @@ body:has(.sb-logos) [data-framer-name^="Brand Logos" i] { display: none !importa
   .sb-c-btns { flex: 1 1 100%; gap: 8px; }
   .sb-c-btns .sb-c-primary, .sb-c-btns .sb-c-ghost { flex: 1 1 0; }
   .sb-c-text { flex: 0 0 auto; }
+}
+
+/* ==========================================================================
+   ABOUT: lift the hero.
+
+   Daniel, 17 Aug: "in the about page the hero seems too down, make it go up a
+   bit". Measured before touching it: the h1 sat at y=350 against 282 on
+   /contact and 283 on /pricing, because Framer gave this one section 230px of
+   top padding where the others have 162 and 63. So this is not a nudge, it is
+   bringing the page back to the rest of the site.
+
+   Two hashed classes because Framer generates a different one per language -
+   /about is framer-15e5r8z, /it/chi-siamo is framer-24pj9z. Keyed on Framer's
+   own class exactly like the legacy-CTA hide in tools/apply_footer.py; if a
+   re-export ever changes them, the rule stops applying and the page goes back
+   to its old spacing rather than breaking.
+   ========================================================================== */
+.framer-15e5r8z, .framer-24pj9z { padding-top: 150px !important; }
+
+@media (max-width: 809px) {
+  .framer-15e5r8z, .framer-24pj9z { padding-top: 96px !important; }
 }
