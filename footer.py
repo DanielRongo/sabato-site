@@ -45,7 +45,7 @@ ENHANCE = os.path.join(ROOT, "site", "js", "enhance.js")
 
 CAL = "https://cal.com/sabatoai/intro"
 LINKEDIN = "https://www.linkedin.com/company/sabato-ai"
-LOGO = "/fuc/images/KY1UqOX7zKeKJdbxTotIopeeZIU-f2557e25.png"
+LOGO = "/brand/sabato-icon.png"   # the square mark, not the wordmark
 BACKED = "/fuc/images/V9nq776DtkEODcun83ayNz0liCU-28058054.webp"
 LI_ICON = "/fuc/images/3vdzRTYV1XV6UUX6QKcsDIfU-e464e3f1.svg"
 # width/height on the two brand images are the assets' TRUE intrinsic pixel
@@ -62,7 +62,7 @@ COPY = ("&copy; 2026 Sabato LTD - 71-75 Shelton Street, London (UK) - "
         "All rights reserved.")
 
 COPY_EN = dict(
-    home="/", tagline='The #1 managed Voice AI <br>for <span class="sb-nb">E-Commerce</span>.',
+    home="/", tagline='Managed Voice AI Agents <br>for <span class="sb-nb">E-Commerce</span> Stores.',
     backed="Backed by", company="Company", usecases="Workflows", industries="Industries",
     links=[("Home", "/"), ("Pricing", "/pricing"), ("About", "/about"),
            ("Contact us", "/contact"), ("Blog", "/blog")],
@@ -226,7 +226,7 @@ def footer_html(lang="en"):
             f'<div class="sb-brand">'
               f'<a href="{c["home"]}" aria-label="{c["logo_alt"]}">'
                 f'<img class="sb-logo" src="{LOGO}" alt="Sabato AI logo" '
-                f'width="2080" height="278" loading="lazy"></a>'
+                f'width="532" height="532" loading="lazy"></a>'
               f'<p class="sb-tagline">{c["tagline"]}</p>'
               f'<p class="sb-backed">{c["backed"]}</p>'
               f'<img class="sb-backed-img" src="{BACKED}" alt="ElevenLabs Grants" '
