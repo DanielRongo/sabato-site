@@ -1211,6 +1211,122 @@
     host.parentElement.insertBefore(sec, host.nextSibling);
   }
 
+  /* ---------- INTEGRATIONS, and retiring the transcript band ----------
+
+     RETIRE. Framer's "Conversational Intelligence" band (the "See what your
+     customers actually ask" transcript) comes off the homepage. Two reasons,
+     and the second is the one that decided it: the Understand tab in the
+     product showcase already shows Call Data Intelligence 4,000px further up,
+     so the page explained one product twice; and the transcript image is a
+     1200x750 JPG from the Framer project, against 3120x1592 for every export we
+     have made since, so the one asset whose job was proving the product is real
+     was the softest thing on the page. Daniel, 18 Aug: "just retire it".
+
+     INTEGRATIONS. Same thirteen logos, same files, restyled onto our own card:
+     the site's #F9FAFD grey instead of Framer's, the lime-dot eyebrow, and two
+     changes that are arguments rather than decoration -
+       * Shopify carries a NATIVE tag. That is the whole differentiator; without
+         it we read as one more Zapier listing.
+       * the "8,500+" line moves from a hand-drawn annotation floating over the
+         first chip to a pill UNDER the grid, where it reads as the answer to
+         "what about my stack" rather than as a caption on Shopify. */
+
+  var INTEG_LOGOS = [
+    ["Shopify", "jhdHQKz8nA2pnUVTCJ9a9QfqMuI-6325b5aa.svg"],
+    ["Magento", "CJ03BIvLYf5OH3pRPylOcWitl8-02a27367.png"],
+    ["WooCommerce", "7zvknPBPAmTBb748bTSrxPbo-20cf3652.webp"],
+    ["BigCommerce", "mB0Xo441Jxk0vYkyoAVaOmgFkBY-20cf3652.png"],
+    ["Zendesk", "q37WkBUsC8sYmKSnvIx6ydbF8WM-e975e1e8.png"],
+    ["Zoho", "YsdiKtj8aYff1o1AvTtF75ZTy4-27741d12.png"],
+    ["Cal.com", "SkDREEWQtYeYtwr5sakudMa8L8-12f321eb.jpg"],
+    ["Calendly", "stXuR6eP5CTdhhUCviLUDJJy6oY-f1032781.png"],
+    ["Zapier", "Sj0aR7FEGpZX1JThxKfTyi2xPI-0718a85f.png"],
+    ["WhatsApp", "G1mdQkk8b5uQQj3jV9wkI6HUOgs-d2e8f70d.png"],
+    ["Twilio", "rNa3XhIxXIBxpzeNq8MXB8Ba5nI-cfbbeecb.svg"],
+    ["Telnyx", "ppwUrPDgob81bqZwHDNupu0Q0U-5be18e7b.png"],
+    ["Salesforce", "ZVHfOaoY4tHeeAEzvNLiG3fsBA-a5eb2970.png"]
+  ];
+
+  var N_COPY = IT
+    ? { eyebrow: "Integrazioni",
+        h2: "Si collega al tuo stack e-commerce.",
+        lede: "Nativo con Shopify. Tutto il resto passa da Zapier o da un webhook: " +
+              "il tuo CRM, il tuo helpdesk, il tuo ERP, il tuo calendario.",
+        tag: "Nativo",
+        more: "<b>8.500+</b> altre app via Zapier, o qualsiasi endpoint a cui puoi " +
+              "puntare un webhook." }
+    : { eyebrow: "Integrations",
+        h2: "Connects to your e-commerce stack.",
+        lede: "Native with Shopify. Everything else through Zapier or a webhook: " +
+              "your CRM, your helpdesk, your ERP, your calendar.",
+        tag: "Native",
+        more: "<b>8,500+</b> more apps via Zapier, or any endpoint you can point a " +
+              "webhook at." };
+
+  var N_CSS =
+    ".sb-n{max-width:1200px;margin:0 auto;padding:0 20px}" +
+    ".sb-n-card{background:#F9FAFD;border-radius:26px;padding:56px 48px 60px;text-align:center}" +
+    ".sb-n-card .sb-lede{max-width:660px;margin:14px auto 0;font-size:17px;line-height:1.6;" +
+    "color:rgb(111,106,102)}" +
+    ".sb-n-rows{margin:34px 0 0;display:flex;flex-direction:column;gap:14px;align-items:center}" +
+    ".sb-n-row{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}" +
+    ".sb-lg{display:inline-flex;align-items:center;gap:11px;background:#fff;border-radius:14px;" +
+    "padding:12px 20px 12px 13px;font-size:17px;font-weight:600;color:rgb(11,11,12);" +
+    "box-shadow:0 1px 2px rgba(11,11,12,.05)}" +
+    ".sb-lg img{width:28px;height:28px;object-fit:contain;flex:none}" +
+    ".sb-lg.native{box-shadow:inset 0 0 0 1.5px rgb(11,11,12)}" +
+    ".sb-lg .tagn{font-size:9.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;" +
+    "background:rgb(204,255,0);border-radius:5px;padding:4px 6px;margin-left:3px}" +
+    ".sb-n-more{margin:26px auto 0;width:max-content;max-width:100%;background:rgb(11,11,12);" +
+    "color:#fff;border-radius:999px;padding:13px 24px;font-size:15px;line-height:1.4;text-align:center}" +
+    ".sb-n-more b{color:rgb(204,255,0);font-weight:700}" +
+    "@media(max-width:809px){.sb-n-card{padding:40px 20px 44px;border-radius:20px}" +
+    ".sb-lg{font-size:14.5px;padding:10px 14px 10px 10px;gap:8px}" +
+    ".sb-lg img{width:22px;height:22px}.sb-n-row{gap:10px}.sb-n-rows{gap:10px}" +
+    ".sb-n-more{font-size:14px;padding:12px 18px}}";
+
+  function retireTranscript() {
+    var el = document.querySelector('[data-framer-name="Conversational Intelligence" i]');
+    if (el && el.style.display !== "none") el.style.display = "none";
+  }
+
+  function buildIntegrations() {
+    sbCss();
+    var anchor = takeOver("Integrations Section", "data-sb-integ");
+    if (!anchor) return;
+    if (!document.getElementById("sb-integ-css")) {
+      var st = document.createElement("style");
+      st.id = "sb-integ-css"; st.textContent = N_CSS;
+      (document.head || document.documentElement).appendChild(st);
+    }
+
+    var rows = [[0, 4], [4, 9], [9, 13]], html = "";
+    for (var r = 0; r < rows.length; r++) {
+      html += '<div class="sb-n-row">';
+      for (var i = rows[r][0]; i < rows[r][1]; i++) {
+        var lg = INTEG_LOGOS[i], native = lg[0] === "Shopify";
+        html += '<div class="sb-lg' + (native ? " native" : "") + '">' +
+                '<img src="/fuc/images/' + lg[1] + '" alt="" loading="lazy" decoding="async">' +
+                lg[0] + (native ? '<span class="tagn">' + N_COPY.tag + "</span>" : "") + "</div>";
+      }
+      html += "</div>";
+    }
+
+    var sec = document.createElement("section");
+    sec.setAttribute("data-sb-integ", "1");
+    sec.className = "sb-band";
+    sec.style.cssText = "padding:64px 0";
+    sec.innerHTML =
+      '<div class="sb-n"><div class="sb-n-card">' +
+        '<p class="sb-eyeb">' + N_COPY.eyebrow + "</p>" +
+        "<h2>" + N_COPY.h2 + "</h2>" +
+        '<p class="sb-lede">' + N_COPY.lede + "</p>" +
+        '<div class="sb-n-rows">' + html + "</div>" +
+        '<div class="sb-n-more">' + N_COPY.more + "</div>" +
+      "</div></div>";
+    anchor.parentElement.insertBefore(sec, anchor.nextSibling);
+  }
+
   function stripTags(s) { return (s || "").replace(/<[^>]*>/g, " "); }
 
   /* True when `el` sits inside the eyebrow pill's own anchor - the pill's text
@@ -1245,6 +1361,8 @@
     buildQueue();
     buildManaged();
     buildInside();
+    retireTranscript();
+    buildIntegrations();
   }
   /* SELF-FEEDING OBSERVER - fixed 6 Aug 2026.
 
