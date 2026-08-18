@@ -1049,9 +1049,9 @@
   }
 
   function buildQueue() {
-    sbCss();
     var anchor = takeOver("Overview Section", "data-sb-queue");
     if (!anchor) return;
+    sbCss();
     var beats = "";
     for (var i = 0; i < Q_COPY.beats.length; i++) {
       var bt = Q_COPY.beats[i];
@@ -1072,9 +1072,9 @@
   }
 
   function buildManaged() {
-    sbCss();
     var anchor = takeOver("Features Section", "data-sb-managed");
     if (!anchor) return;
+    sbCss();
     var steps = "";
     for (var i = 0; i < M_COPY.steps.length; i++) {
       var s = M_COPY.steps[i];
@@ -1149,33 +1149,53 @@
             "Reading the call data and fixing the store"],
         kicker: "You don't lose people. You stop losing their day." };
 
+  /* THE CLASS NAMES HERE ARE PREFIXED sb-ix- FOR A REASON. The first version
+     called the two columns .sb-col, which is the FOOTER's own class (footer.py
+     renders the link columns with it, site/css/footer.css styles it). This
+     stylesheet is injected after the footer's, so every footer column became a
+     white rounded card with ink text on a black background - invisible links,
+     on every page, shipped. Reported by Daniel on 18 Aug 2026: "what the hell
+     happened to the footer".
+
+     enhance.js styles are GLOBAL. Namespace every class this file adds, and
+     diff new class names against site/css/footer.css before shipping. Note that
+     tools/test_footer_clicks.py passed throughout: it clicks by label text, and
+     the links were present and resolving correctly - just invisible. A test
+     that asserts behaviour will not catch a page that cannot be read. */
   var I_CSS =
     ".sb-i{max-width:1200px;margin:0 auto;padding:0 20px;text-align:center}" +
     ".sb-i .sb-lede{max-width:680px;margin:14px auto 0;font-size:17px;line-height:1.6;" +
     "color:rgb(111,106,102)}" +
     ".sb-split{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:34px 0 0;text-align:left}" +
-    ".sb-col{background:#F9FAFD;border-radius:20px;padding:30px 32px 32px}" +
-    ".sb-col.hi{background:#fff;box-shadow:inset 0 0 0 1.5px rgb(11,11,12)}" +
-    ".sb-col small{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;" +
+    ".sb-ix-col{background:#F9FAFD;border-radius:20px;padding:30px 32px 32px}" +
+    ".sb-ix-col.hi{background:#fff;box-shadow:inset 0 0 0 1.5px rgb(11,11,12)}" +
+    ".sb-ix-col small{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;" +
     "color:rgb(111,106,102)}" +
-    ".sb-col.hi small{color:rgb(11,11,12)}" +
-    ".sb-col ul{list-style:none;margin:18px 0 0;padding:0}" +
-    ".sb-col li{font-size:16px;line-height:1.5;font-weight:500;padding:11px 0 11px 26px;" +
+    ".sb-ix-col.hi small{color:rgb(11,11,12)}" +
+    ".sb-ix-col ul{list-style:none;margin:18px 0 0;padding:0}" +
+    ".sb-ix-col li{font-size:16px;line-height:1.5;font-weight:500;padding:11px 0 11px 26px;" +
     "border-top:1px solid rgba(11,11,12,.08);position:relative;color:rgb(11,11,12)}" +
-    ".sb-col li:first-child{border-top:0}" +
-    ".sb-col li:before{content:'';position:absolute;left:2px;top:19px;width:12px;height:1.5px;" +
+    ".sb-ix-col li:first-child{border-top:0}" +
+    ".sb-ix-col li:before{content:'';position:absolute;left:2px;top:19px;width:12px;height:1.5px;" +
     "background:#c8c3be}" +
-    ".sb-col.hi li:before{left:1px;top:16px;width:0;height:0;background:none;" +
+    ".sb-ix-col.hi li:before{left:1px;top:16px;width:0;height:0;background:none;" +
     "border-left:7px solid #8a9e00;border-top:5px solid transparent;border-bottom:5px solid transparent}" +
     ".sb-kick{margin:30px 0 0;font-size:21px;line-height:1.4;font-weight:700;letter-spacing:-.4px;" +
     "color:rgb(11,11,12)}" +
     "@media(max-width:809px){.sb-split{grid-template-columns:1fr;gap:14px;margin-top:26px}" +
-    ".sb-col{padding:24px 22px 26px}.sb-col li{font-size:15px}" +
+    ".sb-ix-col{padding:24px 22px 26px}.sb-ix-col li{font-size:15px}" +
     ".sb-kick{font-size:17px;margin-top:24px}.sb-i .sb-lede{font-size:16px}}";
 
   function buildInside() {
-    sbCss();
     if (document.querySelector("[data-sb-inside]")) return;
+    /* HOST CHECK BEFORE STYLESHEET. The first version injected I_CSS and only
+       then looked for a host, so all 112 pages loaded rules for a section that
+       only two of them render - which is how one bad class name reached every
+       footer on the site. A page never needs CSS for a section it does not
+       have. */
+    var probe = document.querySelector("[data-sb-managed]");
+    if (!probe || !probe.parentElement) return;
+    sbCss();
     if (!document.getElementById("sb-inside-css")) {
       var st = document.createElement("style");
       st.id = "sb-inside-css"; st.textContent = I_CSS;
@@ -1203,8 +1223,8 @@
         "<h2>" + I_COPY.h2 + "</h2>" +
         '<p class="sb-lede">' + I_COPY.lede + "</p>" +
         '<div class="sb-split">' +
-          '<div class="sb-col"><small>' + I_COPY.aHead + "</small><ul>" + li(I_COPY.a) + "</ul></div>" +
-          '<div class="sb-col hi"><small>' + I_COPY.bHead + "</small><ul>" + li(I_COPY.b) + "</ul></div>" +
+          '<div class="sb-ix-col"><small>' + I_COPY.aHead + "</small><ul>" + li(I_COPY.a) + "</ul></div>" +
+          '<div class="sb-ix-col hi"><small>' + I_COPY.bHead + "</small><ul>" + li(I_COPY.b) + "</ul></div>" +
         "</div>" +
         '<p class="sb-kick">' + I_COPY.kicker + "</p>" +
       "</div>";
@@ -1291,9 +1311,9 @@
   }
 
   function buildIntegrations() {
-    sbCss();
     var anchor = takeOver("Integrations Section", "data-sb-integ");
     if (!anchor) return;
+    sbCss();
     if (!document.getElementById("sb-integ-css")) {
       var st = document.createElement("style");
       st.id = "sb-integ-css"; st.textContent = N_CSS;
