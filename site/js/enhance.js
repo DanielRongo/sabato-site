@@ -1103,6 +1103,114 @@
     anchor.parentElement.insertBefore(sec, anchor.nextSibling);
   }
 
+  /* ---------- WHAT CHANGES INSIDE ----------
+     The redeployment argument, and the only section on the page written for the
+     customer service lead rather than the founder. The hero promises the team
+     gets its time back; nothing until now showed what they do with it, which is
+     exactly the thing she has to defend internally.
+
+     No Framer section to displace: this is new, and it slots between the 95%
+     band and the closing proof. Two columns, because the argument IS the
+     comparison - what leaves her desk against what arrives on it. */
+
+  var I_COPY = IT
+    ? { eyebrow: "Cosa cambia dentro",
+        h2: "La coda va all'agente. <br>Il tuo team va altrove.",
+        lede: "Non stai tagliando il team. Lo stai spostando, via dalla coda che si " +
+              "ripete, sul lavoro che solo una persona può fare.",
+        aHead: "Cosa prende l'agente",
+        bHead: "Cosa si riprende il team",
+        a: ["Dov'è il mio ordine",
+            "Date e fasce di consegna",
+            "Condizioni di reso",
+            "Orari e disponibilità",
+            "La stessa domanda, in quattro lingue, alle 2 di notte"],
+        b: ["Il cliente arrabbiato che vuole una persona",
+            "L'ordine da 4.000 € che richiede una decisione",
+            "Il fornitore che insegue una consegna",
+            "Le chiamate di retention che nessuno aveva tempo di fare",
+            "Leggere i dati delle chiamate e sistemare lo store"],
+        kicker: "Non perdi persone. Smetti di perdere le loro giornate." }
+    : { eyebrow: "What changes inside",
+        h2: "The queue goes to the agent. <br>Your team goes somewhere better.",
+        lede: "You are not cutting the team. You are moving it, off the queue that " +
+              "repeats itself, onto the work only a person can do.",
+        aHead: "What the agent takes",
+        bHead: "What your team takes back",
+        a: ["Where is my order",
+            "Delivery dates and slots",
+            "Return eligibility",
+            "Opening hours and stock",
+            "The same question, in four languages, at 2am"],
+        b: ["The angry customer who needs a human",
+            "The €4,000 order that needs a decision",
+            "The supplier chasing a delivery",
+            "Retention calls nobody had time for",
+            "Reading the call data and fixing the store"],
+        kicker: "You don't lose people. You stop losing their day." };
+
+  var I_CSS =
+    ".sb-i{max-width:1200px;margin:0 auto;padding:0 20px;text-align:center}" +
+    ".sb-i .sb-lede{max-width:680px;margin:14px auto 0;font-size:17px;line-height:1.6;" +
+    "color:rgb(111,106,102)}" +
+    ".sb-split{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:34px 0 0;text-align:left}" +
+    ".sb-col{background:#F9FAFD;border-radius:20px;padding:30px 32px 32px}" +
+    ".sb-col.hi{background:#fff;box-shadow:inset 0 0 0 1.5px rgb(11,11,12)}" +
+    ".sb-col small{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;" +
+    "color:rgb(111,106,102)}" +
+    ".sb-col.hi small{color:rgb(11,11,12)}" +
+    ".sb-col ul{list-style:none;margin:18px 0 0;padding:0}" +
+    ".sb-col li{font-size:16px;line-height:1.5;font-weight:500;padding:11px 0 11px 26px;" +
+    "border-top:1px solid rgba(11,11,12,.08);position:relative;color:rgb(11,11,12)}" +
+    ".sb-col li:first-child{border-top:0}" +
+    ".sb-col li:before{content:'';position:absolute;left:2px;top:19px;width:12px;height:1.5px;" +
+    "background:#c8c3be}" +
+    ".sb-col.hi li:before{left:1px;top:16px;width:0;height:0;background:none;" +
+    "border-left:7px solid #8a9e00;border-top:5px solid transparent;border-bottom:5px solid transparent}" +
+    ".sb-kick{margin:30px 0 0;font-size:21px;line-height:1.4;font-weight:700;letter-spacing:-.4px;" +
+    "color:rgb(11,11,12)}" +
+    "@media(max-width:809px){.sb-split{grid-template-columns:1fr;gap:14px;margin-top:26px}" +
+    ".sb-col{padding:24px 22px 26px}.sb-col li{font-size:15px}" +
+    ".sb-kick{font-size:17px;margin-top:24px}.sb-i .sb-lede{font-size:16px}}";
+
+  function buildInside() {
+    sbCss();
+    if (document.querySelector("[data-sb-inside]")) return;
+    if (!document.getElementById("sb-inside-css")) {
+      var st = document.createElement("style");
+      st.id = "sb-inside-css"; st.textContent = I_CSS;
+      (document.head || document.documentElement).appendChild(st);
+    }
+    /* Anchored to the 95% band rather than to a Framer section, because there
+       is no Framer section here to anchor to. If that band is ever removed this
+       one goes with it, which is correct: the argument only lands after the
+       reader knows we run the thing. */
+    var host = document.querySelector("[data-sb-managed]");
+    if (!host || !host.parentElement) return;
+
+    var li = function (arr) {
+      var out = "";
+      for (var i = 0; i < arr.length; i++) out += "<li>" + arr[i] + "</li>";
+      return out;
+    };
+    var sec = document.createElement("section");
+    sec.setAttribute("data-sb-inside", "1");
+    sec.className = "sb-band";
+    sec.style.cssText = "padding:64px 0";
+    sec.innerHTML =
+      '<div class="sb-i">' +
+        '<p class="sb-eyeb">' + I_COPY.eyebrow + "</p>" +
+        "<h2>" + I_COPY.h2 + "</h2>" +
+        '<p class="sb-lede">' + I_COPY.lede + "</p>" +
+        '<div class="sb-split">' +
+          '<div class="sb-col"><small>' + I_COPY.aHead + "</small><ul>" + li(I_COPY.a) + "</ul></div>" +
+          '<div class="sb-col hi"><small>' + I_COPY.bHead + "</small><ul>" + li(I_COPY.b) + "</ul></div>" +
+        "</div>" +
+        '<p class="sb-kick">' + I_COPY.kicker + "</p>" +
+      "</div>";
+    host.parentElement.insertBefore(sec, host.nextSibling);
+  }
+
   function stripTags(s) { return (s || "").replace(/<[^>]*>/g, " "); }
 
   /* True when `el` sits inside the eyebrow pill's own anchor - the pill's text
@@ -1136,6 +1244,7 @@
     buildWorkflowsSection();
     buildQueue();
     buildManaged();
+    buildInside();
   }
   /* SELF-FEEDING OBSERVER - fixed 6 Aug 2026.
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""THE closing CTA band - the green "Your store is open 24/7" card.
+"""THE closing CTA band - the green card that closes the eight Framer pages.
 
     python3 cta.py            # print the English one
     python3 cta.py it         # Italian
@@ -52,7 +52,15 @@ PAGES = {
     "it.html", "it/prezzi.html", "it/chi-siamo.html", "it/contatti.html",
 }
 
-# Copy is Framer's, verbatim - this is a layout rebuild, not a rewrite.
+# Copy WAS Framer's verbatim. It is not any more: on 18 Aug 2026 the headline
+# became "Your best people shouldn't be reading tracking numbers", which is the
+# line Daniel picked for the close, and the body lost "Live in two weeks" - a
+# claim he killed for undervaluing the work.
+#
+# THIS BAND IS ON EIGHT PAGES, not just the homepage (see PAGES). The headline
+# had to work on /about and /pricing too, which is why it argues about the job
+# rather than about this page. The body deliberately does NOT say "the four
+# numbers above": the hero with the numbers exists only on / and /it.
 COPY = {
     "en": dict(
         eyebrow="Get Started",
@@ -60,20 +68,20 @@ COPY = {
         # headline can wrap naturally, and without that space the two sentences
         # collide into "24/7.Your phone line". On desktop a space before a line
         # break collapses to nothing, so the wide layout is unaffected.
-        h2="Your store is open 24/7. <br>Your phone line should be too.",
-        # <br> after "catalog." is Framer's break - it balances the two lines.
-        # Hidden on phones (see the CSS), where the copy wraps over five lines.
-        body=("Pre-configured AI voice workflows for e-commerce. Connected to your "
-              "catalog. <br>Fully managed. Live in two weeks. Book a call or talk to "
-              "our AI right now."),
+        h2="Your best people shouldn't be <br>reading tracking numbers.",
+        # <br> is Framer's break - it balances the two lines. Hidden on phones
+        # (see the CSS), where the copy wraps naturally.
+        body=("Pre-configured AI voice workflows for e-commerce, connected to your "
+              "catalog and fully managed. <br>Book a call, or talk to our agent "
+              "right now."),
         btn="Book a Call",
     ),
     "it": dict(
         eyebrow="Inizia ora",
-        h2="Il tuo store &egrave; aperto 24/7. <br>Anche il tuo telefono dovrebbe esserlo.",
-        body=("Workflow vocali AI preconfigurati per l&rsquo;e-commerce. Collegati al tuo "
-              "catalogo. Completamente gestiti. <br>Operativi in due settimane. Prenota "
-              "una call o parla con la nostra AI adesso."),
+        h2="I tuoi migliori non dovrebbero <br>leggere numeri di tracking.",
+        body=("Workflow vocali AI preconfigurati per l&rsquo;e-commerce, collegati al tuo "
+              "catalogo e completamente gestiti. <br>Prenota una call, oppure parla "
+              "con il nostro agente adesso."),
         btn="Prenota una call",
     ),
 }
