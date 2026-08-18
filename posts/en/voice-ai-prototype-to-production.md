@@ -44,9 +44,7 @@ Each of these is weeks. Several are months.
 
 **3. Live data, behaving badly.** Demos run against a snapshot, or a copy, or a fixture someone prepared. Nobody demos with the system running slow. Nobody demos the moment the stock figure is twenty minutes stale, which is exactly when a confident agent tells a customer something that was true earlier. This is the layer where in-house builds most often quietly die, and it never appears in the room.
 
-**4. The second language.** If you sell in more than one country, a demo in one language has tested one of your markets. The others aren't a setting. They're a repeat of most of this work, and the cost isn't linear — what a voice agent actually costs to run goes through why.
-<!-- FORWARD LINK - issue 03. On the day /blog/voice-agent-cost-to-run publishes, restore:
-     [what a voice agent actually costs to run](/blog/voice-agent-cost-to-run) -->
+**4. The second language.** If you sell in more than one country, a demo in one language has tested one of your markets. The others aren't a setting. They're a repeat of most of this work, and the cost isn't linear. [What a voice agent actually costs to run](/blog/voice-agent-cost-to-run) goes through why.
 
 **5. Volume.** One call at a time and forty calls at once are not the same system behaving differently. They're different systems. Nothing in a demo tells you which one you have.
 

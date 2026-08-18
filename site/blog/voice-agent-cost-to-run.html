@@ -28,24 +28,24 @@
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Why Every Voice AI Demo Works | Sabato AI</title>
-  <meta name="description" content="A demo is one call, one voice, one question - chosen by the person demonstrating. Here is what it leaves out, and the one question to ask instead.">
-  <link rel="alternate" hreflang="en" href="https://www.sabato.ai/blog/voice-ai-prototype-to-production">
-  <link rel="alternate" hreflang="it" href="https://www.sabato.ai/it/blog/voice-ai-prototype-to-production">
-  <link rel="alternate" hreflang="x-default" href="https://www.sabato.ai/blog/voice-ai-prototype-to-production">
-  <link rel="canonical" href="https://www.sabato.ai/blog/voice-ai-prototype-to-production">
+  <title>Voice Agent Running Costs: The Seven Lines | Sabato AI</title>
+  <meta name="description" content="The per-minute price is the smallest line on the sheet. The seven costs that actually recur, and why running cost scales with variety, not volume.">
+  <link rel="alternate" hreflang="en" href="https://www.sabato.ai/blog/voice-agent-cost-to-run">
+  <link rel="alternate" hreflang="it" href="https://www.sabato.ai/it/blog/voice-agent-cost-to-run">
+  <link rel="alternate" hreflang="x-default" href="https://www.sabato.ai/blog/voice-agent-cost-to-run">
+  <link rel="canonical" href="https://www.sabato.ai/blog/voice-agent-cost-to-run">
 
   <meta property="og:type" content="article">
-  <meta property="og:title" content="Why Every Voice AI Demo Works | Sabato AI">
-  <meta property="og:description" content="A demo is one call, one voice, one question - chosen by the person demonstrating. Here is what it leaves out, and the one question to ask instead.">
-  <meta property="og:url" content="https://www.sabato.ai/blog/voice-ai-prototype-to-production">
+  <meta property="og:title" content="Voice Agent Running Costs: The Seven Lines | Sabato AI">
+  <meta property="og:description" content="The per-minute price is the smallest line on the sheet. The seven costs that actually recur, and why running cost scales with variety, not volume.">
+  <meta property="og:url" content="https://www.sabato.ai/blog/voice-agent-cost-to-run">
   <meta property="og:image" content="https://www.sabato.ai/fuc/assets/8Q4ofjOgRTqsr8FpanTJF9nzLwU.png">
   <meta property="og:locale" content="en_US">
   <meta name="twitter:card" content="summary_large_image">
   <link href="/fuc/images/hWFOqN6Okd1QgfKhizqgIF1s.png" rel="icon" media="(prefers-color-scheme: light)">
   <link href="/fuc/images/dEcuqc3xAQ3JJoX4xQDYrMQefA.png" rel="icon" media="(prefers-color-scheme: dark)">
   <link rel="apple-touch-icon" href="/fuc/images/dEcuqc3xAQ3JJoX4xQDYrMQefA.png">
-  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Every voice demo works. That's what makes them dangerous.", "description": "A demo is one call, one voice, one question - chosen by the person demonstrating. Here is what it leaves out, and the one question to ask instead.", "datePublished": "2026-08-12", "dateModified": "2026-08-12", "inLanguage": "en", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://www.sabato.ai/blog/voice-ai-prototype-to-production"}, "author": {"@type": "Organization", "name": "Sabato AI", "url": "https://www.sabato.ai"}, "publisher": {"@type": "Organization", "name": "Sabato AI", "url": "https://www.sabato.ai"}}</script>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "What a voice agent costs to run, not to build", "description": "The per-minute price is the smallest line on the sheet. The seven costs that actually recur, and why running cost scales with variety, not volume.", "datePublished": "2026-08-18", "dateModified": "2026-08-18", "inLanguage": "en", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://www.sabato.ai/blog/voice-agent-cost-to-run"}, "author": {"@type": "Organization", "name": "Sabato AI", "url": "https://www.sabato.ai"}, "publisher": {"@type": "Organization", "name": "Sabato AI", "url": "https://www.sabato.ai"}}</script>
   <style>
     /* ============ Fonts (local mirrors, same files the site loads) ============ */
     @font-face { font-family: "Satoshi"; src: url("/fuc/third-party-assets/fontshare/wf/TTX2Z3BF3P6Y5BQT3IV2VNOK6FL22KUT/7QYRJOI3JIMYHGY6CH7SOIFRQLZOLNJ6/KFIAZD4RUMEZIYV6FQ3T3GP5PDBDB6JY.woff2") format("woff2"); font-display: swap; font-style: normal; font-weight: 400; }
@@ -375,63 +375,140 @@
     <a class="backlink" href="/blog">← Back to the blog</a>
     <div style="display:flex;flex-direction:column;align-items:center;">
       <span class="tag">Voice AI DIY</span>
-      <h1>Every voice demo works. That's what makes them dangerous.</h1>
-      <p class="meta"><span>Aug 12, 2026</span><span>6 min read</span><span>By Sabato AI</span><span><a href="/it/blog/voice-ai-prototype-to-production" style="color:#fff;text-decoration:underline;text-underline-offset:3px;">Leggi in italiano 🇮🇹</a></span></p>
+      <h1>What a voice agent costs to run, not to build</h1>
+      <p class="meta"><span>Aug 18, 2026</span><span>6 min read</span><span>By Sabato AI</span><span><a href="/it/blog/voice-agent-cost-to-run" style="color:#fff;text-decoration:underline;text-underline-offset:3px;">Leggi in italiano 🇮🇹</a></span></p>
     </div>
   </section>
   <main>
     <article class="prose">
-<p><em>The Build File, issue 02. A season on running a voice build without being an engineer.</em></p>
-<p>Voice agent demos work.</p>
-<p>Not usually. Not most of the time. They work, essentially always, and that should be far more suspicious than it is.</p>
-<p>It isn't because anyone is cheating. It's because a demo is, structurally, one call: one voice, one clean line, one question, chosen by the person doing the demonstrating. That isn't evidence. It's a sample selected by someone with an interest in the selection.</p>
-<p>Which is fine, as long as everyone in the room knows that's what they're looking at. The problem is what happens next. The demo lands, the team feels validated, and a sentence enters the project that will cost you four months: we already have it working.</p>
-<p>You don't. You have the first ten percent, and it looks like the last ninety.</p>
+<p><em>The Build File, issue 03. A season on running a voice build without being an engineer.</em></p>
+<p>Everybody quotes the per-minute cost.</p>
+<p>It's the number on the pricing page, it's the one your technical lead brings to the meeting, and
+it is the smallest line on the sheet. Not one of the smaller ones. The smallest.</p>
+<p>This matters because almost every in-house business case for a voice agent is built on the cost
+to <em>build</em> it. A one-off, quoted in weeks of developer time, which everyone will have forgotten
+about within a year. The cost to <em>run</em> it is forever, and it usually isn't in the document at all.</p>
+<p>The running cost breaks into seven lines. You won't find your own numbers here; you'll find
+which questions to send to your finance director, and what happens if one of the lines is missing.</p>
 <hr />
-<h2>The inversion</h2>
-<p>Here is the shape of a voice build, and it is the opposite of what everyone assumes.</p>
-<p>Getting an agent to hold one good conversation is now a small piece of work. Genuinely small. A capable developer can do it in a few days, and the result will be impressive enough to show a board.</p>
-<p>Getting it to hold the thousandth conversation, with the caller you didn't pick, on the line you don't control, about the product that changed last week, is most of the work. All of it is invisible in a demo, because a demo is designed — reasonably — to show the thing succeeding.</p>
-<p>So the ratio people carry in their heads is upside down. The prototype feels like ninety percent of the project because it produced ninety percent of the visible progress. It is about ten percent of the work.</p>
+<h2>The seven lines</h2>
+<p><strong>1. Processing, per minute of conversation.</strong> Speech in, a model deciding what to say, speech
+back out, metered by the minute. This is the famous one, it's genuinely metered, and it has been
+falling steadily for two years. It is the line people quote because it's the only one with a
+published price, which is a bad reason.</p>
+<p><strong>2. The line itself.</strong> A phone number in each country you sell in, rented monthly, plus inbound
+minutes at carrier rates. Modest per market. The thing to notice is <em>per market</em>. Four countries
+is four arrangements, four invoices and four sets of paperwork, not one line item with a bigger
+number.</p>
+<p><strong>3. Somebody who listens.</strong> Every week, a person pulls a sample of calls, listens to them, and
+fixes what went wrong. Not during the project. Forever.</p>
+<p>This is the largest recurring line in most voice operations and it is missing from most business
+cases, because it doesn't look like infrastructure. It looks like somebody's afternoon. It is
+still the difference between an agent that improves and an agent that decays.</p>
+<p><strong>4. Somebody who answers at 8pm.</strong> When the thing breaks outside office hours, either a person
+is paid to be reachable, or the line is degraded until Monday. Both are legitimate choices. Only
+one of them is usually costed, and it's rarely the one that got chosen.</p>
+<p><strong>5. The testing that keeps happening.</strong> Maintaining a test set, running it monthly, re-running it
+after every change to the instructions or the catalogue. This is small, unglamorous, and always
+the first line cut. It is why so many agents that worked in March don't in September.
+<a href="/blog/voice-agent-acceptance-test">The twenty calls</a> is the cheap version of this line.</p>
+<p><strong>6. Each additional language.</strong> Not a multiplier of line 1. A repeat of lines 2 through 5: another
+set of numbers, another test set, another weekly listening session. And the part that
+surprises people: another person who can actually judge whether those calls were any good. You cannot
+review Dutch calls with an Italian team.</p>
+<p><strong>7. The rebuild.</strong> Every eighteen months or so the ground moves underneath: models change,
+a supplier's data format shifts, the thing you built around gets deprecated. Treat it as a
+recurring capital line rather than an annual surprise, because it is one.</p>
 <hr />
-<h2>The six things a demo leaves out</h2>
-<p>Each of these is weeks. Several are months.</p>
-<p><strong>1. The second kind of caller.</strong> The person speaking in the demo is almost always someone on the project. They articulate, they wait their turn, and they ask questions they know it can answer. They are, without meaning to be, the easiest caller your business will ever have. The demo tells you nothing about the customer in a van with the window down, or the one from Bari, or the one who drops English product names into the middle of a sentence.</p>
-<p><strong>2. The path where things go wrong.</strong> Every demo follows the route where everything goes as expected. Real calls leave that route inside the first twenty seconds — the caller changes his mind, asks two things at once, gives the wrong reference number and corrects it, or wants something you don't sell. The unhappy paths aren't a subset of the work. They are the work.</p>
-<p><strong>3. Live data, behaving badly.</strong> Demos run against a snapshot, or a copy, or a fixture someone prepared. Nobody demos with the system running slow. Nobody demos the moment the stock figure is twenty minutes stale, which is exactly when a confident agent tells a customer something that was true earlier. This is the layer where in-house builds most often quietly die, and it never appears in the room.</p>
-<p><strong>4. The second language.</strong> If you sell in more than one country, a demo in one language has tested one of your markets. The others aren't a setting. They're a repeat of most of this work, and the cost isn't linear. <a href="/blog/voice-agent-cost-to-run">What a voice agent actually costs to run</a> goes through why.</p>
-<p><strong>5. Volume.</strong> One call at a time and forty calls at once are not the same system behaving differently. They're different systems. Nothing in a demo tells you which one you have.</p>
-<p><strong>6. Time.</strong> A demo is a photograph. The thing has to work in March, when the underlying models have changed beneath it, someone has edited the instructions, a supplier's data format has moved and three new product categories exist that nobody thought to test.</p>
+<h2>The line that inverts everything</h2>
+<p>This is the part worth taking to your CFO, because it contradicts the instinct that everyone
+brings to software spending.</p>
+<p>In normal software, you build once and each additional user costs you close to nothing. That's
+the whole shape of the industry and it's why software companies are valuable.</p>
+<p>Voice doesn't behave like that, because most of the recurring cost is <strong>human attention</strong>, which is
+lines 3, 4, 5 and half of 6. Human attention does not scale with volume. It scales with <strong>variety</strong>.</p>
+<p>Ten thousand calls a month about three things is cheap to run. Two thousand calls a month about
+forty things is expensive, and can easily cost more in total despite being a fifth of the volume.
+Every distinct kind of call needs its own instructions, its own test cases, its own review, and
+its own failure modes that somebody has to notice.</p>
+<p>So the question your business case is built on is probably the wrong one. It's almost
+always <em>how many calls do we get?</em> The question that actually drives the running cost is <strong>how
+many different kinds of call do we get</strong>. The answer decides whether this is cheap or
+ruinous. That's not a budgeting detail; it's the entire argument for scoping the first agent
+narrowly.</p>
 <hr />
-<h2>Why the demo is specifically seductive to you</h2>
-<p>This is the part I'd want the person approving the budget to sit with.</p>
-<p>Of everything in a voice build, the conversation is the only component you can personally evaluate. You can hear it. You have forty years of expertise in whether something sounds right on a phone, and that expertise is real.</p>
-<p>You cannot hear the data layer. You cannot hear how the agent behaves when the system is unreachable. You cannot hear what it's permitted to change in a customer record, or what happens at 9pm on a Saturday when there's nobody to transfer to, or how it handles the fortieth simultaneous call.</p>
-<p>So the one part you're qualified to judge is the part that's least diagnostic — and it's also the part that's furthest along, because it's the part your team enjoyed building. Every incentive in the room points at the same wrong conclusion, and nobody in it is acting in bad faith.</p>
-<p>That's why "it sounded great" keeps producing projects that slip two quarters. It sounded great because that's the easy part and you're the expert on it.</p>
+<h2>The European multiplier</h2>
+<p>Every one of those human lines is priced in local labour, which is why this business case does
+not transfer across the continent.</p>
+<p>In 2025, hourly labour costs across the EU ranged from &euro;12.0 in Bulgaria to &euro;56.8 in
+Luxembourg, against an EU average of &euro;34.9 and a euro area average of &euro;38.2, according
+to Eurostat. The Netherlands sat at &euro;47.9, Denmark at &euro;51.7, Romania at &euro;13.6.</p>
+<p>A caveat, because it matters: those are whole-economy figures for enterprises with ten or more
+employees, covering wages plus employer social contributions. They are a sound proxy for how
+relative labour cost varies between markets. They are not a quote for what a customer service
+agent costs you, and anyone using them that way is being sloppy.</p>
+<p>Used properly, though, they say something blunt. The identical agent, handling identical volume,
+has a business case that differs by roughly four times depending on which side of Europe your
+support team sits on.</p>
+<p>And there's an awkward consequence. The operators with the strongest financial case for
+automating are in the highest-cost markets. The operators most likely to attempt building it
+in-house, because capable developers nearby are affordable, are in the lowest. The build
+instinct is strongest precisely where the payoff is weakest, and it's worth knowing which of
+those two you are before anyone writes a line of code.</p>
 <hr />
-<h2>What to ask instead</h2>
-<p>Don't ask for a better demo. Ask for the opposite one.</p>
-<blockquote>
-<p>"Show me three calls where it did the wrong thing."</p>
-</blockquote>
-<p>That's the whole intervention. A team that has been testing properly will have them ready, will be slightly pleased to show you, and will already know why each one happened. A team that can't produce three has not been looking for them — which is the actual finding, and it's worth more than anything in the successful demo.</p>
-<p>Then two follow-ups:</p>
-<blockquote>
-<p>"What did it do when the data was wrong?"</p>
-</blockquote>
-<p>Not unavailable. Wrong. Stale, contradictory, or pointing at a product that was discontinued.</p>
-<blockquote>
-<p>"Who has phoned it who isn't in this company?"</p>
-</blockquote>
-<p>If the answer is nobody, the agent has been tested on the friendliest possible population, and the results mean roughly nothing.</p>
-<p>If you want the structured version of this, it's <a href="/blog/voice-agent-acceptance-test">the twenty calls</a> — the same instinct, written out so someone can score it in an afternoon.</p>
-<hr />
-<h2>The reframe</h2>
-<p>A prototype's job is not to prove the thing can work. Everyone already knows it can work; that question was settled by the whole industry a while ago.</p>
-<p>A prototype's job is to find out how it breaks, in your business, with your customers, on your data. Measured that way, a prototype that only ever succeeded taught you nothing, and cost you however long it took to build.</p>
-<p>Which flips what "we already have it working" means. It isn't a status report. It's a description of the starting line — and if it's being offered as a reason to shorten the timeline, that's the moment to slow down rather than speed up.</p>
-<p>The good news is that this is a cheap thing to fix. A week of deliberately trying to break it tells you more than another month of polishing it, and it's the week that decides whether the scope you approved was the right one — which is the scoping problem, and the next thing worth getting right.</p>
+<h2>The one-page model</h2>
+<p>Take this to whoever owns the numbers. The right-hand column is the work.</p>
+<div class="table-wrap dense"><table>
+<thead>
+<tr>
+<th>Line</th>
+<th>Recurs</th>
+<th>How to get a real number</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Processing per minute</td>
+<td>Monthly, with volume</td>
+<td>Ask for a quote at your actual monthly minutes, not list price</td>
+</tr>
+<tr>
+<td>Numbers and carrier minutes</td>
+<td>Monthly, per country</td>
+<td>One quote per market you sell in</td>
+</tr>
+<tr>
+<td>Weekly listening and fixes</td>
+<td>Forever</td>
+<td>Hours per week x your loaded hourly cost. Name the person</td>
+</tr>
+<tr>
+<td>Out-of-hours cover</td>
+<td>Forever, or never</td>
+<td>Decide explicitly. "We'll see" costs the same as the expensive option</td>
+</tr>
+<tr>
+<td>Monthly testing</td>
+<td>Forever</td>
+<td>Half a day a month. Put it in someone's calendar or it won't happen</td>
+</tr>
+<tr>
+<td>Each extra language</td>
+<td>Per market</td>
+<td>Re-run rows 2 to 5 for that market, including a reviewer who speaks it</td>
+</tr>
+<tr>
+<td>Rebuild</td>
+<td>Every 18 to 24 months</td>
+<td>A fraction of the original build, annualised</td>
+</tr>
+</tbody>
+</table></div>
+<p>If a build proposal covers the first row and none of the others, it isn't a costing. It is a
+quote for the cheapest component, and it will be wrong by a multiple rather than a percentage.</p>
+<p>None of this means building in-house is the wrong answer. For some businesses it plainly is the
+right one. It means the decision should be made against the running cost, not the build cost,
+because the build cost is the part that ends.</p>
 <hr />
 <p><em>The Build File is a season for people approving voice builds rather than writing them.</em></p>
     </article>

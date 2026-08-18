@@ -44,9 +44,7 @@ Ognuna vale settimane. Alcune valgono mesi.
 
 **3. I dati veri, quando fanno i capricci.** Le demo girano su una copia, su una fotografia del database, su qualcosa che qualcuno ha preparato. Nessuno fa una demo con il gestionale lento. Nessuno fa una demo nel momento esatto in cui la disponibilità di magazzino è vecchia di venti minuti, che è precisamente quando un agente sicuro di sé dice al cliente una cosa che era vera prima. È lo strato in cui muoiono in silenzio la maggior parte dei progetti fatti in casa, ed è lo strato che in sala non si vede mai.
 
-**4. La seconda lingua.** Se vendete in più di un paese, una demo in una lingua ha collaudato uno dei vostri mercati. Gli altri non sono un'impostazione da attivare: sono la ripetizione di quasi tutto il lavoro, e il costo non cresce in modo lineare. Il perché sta in quanto costa davvero far girare un agente vocale.
-<!-- FORWARD LINK - numero 03. Il giorno in cui esce /blog/voice-agent-cost-to-run, ripristina:
-     [quanto costa davvero far girare un agente vocale](/it/blog/voice-agent-cost-to-run) -->
+**4. La seconda lingua.** Se vendete in più di un paese, una demo in una lingua ha collaudato uno dei vostri mercati. Gli altri non sono un'impostazione da attivare: sono la ripetizione di quasi tutto il lavoro, e il costo non cresce in modo lineare. Il perché sta in [quanto costa davvero far girare un agente vocale](/it/blog/voice-agent-cost-to-run).
 
 **5. Il volume.** Una chiamata alla volta e quaranta chiamate insieme non sono lo stesso sistema che si comporta diversamente. Sono due sistemi diversi. Da una demo non c'è modo di capire quale dei due avete.
 

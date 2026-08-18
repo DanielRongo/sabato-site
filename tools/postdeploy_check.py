@@ -49,6 +49,8 @@ PAGES = [
          "/it/blog/voice-agent-acceptance-test",
          "/blog/voice-ai-prototype-to-production",
          "/it/blog/voice-ai-prototype-to-production",
+         "/blog/voice-agent-cost-to-run",
+         "/it/blog/voice-agent-cost-to-run",
          "/use-cases/where-is-my-order", "/it/casi-duso/dove-e-il-mio-ordine",
          "/playbooks/peak-season", "/it/playbook/picchi-stagionali",
          "/playbooks/international-expansion",
