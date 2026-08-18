@@ -889,6 +889,220 @@
     prodSec.parentElement.insertBefore(sec, prodSec.nextSibling);
   }
 
+  /* ---------- THE QUEUE, and THE DEMO IS 5% ----------
+     Two bands that replace Framer's "Overview Section" (the "We handle the AI"
+     block and the 9 / 24-7 / 2 weeks stats) and "Features Section" ("Live in
+     three steps", 2,066px of it).
+
+     Both are found by data-framer-name, not by class or heading text: React
+     writes that attribute itself so it survives hydration, the hashes differ per
+     page, and the Italian page wraps its heading in ssr-variant nodes that make
+     child-walking unreliable. Framer's section is hidden rather than emptied -
+     React owns those nodes and puts back anything removed - and ours is inserted
+     immediately after it.
+
+     Neither borrows Framer's type. The queue is a dark band and the 95% band is
+     strongly designed, so they carry their own scale, and their eyebrow is the
+     lime dot introduced on 17 Aug 2026.
+
+     TRADE-OFF, stated so the next person does not have to rediscover it: these
+     are JS passes, so a crawler that runs no JavaScript sees none of this copy.
+     That was acceptable for the product showcase and the workflows; it is worth
+     watching here, because "The demo is 5%. We run the other 95." is the
+     positioning line most worth being quoted on. The FAQ carries the
+     citation-shaped copy and it IS static - see faq.py. If GEO ever needs these
+     two, they move to the faq.py pattern and the CSS places them. */
+
+  var Q_COPY = IT
+    ? { eyebrow: "La coda",
+        h2: "Il tuo store &egrave; cresciuto. <br>Il telefono no.",
+        beats: [
+          ["01", "Ogni ordine genera chiamate.",
+           "Dov'è, come lo rendo, mi va bene la taglia. Sempre le stesse domande, " +
+           "tutto il giorno, da una coda che non si accorcia mai."],
+          ["02", "L'alta stagione ti punisce due volte.",
+           "La domanda raddoppia: o assumi stagionali che non sanno niente, o lasci i " +
+           "clienti in attesa due ore. Entrambe ti costano clienti che hai già pagato."],
+          ["03", "Ogni lingua è un'assunzione. Ogni notte è buio.",
+           "Un team che copre quattro mercati 24 ore su 24 è un costo del personale, " +
+           "non un reparto."]],
+        turn: "La coda non è un problema di organico. Ha smesso di esserlo." }
+    : { eyebrow: "The queue",
+        h2: "Your store scaled. <br>Your phone line didn't.",
+        beats: [
+          ["01", "Every order creates calls.",
+           "Where is it, how do I return it, does it fit. The same handful of questions, " +
+           "all day, from a queue that never shortens."],
+          ["02", "Peak season punishes you twice.",
+           "Demand doubles, so you hire temps who know nothing, or you let customers hold " +
+           "for two hours. Both cost you customers you already paid to acquire."],
+          ["03", "Every language is a hire. Every night is dark.",
+           "A support team that covers four markets around the clock is a payroll, not a " +
+           "department."]],
+        turn: "The queue is not a headcount problem. It stopped being one." };
+
+  var M_COPY = IT
+    ? { eyebrow: "Completamente gestito",
+        h2: "La demo &egrave; il 5%. <br>Il restante 95 lo gestiamo noi.",
+        lede: "Chiunque può mostrarti un agente che parla. Il lavoro è tenerlo " +
+              "preciso alla diecimillesima chiamata, e quel lavoro è nostro, ogni giorno.",
+        steps: [
+          ["Step 1", "Ci dici come deve andare",
+           "Le tue regole, il tuo tono, i tuoi limiti. Una sessione con chi sa."],
+          ["Step 2", "Lo costruiamo e lo colleghiamo",
+           "Catalogo, ordini, CRM, helpdesk. Nessuno sprint per il tuo team."],
+          ["Step 3", "Lo ascolti tu, prima di tutti",
+           "Ti chiamiamo con la bozza. Online quando dici tu, non prima."],
+          ["Step 4", "Rivediamo ogni chiamata, ogni giorno",
+           "Lacune trovate, correzioni pubblicate, tutto leggibile da te."]],
+        tiles: [
+          ["2.914", "up", "+318 vs settimana scorsa", "Chiamate riviste questa settimana", "blue"],
+          ["23", "down", "-6 vs settimana scorsa", "Lacune trovate", "orange"],
+          ["9", "up", "+2 vs settimana scorsa", "Correzioni pubblicate", "green"],
+          ["56,93%", "up", "+1,45% vs settimana scorsa", "Tasso di autonomia", "yellow"]] }
+    : { eyebrow: "Fully managed",
+        h2: "The demo is 5%. <br>We run the other 95.",
+        lede: "Any vendor can show you an agent that talks. The work is keeping it right " +
+              "on the ten-thousandth call, and that work is ours, daily.",
+        steps: [
+          ["Step 1", "You tell us how it should go",
+           "Your rules, your tone, your red lines. One session with whoever knows."],
+          ["Step 2", "We build and wire it",
+           "Catalog, orders, CRM, helpdesk. No sprint from your team."],
+          ["Step 3", "You hear it before anyone else",
+           "We call you with the draft. Live when you say so, not before."],
+          ["Step 4", "We review every call, every day",
+           "Gaps found, fixes published, all of it readable by you."]],
+        tiles: [
+          ["2,914", "up", "+318 vs last week", "Calls reviewed this week", "blue"],
+          ["23", "down", "-6 vs last week", "Gaps found", "orange"],
+          ["9", "up", "+2 vs last week", "Fixes published", "green"],
+          ["56.93%", "up", "+1.45% vs last week", "Autonomy rate", "yellow"]] };
+
+  /* The four chip colours are the Agent Evaluation screen's own label palette,
+     lifted from assets-src/agent-evaluation.html so the section visually rhymes
+     with the product it describes.
+
+     THE ARROW CARRIES THE MEANING, NOT THE COLOUR. All four deltas are green,
+     because all four are good news - but "good" on Gaps found is DOWN. A naive
+     up-arrow on every tile would read as the agent degrading, which is the
+     opposite of this section's argument. */
+  var SB_CSS =
+    ".sb-band{font-family:Satoshi,Inter,-apple-system,sans-serif;-webkit-font-smoothing:antialiased}" +
+    ".sb-q{max-width:1200px;margin:0 auto;padding:0 20px}" +
+    ".sb-q-card{background:rgb(11,11,12);color:#fff;border-radius:26px;padding:64px 58px}" +
+    ".sb-eyeb{display:inline-flex;align-items:center;gap:9px;font-size:12px;line-height:1.2;" +
+    "font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgb(111,106,102);margin:0}" +
+    ".sb-eyeb:before{content:'';width:7px;height:7px;border-radius:50%;background:rgb(204,255,0);flex:none}" +
+    ".sb-q-card .sb-eyeb{color:rgba(255,255,255,.62)}" +
+    ".sb-band h2{font-size:46px;line-height:1.16;letter-spacing:-1.4px;font-weight:700;margin:16px 0 0;" +
+    "color:rgb(11,11,12)}" +
+    ".sb-q-card h2{color:#fff}" +
+    ".sb-beat{display:grid;grid-template-columns:56px 1fr;gap:8px;border-top:1px solid rgba(255,255,255,.10);padding:26px 0}" +
+    ".sb-beat:first-of-type{margin-top:34px}" +
+    ".sb-beat i{font-size:12px;line-height:1.6;color:rgb(204,255,0);font-style:normal;font-weight:700}" +
+    ".sb-beat b{font-size:21px;line-height:1.3;display:block}" +
+    ".sb-beat p{margin:8px 0 0;font-size:15px;line-height:1.55;color:rgba(255,255,255,.66);max-width:780px}" +
+    ".sb-turn{margin:24px 0 0;font-size:17px;font-weight:700;color:rgb(204,255,0)}" +
+    ".sb-m{max-width:1200px;margin:0 auto;padding:0 20px;text-align:center}" +
+    ".sb-m .sb-lede{max-width:680px;margin:16px auto 0;font-size:17px;line-height:1.6;color:rgb(111,106,102)}" +
+    ".sb-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:34px 0 0;text-align:left}" +
+    ".sb-step{background:#F9FAFD;border-radius:20px;padding:26px}" +
+    ".sb-step.on{background:rgb(11,11,12);color:#fff}" +
+    ".sb-step small{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgb(111,106,102)}" +
+    ".sb-step.on small{color:rgb(204,255,0)}" +
+    ".sb-step b{display:block;margin-top:12px;font-size:17px;line-height:1.3}" +
+    ".sb-step p{margin:9px 0 0;font-size:14.5px;line-height:1.5;color:rgb(111,106,102);text-wrap:pretty}" +
+    ".sb-step.on p{color:rgba(255,255,255,.72)}" +
+    ".sb-tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:16px 0 0}" +
+    ".sb-tile{border-radius:16px;padding:22px 18px;text-align:center}" +
+    ".sb-tile b{display:block;font-size:28px;line-height:1;font-weight:700;color:rgb(11,11,12)}" +
+    ".sb-tile u{display:block;margin-top:9px;font-size:12px;font-weight:700;color:rgb(47,107,71);text-decoration:none}" +
+    ".sb-tile span{display:inline-block;margin-top:11px;border-radius:999px;padding:5px 11px;" +
+    "font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}" +
+    ".sb-tile.blue{background:#f2f6fc}   .sb-tile.blue span{background:#e5eefa;color:#28588c}" +
+    ".sb-tile.orange{background:#fdf6ef} .sb-tile.orange span{background:#fdeee0;color:#8a4c14}" +
+    ".sb-tile.green{background:#f1f8f4}  .sb-tile.green span{background:#e4f1ea;color:#2f6b47}" +
+    ".sb-tile.yellow{background:#fdfaef} .sb-tile.yellow span{background:#fbf3d9;color:#7a5c10}" +
+    "@media(max-width:1024px){.sb-steps,.sb-tiles{grid-template-columns:repeat(2,1fr)}}" +
+    "@media(max-width:809px){.sb-q-card{padding:44px 24px;border-radius:20px}" +
+    ".sb-band h2{font-size:30px;letter-spacing:-.8px}" +
+    ".sb-beat{grid-template-columns:38px 1fr;padding:20px 0}.sb-beat b{font-size:18px}" +
+    ".sb-turn{font-size:15.5px}.sb-m .sb-lede{font-size:16px}" +
+    ".sb-steps,.sb-tiles{grid-template-columns:1fr}.sb-step{padding:22px}}";
+
+  function sbCss() {
+    if (document.getElementById("sb-band-css")) return;
+    var st = document.createElement("style");
+    st.id = "sb-band-css"; st.textContent = SB_CSS;
+    (document.head || document.documentElement).appendChild(st);
+  }
+
+  /* Hide the Framer section of that name and return it, so ours can be placed
+     immediately after. Returns null when it is already handled or absent. */
+  function takeOver(framerName, ourAttr) {
+    if (document.querySelector("[" + ourAttr + "]")) return null;
+    var sec = document.querySelector('section[data-framer-name="' + framerName + '" i]');
+    if (!sec || !sec.parentElement) return null;
+    if (sec.style.display !== "none") sec.style.display = "none";
+    return sec;
+  }
+
+  function buildQueue() {
+    sbCss();
+    var anchor = takeOver("Overview Section", "data-sb-queue");
+    if (!anchor) return;
+    var beats = "";
+    for (var i = 0; i < Q_COPY.beats.length; i++) {
+      var bt = Q_COPY.beats[i];
+      beats += '<div class="sb-beat"><i>' + bt[0] + "</i><div><b>" + bt[1] +
+               "</b><p>" + bt[2] + "</p></div></div>";
+    }
+    var sec = document.createElement("section");
+    sec.setAttribute("data-sb-queue", "1");
+    sec.className = "sb-band";
+    sec.style.cssText = "padding:64px 0";
+    sec.innerHTML =
+      '<div class="sb-q"><div class="sb-q-card">' +
+        '<p class="sb-eyeb">' + Q_COPY.eyebrow + "</p>" +
+        "<h2>" + Q_COPY.h2 + "</h2>" + beats +
+        '<p class="sb-turn">' + Q_COPY.turn + "</p>" +
+      "</div></div>";
+    anchor.parentElement.insertBefore(sec, anchor.nextSibling);
+  }
+
+  function buildManaged() {
+    sbCss();
+    var anchor = takeOver("Features Section", "data-sb-managed");
+    if (!anchor) return;
+    var steps = "";
+    for (var i = 0; i < M_COPY.steps.length; i++) {
+      var s = M_COPY.steps[i];
+      steps += '<div class="sb-step' + (i === 0 ? " on" : "") + '"><small>' + s[0] +
+               "</small><b>" + s[1] + "</b><p>" + s[2] + "</p></div>";
+    }
+    var tiles = "";
+    for (var t = 0; t < M_COPY.tiles.length; t++) {
+      var m = M_COPY.tiles[t];
+      var arrow = m[1] === "down" ? "↓" : "↑";
+      tiles += '<div class="sb-tile ' + m[4] + '"><b>' + m[0] + "</b><u>" + arrow + " " +
+               m[2] + "</u><span>" + m[3] + "</span></div>";
+    }
+    var sec = document.createElement("section");
+    sec.setAttribute("data-sb-managed", "1");
+    sec.className = "sb-band";
+    sec.style.cssText = "padding:64px 0";
+    sec.innerHTML =
+      '<div class="sb-m">' +
+        '<p class="sb-eyeb">' + M_COPY.eyebrow + "</p>" +
+        "<h2>" + M_COPY.h2 + "</h2>" +
+        '<p class="sb-lede">' + M_COPY.lede + "</p>" +
+        '<div class="sb-steps">' + steps + "</div>" +
+        '<div class="sb-tiles">' + tiles + "</div>" +
+      "</div>";
+    anchor.parentElement.insertBefore(sec, anchor.nextSibling);
+  }
+
   function stripTags(s) { return (s || "").replace(/<[^>]*>/g, " "); }
 
   /* True when `el` sits inside the eyebrow pill's own anchor - the pill's text
@@ -920,6 +1134,8 @@
     injectCustomerBand();
     replaceWorkflowsWithProduct();
     buildWorkflowsSection();
+    buildQueue();
+    buildManaged();
   }
   /* SELF-FEEDING OBSERVER - fixed 6 Aug 2026.
 
