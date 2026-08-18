@@ -289,10 +289,20 @@ with sync_playwright() as p:
                   const w = document.querySelector('section.sb-proof');
                   if (!w) return false;
                   const top = w.getBoundingClientRect().top + scrollY;
-                  let faq = null;
-                  document.querySelectorAll('#main [data-framer-name]').forEach(e => {
-                    if (!faq && (e.getAttribute('data-framer-name') || '')
-                        .toLowerCase().trim().startsWith('faq section')) faq = e; });
+                  // WHICH FAQ. On the two homepages Framer's "Faq Section"
+                  // is display:none from 17 Aug 2026 and ours (#sb-faq, static,
+                  // outside React's root) renders in its place. A hidden node
+                  // reports a zero rect, so anchoring on Framer's here made this
+                  // check fail on / and /it while the page was in fact correct.
+                  // Prefer whichever FAQ is actually on screen; the invariant is
+                  // unchanged - proof must END just above where the FAQ BEGINS.
+                  let faq = document.querySelector('#sb-faq');
+                  if (faq && !faq.offsetParent) faq = null;
+                  if (!faq) {
+                    document.querySelectorAll('#main [data-framer-name]').forEach(e => {
+                      if (!faq && e.offsetParent && (e.getAttribute('data-framer-name') || '')
+                          .toLowerCase().trim().startsWith('faq section')) faq = e; });
+                  }
                   const ftop = faq ? faq.getBoundingClientRect().top + scrollY : -1;
                   const b = w.getBoundingClientRect().bottom + scrollY;
                   // ADJACENCY, not a page fraction: a 40%-of-page floor failed

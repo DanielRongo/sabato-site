@@ -35,6 +35,7 @@ from footer import footer_html  # noqa: E402
 from cta import cta_html, PAGES as CTA_PAGES  # noqa: E402
 from header import header_html  # noqa: E402
 from hero import hero_html, PAGES as HERO_PAGES  # noqa: E402
+from faq import faq_html, PAGES as FAQ_PAGES  # noqa: E402
 from logos import logos_html, PAGES as LOGO_PAGES  # noqa: E402
 from proof import proof_html, PAGES as PROOF_PAGES  # noqa: E402
 
@@ -82,6 +83,27 @@ OURS_PROOF = re.compile(
     r'|\s*<script>\(function\(\)\{(?:var W=null;)?function go\(\).*?</script>)*'
     r'\s*', re.S)
 OURS_LOGOS = re.compile(r'\s*<section class="sb-logos".*?</section>\s*', re.S)
+# Our FAQ block: the rule that hides Framer's, our stylesheet, the section, the
+# FAQPage JSON-LD and the accordion script. Stripped as one unit so a second
+# apply_footer run is a fixed point - --check compares bytes, so a block that
+# accumulates fails the gate on every page.
+#
+# BOTH <style> tags carry an id purely so this pattern can anchor on something
+# that cannot drift. The first version matched the stylesheet as
+# `<style>\s*\.sb-faq\{`, then a comment was added at the top of the CSS and the
+# pattern silently stopped matching: nothing was stripped, a fresh block was
+# appended every build, and index.html was carrying 24 copies of the FAQ before
+# --check caught it. Anchor on ids, never on the first bytes of content.
+OURS_FAQ = re.compile(
+    r'\s*<style id="sb-faq-hide">.*?</style>'
+    # Tolerates the id-less <style> the first version emitted, so pages that
+    # already accumulated copies get cleaned rather than stripped forever.
+    # CSS cannot contain "<", so [^<]*? cannot run past the opening tag.
+    r'\s*<style[^>]*>[^<]*?\.sb-faq\{.*?</style>'
+    r'\s*<section class="sb-faq".*?</section>'
+    r'\s*<script type="application/ld\+json">.*?</script>'
+    r"\s*<script>\(function\(\)\{var r=document\.getElementById\('sb-faq'\).*?</script>"
+    r'\s*', re.S)
 OURS_HERO = re.compile(
     r'\s*<section class="sb-hero".*?</section>'
     r'(?:\s*<script>\(function\(\)\{var s=document\.querySelector.*?</script>)?'
@@ -194,7 +216,12 @@ def apply_to(html, lang, rel):
     new_footer = footer_html(lang)
     # Only the pages Framer put a closing CTA on. Our generated pages already
     # end with their own page-specific <section class="cta-band">.
+    # Order here IS render order: everything in this block sits after Framer's
+    # React root closes, so it lands at the foot of the page in the sequence
+    # written. Success stories, then the FAQ, then the closing CTA, then the
+    # footer - objections answered immediately before the ask.
     block = ((proof_html(lang) if rel in PROOF_PAGES else "")
+             + (faq_html(lang) if rel in FAQ_PAGES else "")
              + (cta_html(lang) if rel in CTA_PAGES else "") + new_footer)
 
     # Idempotency: strip any CTA+footer we previously installed before adding one.
@@ -212,6 +239,7 @@ def apply_to(html, lang, rel):
     html, _ = hide_legacy_cta_css(html)
 
     html = OURS_PROOF.sub("\n", html)
+    html = OURS_FAQ.sub("\n", html)
     html = OURS_LOGOS.sub("\n", html)
     html = OURS_HERO.sub("\n", html)
     html = OURS_HDR.sub("\n", html)

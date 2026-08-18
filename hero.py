@@ -178,7 +178,7 @@ COPY = {
               "speaking every language you sell in. We build it, we run it, we "
               "improve it every day. Your team gets its time back."),
         sub2="",
-        hand="call it right now &mdash; it picks up",
+        hand="call it right now - it picks up",
         reveal="Show number",
         call="Call now",
         listen="or listen to a sample call",
@@ -196,7 +196,7 @@ COPY = {
               "ordini, che parla tutte le lingue in cui vendi. Lo costruiamo, lo "
               "gestiamo, lo miglioriamo ogni giorno. Il tuo team si riprende il suo tempo."),
         sub2="",
-        hand="chiamalo adesso &mdash; risponde",
+        hand="chiamalo adesso - risponde",
         reveal="Mostra numero",
         call="Chiama ora",
         listen="oppure ascolta una chiamata di esempio",

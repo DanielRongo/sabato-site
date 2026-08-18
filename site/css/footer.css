@@ -1446,3 +1446,58 @@ body:has(.sb-logos) [data-framer-name^="Brand Logos" i] { display: none !importa
 @media (max-width: 809px) {
   .framer-15e5r8z, .framer-24pj9z { padding-top: 96px !important; }
 }
+
+/* ---------------------------------------------------------------------------
+   THE EYEBROW LABEL. Daniel, 17 Aug 2026: "is it the case of killing the red
+   colour for the pills? I'm thinking it doesn't make sense". It doesn't.
+
+   Red lived on ten Framer-origin pages and nowhere else: every page generated
+   since - five product pages, nine use cases, six playbooks, nine industries,
+   the blog - already uses a grey letter-spaced eyebrow. Red was the leftover,
+   not the system. It also competed with the lime, which is the only colour on
+   this site that should be pulling the eye, because it is the only one that
+   means "do something".
+
+   Replaced with a 7px lime dot and a grey label: the rhythm a long page needs
+   from a repeating marker, our own brand colour rather than an orphan one, and
+   a shape that cannot be mistaken for a button.
+
+   SELECTOR. The pill is a shared Framer component (.framer-Ct5Fx) that also
+   renders in lime on /about, white for "Get Started" and black on /404, so
+   restyling the class would repaint all of them. What is unique to the red ones
+   is the colour token Framer names inline, so the attribute selector keys on
+   that instead. Change the token id here if the Framer project is republished
+   with a new palette.
+   --------------------------------------------------------------------------- */
+[style*="16cbd617"] {
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  display: inline-flex !important;
+  align-items: center;
+  gap: 9px;
+}
+[style*="16cbd617"]::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgb(204, 255, 0);
+  flex: none;
+}
+[style*="16cbd617"] p,
+[style*="16cbd617"] span {
+  color: rgb(111, 106, 102) !important;
+  font-size: 12px !important;
+  line-height: 1.2 !important;
+  font-weight: 700 !important;
+  letter-spacing: .18em !important;
+  text-transform: uppercase !important;
+}
+@media (max-width: 809px) {
+  [style*="16cbd617"] { gap: 7px; }
+  [style*="16cbd617"]::before { width: 6px; height: 6px; }
+  [style*="16cbd617"] p,
+  [style*="16cbd617"] span { font-size: 11px !important; letter-spacing: .15em !important; }
+}

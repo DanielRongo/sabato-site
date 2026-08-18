@@ -681,6 +681,11 @@
 
     var rows = [];
     for (var q = 0; q < kids.length; q++) if (kids[q] !== head) rows.push(kids[q]);
+    /* The card rows go. buildWorkflowsSection() renders its own tiles further
+       down the page - shorter copy, outline icons, left-aligned - so Framer's
+       nine centred cards are not reused. Only the HEADING BLOCK is kept, cloned,
+       so the red pill and the h2 stay Framer's type. */
+    SAVED_HEAD = head;
 
     var pills = "", panels = "";
     for (var n = 0; n < PROD_TABS.length; n++) {
@@ -707,7 +712,7 @@
     wrap.setAttribute("data-sb-prod", "1");
     wrap.innerHTML = '<div class="sb-prod-pills" role="tablist">' + pills + "</div>" + panels;
     inner.appendChild(wrap);
-    for (var r = 0; r < rows.length; r++) rows[r].remove();
+    for (var r = 0; r < rows.length; r++) rows[r].parentNode.removeChild(rows[r]);
 
     /* PRELOAD THE OTHER FOUR SCREENSHOTS.
 
@@ -754,6 +759,136 @@
     });
   }
 
+  /* ---------- THE WORKFLOWS SECTION ----------
+     "Start where it hurts." Six tiles in two labelled bands, rendered here
+     rather than reusing Framer's nine centred cards: shorter copy, one outline
+     icon top-left, text left-aligned, on the site's own #F9FAFD card grey.
+
+     Six, not nine. That drops the homepage's direct links to three use-case
+     pages, so the band closes with a link to the /use-cases hub - the crawl
+     path to all nine survives, and so does the visitor's way to find them. */
+  var SAVED_HEAD = null;
+
+  var WF_COPY = IT
+    ? { pill: "Casi d'uso", h2: "Parti da dove fa male.",
+        sub: "Ogni workflow \u00e8 preconfigurato per l'e-commerce e collegato al tuo " +
+             "catalogo. Accendi quello che ti serve, quando ti serve.",
+        g1: "Svuota la coda", g2: "Poi fai rendere il telefono",
+        all: "Tutti i workflow", allHref: "/it/casi-duso" }
+    : { pill: "Use Cases", h2: "Start where it hurts.",
+        sub: "Every workflow is pre-configured for e-commerce and wired to your " +
+             "catalog. Turn on the ones you need, when you need them.",
+        g1: "Kill the queue", g2: "Then make the line pay",
+        all: "All nine workflows", allHref: "/use-cases" };
+
+  function wfIc(d) {
+    return '<svg class="sb-wf-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
+           'stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ' +
+           'aria-hidden="true">' + d + "</svg>";
+  }
+  var WF_ICONS = {
+    order:   wfIc('<path d="M3 8.5 12 4l9 4.5v7L12 20l-9-4.5z"/><path d="M3 8.5 12 13l9-4.5M12 13v7"/>'),
+    complaint: wfIc('<path d="M20 15a2 2 0 0 1-2 2H8l-4 3V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2z"/><path d="M12 8v3.5M12 14h.01"/>'),
+    returns: wfIc('<path d="M3 10h11a5 5 0 0 1 0 10H9"/><path d="M7 6 3 10l4 4"/>'),
+    stock:   wfIc('<path d="M18 8a6 6 0 1 0-12 0c0 6-2 7-2 7h16s-2-1-2-7"/><path d="M10.5 20a2 2 0 0 0 3 0"/>'),
+    presale: wfIc('<path d="M4 12a8 8 0 0 1 16 0v5a3 3 0 0 1-3 3h-2"/><rect x="2" y="12" width="4" height="6" rx="1.6"/><rect x="18" y="12" width="4" height="6" rx="1.6"/>'),
+    quote:   wfIc('<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M14.5 12.2a2.6 2.6 0 1 0 0 3.6M9.5 13h4M9.5 15h4"/>')
+  };
+
+  var WF_TILES = IT
+    ? [["order", "Dov'\u00e8 il Mio Ordine", "Legge l'ordine in tempo reale e lo dice al cliente, in pochi secondi, a qualsiasi ora.", "/it/casi-duso/dove-e-il-mio-ordine", 1],
+       ["complaint", "Apertura Reclamo", "Raccoglie il problema con tutto il contesto e lo manda alla persona giusta.", "/it/casi-duso/apertura-reclamo", 1],
+       ["returns", "Gestione Resi", "Verifica le condizioni contro la tua policy e avvia la pratica.", "/it/casi-duso/gestione-resi", 1],
+       ["stock", "Notifica Ritorno in Stock", "Chiama chi lo voleva, invece di un'email che finisce nello spam.", "/it/casi-duso/notifica-ritorno-in-stock", 1],
+       ["presale", "Consulenza Pre-Vendita", "Risponde alla domanda sul prodotto e accompagna il cliente al checkout.", "/it/casi-duso/consulenza-pre-vendita", 2],
+       ["quote", "Preventivi Automatici", "Qualifica, raccoglie i requisiti e manda il preventivo prima che qualcuno alzi un dito.", "/it/casi-duso/preventivi-automatici", 2]]
+    : [["order", "Where Is My Order", "Reads the live order and tells them, in seconds, at any hour.", "/use-cases/where-is-my-order", 1],
+       ["complaint", "Open a Complaint", "Captures the issue with full context and routes it to the right person.", "/use-cases/open-a-complaint", 1],
+       ["returns", "Managing Returns", "Checks eligibility against your policy and starts the process.", "/use-cases/managing-returns", 1],
+       ["stock", "Back-in-Stock Alerts", "Calls the people who wanted it, not an email in a spam folder.", "/use-cases/back-in-stock-notification", 1],
+       ["presale", "Pre-Sales Consultation", "Answers the product question and guides the buyer to checkout.", "/use-cases/pre-sales-consultation", 2],
+       ["quote", "B2B Quote Collection", "Qualifies, collects requirements, sends the quote before anyone touches it.", "/use-cases/qualify-and-collect-for-quote", 2]];
+
+  var WF_CSS =
+    ".sb-wf-band{display:flex;align-items:center;gap:16px;margin:34px 0 16px;" +
+    "font-family:Satoshi,Inter,sans-serif;font-weight:700;font-size:11.5px;letter-spacing:.16em;" +
+    "text-transform:uppercase;color:rgb(111,106,102)}" +
+    ".sb-wf-band:after{content:'';flex:1;height:1px;background:rgba(11,11,12,.10)}" +
+    ".sb-wf-grid{display:grid;gap:16px}" +
+    ".sb-wf-grid.g4{grid-template-columns:repeat(4,1fr)}" +
+    ".sb-wf-grid.g2{grid-template-columns:repeat(2,1fr)}" +
+    ".sb-wf-tile{display:block;text-decoration:none;background:#F9FAFD;border-radius:20px;" +
+    "padding:26px 26px 30px;transition:background .18s,transform .18s}" +
+    ".sb-wf-tile:hover{background:#F1F4FA;transform:translateY(-2px)}" +
+    ".sb-wf-ic{width:22px;height:22px;color:rgb(11,11,12);display:block;margin-bottom:14px}" +
+    ".sb-wf-tile b{display:block;font-family:Satoshi,Inter,sans-serif;font-weight:700;" +
+    "font-size:17px;line-height:1.3;color:rgb(11,11,12)}" +
+    ".sb-wf-tile span{display:block;margin-top:9px;font-family:Satoshi,Inter,sans-serif;" +
+    "font-size:14.5px;line-height:1.5;color:rgb(111,106,102);text-wrap:pretty}" +
+    ".sb-wf-all{display:block;margin:26px 0 0;text-align:center;font-family:Satoshi,Inter,sans-serif;" +
+    "font-weight:700;font-size:15.5px;color:rgb(11,11,12);text-decoration:none}" +
+    ".sb-wf-all u{text-decoration:none;border-bottom:2px solid rgb(204,255,0);padding-bottom:2px}" +
+    "@media(max-width:1024px){.sb-wf-grid.g4{grid-template-columns:repeat(2,1fr)}}" +
+    "@media(max-width:640px){.sb-wf-grid.g4,.sb-wf-grid.g2{grid-template-columns:1fr}" +
+    ".sb-wf-band{margin:26px 0 12px;font-size:10.5px}.sb-wf-tile{padding:22px 22px 24px}}";
+
+  function wfTiles(group) {
+    var out = "";
+    for (var i = 0; i < WF_TILES.length; i++) {
+      var t = WF_TILES[i];
+      if (t[4] !== group) continue;
+      out += '<a class="sb-wf-tile" href="' + t[3] + '">' + WF_ICONS[t[0]] +
+             "<b>" + t[1] + "</b><span>" + t[2] + "</span></a>";
+    }
+    return out;
+  }
+
+  function buildWorkflowsSection() {
+    if (!SAVED_HEAD) return;
+    if (document.querySelector("[data-sb-wf]")) return;
+    var host = document.querySelector("[data-sb-prod]");
+    if (!host) return;
+    var prodSec = host.closest("section");
+    if (!prodSec || !prodSec.parentElement) return;
+
+    if (!document.getElementById("sb-wf-css")) {
+      var st = document.createElement("style");
+      st.id = "sb-wf-css"; st.textContent = WF_CSS;
+      (document.head || document.documentElement).appendChild(st);
+    }
+
+    var sec = document.createElement("section");
+    sec.setAttribute("data-sb-wf", "1");
+    var col = document.createElement("div");
+    col.style.cssText = "max-width:1200px;margin:0 auto;padding:0 20px";
+    sec.appendChild(col);
+
+    /* Cloned heading block: the red pill and the h2 keep Framer's exact type. */
+    var head = SAVED_HEAD.cloneNode(true);
+    col.appendChild(head);
+    var pill = head.querySelector("a p, a span");
+    if (pill) setText(pill, WF_COPY.pill);
+    var h2 = head.querySelector("h2");
+    if (h2) setHTML(h2, WF_COPY.h2);
+    var ps = head.querySelectorAll("p"), got = false;
+    for (var j = 0; j < ps.length; j++) {
+      if (ps[j] === pill || pill_contains(pill, ps[j])) continue;
+      if (!got) { setText(ps[j], WF_COPY.sub); ps[j].style.display = ""; got = true; }
+      else if (ps[j].style.display !== "none") ps[j].style.display = "none";
+    }
+
+    var body = document.createElement("div");
+    body.innerHTML =
+      '<div class="sb-wf-band">' + WF_COPY.g1 + "</div>" +
+      '<div class="sb-wf-grid g4">' + wfTiles(1) + "</div>" +
+      '<div class="sb-wf-band">' + WF_COPY.g2 + "</div>" +
+      '<div class="sb-wf-grid g2">' + wfTiles(2) + "</div>" +
+      '<a class="sb-wf-all" href="' + WF_COPY.allHref + '"><u>' + WF_COPY.all +
+      " &rarr;</u></a>";
+    col.appendChild(body);
+    prodSec.parentElement.insertBefore(sec, prodSec.nextSibling);
+  }
+
   function stripTags(s) { return (s || "").replace(/<[^>]*>/g, " "); }
 
   /* True when `el` sits inside the eyebrow pill's own anchor - the pill's text
@@ -784,6 +919,7 @@
     wireUseCaseTargets(); wireIndustryTargets(); installClickInterceptor();
     injectCustomerBand();
     replaceWorkflowsWithProduct();
+    buildWorkflowsSection();
   }
   /* SELF-FEEDING OBSERVER - fixed 6 Aug 2026.
 
