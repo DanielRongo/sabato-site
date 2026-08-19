@@ -83,7 +83,15 @@ SAMPLE_CALL = "/fuc/assets/FEuwqrQUga0mEuonuv8aRlsCG8.mp3"
 # headers rather than the whole file - most of the saving, none of the risk.
 # muted + playsinline are what make autoplay legal at all; drop either and the
 # wave is a black box on every iPhone.
-WAVE = "/fuc/assets/zjPqfnxlo8A7anHbrHHt6WNQQ.mp4"
+# KILLED 18 Aug 2026, Daniel: "kill the moving wave in the hero". The constant
+# stays so the history above reads, and so nobody re-derives the file path from
+# scratch if it ever comes back. The <video> element is no longer emitted, and
+# .sb-hero-wave in footer.css is now dead CSS kept for the same reason.
+#
+# What this buys: 4.2MB that every desktop visitor downloaded on the highest
+# -traffic page on the site, for decoration. The card keeps its own bottom
+# padding, so nothing collapses.
+WAVE = "/fuc/assets/zjPqfnxlo8A7anHbrHHt6WNQQ.mp4"  # unused
 
 # ---------------------------------------------------------------------------
 # The four numbers.
@@ -308,8 +316,6 @@ def hero_html(lang="en", allow_placeholder=False):
             f'<a class="sb-hero-listen" href="{SAMPLE_CALL}" target="_blank" rel="noopener">'
               f'<span class="sb-hero-tri"></span>{c["listen"]}</a>'
           f'</div>'
-          f'<video class="sb-hero-wave" src="{WAVE}" autoplay loop muted '
-          f'playsinline preload="metadata" aria-hidden="true" tabindex="-1"></video>'
         f'</div>'
       f'</section>'
       f'{REVEAL_SCRIPT}'

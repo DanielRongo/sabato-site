@@ -810,9 +810,10 @@
        ["quote", "B2B Quote Collection", "Qualifies, collects requirements, sends the quote before anyone touches it.", "/use-cases/qualify-and-collect-for-quote", 2]];
 
   var WF_CSS =
-    ".sb-wf-band{display:flex;align-items:center;gap:16px;margin:34px 0 16px;" +
-    "font-family:Satoshi,Inter,sans-serif;font-weight:700;font-size:11.5px;letter-spacing:.16em;" +
-    "text-transform:uppercase;color:rgb(111,106,102)}" +
+    ".sb-wf-band{display:flex;align-items:baseline;gap:18px;margin:38px 0 18px;" +
+    "font-family:Satoshi,Inter,sans-serif;font-weight:700;font-size:19px;" +
+    "letter-spacing:-.2px;color:rgb(11,11,12)}" +
+    ".sb-wf-band b{border-bottom:2.5px solid rgb(204,255,0);padding-bottom:3px;font-weight:700}" +
     ".sb-wf-band:after{content:'';flex:1;height:1px;background:rgba(11,11,12,.10)}" +
     ".sb-wf-grid{display:grid;gap:16px}" +
     ".sb-wf-grid.g4{grid-template-columns:repeat(4,1fr)}" +
@@ -825,12 +826,22 @@
     "font-size:17px;line-height:1.3;color:rgb(11,11,12)}" +
     ".sb-wf-tile span{display:block;margin-top:9px;font-family:Satoshi,Inter,sans-serif;" +
     "font-size:14.5px;line-height:1.5;color:rgb(111,106,102);text-wrap:pretty}" +
-    ".sb-wf-all{display:block;margin:26px 0 0;text-align:center;font-family:Satoshi,Inter,sans-serif;" +
-    "font-weight:700;font-size:15.5px;color:rgb(11,11,12);text-decoration:none}" +
-    ".sb-wf-all u{text-decoration:none;border-bottom:2px solid rgb(204,255,0);padding-bottom:2px}" +
+    /* The hub link is deliberately NOT the band-label treatment. Daniel, 18 Aug:
+       "all nine workflows should have a different style" - it was wearing the
+       same lime rule as the two band labels above it, so a navigation control
+       and two section headings read as one object. Ghost pill, same shape as
+       Contact in the header. */
+    ".sb-wf-all{display:inline-flex;align-items:center;gap:9px;margin:30px auto 0;" +
+    "border:1px solid #d8d3ce;border-radius:999px;padding:13px 26px;background:#fff;" +
+    "font-family:Satoshi,Inter,sans-serif;font-weight:700;font-size:15.5px;" +
+    "color:rgb(18,10,11);text-decoration:none}" +
+    ".sb-wf-all-wrap{text-align:center}" +
+    "@media (hover:hover){.sb-wf-all{transition:background-color .18s ease,border-color .18s ease,color .18s ease}" +
+      ".sb-wf-all:hover{background:rgb(18,10,11);border-color:rgb(18,10,11);color:#fff}}" +
     "@media(max-width:1024px){.sb-wf-grid.g4{grid-template-columns:repeat(2,1fr)}}" +
     "@media(max-width:640px){.sb-wf-grid.g4,.sb-wf-grid.g2{grid-template-columns:1fr}" +
-    ".sb-wf-band{margin:26px 0 12px;font-size:10.5px}.sb-wf-tile{padding:22px 22px 24px}}";
+    ".sb-wf-band{margin:28px 0 14px;font-size:16px;gap:14px}" +
+    ".sb-wf-tile{padding:22px 22px 24px}}";
 
   function wfTiles(group) {
     var out = "";
@@ -859,6 +870,12 @@
 
     var sec = document.createElement("section");
     sec.setAttribute("data-sb-wf", "1");
+    /* 64px top and bottom, same as every other band. Without it this section
+       carried none, so it inherited only the PREVIOUS section's bottom padding -
+       64px of separation where the rest of the page has 128. Daniel, 18 Aug:
+       "use cases section is too attached to the above section". */
+    sec.className = "sb-band";
+    sec.style.cssText = "width:100%;padding:64px 0";
     var col = document.createElement("div");
     col.style.cssText = "max-width:1200px;margin:0 auto;padding:0 20px";
     sec.appendChild(col);
@@ -879,12 +896,12 @@
 
     var body = document.createElement("div");
     body.innerHTML =
-      '<div class="sb-wf-band">' + WF_COPY.g1 + "</div>" +
+      '<div class="sb-wf-band"><b>' + WF_COPY.g1 + "</b></div>" +
       '<div class="sb-wf-grid g4">' + wfTiles(1) + "</div>" +
-      '<div class="sb-wf-band">' + WF_COPY.g2 + "</div>" +
+      '<div class="sb-wf-band"><b>' + WF_COPY.g2 + "</b></div>" +
       '<div class="sb-wf-grid g2">' + wfTiles(2) + "</div>" +
-      '<a class="sb-wf-all" href="' + WF_COPY.allHref + '"><u>' + WF_COPY.all +
-      " &rarr;</u></a>";
+      '<div class="sb-wf-all-wrap"><a class="sb-wf-all" href="' + WF_COPY.allHref + '">' +
+      WF_COPY.all + "<span aria-hidden=\"true\">&rarr;</span></a></div>";
     col.appendChild(body);
     prodSec.parentElement.insertBefore(sec, prodSec.nextSibling);
   }
@@ -1048,6 +1065,17 @@
     return sec;
   }
 
+  /* NOT IN THE RUNNING ORDER. Daniel set the section order on 18 Aug 2026 and
+     THE QUEUE was not in it. The builder stays - the copy is written, both
+     languages, and the argument may come back - but run() calls retireOverview()
+     instead, which does the half of takeOver() that still has to happen: hiding
+     Framer's "We handle the AI. You handle your store." block. Drop
+     retireOverview() and call buildQueue() to restore the band. */
+  function retireOverview() {
+    var sec = document.querySelector('section[data-framer-name="Overview Section" i]');
+    if (sec && sec.style.display !== "none") sec.style.display = "none";
+  }
+
   function buildQueue() {
     var anchor = takeOver("Overview Section", "data-sb-queue");
     if (!anchor) return;
@@ -1061,7 +1089,7 @@
     var sec = document.createElement("section");
     sec.setAttribute("data-sb-queue", "1");
     sec.className = "sb-band";
-    sec.style.cssText = "padding:64px 0";
+    sec.style.cssText = "width:100%;padding:64px 0";
     sec.innerHTML =
       '<div class="sb-q"><div class="sb-q-card">' +
         '<p class="sb-eyeb">' + Q_COPY.eyebrow + "</p>" +
@@ -1091,7 +1119,7 @@
     var sec = document.createElement("section");
     sec.setAttribute("data-sb-managed", "1");
     sec.className = "sb-band";
-    sec.style.cssText = "padding:64px 0";
+    sec.style.cssText = "width:100%;padding:64px 0";
     sec.innerHTML =
       '<div class="sb-m">' +
         '<p class="sb-eyeb">' + M_COPY.eyebrow + "</p>" +
@@ -1216,7 +1244,7 @@
     var sec = document.createElement("section");
     sec.setAttribute("data-sb-inside", "1");
     sec.className = "sb-band";
-    sec.style.cssText = "padding:64px 0";
+    sec.style.cssText = "width:100%;padding:64px 0";
     sec.innerHTML =
       '<div class="sb-i">' +
         '<p class="sb-eyeb">' + I_COPY.eyebrow + "</p>" +
@@ -1267,43 +1295,56 @@
     ["Salesforce", "ZVHfOaoY4tHeeAEzvNLiG3fsBA-a5eb2970.png"]
   ];
 
+  /* ---------- INTEGRATIONS, the slim version ----------
+     Daniel, 18 Aug: "less invasive, ideally on one line and right below the
+     PRODUCT section". So the grey card, the 46px headline and the three stacked
+     rows are gone. What is left is a trust strip: a label, thirteen marks on one
+     line, and the Zapier note.
+
+     Icon-only, deliberately. Thirteen chips carrying names need ~1,430px at a
+     readable size and do not fit one line at 1440 - and a logo strip is scanned,
+     not read. Each mark keeps its name in `title` and `alt`, so it is still
+     announced to a screen reader and still legible to a crawler.
+
+     Shopify keeps its tag, because the whole argument of this strip is that one
+     of these thirteen is native and the rest are a route. */
+
   var N_COPY = IT
-    ? { eyebrow: "Integrazioni",
-        h2: "Si collega al tuo stack e-commerce.",
-        lede: "Nativo con Shopify. Tutto il resto passa da Zapier o da un webhook: " +
-              "il tuo CRM, il tuo helpdesk, il tuo ERP, il tuo calendario.",
-        tag: "Nativo",
-        more: "<b>8.500+</b> altre app via Zapier, o qualsiasi endpoint a cui puoi " +
-              "puntare un webhook." }
-    : { eyebrow: "Integrations",
-        h2: "Connects to your e-commerce stack.",
-        lede: "Native with Shopify. Everything else through Zapier or a webhook: " +
-              "your CRM, your helpdesk, your ERP, your calendar.",
-        tag: "Native",
-        more: "<b>8,500+</b> more apps via Zapier, or any endpoint you can point a " +
-              "webhook at." };
+    ? { label: "Si collega al tuo stack", tag: "Nativo",
+        more: "+8.500 app via Zapier" }
+    : { label: "Connects to your stack", tag: "Native",
+        more: "+8,500 apps via Zapier" };
 
   var N_CSS =
-    ".sb-n{max-width:1200px;margin:0 auto;padding:0 20px}" +
-    ".sb-n-card{background:#F9FAFD;border-radius:26px;padding:56px 48px 60px;text-align:center}" +
-    ".sb-n-card .sb-lede{max-width:660px;margin:14px auto 0;font-size:17px;line-height:1.6;" +
-    "color:rgb(111,106,102)}" +
-    ".sb-n-rows{margin:34px 0 0;display:flex;flex-direction:column;gap:14px;align-items:center}" +
-    ".sb-n-row{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}" +
-    ".sb-lg{display:inline-flex;align-items:center;gap:11px;background:#fff;border-radius:14px;" +
-    "padding:12px 20px 12px 13px;font-size:17px;font-weight:600;color:rgb(11,11,12);" +
-    "box-shadow:0 1px 2px rgba(11,11,12,.05)}" +
-    ".sb-lg img{width:28px;height:28px;object-fit:contain;flex:none}" +
-    ".sb-lg.native{box-shadow:inset 0 0 0 1.5px rgb(11,11,12)}" +
-    ".sb-lg .tagn{font-size:9.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;" +
-    "background:rgb(204,255,0);border-radius:5px;padding:4px 6px;margin-left:3px}" +
-    ".sb-n-more{margin:26px auto 0;width:max-content;max-width:100%;background:rgb(11,11,12);" +
-    "color:#fff;border-radius:999px;padding:13px 24px;font-size:15px;line-height:1.4;text-align:center}" +
-    ".sb-n-more b{color:rgb(204,255,0);font-weight:700}" +
-    "@media(max-width:809px){.sb-n-card{padding:40px 20px 44px;border-radius:20px}" +
-    ".sb-lg{font-size:14.5px;padding:10px 14px 10px 10px;gap:8px}" +
-    ".sb-lg img{width:22px;height:22px}.sb-n-row{gap:10px}.sb-n-rows{gap:10px}" +
-    ".sb-n-more{font-size:14px;padding:12px 18px}}";
+    ".sb-strip{max-width:1200px;margin:0 auto;padding:0 20px}" +
+    ".sb-strip-in{display:flex;align-items:center;justify-content:center;gap:22px;flex-wrap:wrap;" +
+    "border-top:1px solid rgba(11,11,12,.10);border-bottom:1px solid rgba(11,11,12,.10);" +
+    "padding:20px 0}" +
+    ".sb-strip-lab{font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;" +
+    "color:rgb(111,106,102);display:inline-flex;align-items:center;gap:9px;white-space:nowrap}" +
+    ".sb-strip-lab:before{content:'';width:7px;height:7px;border-radius:50%;" +
+    "background:rgb(204,255,0);flex:none}" +
+    ".sb-marks{display:flex;align-items:center;gap:18px;flex-wrap:wrap;justify-content:center}" +
+    ".sb-mark{width:30px;height:30px;object-fit:contain;flex:none;opacity:.92}" +
+    ".sb-mark-native{display:inline-flex;align-items:center;gap:7px;background:#F9FAFD;" +
+    "border-radius:9px;padding:5px 9px 5px 6px}" +
+    ".sb-mark-native b{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;" +
+    "background:rgb(204,255,0);border-radius:4px;padding:3px 5px;color:rgb(11,11,12)}" +
+    ".sb-strip-more{font-size:14px;font-weight:600;color:rgb(11,11,12);white-space:nowrap}" +
+    "@media(max-width:900px){.sb-strip-in{gap:14px;padding:18px 0}" +
+    ".sb-marks{gap:13px}.sb-mark{width:25px;height:25px}" +
+    ".sb-strip-lab{font-size:11px}.sb-strip-more{font-size:13px}}";
+
+  /* Framer's "Testimonials Section" renders 100px of nothing: its content was
+     replaced by our own proof widget long ago and the empty shell stayed. It
+     reads as a dead gap between "what changes inside" and Success Stories. */
+  function retireEmptyFramerBands() {
+    var names = ["Testimonials Section"];
+    for (var i = 0; i < names.length; i++) {
+      var s2 = document.querySelector('section[data-framer-name="' + names[i] + '" i]');
+      if (s2 && !(s2.innerText || "").trim() && s2.style.display !== "none") s2.style.display = "none";
+    }
+  }
 
   function retireTranscript() {
     var el = document.querySelector('[data-framer-name="Conversational Intelligence" i]');
@@ -1320,31 +1361,55 @@
       (document.head || document.documentElement).appendChild(st);
     }
 
-    var rows = [[0, 4], [4, 9], [9, 13]], html = "";
-    for (var r = 0; r < rows.length; r++) {
-      html += '<div class="sb-n-row">';
-      for (var i = rows[r][0]; i < rows[r][1]; i++) {
-        var lg = INTEG_LOGOS[i], native = lg[0] === "Shopify";
-        html += '<div class="sb-lg' + (native ? " native" : "") + '">' +
-                '<img src="/fuc/images/' + lg[1] + '" alt="" loading="lazy" decoding="async">' +
-                lg[0] + (native ? '<span class="tagn">' + N_COPY.tag + "</span>" : "") + "</div>";
-      }
-      html += "</div>";
+    var marks = "";
+    for (var i = 0; i < INTEG_LOGOS.length; i++) {
+      var lg = INTEG_LOGOS[i];
+      var img = '<img class="sb-mark" src="/fuc/images/' + lg[1] + '" alt="' + lg[0] +
+                '" title="' + lg[0] + '" loading="lazy" decoding="async">';
+      marks += lg[0] === "Shopify"
+        ? '<span class="sb-mark-native">' + img + "<b>" + N_COPY.tag + "</b></span>"
+        : img;
     }
 
     var sec = document.createElement("section");
     sec.setAttribute("data-sb-integ", "1");
     sec.className = "sb-band";
-    sec.style.cssText = "padding:64px 0";
+    sec.style.cssText = "width:100%;padding:26px 0 6px";
     sec.innerHTML =
-      '<div class="sb-n"><div class="sb-n-card">' +
-        '<p class="sb-eyeb">' + N_COPY.eyebrow + "</p>" +
-        "<h2>" + N_COPY.h2 + "</h2>" +
-        '<p class="sb-lede">' + N_COPY.lede + "</p>" +
-        '<div class="sb-n-rows">' + html + "</div>" +
-        '<div class="sb-n-more">' + N_COPY.more + "</div>" +
+      '<div class="sb-strip"><div class="sb-strip-in">' +
+        '<span class="sb-strip-lab">' + N_COPY.label + "</span>" +
+        '<span class="sb-marks">' + marks + "</span>" +
+        '<span class="sb-strip-more">' + N_COPY.more + "</span>" +
       "</div></div>";
     anchor.parentElement.insertBefore(sec, anchor.nextSibling);
+  }
+
+  /* ---------- THE ORDER ----------
+     Daniel set it on 18 Aug: hero, product, integrations, fully managed, start
+     where it hurts, what changes inside, then the closing block (proof, FAQ,
+     CTA) which apply_footer.py already emits in that sequence.
+
+     Each section is built where its Framer anchor happens to sit, so DOM order
+     out of the builders is whatever Framer's layout was. This pass puts them in
+     the order Daniel asked for, by re-inserting each one after the last - which
+     MOVES the node rather than copying it, so no rebuild and no duplicate.
+
+     Runs on every observer tick, so it checks first and writes nothing when the
+     order is already right. Without that guard it would feed the observer and
+     never settle. */
+  var ORDER = ["data-sb-integ", "data-sb-managed", "data-sb-wf", "data-sb-inside"];
+
+  function arrangeSections() {
+    var host = document.querySelector("[data-sb-prod]");
+    if (!host) return;
+    var prev = host.closest("section");
+    if (!prev || !prev.parentElement) return;
+    for (var i = 0; i < ORDER.length; i++) {
+      var el = document.querySelector("[" + ORDER[i] + "]");
+      if (!el) continue;
+      if (prev.nextElementSibling !== el) prev.parentElement.insertBefore(el, prev.nextElementSibling);
+      prev = el;
+    }
   }
 
   function stripTags(s) { return (s || "").replace(/<[^>]*>/g, " "); }
@@ -1378,11 +1443,13 @@
     injectCustomerBand();
     replaceWorkflowsWithProduct();
     buildWorkflowsSection();
-    buildQueue();
+    retireOverview();
     buildManaged();
     buildInside();
+    retireEmptyFramerBands();
     retireTranscript();
     buildIntegrations();
+    arrangeSections();
   }
   /* SELF-FEEDING OBSERVER - fixed 6 Aug 2026.
 
