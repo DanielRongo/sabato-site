@@ -68,6 +68,16 @@ PAGES = {
         robots="noindex, nofollow",
     ),
 
+    # Framer's own description sold the three-tier model ("Enterprise controls,
+    # SLA options") and survived every build because nothing here owned this
+    # page. The tiers died on 19 Aug 2026; this is what a searcher should see.
+    "pricing": dict(
+        title="Managed Voice AI Pricing: $0.65 per minute | Sabato AI",
+        desc="One all-inclusive rate: $0.65 per minute of talk, billed by the "
+             "second. The build, every language and the human management are "
+             "in the price. No setup fee.",
+    ),
+
     # ---- Italian pages shipped with English titles ------------------------
     "it": dict(
         title="Agenti vocali AI per l'e-commerce | Sabato AI",
@@ -75,9 +85,10 @@ PAGES = {
              "i clienti su taglie, compatibilità e specifiche. Li costruiamo e li gestiamo noi.",
     ),
     "it/prezzi": dict(
-        title="Prezzi degli agenti vocali AI | Sabato AI",
-        desc="Paghi l'utilizzo, non le persone. Tre piani con controlli enterprise, "
-             "opzioni SLA e policy di conservazione dei dati. Operativi in due settimane.",
+        title="Prezzi voice AI gestita: 0,55 euro al minuto | Sabato AI",
+        desc="Una tariffa sola: 0,55 euro al minuto di conversazione, fatturata "
+             "al secondo. Configurazione, lingue e gestione umana sono nel "
+             "prezzo. Nessuna attivazione.",
     ),
     "it/contatti": dict(
         title="Contatta Sabato AI | Prenota una demo",

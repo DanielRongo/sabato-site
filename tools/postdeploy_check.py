@@ -305,6 +305,24 @@ with sync_playwright() as p:
                       if (!faq && e.offsetParent && (e.getAttribute('data-framer-name') || '')
                           .toLowerCase().trim().startsWith('faq section')) faq = e; });
                   }
+                  // 19 Aug 2026: on /pricing there is no FAQ below the widget any
+                  // more. That page's FAQ is static and sits at the TOP with the
+                  // rest of the pricing block, and Framer's is emptied down to a
+                  // shell, so both candidates above come back null and this failed
+                  // on a page that was laid out correctly.
+                  //
+                  // The fallback anchor is the closing CTA, which is the widget's
+                  // real neighbour there. It is deliberately a NAMED band and not
+                  // "whatever element comes next": the first version of this
+                  // fallback walked nextElementSibling and picked a section that
+                  // flex `order` had already moved above the widget, which is the
+                  // exact failure mode this check exists to catch. Anchoring on a
+                  // known band keeps it strict - if the widget is missorted to the
+                  // top of the page, the gap to the CTA blows up and this fails.
+                  if (!faq) {
+                    const cta = document.querySelector('section.sb-cta');
+                    if (cta && cta.offsetParent) faq = cta;
+                  }
                   const ftop = faq ? faq.getBoundingClientRect().top + scrollY : -1;
                   const b = w.getBoundingClientRect().bottom + scrollY;
                   // ADJACENCY, not a page fraction: a 40%-of-page floor failed

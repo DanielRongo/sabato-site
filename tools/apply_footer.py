@@ -38,6 +38,7 @@ from hero import hero_html, PAGES as HERO_PAGES  # noqa: E402
 from faq import faq_html, PAGES as FAQ_PAGES  # noqa: E402
 from logos import logos_html, PAGES as LOGO_PAGES  # noqa: E402
 from proof import proof_html, PAGES as PROOF_PAGES  # noqa: E402
+from pricing import pricing_html, PAGES as PRICE_PAGES  # noqa: E402
 
 SITE = os.path.join(ROOT, "site")
 CSS_LINK = '<link rel="stylesheet" href="/css/footer.css">'
@@ -104,6 +105,17 @@ OURS_FAQ = re.compile(
     r'\s*<script type="application/ld\+json">.*?</script>'
     r"\s*<script>\(function\(\)\{var r=document\.getElementById\('sb-faq'\).*?</script>"
     r'\s*', re.S)
+# The whole pricing block, from the Framer-hiding style to the end of the
+# slider script, which is the last thing pricing_html emits. Anchored on those
+# two because the block contains a nested <section class="sb-hero sb-px-dial">
+# and several </div>s, so any regex that tries to match the container itself
+# stops in the wrong place. If the emit order in pricing.py ever changes so the
+# slider is not last, change the tail here with it.
+OURS_PRICE = re.compile(
+    r'\s*<style id="sb-px-hide">.*?'
+    r"<script>\(function\(\)\{var r=document\.getElementById\('sb-px-range'\).*?</script>"
+    r'\s*', re.S)
+
 OURS_HERO = re.compile(
     r'\s*<section class="sb-hero".*?</section>'
     r'(?:\s*<script>\(function\(\)\{var s=document\.querySelector.*?</script>)?'
@@ -125,6 +137,88 @@ TAG = re.compile(r"<(/?)([a-zA-Z][a-zA-Z0-9-]*)([^>]*)>")
 ROOT_NAMES = ('data-framer-name="CTA Section"', 'data-framer-name="Container"')
 # Framer's header root. Stable across every page, unlike the CTA's.
 FRAMER_HEADER = 'header.framer-wv5hx'
+
+
+# ---------------------------------------------------------------------------
+# Framer bands that must not survive into the SERVED HTML on the pricing pages.
+#
+# display:none hides a node from a visitor and from nobody else. /pricing was
+# shipping "Starting from EUR 490 / month", "Up to ~200 calls", "1 voice
+# workflow" and "Live in two weeks" inside the markup, with "Store", "Merchant"
+# and "Enterprise" as <h1> elements - a complete second price list, on the one
+# page whose entire job is to be quoted correctly by a crawler or an answer
+# engine. Hiding it with CSS was not enough.
+#
+# So the nodes are cut at build time AS WELL as hidden. React re-renders its
+# root at hydration and will put them back for a visitor with JavaScript, which
+# is exactly why the CSS rule in pricing.py stays: the strip is for machines,
+# the stylesheet is for people.
+#
+# "FAQ Section" is EMPTIED rather than cut. proof.py's move script finds it by
+# data-framer-name, inserts Success Stories in front of it, and copies its
+# computed flex `order` - which is the only thing that puts the widget in the
+# right place at the phone breakpoint. Delete the node and that bug comes back.
+# Emptying it drops the stale copy while leaving the anchor intact.
+FRAMER_STRIP = [("Pricing Section", "cut"),
+                ("Testimonials Section", "cut"),
+                ("FAQ Section", "empty")]
+
+
+def _element_span(html_text, inside_tag_at):
+    """(start, end) of the element whose OPENING TAG contains `inside_tag_at`.
+
+    Depth-counted on the tag name rather than a naive search for the next
+    closing tag: these sections nest dozens of divs and Framer emits several
+    responsive copies of each, so "the next </section>" is the wrong one more
+    often than it is the right one.
+    """
+    start = html_text.rfind("<", 0, inside_tag_at)
+    if start < 0:
+        return None
+    m = TAG.match(html_text, start)
+    if not m:
+        return None
+    name = m.group(2).lower()
+    if name in VOID or m.group(3).rstrip().endswith("/"):
+        return start, m.end()
+    depth = 0
+    for t in TAG.finditer(html_text, start):
+        if t.group(2).lower() != name:
+            continue
+        if t.group(1):
+            depth -= 1
+            if depth == 0:
+                return start, t.end()
+        elif not (name in VOID or t.group(3).rstrip().endswith("/")):
+            depth += 1
+    return None
+
+
+def strip_framer_nodes(html_text, specs=FRAMER_STRIP):
+    """Cut or empty every copy of the named Framer bands. Returns (html, n)."""
+    done = 0
+    for fname, mode in specs:
+        needle = ('data-framer-name="%s"' % fname).lower()
+        pos = 0
+        while True:
+            i = html_text.lower().find(needle, pos)
+            if i < 0:
+                break
+            span = _element_span(html_text, i)
+            if not span:
+                pos = i + len(needle)
+                continue
+            a, b = span
+            if mode == "cut":
+                html_text = html_text[:a] + html_text[b:]
+                pos = a
+            else:
+                m = TAG.match(html_text, a)
+                shell = html_text[a:m.end()] + "</%s>" % m.group(2)
+                html_text = html_text[:a] + shell + html_text[b:]
+                pos = a + len(shell)
+            done += 1
+    return html_text, done
 
 
 def _ancestors_at(html_text, offset):
@@ -241,6 +335,9 @@ def apply_to(html, lang, rel):
     html = OURS_PROOF.sub("\n", html)
     html = OURS_FAQ.sub("\n", html)
     html = OURS_LOGOS.sub("\n", html)
+    html = OURS_PRICE.sub("\n", html)
+    if rel in PRICE_PAGES:
+        html, _ = strip_framer_nodes(html)
     html = OURS_HERO.sub("\n", html)
     html = OURS_HDR.sub("\n", html)
     html = THEIRS_HDR.sub("\n", html)
@@ -253,6 +350,10 @@ def apply_to(html, lang, rel):
     # outside the root, which is the only property that matters.
     top = (header_html(lang)
            + (hero_html(lang) if rel in HERO_PAGES else "")
+           # The pricing page's own content, in the top block for the same
+           # reason the hero is: apply_footer can only inject before React's
+           # root or after it, and everything here has to be crawlable.
+           + (pricing_html(lang) if rel in PRICE_PAGES else "")
            + (logos_html(lang) if rel in LOGO_PAGES else ""))
     html = html[:m.end()] + "\n" + top + html[m.end():]
 

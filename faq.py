@@ -130,7 +130,7 @@ COPY = {
              "arriva, e può mandare il link di tracking via messaggio prima di chiudere. "
              "Nessuna attesa, a qualsiasi ora, in tutte le lingue in cui vendi."),
             ("Quanto costa la voice AI per l'assistenza clienti?",
-             "Sabato costa da 0,55 a 0,65 euro al minuto di conversazione, a seconda del tipo "
+             "Sabato costa da 0,45 a 0,55 euro al minuto di conversazione, a seconda del tipo "
              "di chiamata. Il prezzo include il servizio gestito: costruiamo l'agente, lo "
              "colleghiamo ai tuoi sistemi, rivediamo le chiamate e pubblichiamo le "
              "correzioni. Non c'è un canone di piattaforma separato né una licenza "
