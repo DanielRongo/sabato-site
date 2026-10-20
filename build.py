@@ -39,6 +39,7 @@ STEPS = [
     # section renderers and the proof widget, so the playbook template has to be
     # the current one when this runs.
     ("product.py",   "product pages - reuses the playbook modules wholesale"),
+    ("pricing.py",   "/pricing and /it/prezzi - imports proof.py and hero.py"),
     ("industries.py", "industry pages + indexes, THEN relinks footers site-wide - runs last"),
     ("legal.py",     "terms + privacy, EN and IT, from legal/*.md"),
     ("tools/set_page_meta.py", "metadata for static pages that no generator owns"),

@@ -48,8 +48,9 @@ DECOR = "/fuc/images/gwJojp6ALd65GvULe61l4AVkc-d2211afa.png"
 # headline. Kept explicit rather than "every Framer page" so adding a page does
 # not silently gain a second closing CTA.
 PAGES = {
-    "index.html", "about.html", "contact.html", "pricing.html",
-    "it.html", "it/prezzi.html", "it/chi-siamo.html", "it/contatti.html",
+    # /pricing and /it/prezzi close with their own band (pricing.py).
+    "index.html", "about.html", "contact.html",
+    "it.html", "it/chi-siamo.html", "it/contatti.html",
 }
 
 # Copy WAS Framer's verbatim. It is not any more: on 18 Aug 2026 the headline

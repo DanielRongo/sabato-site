@@ -45,8 +45,10 @@ SLUG = "creative-cables"
 
 # Every page Daniel asked for, both languages. Clima Convenienza is not here:
 # its approval is still pending and `approved` would block it anyway.
-PAGES = {"index.html", "pricing.html", "about.html",
-         "it.html", "it/prezzi.html", "it/chi-siamo.html"}
+# /pricing and /it/prezzi render the card inline (pricing.py), so they are
+# not here: listing them would append a second copy above the footer.
+PAGES = {"index.html", "about.html",
+         "it.html", "it/chi-siamo.html"}
 
 # Framer names it "Faq Section" on / and /about and "FAQ Section" on /pricing.
 # The script matches case-insensitively for exactly that reason - the same class

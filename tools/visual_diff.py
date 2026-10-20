@@ -92,8 +92,8 @@ CHANNEL_TOL = 8
 THRESHOLD = 0.0005          # 0.05% - our own pages
 THRESHOLD_FRAMER = 0.025    # 2.5%  - pages still running Framer's runtime
 
-FRAMER_PAGES = {"home", "it", "pricing", "about", "contact",
-                "it_prezzi", "it_chi-siamo", "it_contatti"}
+FRAMER_PAGES = {"home", "it", "about", "contact",
+                "it_chi-siamo", "it_contatti"}
 
 
 def threshold_for(name):

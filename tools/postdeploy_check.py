@@ -15,7 +15,9 @@ from customer_data import CUSTOMERS  # noqa: E402
 UNAPPROVED = sorted(d["name"] for d in CUSTOMERS.values() if not d.get("promotable"))
 # The pages the proof widget lives on, plus the two homepages. Anywhere a
 # customer could plausibly be named by us rather than by their own page.
-PROOF_PATHS = ("/", "/it", "/pricing", "/about", "/it/prezzi", "/it/chi-siamo")
+# /pricing and /it/prezzi are authored pages with the card inline and their own
+# FAQ further down, so the "directly above the Framer FAQ" invariant does not apply.
+PROOF_PATHS = ("/", "/it", "/about", "/it/chi-siamo")
 # Slugs whose case study is allowed in the index. Same flag, same source.
 PROMOTABLE_SLUGS = {s for s, d in CUSTOMERS.items() if d.get("promotable")}
 
