@@ -52,8 +52,8 @@ CUSTOMERS = {
             "title": "One agent · every queue · every market",
             "languages": ["Italiano", "Français", "Deutsch"],
             "queues": ["General information", "Where is my order", "Product configurator"],
-            "note": "Every queue answered in every market, from one Italian team - "
-                    "no market waiting on a hire before it gets a phone line.",
+            "note": "Every queue answered in every market by the same agent, live in "
+                    "every language from day one.",
         },
         "storefront": "/customers/assets/climaconvenienza-store.jpg",
         "storefront_url": "climaconvenienza.it",
@@ -65,52 +65,50 @@ CUSTOMERS = {
         "approved": True,
         "promotable": False,
         "title": "ClimaConvenienza - Voice AI Case Study | Sabato AI",
-        "description": "How ClimaConvenienza scaled phone support across Italy, France and Germany without hiring: 53.1% of calls handled autonomously in month one.",
-        "h1": "Growing across three markets faster than a phone team [nb]can be hired.[/nb]",
-        "sub": ("ClimaConvenienza sells climate equipment into Italy, France and Germany. Demand "
-                "was climbing in all three - and then a heatwave pushed it to a record eight days "
-                "after go-live. The phone line scaled with the business instead of capping it."),
+        "description": "How ClimaConvenienza runs phone support across Italy, France and Germany: 12,127 calls in month one, 44.5% closed without an operator.",
+        "h1": "Three markets, three languages, one phone line that grows with [nb]the business.[/nb]",
+        "sub": ("ClimaConvenienza offers home comfort solutions in Italy, France and Germany. "
+                "Demand was climbing in all three markets, and six days after go-live a heatwave "
+                "pushed it to a record. The phone line held the peak and kept pace with growth."),
 
         "situation_eyebrow": "The situation",
-        "situation_h2": "Expansion moves faster than hiring does",
+        "situation_h2": "Multilingual support behind international growth",
         "situation_body": [
-            "ClimaConvenienza sells heat pumps, boilers and air conditioning on Shopify, and the "
-            "business has been growing well beyond Italy. New markets generate phone calls long "
-            "before they generate the volume that justifies a native-speaking hire - a French line "
-            "and a German line are a full salary each on the day they open, and a fraction of the "
-            "traffic. Growth arrives first; the business case for headcount arrives later.",
-            "Then the weather intervened. Climate equipment has one demand curve and it is the "
-            "temperature. Days after the agent went live it was taking its "
-            "busiest day on record - in its second week of operation, absorbed without a single "
-            "additional hire.",
+            "ClimaConvenienza brings home comfort to three countries and has been growing beyond "
+            "Italy for years. Every new market brings customers who want to talk to someone in "
+            "their own language, often before they buy. The business needed support that could "
+            "follow the expansion, absorb demand peaks, and do it without a heavy hit to running "
+            "costs.",
+            "Then the heat arrived. Air conditioning demand peaks hard with the weather. Six days "
+            "after go-live the agent took the busiest day on record: 973 calls.",
         ],
         "situation_points": [
-            ("New markets ring before they pay for themselves",
-             "France and Germany were producing calls from customers already far enough down the "
-             "funnel to pick up the phone - well before the volume in either market justified "
-             "dedicated headcount."),
-            ("Demand is set by the weather, not the plan",
-             "A heatwave does not give notice. The volume that matters most arrives in the days you "
-             "could not have staffed for, and it arrives from people ready to buy today."),
-            ("Half the phone traffic is one question",
-             "Where is my order accounts for 48% of every call. Answering it well is not a support "
-             "nicety - it is the single largest claim on the team's day."),
+            ("Every new market rings from day one",
+             "France and Germany were producing calls within the first weeks, often from customers "
+             "one step from buying. Support had to answer in French and German straight away, at "
+             "the same standard as in Italy."),
+            ("Peaks follow the weather",
+             "A heatwave does not give weeks of notice. The most valuable calls arrive on exactly "
+             "those days, from people ready to buy."),
+            ("Four calls in ten ask the same question",
+             "Where is my order accounts for 42.4% of the 12,127 calls the agent took in month one. "
+             "It is the most frequent request of the day."),
         ],
 
         "stack_h2": "What went live",
         "stack": [
             ("languages", "Multilingual pre-sales and support",
-             "The agent takes calls in Italian, French and German across all three queues - general "
-             "information, order tracking and the product configurator - on the same catalogue and "
+             "The agent takes calls in Italian, French and German across all three queues (general "
+             "information, order tracking and the product configurator), on the same catalogue and "
              "the same rules."),
             ("wismo", "Where is my order",
-             "The biggest queue by far. Order status read live from Shopify and confirmed back to "
-             "the caller, with the detail sent as a text so nothing rests on the customer "
-             "remembering it."),
+             "The most frequent question on the line. Order status read live from Shopify and "
+             "confirmed back to the caller, with the detail sent as a text so nothing rests on the "
+             "customer remembering it."),
             ("configurator", "Configuratore",
              "The configurator queue, on the phone. The agent takes a caller through sizing and "
-             "compatibility to a specific unit for their space and system. It is the "
-             "highest-autonomy queue on the line, at 57.8%."),
+             "compatibility to a specific unit for their space and system. It has the highest share "
+             "of calls closed without an operator: 56.7%."),
         ],
         "stack_note": ("Connected to Shopify, so the agent reads the same catalogue, pricing and order "
                        "data the storefront does."),
@@ -126,12 +124,12 @@ CUSTOMERS = {
                  ("agent", "I can work that out with you. Is the room on a top floor, and does it "
                            "get much direct sun in the afternoon?"),
                  ("caller", "Top floor, and yes, sun all afternoon."),
-                 ("agent", "Then 9000 BTU would be under-sized for that room - 12000 is the right "
-                           "match. We have a dual-split Hisense at 12000 with built-in Wi-Fi in "
+                 ("agent", "Then 9000 BTU would be under-sized for that room: 12000 is the right "
+                           "match. We have a single-split Hisense at 12000 with built-in Wi-Fi in "
                            "stock, and a Mitsubishi in the same class if you'd prefer that brand."),
                  ("caller", "What's the difference in price?"),
-                 ("agent", "The Hisense is €313.95 including VAT, the Mitsubishi starts at €525. "
-                           "Both are A++ on cooling. Shall I text you both so you can compare?"),
+                 ("agent", "The Hisense is around €300 including VAT, the Mitsubishi starts at about "
+                           "€500. Shall I text you both so you can compare?"),
                  ("caller", "Yes, send them over."),
              ]},
             {"label": "WISMO", "icon": "wismo",
@@ -140,35 +138,38 @@ CUSTOMERS = {
              "lines": [
                  ("caller", "Hi, I ordered a heat pump last week and I've not heard anything."),
                  ("agent", "I can check that now. Do you have the order number to hand?"),
-                 ("caller", "One moment - it's 48120."),
+                 ("caller", "One moment... it's 48120."),
                  ("agent", "Thank you. Your order left the warehouse yesterday and it's due "
                            "Thursday. I'm sending you the tracking link by text now."),
                  ("caller", "And what if nobody's home when it arrives?"),
-                 ("agent", "The courier leaves a card and tries again the next day. If you'd rather "
-                           "fix a specific slot, I'll note that and the team will confirm it with "
-                           "you."),
+                 ("agent", "I'll log that and the team will get back to you to arrange the "
+                           "delivery."),
              ]},
         ],
         "call_note": ("Product and order details here are illustrative. On a live call the agent "
-                      "reads ClimaConvenienza's real catalogue, stock and order data - and takes "
-                      "the same two calls in French and German."),
+                      "reads ClimaConvenienza's real catalogue, stock and order data, and takes "
+                      "the same calls in French and German."),
 
-        "results_eyebrow": "Results · the first month live",
+        "results_eyebrow": "Results · 24 June to 24 July 2026",
         "results_h2": "The first month",
         "results": [
-            ("53.1%", "Calls handled autonomously",
-             "Resolved by the agent with no operator involved, in the first month live."),
-            ("435", "Hours of support time returned",
-             "Phone time the agent absorbed instead of an operator, redeployed into B2B sales."),
-            ("1,535", "Calls on the busiest day",
-             "Absorbed during a heatwave, without a single additional hire."),
+            ("44.5%", "Calls closed without an operator",
+             "Calls where the agent started no transfer to a person on the team. Base: 12,127 "
+             "calls taken by the agent."),
+            ("12,127", "Calls handled by the agent",
+             "In 30 days, for a total of 264 hours of conversation."),
+            ("973", "Calls on the busiest day",
+             "Taken by the agent on Tuesday 30 June 2026, six days after go-live, during a "
+             "heatwave."),
         ],
-        "results_foot": "Measured over the first month from go-live.",
+        "results_foot": ("Measured on the Sabato platform from 24 June to 24 July 2026, test calls "
+                         "excluded."),
 
-        "quote": ("We faced a massive demand spike without hiring anyone - and we moved a large part "
-                  "of the customer support team into B2B sales, so they are growing the business "
-                  "instead of repeating the same thing on the phone all day."),
-        
+        "quote": ("Sara helped us handle a sharp spike in requests and move part of the support team "
+                  "onto complex requests and B2B sales growth. By automating the most repetitive "
+                  "requests, we make the most of our people's skills and spend more time on customer "
+                  "relationships and commercial growth."),
+
         "cta_h2": "Want the same for your e-commerce store?",
         "cta_sub": ("A pilot runs on your real calls and measures what changed against your own "
                     "baseline. No slideware."),

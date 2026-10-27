@@ -29,8 +29,8 @@ CUSTOMERS_IT = {
             "title": "Un agente · ogni coda · ogni mercato",
             "languages": ["Italiano", "Français", "Deutsch"],
             "queues": ["Informazioni generali", "Dov'è il mio ordine", "Configuratore"],
-            "note": "Ogni coda risposta in ogni mercato, da un unico team italiano - "
-                    "nessun mercato che aspetta un'assunzione prima di avere una linea.",
+            "note": "Ogni coda risponde in ogni mercato con lo stesso agente, attivo in "
+                    "ogni lingua dal primo giorno.",
         },
         "storefront": None,
         "storefront_url": "",
@@ -42,51 +42,52 @@ CUSTOMERS_IT = {
         "approved": True,
         "promotable": False,
         "title": "ClimaConvenienza: case study agenti vocali | Sabato AI",
-        "description": "Come ClimaConvenienza ha scalato il supporto telefonico su Italia, Francia e Germania senza assumere: 53,1% delle chiamate gestite in autonomia.",
-        "h1": "Cresce su tre mercati più in fretta di quanto si possa [nb]assumere.[/nb]",
-        "sub": ("ClimaConvenienza vende climatizzazione in Italia, Francia e Germania. La domanda "
-                "saliva in tutti e tre - poi un'ondata di caldo l'ha portata a un record otto giorni "
-                "dopo il go-live. La linea telefonica è cresciuta con l'azienda invece di frenarla."),
+        "description": "Come ClimaConvenienza gestisce l'assistenza telefonica in Italia, Francia e Germania: 12.127 chiamate nel primo mese, il 44,5% concluse senza operatore.",
+        "h1": "Tre mercati, tre lingue, una linea che cresce con [nb]l'azienda.[/nb]",
+        "sub": ("ClimaConvenienza propone soluzioni per il comfort domestico in Italia, Francia e "
+                "Germania. La domanda cresceva in tutti e tre i mercati, e sei giorni dopo il go-live "
+                "un'ondata di caldo l'ha portata al record. La linea telefonica ha retto il picco e ha "
+                "seguito la crescita."),
 
         "situation_eyebrow": "Il contesto",
-        "situation_h2": "L'espansione corre più veloce delle assunzioni",
+        "situation_h2": "Un'assistenza multilingua a supporto della crescita internazionale",
         "situation_body": [
-            "ClimaConvenienza vende pompe di calore, caldaie e climatizzatori su Shopify, e da tempo "
-            "cresce ben oltre l'Italia. Un mercato nuovo genera telefonate molto prima di generare i "
-            "volumi che giustificano una persona madrelingua: una linea francese e una tedesca "
-            "costano uno stipendio pieno ciascuna dal primo giorno, su una frazione del traffico. "
-            "La crescita arriva prima; il business case per l'organico arriva dopo.",
-            "Poi ci si è messo il meteo. La climatizzazione ha una sola curva di domanda ed è la "
-            "temperatura. Pochi giorni dopo il go-live l'agente gestiva la "
-            "giornata più intensa di sempre - alla seconda settimana di operatività, assorbita senza "
-            "una sola assunzione in più.",
+            "ClimaConvenienza porta il comfort domestico in tre Paesi e da anni cresce oltre i "
+            "confini italiani. Ogni nuovo mercato porta subito clienti che vogliono parlare con "
+            "qualcuno nella propria lingua, spesso prima ancora di acquistare. Serviva un'assistenza "
+            "capace di seguire l'espansione in modo flessibile e di reggere i picchi di richieste, "
+            "senza incidere pesantemente sui costi di gestione.",
+            "Poi è arrivato il caldo. Nella climatizzazione la domanda ha forti picchi stagionali "
+            "legati al meteo. Sei giorni dopo il go-live l'agente ha gestito la giornata più intensa "
+            "di sempre: 973 chiamate.",
         ],
         "situation_points": [
-            ("I mercati nuovi squillano prima di ripagarsi",
-             "Francia e Germania generavano chiamate da clienti già abbastanza avanti nel funnel da "
-             "alzare la cornetta, molto prima che il volume giustificasse personale dedicato."),
-            ("La domanda la decide il meteo, non il piano",
-             "Un'ondata di caldo non avvisa. Il volume che conta di più arriva nei giorni per cui non "
-             "avresti potuto organizzare i turni, e arriva da persone pronte a comprare oggi."),
-            ("Metà del traffico telefonico è una sola domanda",
-             "Dov'è il mio ordine vale il 48% delle chiamate. Risponderci bene non è una cortesia "
-             "del supporto: è la voce più pesante nella giornata del team."),
+            ("Ogni nuovo mercato chiama dal primo giorno",
+             "In Francia e Germania i clienti telefonavano già nelle prime settimane, spesso a un "
+             "passo dall'acquisto. L'assistenza doveva rispondere in francese e in tedesco subito, "
+             "con la stessa qualità offerta in Italia."),
+            ("I picchi seguono il meteo",
+             "Un'ondata di caldo non si annuncia con settimane di anticipo. Le chiamate più preziose "
+             "arrivano proprio in quei giorni, da persone pronte a comprare."),
+            ("Più di quattro chiamate su dieci fanno la stessa domanda",
+             "Dov'è il mio ordine vale il 42,4% delle 12.127 chiamate ricevute dall'agente nel primo "
+             "mese. È la richiesta più frequente della giornata."),
         ],
 
         "stack_h2": "Cosa è andato live",
         "stack": [
             ("languages", "Pre-vendita e supporto multilingua",
-             "L'agente prende chiamate in italiano, francese e tedesco su tutte e tre le code - "
-             "informazioni generali, tracking ordini e configuratore - sullo stesso catalogo e con "
+             "L'agente prende chiamate in italiano, francese e tedesco su tutte e tre le code "
+             "(informazioni generali, tracking ordini e configuratore), sullo stesso catalogo e con "
              "le stesse regole."),
             ("wismo", "Dov'è il mio ordine",
-             "La coda più grande, di gran lunga. Stato dell'ordine letto in tempo reale da Shopify e "
-             "confermato al cliente, con il dettaglio inviato via messaggio così nulla dipende da "
-             "cosa si ricorda chi ha chiamato."),
+             "La domanda più frequente della linea. Stato dell'ordine letto in tempo reale da Shopify "
+             "e confermato al cliente, con il dettaglio inviato via messaggio, così nulla dipende da "
+             "cosa ricorda chi ha chiamato."),
             ("configurator", "Configuratore",
              "Il configuratore, al telefono. L'agente porta chi chiama da dimensionamento e "
              "compatibilità a un modello preciso per il suo spazio e il suo impianto. È la coda con "
-             "l'autonomia più alta della linea, al 57,8%."),
+             "la quota più alta di chiamate concluse senza operatore: il 56,7%."),
         ],
         "stack_note": ("Collegato a Shopify: l'agente legge lo stesso catalogo, gli stessi prezzi e "
                        "gli stessi ordini dello store."),
@@ -103,13 +104,12 @@ CUSTOMERS_IT = {
                            "pomeriggio?"),
                  ("caller", "Ultimo piano sì, e sole tutto il pomeriggio."),
                  ("agent", "Allora 9000 BTU sarebbero sottodimensionati per quella stanza: il taglio "
-                           "giusto è 12000. Abbiamo un dual-split Hisense da 12000 con Wi-Fi "
+                           "giusto è 12000. Abbiamo un monosplit Hisense da 12000 con Wi-Fi "
                            "integrato disponibile, e un Mitsubishi della stessa classe se preferisce "
                            "quel marchio."),
                  ("caller", "Che differenza c'è di prezzo?"),
-                 ("agent", "L'Hisense è 313,95 euro IVA inclusa, il Mitsubishi parte da 525. "
-                           "Entrambi A++ in raffrescamento. Glieli mando via messaggio così li "
-                           "confronta?"),
+                 ("agent", "L'Hisense è intorno ai 300 euro IVA inclusa, il Mitsubishi parte da circa "
+                           "500. Glieli mando via messaggio così li confronta con calma?"),
                  ("caller", "Sì, me li mandi."),
              ]},
             {"label": "WISMO", "icon": "wismo",
@@ -119,35 +119,38 @@ CUSTOMERS_IT = {
                  ("caller", "Buongiorno, ho ordinato una pompa di calore la settimana scorsa e non "
                             "ho più saputo nulla."),
                  ("agent", "Controllo subito. Mi può dare il numero d'ordine?"),
-                 ("caller", "Un attimo - 48120."),
+                 ("caller", "Un attimo... 48120."),
                  ("agent", "Grazie. Il suo ordine è partito dal magazzino ieri ed è previsto per "
                            "giovedì. Le mando adesso il link di tracking via messaggio."),
                  ("caller", "E se non c'è nessuno in casa alla consegna?"),
-                 ("agent", "Il corriere lascia l'avviso e riprova il giorno dopo. Se preferisce "
-                           "fissare una fascia precisa, segnalo e il team gliela conferma."),
+                 ("agent", "Segnalo la sua richiesta e il team la ricontatta per concordare la "
+                           "consegna."),
              ]},
         ],
         "call_note": ("I dettagli di prodotto e ordine qui sono indicativi. In chiamata reale "
-                      "l'agente legge catalogo, disponibilità e ordini veri di ClimaConvenienza - e "
-                      "gestisce le stesse due chiamate in francese e tedesco."),
+                      "l'agente legge catalogo, disponibilità e ordini veri di ClimaConvenienza, e "
+                      "gestisce le stesse chiamate anche in francese e tedesco."),
 
-        "results_eyebrow": "Risultati · il primo mese live",
+        "results_eyebrow": "Risultati · dal 24 giugno al 24 luglio 2026",
         "results_h2": "Il primo mese",
         "results": [
-            ("53,1%", "Chiamate gestite in autonomia",
-             "Risolte dall'agente senza alcun operatore, nel primo mese live."),
-            ("435", "Ore di supporto restituite",
-             "Tempo al telefono assorbito dall'agente invece che da un operatore, reimpiegato sulle "
-             "vendite B2B."),
-            ("1.535", "Chiamate nel giorno di picco",
-             "Assorbite durante un'ondata di caldo, senza una sola assunzione in più."),
+            ("44,5%", "Chiamate concluse senza operatore",
+             "Chiamate in cui l'agente non ha avviato alcun trasferimento a una persona del team. "
+             "Base: 12.127 chiamate ricevute dall'agente."),
+            ("12.127", "Chiamate gestite dall'agente",
+             "In 30 giorni, per un totale di 264 ore di conversazione."),
+            ("973", "Chiamate nel giorno di picco",
+             "Ricevute dall'agente martedì 30 giugno 2026, sei giorni dopo il go-live, durante "
+             "un'ondata di caldo."),
         ],
-        "results_foot": "Misurato sul primo mese dal go-live.",
+        "results_foot": ("Dati misurati sulla piattaforma Sabato dal 24 giugno al 24 luglio 2026, "
+                         "chiamate di test escluse."),
 
-        "quote": ("Abbiamo affrontato un picco di domanda enorme senza assumere nessuno - e abbiamo "
-                  "spostato una buona parte del team di customer support sulle vendite B2B, così "
-                  "fanno crescere l'azienda invece di ripetere la stessa cosa al telefono tutto il "
-                  "giorno."),
+        "quote": ("Sara ci ha aiutato a gestire un forte picco di richieste e a dedicare una parte "
+                  "del team di assistenza alla gestione delle richieste più complesse e allo "
+                  "sviluppo delle vendite B2B. Automatizzando le richieste più ricorrenti, possiamo "
+                  "valorizzare le competenze delle nostre persone e dedicare più tempo alla "
+                  "relazione con i clienti e alla crescita commerciale."),
 
         "cta_h2": "Vuoi lo stesso per il tuo e-commerce?",
         "cta_sub": ("Un pilota gira sulle tue chiamate vere e misura cosa cambia rispetto alla tua "
