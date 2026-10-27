@@ -100,6 +100,8 @@ Questi cookie analitici vengono impostati solo dopo la tua accettazione. Alla pr
 
 Utilizziamo inoltre RB2B, un servizio di identificazione aziendale che riconosce l'azienda da cui proviene la visita, per poter dare seguito alle richieste commerciali. Viene eseguito solo se accetti la categoria **Marketing** e non viene mai caricato prima. L'identificazione a livello di persona di RB2B opera esclusivamente su visitatori situati negli Stati Uniti e non identifica visitatori nell'Unione Europea o nel Regno Unito.
 
+La chat del sito è fornita da Chaport Inc. Finché non clicchi sul pulsante della chat, da Chaport non viene caricato nulla. Quando lo fai, Chaport salva un identificativo nel tuo browser per mantenere la conversazione mentre passi da una pagina all'altra, e riceve i tuoi messaggi, i recapiti che decidi di lasciarci e la pagina in cui ti trovi. Visto che la chat l'hai chiesta tu, questa memorizzazione è strettamente necessaria per fornirtela e non dipende dal banner dei cookie. Nella memoria locale del browser registriamo con la chiave `sb-chat` che hai aperto la chat, così si ricarica nelle pagine successive: cancellando i dati del sito la elimini. Usiamo le conversazioni in chat solo per risponderti e per dare seguito a quello che ci hai chiesto.
+
 Questo sito non installa cookie pubblicitari e non mostra pubblicità.
 
 La tua scelta sul consenso è conservata nel local storage del browser sotto la chiave `sb-consent`, insieme alla data in cui l'hai espressa. È strettamente necessaria — è la prova di ciò che hai richiesto — e scade dopo 180 giorni, trascorsi i quali ti chiediamo di nuovo.

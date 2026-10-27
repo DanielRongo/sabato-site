@@ -100,6 +100,8 @@ These analytics cookies are only set once you accept them. A consent banner appe
 
 We also use RB2B, a business-identification service that recognises the company a visitor is browsing from so that we can follow up on business enquiries. It only runs if you accept the **Marketing** category, and it is never loaded before then. RB2B's person-level identification operates only on visitors located in the United States; it does not resolve visitors in the EU or UK.
 
+Live chat on this website is provided by Chaport Inc. Nothing from Chaport loads until you click the chat button. Once you do, Chaport stores an identifier in your browser so the conversation continues as you move between pages, and receives your messages, any contact details you choose to give, and the page you are on. Because you asked for the chat, this storage is strictly necessary to deliver it and does not depend on the consent banner. We remember that you opened the chat under `sb-chat` in your browser's local storage, so the chat reloads on later pages; clearing your site data removes it. We use chat conversations only to answer you and to follow up on what you asked about.
+
 This website sets no advertising cookies and shows no advertising.
 
 Your consent choice is stored in your browser's local storage under `sb-consent`, together with the date you made it. It is strictly necessary — it is the record of what you asked for — and it expires after 180 days, at which point we ask again.

@@ -50,6 +50,8 @@ python3 tools/inject_ga.py
 # RB2B goes second so it lands after the GA block in <head>. Both are
 # marker-fenced and self-verify their own count, so re-runs are no-ops.
 python3 tools/inject_reb2b.py
+# Chat launcher: a button only. Chaport itself loads on click, never on page view.
+python3 tools/inject_chat.py
 # LAST: the banner is what flips the two above on. It goes before </body>,
 # outside Framer's React root - inside it, hydration deletes it.
 python3 tools/inject_consent.py
