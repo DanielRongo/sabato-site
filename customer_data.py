@@ -155,9 +155,8 @@ CUSTOMERS = {
                          "excluded."),
 
         "quote": ("Sara helped us handle a sharp spike in requests and move part of the support team "
-                  "onto complex requests and B2B sales growth. By automating the most repetitive "
-                  "requests, we make the most of our people's skills and spend more time on customer "
-                  "relationships and commercial growth."),
+                  "onto complex requests and B2B sales. That way we make the most of our people's "
+                  "skills."),
 
         "cta_h2": "Want the same for your e-commerce store?",
         "cta_sub": ("A pilot runs on your real calls and measures what changed against your own "

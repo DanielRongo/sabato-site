@@ -135,11 +135,9 @@ CUSTOMERS_IT = {
         "results_foot": ("Dati misurati sulla piattaforma Sabato dal 24 giugno al 24 luglio 2026, "
                          "chiamate di test escluse."),
 
-        "quote": ("Sara ci ha aiutato a gestire un forte picco di richieste e a dedicare una parte "
-                  "del team di assistenza alla gestione delle richieste più complesse e allo "
-                  "sviluppo delle vendite B2B. Automatizzando le richieste più ricorrenti, possiamo "
-                  "valorizzare le competenze delle nostre persone e dedicare più tempo alla "
-                  "relazione con i clienti e alla crescita commerciale."),
+        "quote": ("Sara ci ha aiutato a gestire un forte picco di richieste e a dedicare parte del "
+                  "team di assistenza alle richieste più complesse e alle vendite B2B. Così "
+                  "valorizziamo le competenze delle nostre persone."),
 
         "cta_h2": "Vuoi lo stesso per il tuo e-commerce?",
         "cta_sub": ("Un pilota gira sulle tue chiamate vere e misura cosa cambia rispetto alla tua "
