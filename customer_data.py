@@ -82,18 +82,7 @@ CUSTOMERS = {
             "Then the heat arrived. Air conditioning demand peaks hard with the weather. Six days "
             "after go-live the agent took the busiest day on record: 973 calls.",
         ],
-        "situation_points": [
-            ("Every new market rings from day one",
-             "France and Germany were producing calls within the first weeks, often from customers "
-             "one step from buying. Support had to answer in French and German straight away, at "
-             "the same standard as in Italy."),
-            ("Peaks follow the weather",
-             "A heatwave does not give weeks of notice. The most valuable calls arrive on exactly "
-             "those days, from people ready to buy."),
-            ("Four calls in ten ask the same question",
-             "Where is my order accounts for 42.4% of the 12,127 calls the agent took in month one. "
-             "It is the most frequent request of the day."),
-        ],
+        "situation_points": [],
 
         "stack_h2": "What went live",
         "stack": [
@@ -102,7 +91,7 @@ CUSTOMERS = {
              "information, order tracking and the product configurator), on the same catalogue and "
              "the same rules."),
             ("wismo", "Where is my order",
-             "The most frequent question on the line. Order status read live from Shopify and "
+             "Four calls in ten (42.4%) ask where an order is. Status is read live from Shopify and "
              "confirmed back to the caller, with the detail sent as a text so nothing rests on the "
              "customer remembering it."),
             ("configurator", "Configuratore",

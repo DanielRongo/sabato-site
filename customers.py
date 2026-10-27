@@ -207,8 +207,12 @@ def section_situation(d):
         %s
       </div>
     </section>
-    <section class="stack"><div class="stack-grid">%s</div></section>""" % (
-        cls, ph(d["situation_eyebrow"]), ph(d["situation_h2"]), body, shot, cards)
+    %s""" % (
+        cls, ph(d["situation_eyebrow"]), ph(d["situation_h2"]), body, shot,
+        # No points, no band: a story can skip the tile row entirely rather than
+        # stacking two tile grids back to back (ClimaConvenienza, 27 Oct 2026).
+        ('<section class="stack"><div class="stack-grid">%s</div></section>' % cards)
+        if cards else "")
 
 
 def section_stack(d):

@@ -61,18 +61,7 @@ CUSTOMERS_IT = {
             "legati al meteo. Sei giorni dopo il go-live l'agente ha gestito la giornata più intensa "
             "di sempre: 973 chiamate.",
         ],
-        "situation_points": [
-            ("Ogni nuovo mercato chiama dal primo giorno",
-             "In Francia e Germania i clienti telefonavano già nelle prime settimane, spesso a un "
-             "passo dall'acquisto. L'assistenza doveva rispondere in francese e in tedesco subito, "
-             "con la stessa qualità offerta in Italia."),
-            ("I picchi seguono il meteo",
-             "Un'ondata di caldo non si annuncia con settimane di anticipo. Le chiamate più preziose "
-             "arrivano proprio in quei giorni, da persone pronte a comprare."),
-            ("Più di quattro chiamate su dieci fanno la stessa domanda",
-             "Dov'è il mio ordine vale il 42,4% delle 12.127 chiamate ricevute dall'agente nel primo "
-             "mese. È la richiesta più frequente della giornata."),
-        ],
+        "situation_points": [],
 
         "stack_h2": "Cosa è andato live",
         "stack": [
@@ -81,9 +70,9 @@ CUSTOMERS_IT = {
              "(informazioni generali, tracking ordini e configuratore), sullo stesso catalogo e con "
              "le stesse regole."),
             ("wismo", "Dov'è il mio ordine",
-             "La domanda più frequente della linea. Stato dell'ordine letto in tempo reale da Shopify "
-             "e confermato al cliente, con il dettaglio inviato via messaggio, così nulla dipende da "
-             "cosa ricorda chi ha chiamato."),
+             "Più di quattro chiamate su dieci (il 42,4%) chiedono dov'è il proprio ordine. Lo stato "
+             "viene letto in tempo reale da Shopify e confermato al cliente, con il dettaglio inviato "
+             "via messaggio, così nulla dipende da cosa ricorda chi ha chiamato."),
             ("configurator", "Configuratore",
              "Il configuratore, al telefono. L'agente porta chi chiama da dimensionamento e "
              "compatibilità a un modello preciso per il suo spazio e il suo impianto. È la coda con "
