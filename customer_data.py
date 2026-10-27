@@ -65,7 +65,7 @@ CUSTOMERS = {
         "approved": True,
         "promotable": False,
         "title": "ClimaConvenienza - Voice AI Case Study | Sabato AI",
-        "description": "How ClimaConvenienza runs phone support across Italy, France and Germany: 12,127 calls in month one, 44.5% closed without an operator.",
+        "description": "How ClimaConvenienza runs phone support across Italy, France and Germany: 12,127 calls in month one, 44.7% closed without an operator.",
         "h1": "Three markets, three languages, one phone line that grows with [nb]the business.[/nb]",
         "sub": ("ClimaConvenienza offers home comfort solutions in Italy, France and Germany. "
                 "Demand was climbing in all three markets, and six days after go-live a heatwave "
@@ -153,9 +153,9 @@ CUSTOMERS = {
         "results_eyebrow": "Results · 24 June to 24 July 2026",
         "results_h2": "The first month",
         "results": [
-            ("44.5%", "Calls closed without an operator",
-             "Calls where the agent started no transfer to a person on the team. Base: 12,127 "
-             "calls taken by the agent."),
+            ("44.7%", "Calls closed without an operator",
+             "5,422 of 12,127 calls closed by the agent with no transfer to a person on the "
+             "team."),
             ("12,127", "Calls handled by the agent",
              "In 30 days, for a total of 264 hours of conversation."),
             ("973", "Calls on the busiest day",

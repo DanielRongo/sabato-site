@@ -42,7 +42,7 @@ CUSTOMERS_IT = {
         "approved": True,
         "promotable": False,
         "title": "ClimaConvenienza: case study agenti vocali | Sabato AI",
-        "description": "Come ClimaConvenienza gestisce l'assistenza telefonica in Italia, Francia e Germania: 12.127 chiamate nel primo mese, il 44,5% concluse senza operatore.",
+        "description": "Come ClimaConvenienza gestisce l'assistenza telefonica in Italia, Francia e Germania: 12.127 chiamate nel primo mese, il 44,7% chiuse senza operatore.",
         "h1": "Tre mercati, tre lingue, una linea che cresce con [nb]l'azienda.[/nb]",
         "sub": ("ClimaConvenienza propone soluzioni per il comfort domestico in Italia, Francia e "
                 "Germania. La domanda cresceva in tutti e tre i mercati, e sei giorni dopo il go-live "
@@ -87,7 +87,7 @@ CUSTOMERS_IT = {
             ("configurator", "Configuratore",
              "Il configuratore, al telefono. L'agente porta chi chiama da dimensionamento e "
              "compatibilità a un modello preciso per il suo spazio e il suo impianto. È la coda con "
-             "la quota più alta di chiamate concluse senza operatore: il 56,7%."),
+             "la quota più alta di chiamate chiuse senza operatore: il 56,7%."),
         ],
         "stack_note": ("Collegato a Shopify: l'agente legge lo stesso catalogo, gli stessi prezzi e "
                        "gli stessi ordini dello store."),
@@ -134,9 +134,9 @@ CUSTOMERS_IT = {
         "results_eyebrow": "Risultati · dal 24 giugno al 24 luglio 2026",
         "results_h2": "Il primo mese",
         "results": [
-            ("44,5%", "Chiamate concluse senza operatore",
-             "Chiamate in cui l'agente non ha avviato alcun trasferimento a una persona del team. "
-             "Base: 12.127 chiamate ricevute dall'agente."),
+            ("44,7%", "Chiamate chiuse senza operatore",
+             "5.422 chiamate su 12.127 chiuse dall'agente senza alcun trasferimento a una persona "
+             "del team."),
             ("12.127", "Chiamate gestite dall'agente",
              "In 30 giorni, per un totale di 264 ore di conversazione."),
             ("973", "Chiamate nel giorno di picco",
