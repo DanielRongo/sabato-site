@@ -443,7 +443,9 @@ with sync_playwright() as p:
             landed = pg.url.replace(BASE, "")
         except Exception as e:
             landed = "ERR " + str(e)[:40]
-        if landed != expect:
+        # Netlify 301s a folder index (/industries -> /industries/), so the
+        # same page can arrive with or without the slash. Compare without it.
+        if landed.rstrip("/") != expect.rstrip("/"):
             failures.append((f"{src} click {label}", {"landed": landed, "expected": expect}, [], []))
             print(f"FAIL {src} click '{label}' -> {landed}")
         else:
