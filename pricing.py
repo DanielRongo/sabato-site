@@ -75,7 +75,6 @@ COPY = {
         desc="Billed per AI token, about a minute of talk: around €0.39 for an "
              "order status call. See what an agent saves you, then start with a pilot.",
         og_locale="en_US",
-        eyebrow="Pricing",
         h1="Every call answered.<br>Pay for the conversation.",
         price_int="0", price_dec=".39",
         price_note="a where is my order call, start to finish",
@@ -90,7 +89,6 @@ COPY = {
               ("return", "Transfers when it matters"), ("bars", "Turns calls into data"),
               ("check", "Gets better every day")],
         desk_link="See the product", desk_href="/product/voice-agent-builder",
-        calc_eyebrow="Savings calculator",
         calc_h2="Calculate your savings",
         calc_sub="See what an agent saves you each month against a human team.",
         step1="1. Pick your main call type",
@@ -159,7 +157,6 @@ COPY = {
         desc="Paghi a token AI, circa un minuto di conversazione: in media €0,39 per "
              "una chiamata sullo stato dell'ordine. Calcola quanto risparmi e parti con un pilot.",
         og_locale="it_IT",
-        eyebrow="Prezzi",
         h1="Rispondiamo a ogni chiamata.<br>Paghi solo quando si parla.",
         price_int="0", price_dec=",39",
         price_note="una chiamata “dov'è il mio ordine”, dall'inizio alla fine",
@@ -176,7 +173,6 @@ COPY = {
               ("bars", "Trasforma le chiamate in dati"),
               ("check", "Migliora ogni giorno")],
         desk_link="Scopri il prodotto", desk_href="/it/prodotto/voice-agent-builder",
-        calc_eyebrow="Calcolatore di risparmio",
         calc_h2="Calcola quanto risparmi",
         calc_sub="Scopri quanto ti fa risparmiare un agente ogni mese rispetto a un team di operatori.",
         step1="1. Scegli il tipo di chiamata più frequente",
@@ -276,7 +272,6 @@ body{margin:0;background:#fff;color:var(--ink);font-family:"Satoshi","Inter",-ap
 
 /* hero */
 .pc-hero{background:#000;border-radius:24px;padding:72px 24px 56px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:24px;color:#fff}
-.pc-hero .pc-eyebrow{color:rgba(248,244,241,.7)}
 .pc-hero h1{font-size:clamp(40px,5.4vw,64px);font-weight:700;letter-spacing:-2.2px;line-height:1.04}
 .pc-price{display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap;margin-top:16px}
 .pc-amount{display:flex;align-items:flex-start;color:var(--lime)}
@@ -467,7 +462,6 @@ def hero(c, lang):
         for code, lab_en, lab_it, disp, _tel in NUMBERS)
     return (
         '<section class="pc-hero">'
-        f'<p class="pc-eyebrow">{c["eyebrow"]}</p>'
         f'<h1>{c["h1"]}</h1>'
         '<div class="pc-price">'
         f'<div class="pc-amount" aria-label="€{c["price_int"]}{c["price_dec"]}">'
@@ -516,7 +510,6 @@ def calculator(c, lang):
     attrs = " ".join(f'data-{k}="{esc(str(v))}"' for k, v in data.items())
     return (
         '<div class="pc-head">'
-        f'<p class="pc-eyebrow">{esc(c["calc_eyebrow"])}</p>'
         f'<h2 class="pc-h2">{esc(c["calc_h2"])}</h2>'
         f'<p>{esc(c["calc_sub"])}</p></div>'
         f'<section class="pc-calc" id="pc-calc" {attrs}>'
